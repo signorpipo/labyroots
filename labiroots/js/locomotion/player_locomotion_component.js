@@ -74,6 +74,13 @@ WL.registerComponent('player-locomotion', {
 
                     Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
                     this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
+
+                    let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
+
+                    if (cell != null) {
+                        this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
+                        this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
+                    }
                 }
             } else {
                 _myTotalRaycasts = 0; // #TODO debug stuff, remove later

@@ -125,6 +125,21 @@ LR.Maze = class Maze {
 
         return cell;
     }
+
+    getCellsByType(itemType) {
+        let cells = [];
+
+        for (let i = 0; i < this._myCells.length; i++) {
+            let row = this._myCells[i];
+            for (let j = 0; j < row.length; j++) {
+                if (row[j].myStaticMazeItemType == itemType) {
+                    cells.push(row[j]);
+                }
+            }
+        }
+
+        return cells;
+    }
 }
 
 LR.MazeCell = class MazeCell {

@@ -44,6 +44,12 @@
                 },
                 {
                     "type": "labiroots-gateway"
+                },
+                {
+                    "type": "story",
+                    "story": {
+                        "_myOnlyVR": false
+                    }
                 }
             ]
         },
@@ -63,18 +69,21 @@
                         "_myMinAngleToFlyDownVR": 90.0,
                         "_myMinAngleToFlyRight": 90.0
                     }
+                },
+                {
+                    "type": "transformation"
                 }
             ],
             "translation": [
                 0.0,
-                0.0,
+                -30.0,
                 0.0
             ],
             "rotation": [
                 0.0,
+                1.0,
                 0.0,
-                0.0,
-                1.0
+                -4.371138828673793e-8
             ],
             "scale": [
                 1.0,
@@ -111,7 +120,8 @@
                     "pp-switch-hand-object": {
                         "_myGamepad": "102",
                         "_myTrackedHand": "105"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -125,7 +135,8 @@
                         "_myHandedness": "right",
                         "_myGamepad": "106",
                         "_myTrackedHand": "108"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -271,6 +282,12 @@
                         "_myBottomButton": "130",
                         "_myUsePressForSqueeze": true
                     }
+                },
+                {
+                    "type": "pp-set-active",
+                    "pp-set-active": {
+                        "_myActive": false
+                    }
                 }
             ],
             "translation": [
@@ -321,6 +338,12 @@
                         "_myJointMesh": "p1",
                         "_myJointMaterial": "144"
                     }
+                },
+                {
+                    "type": "pp-set-active",
+                    "pp-set-active": {
+                        "_myActive": false
+                    }
                 }
             ]
         },
@@ -344,6 +367,12 @@
                         "_myBottomButton": "138",
                         "_myUsePressForSqueeze": true,
                         "_myHandedness": "right"
+                    }
+                },
+                {
+                    "type": "pp-set-active",
+                    "pp-set-active": {
+                        "_myActive": false
                     }
                 }
             ],
@@ -386,6 +415,12 @@
                         "_myJointMesh": "p1",
                         "_myJointMaterial": "144",
                         "_myHandedness": "right"
+                    }
+                },
+                {
+                    "type": "pp-set-active",
+                    "pp-set-active": {
+                        "_myActive": false
                     }
                 }
             ]
@@ -3187,6 +3222,492 @@
                 1.0,
                 1.0
             ]
+        },
+        "d22d2c89-cc68-4a13-8f1d-ce0367d93b36": {
+            "name": "Stage",
+            "parent": "99",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "stage-switch",
+                    "stage-switch": {
+                        "_myOnlyVR": true,
+                        "_myStage0": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+                        "_myStage1": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+                        "_myStage2": "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf",
+                        "_myStage4": "df85ce43-0200-4d79-93a1-c37c7b5b641d",
+                        "_myStage3": "60f02c32-6141-499e-b8e2-0c276be29ce1",
+                        "_myStage5": "d35fd685-3193-40a3-b932-a27e518bc3b6"
+                    }
+                }
+            ]
+        },
+        "4973aa54-05b3-488b-9ea6-1e908bdd2eac": {
+            "name": "Stage 1",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
+        },
+        "3de76c8f-4bf2-42a9-ab88-7f85d2c9b68a": {
+            "name": "Empty",
+            "parent": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf": {
+            "name": "Stage 2",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
+        },
+        "38852629-6d45-4b5a-beea-629b4e1b0a0e": {
+            "name": "Empty",
+            "parent": "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "ca9f7080-051b-4906-b63e-252dd4d6c887"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "60f02c32-6141-499e-b8e2-0c276be29ce1": {
+            "name": "Stage 3",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
+        },
+        "95da354c-628c-4c9a-bbae-79930f839b6a": {
+            "name": "Empty",
+            "parent": "60f02c32-6141-499e-b8e2-0c276be29ce1",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "df85ce43-0200-4d79-93a1-c37c7b5b641d": {
+            "name": "Stage 4",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
+        },
+        "6d2327a4-8515-4efa-a3d7-635f6bcdfa4c": {
+            "name": "Empty",
+            "parent": "df85ce43-0200-4d79-93a1-c37c7b5b641d",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "d35fd685-3193-40a3-b932-a27e518bc3b6": {
+            "name": "Stage 5",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
+        },
+        "e2100cc3-0a9e-4644-9211-55cfc381e8bf": {
+            "name": "Empty",
+            "parent": "d35fd685-3193-40a3-b932-a27e518bc3b6",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "eda81209-f334-4b33-a08e-5640069eef56"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "65b5a60d-bf9a-455d-8c3c-4b324ac2f528": {
+            "name": "Stage",
+            "parent": "107",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "stage-switch",
+                    "stage-switch": {
+                        "_myOnlyVR": true,
+                        "_myStage1": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+                        "_myStage2": "cb3baadb-6fe2-4e13-868a-449e420701d9",
+                        "_myStage3": "f4e40d97-d911-4cdf-8606-b3e49eec1a7e",
+                        "_myStage4": "97f3124d-d433-4175-9d32-094e26afdd44",
+                        "_myStage5": "4c834083-5d29-4121-adb7-bb2c01d630ec"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2": {
+            "name": "Stage 1",
+            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+        },
+        "4e780c8f-02e3-4796-98b2-1ef0b0885817": {
+            "name": "Empty",
+            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "cb3baadb-6fe2-4e13-868a-449e420701d9": {
+            "name": "Stage 2",
+            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+        },
+        "248fc46b-337f-4026-b1c7-8d799668b48e": {
+            "name": "Empty",
+            "parent": "cb3baadb-6fe2-4e13-868a-449e420701d9",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "ca9f7080-051b-4906-b63e-252dd4d6c887"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "f4e40d97-d911-4cdf-8606-b3e49eec1a7e": {
+            "name": "Stage 3",
+            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+        },
+        "cb0c595c-e3e7-405c-be6c-5a19e4f7e06d": {
+            "name": "Empty",
+            "parent": "f4e40d97-d911-4cdf-8606-b3e49eec1a7e",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "97f3124d-d433-4175-9d32-094e26afdd44": {
+            "name": "Stage 4",
+            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+        },
+        "436de1c2-ab72-4706-98bb-fdd14cb5e929": {
+            "name": "Empty",
+            "parent": "97f3124d-d433-4175-9d32-094e26afdd44",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "4c834083-5d29-4121-adb7-bb2c01d630ec": {
+            "name": "Stage 5",
+            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+        },
+        "f88d4a8e-1dcf-450c-830e-dd4507020d54": {
+            "name": "Empty",
+            "parent": "4c834083-5d29-4121-adb7-bb2c01d630ec",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "eda81209-f334-4b33-a08e-5640069eef56"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "51b394fc-9fe0-4d79-b359-987a007a047e": {
+            "name": "Dark Room",
+            "parent": "996d4af5-d835-46f1-87de-d5232608d43f",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p1",
+                        "material": "a2d69cb1-ad10-482a-9648-9fef6f7cf689"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                -30.0,
+                0.0
+            ],
+            "scale": [
+                3.0,
+                3.0,
+                3.0
+            ]
         }
     },
     "meshes": {
@@ -3662,6 +4183,24 @@
                 "ambientFactor": 0.5,
                 "diffuseTexture": "ec8f0cfe-b4d8-49d0-9be9-4889afc65f58"
             }
+        },
+        "a2d69cb1-ad10-482a-9648-9fef6f7cf689": {
+            "name": "Dark Room",
+            "pipeline": "1a9f8525-447a-4c63-bd65-bf9215462df7",
+            "Phong": {
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
         }
     },
     "shaders": {
@@ -3882,6 +4421,14 @@
                 "name": "Phong Lightmapped",
                 "file": "default"
             }
+        },
+        "1a9f8525-447a-4c63-bd65-bf9215462df7": {
+            "link": {
+                "name": "Phong Opaque",
+                "file": "default"
+            },
+            "name": "Phong Opaque Double",
+            "doubleSided": true
         }
     },
     "settings": {
@@ -3902,10 +4449,14 @@
             ]
         },
         "runtime": {
-            "xrButtonColor": "black",
+            "xrButtonColor": "white",
             "webxr": {
                 "optionalFeatures": {
-                    "hand-tracking": true
+                    "hand-tracking": true,
+                    "local-floor": true
+                },
+                "requiredFeatures": {
+                    "local-floor": true
                 }
             },
             "viewObject": "21",
@@ -3987,12 +4538,8 @@
     },
     "files": [
         "assets/models/meta_quest_1_gamepads_credits_Jezza3D.fbx",
-        "assets/models/Muri/Angolo_A.fbx",
-        "assets/models/Muri/Angolo_B.fbx",
         "assets/models/Muri/Muro_A.fbx",
         "assets/textures/Trees/60.png",
-        "assets/textures/Trees/21.png",
-        "assets/textures/Walls/test_texture.fbx",
         "assets/textures/Walls/AngoloTexture.png",
         "assets/textures/Fruits/Frutto_Blu.png",
         "assets/textures/Fruits/Frutto_Rosso.png",

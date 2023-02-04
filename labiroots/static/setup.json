@@ -3,6 +3,10 @@
 	{
 		"mySpeed": 2
 	},
+"myPlayerSetup":
+	{
+		"myTransformationTimers": [2,2,2,2,1]
+	},
 "myMazeSetup":
 	{
 		"myCellSize":2,
