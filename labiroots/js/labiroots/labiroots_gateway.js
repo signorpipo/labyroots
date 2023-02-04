@@ -43,6 +43,8 @@ Global = {
     myMaze: null,
     myPlayer: null,
     myReady: false,
+    myStage: 0,
+    myRoots: null
 };
 
 LR = {};

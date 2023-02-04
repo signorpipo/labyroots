@@ -75,7 +75,6 @@ WL.registerComponent('player-locomotion', {
                     Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
                     this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
 
-                    let playerSpawnPosition = PP.vec3_create();
                     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 
                     if (cell != null) {
