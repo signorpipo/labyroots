@@ -871,7 +871,7 @@
                         "_myActive": false,
                         "_mySetActiveWhen": "first_update"
                     },
-                    "active": false
+                    "active": true
                 }
             ],
             "translation": [
@@ -1636,11 +1636,11 @@
             ]
         },
         "c9fb61ae-8b59-4d08-892f-585800456fa4": {
-            "name": "1",
+            "name": "60",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         },
         "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
-            "name": "2",
+            "name": "70",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
                 -2.7127923,
@@ -3737,6 +3737,220 @@
                 3.0,
                 3.0
             ]
+        },
+        "036fdb68-5fb9-40cb-a9d9-c123861a3141": {
+            "name": "1",
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+        },
+        "d951cab5-9d18-4840-97f1-081aa9b05cff": {
+            "name": "Pivot",
+            "parent": "036fdb68-5fb9-40cb-a9d9-c123861a3141",
+            "scale": [
+                10.0,
+                10.0,
+                1.0
+            ]
+        },
+        "3bd5bd30-6ea9-4475-82ab-af40451e5ad5": {
+            "name": "AlberoFase1",
+            "parent": "d951cab5-9d18-4840-97f1-081aa9b05cff",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1226acad-4d43-4af8-833e-cf410ed3226b"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9814093,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "0a23cb7e-dfa0-4f88-a3e3-11fc9b1fb880": {
+            "name": "2",
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+        },
+        "8d9c3a64-c5c7-443f-965e-a7fe99e96ea9": {
+            "name": "Pivot",
+            "parent": "0a23cb7e-dfa0-4f88-a3e3-11fc9b1fb880",
+            "scale": [
+                10.0,
+                10.0,
+                1.0
+            ]
+        },
+        "13f55714-53d9-45f6-a7da-e812f1b24bf3": {
+            "name": "AlberoFase2",
+            "parent": "8d9c3a64-c5c7-443f-965e-a7fe99e96ea9",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "9f8f65fd-6af7-41ab-9e40-055c8f224f54"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9814093,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "b9e6b49b-1536-4e80-81ec-80d8f5f5bcb1": {
+            "name": "3",
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+        },
+        "eb721e5b-3f6c-4552-97e8-022bc72f636a": {
+            "name": "Pivot",
+            "parent": "b9e6b49b-1536-4e80-81ec-80d8f5f5bcb1",
+            "scale": [
+                10.0,
+                10.0,
+                1.0
+            ]
+        },
+        "97231eee-a68d-4910-8cf9-d7fc8b084233": {
+            "name": "AlberoFase3",
+            "parent": "eb721e5b-3f6c-4552-97e8-022bc72f636a",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "51fe1ade-3b21-46b4-81e0-dc310a778e76"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9814093,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "243c9c58-841c-49e4-9361-432311c7393d": {
+            "name": "4",
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+        },
+        "f7eac7bc-9111-4439-9e37-ff47e32982a4": {
+            "name": "Pivot",
+            "parent": "243c9c58-841c-49e4-9361-432311c7393d",
+            "scale": [
+                10.0,
+                10.0,
+                1.0
+            ]
+        },
+        "172e5b27-16c5-4622-954b-83fb80154aff": {
+            "name": "AlberoFase4",
+            "parent": "f7eac7bc-9111-4439-9e37-ff47e32982a4",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1226acad-4d43-4af8-833e-cf410ed3226b"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9814093,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "a118fcc4-be9e-418e-8c38-ec6613b24fc6": {
+            "name": "5",
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+        },
+        "456350e3-c528-4d30-8f02-6a73ca4be216": {
+            "name": "Pivot",
+            "parent": "a118fcc4-be9e-418e-8c38-ec6613b24fc6",
+            "scale": [
+                10.0,
+                10.0,
+                1.0
+            ]
+        },
+        "2d9d2233-4dcf-4957-899d-85e77da17b76": {
+            "name": "AlberoFase5",
+            "parent": "456350e3-c528-4d30-8f02-6a73ca4be216",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1226acad-4d43-4af8-833e-cf410ed3226b"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9814093,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "9c7d9729-760a-4b57-b211-5e176e88b1a3": {
+            "name": "80",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         }
     },
     "meshes": {
@@ -3933,6 +4147,24 @@
                 "name": "RadiciAlbero_fase2Fixed.png",
                 "file": "assets\\textures\\Trees\\RadiciAlbero_fase2Fixed.png"
             }
+        },
+        "f5ae09e5-c8c5-4a87-a156-6e1f53918cd6": {
+            "link": {
+                "name": "AlberoGrosso_fase1.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase1.png"
+            }
+        },
+        "de51f0e4-5a51-4348-9c24-783c4d25d49b": {
+            "link": {
+                "name": "AlberoGrosso_fase2.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase2.png"
+            }
+        },
+        "785b78f6-2b2f-4396-9ac2-50efc0b940a8": {
+            "link": {
+                "name": "AlberoGrosso_fase3.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
+            }
         }
     },
     "images": {
@@ -3974,18 +4206,40 @@
             "link": {
                 "name": "RadiciAlbero_fase3Fixed.png",
                 "file": "assets\\textures\\Trees\\RadiciAlbero_fase3Fixed.png"
-            }
+            },
+            "compress": false
         },
         "256c9c93-aaeb-414c-aa81-78de15a2e445": {
             "link": {
                 "name": "RadiciAlbero_fase1Fixed.png",
                 "file": "assets\\textures\\Trees\\RadiciAlbero_fase1Fixed.png"
-            }
+            },
+            "compress": false
         },
         "b2ddbfee-7e65-493f-946f-959c49f1f652": {
             "link": {
                 "name": "RadiciAlbero_fase2Fixed.png",
                 "file": "assets\\textures\\Trees\\RadiciAlbero_fase2Fixed.png"
+            },
+            "compress": false
+        },
+        "93a39555-5abb-44da-9f17-f22570276e8f": {
+            "link": {
+                "name": "AlberoGrosso_fase1.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase1.png"
+            },
+            "compress": false
+        },
+        "7f648475-da4e-40ed-974a-6c01da5ed296": {
+            "link": {
+                "name": "AlberoGrosso_fase2.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase2.png"
+            }
+        },
+        "5d76c448-4b4e-469b-9afd-39cd373d4284": {
+            "link": {
+                "name": "AlberoGrosso_fase3.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
             }
         }
     },
@@ -4274,6 +4528,74 @@
                     1.0
                 ]
             }
+        },
+        "1226acad-4d43-4af8-833e-cf410ed3226b": {
+            "name": "AlberoFase1",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "f5ae09e5-c8c5-4a87-a156-6e1f53918cd6"
+            }
+        },
+        "9f8f65fd-6af7-41ab-9e40-055c8f224f54": {
+            "name": "AlberoFase2",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "de51f0e4-5a51-4348-9c24-783c4d25d49b"
+            }
+        },
+        "51fe1ade-3b21-46b4-81e0-dc310a778e76": {
+            "name": "AlberoFase3",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "785b78f6-2b2f-4396-9ac2-50efc0b940a8"
+            }
+        },
+        "1de0b560-bb93-4196-86a9-d95e26852992": {
+            "name": "AlberoFase4",
+            "pipeline": "14"
+        },
+        "f5a6ddb1-042d-4937-b738-f231488eba39": {
+            "name": "AlberoFase5",
+            "pipeline": "14"
         }
     },
     "shaders": {
@@ -4519,6 +4841,14 @@
                 0.105098,
                 0.3999999,
                 1.0
+            ],
+            "textureAtlasSize": [
+                16384,
+                16384
+            ],
+            "compressedTextureAtlasSize": [
+                32768,
+                16384
             ]
         },
         "runtime": {
@@ -4618,7 +4948,10 @@
         "assets/textures/Fruits/Frutto_Rosso.png",
         "assets/textures/Trees/RadiciAlbero_fase3Fixed.png",
         "assets/textures/Trees/RadiciAlbero_fase1Fixed.png",
-        "assets/textures/Trees/RadiciAlbero_fase2Fixed.png"
+        "assets/textures/Trees/RadiciAlbero_fase2Fixed.png",
+        "assets/textures/Trees/AlberoGrosso_fase1.png",
+        "assets/textures/Trees/AlberoGrosso_fase2.png",
+        "assets/textures/Trees/AlberoGrosso_fase3.png"
     ],
     "fonts": {
         "147": {
