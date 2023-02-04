@@ -3702,6 +3702,11 @@
                 0.0,
                 -30.0,
                 0.0
+            ],
+            "scale": [
+                3.0,
+                3.0,
+                3.0
             ]
         }
     },
@@ -4444,10 +4449,14 @@
             ]
         },
         "runtime": {
-            "xrButtonColor": "black",
+            "xrButtonColor": "white",
             "webxr": {
                 "optionalFeatures": {
-                    "hand-tracking": true
+                    "hand-tracking": true,
+                    "local-floor": true
+                },
+                "requiredFeatures": {
+                    "local-floor": true
                 }
             },
             "viewObject": "21",
@@ -4529,12 +4538,8 @@
     },
     "files": [
         "assets/models/meta_quest_1_gamepads_credits_Jezza3D.fbx",
-        "assets/models/Muri/Angolo_A.fbx",
-        "assets/models/Muri/Angolo_B.fbx",
         "assets/models/Muri/Muro_A.fbx",
         "assets/textures/Trees/60.png",
-        "assets/textures/Trees/21.png",
-        "assets/textures/Walls/test_texture.fbx",
         "assets/textures/Walls/AngoloTexture.png",
         "assets/textures/Fruits/Frutto_Blu.png",
         "assets/textures/Fruits/Frutto_Rosso.png",
