@@ -3991,6 +3991,34 @@
                 1.0,
                 1.0
             ]
+        },
+        "3a6a729e-dd31-456a-beac-cc53da62aae8": {
+            "name": "Mouth",
+            "parent": "74",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.15
+                        },
+                        "groups": 2,
+                        "block": 4,
+                        "kinematic": true,
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false
+                    }
+                },
+                {
+                    "type": "mouth"
+                }
+            ],
+            "translation": [
+                0.0,
+                -0.1,
+                0.1
+            ]
         }
     },
     "meshes": {
