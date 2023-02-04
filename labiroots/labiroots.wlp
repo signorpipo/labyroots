@@ -2734,7 +2734,8 @@
                 "js/locomotion/teleport",
                 "js/labiroots",
                 "js/labiroots/maze",
-                "js/labiroots/json"
+                "js/labiroots/json",
+                "static"
             ],
             "useInternalBundler": false
         },
