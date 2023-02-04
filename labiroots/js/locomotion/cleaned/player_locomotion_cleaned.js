@@ -210,7 +210,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
                 params.myHandedness = this._myParams.myMainHand;
 
                 params.myDetectionParams.myMaxDistance = 3;
-                params.myDetectionParams.myMaxHeightDifference = 4;
+                params.myDetectionParams.myMaxHeightDifference = 0.5;
                 params.myDetectionParams.myGroundAngleToIgnoreUpward = this._myCollisionCheckParamsMovement.myGroundAngleToIgnore;
                 params.myDetectionParams.myMustBeOnGround = true;
 
@@ -260,6 +260,18 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         this._myPlayerLocomotionRotate.start();
 
         this._myLocomotionMovementFSM.perform("start");
+    }
+
+    canStop() {
+        let canStop = false;
+
+        if (this._myLocomotionMovementFSM.isInState("smooth") && this._myPlayerLocomotionSmooth.canStop()) {
+            canStop = true;
+        } else if (this._myLocomotionMovementFSM.isInState("teleport") && this._myPlayerLocomotionTeleport.canStop()) {
+            canStop = true;
+        }
+
+        return canStop;
     }
 
     update(dt) {

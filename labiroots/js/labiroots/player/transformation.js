@@ -14,10 +14,12 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
-            if (this._myTransformationTimer.isRunning()) {
-                this._myTransformationTimer.update(dt);
-                if (this._myTransformationTimer.isDone()) {
+            this._myTransformationTimer.update(dt);
+            if (this._myTransformationTimer.isDone()) {
+                if (Global.myPlayerLocomotion.canStop()) {
+                    Global.myPlayerLocomotion.setIdle(true);
                     this._nextStage();
+                    Global.myPlayerLocomotion.setIdle(false);
                 }
             }
         }
@@ -50,7 +52,8 @@ WL.registerComponent('transformation', {
 
         if (cell != null) {
             Global.myPlayer.teleportPosition(cell[0].myCellPosition, null, true);
-            Global.myPlayer.resetToReal(true);
+            Global.myPlayer.resetReal(true, false, false, true);
+            Global.myPlayer.resetHeadToReal();
         }
 
         this._resetTransformation();

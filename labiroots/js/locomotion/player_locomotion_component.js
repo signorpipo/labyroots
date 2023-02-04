@@ -73,13 +73,15 @@ WL.registerComponent('player-locomotion', {
                     this._myPlayerLocomotion.start();
 
                     Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
-                    this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
+                    Global.myPlayerLocomotion = this._myPlayerLocomotion;
+                    Global.myPlayer.resetReal(true, false, false, true);
 
                     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 
                     if (cell != null) {
                         this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
-                        this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
+                        Global.myPlayer.resetReal(true, false, false, true);
+                        Global.myPlayer.resetHeadToReal();
                     }
                 }
             } else {
