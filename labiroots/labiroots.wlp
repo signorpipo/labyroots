@@ -43,7 +43,7 @@
                     "type": "pp-debug-manager"
                 },
                 {
-                    "type": "load-setup"
+                    "type": "labiroots-gateway"
                 }
             ]
         },
@@ -824,6 +824,69 @@
                     }
                 }
             ]
+        },
+        "7cbd9105-a8fe-4425-badd-d877732475d1": {
+            "name": "Maze Items",
+            "parent": "996d4af5-d835-46f1-87de-d5232608d43f",
+            "components": [
+                {
+                    "type": "pp-set-active",
+                    "pp-set-active": {
+                        "_myActive": false,
+                        "_mySetActiveWhen": "first_update"
+                    }
+                }
+            ]
+        },
+        "6b48d416-7da1-4c3e-82b7-b449bdec1aaf": {
+            "name": "1",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "1f4c9b86-a4a8-4904-8c62-08cfe780f217": {
+            "name": "Mesh",
+            "parent": "6b48d416-7da1-4c3e-82b7-b449bdec1aaf",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p1",
+                        "material": "0073c085-8173-4259-bf93-e23c622d1d99"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.0,
+                0.0
+            ]
+        },
+        "53f064fd-510b-4612-9622-54ada2e5d2f3": {
+            "name": "Physx",
+            "parent": "6b48d416-7da1-4c3e-82b7-b449bdec1aaf",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.0,
+                0.0
+            ]
         }
     },
     "meshes": {
@@ -1359,7 +1422,10 @@
                 "js/pp/cauldron/visual/elements",
                 "js/pp/cauldron/visual/components",
                 "js/pp/cauldron/visual",
-                "js/locomotion/teleport"
+                "js/locomotion/teleport",
+                "js/labiroots",
+                "js/labiroots/maze",
+                "js/labiroots/json"
             ],
             "useInternalBundler": false
         },
@@ -1375,7 +1441,17 @@
             "ids": "uuid"
         },
         "physx": {
-            "enable": true
+            "enable": true,
+            "groupNames": {
+                "0": "wall",
+                "1": "player",
+                "2": "fruit",
+                "3": "axe",
+                "4": "root",
+                "5": "heart",
+                "6": "tree",
+                "7": "grab"
+            }
         }
     },
     "files": [
