@@ -172,10 +172,10 @@
                 1.0
             ],
             "rotation": [
-                0.2823414,
-                0.0,
-                0.0,
-                0.9593139
+                -0.1205904,
+                -0.0499502,
+                0.3794095,
+                0.9159756
             ],
             "scale": [
                 1.0,
@@ -655,9 +655,9 @@
                         "shape": "box",
                         "box": {
                             "extents": [
-                                10.0,
+                                100.0,
                                 0.25,
-                                10.0
+                                100.0
                             ]
                         },
                         "gravity": false,
@@ -781,9 +781,9 @@
                 1.0
             ],
             "scale": [
-                10.0,
+                100.0,
                 0.25,
-                10.0
+                100.0
             ],
             "translation": [
                 0.0,
@@ -812,7 +812,8 @@
                     "pp-set-active": {
                         "_myActive": false,
                         "_mySetActiveWhen": "first_update"
-                    }
+                    },
+                    "active": false
                 }
             ],
             "translation": [
@@ -1122,7 +1123,14 @@
                 "name": "Angolo_1<Angolo_1_$AssimpFbx$_ScalingPivotInverse<Angolo_1_$AssimpFbx$_ScalingPivot<Angolo_1_$AssimpFbx$_RotationPivotInverse<Angolo_1_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Angolo_B.fbx"
             },
-            "parent": "81e993ae-c4ef-4d5d-ba15-bd240d6fd716"
+            "parent": "81e993ae-c4ef-4d5d-ba15-bd240d6fd716",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "055feb5e-67fb-4f9d-9057-dbac9abbfa4c"
+                    }
+                }
+            ]
         },
         "ac2413b4-e5d5-46bd-92d6-430fd4ecfd2e": {
             "link": {
@@ -1174,9 +1182,9 @@
             "name": "31",
             "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
             "translation": [
+                -12.2342596,
                 0.0,
-                0.0,
-                -9.1666259
+                -9.1142539
             ],
             "rotation": [
                 0.0,
@@ -1194,9 +1202,9 @@
             "name": "1",
             "parent": "28e6ccaa-d4cf-4430-bdd6-aaab19d1d6c3",
             "translation": [
-                -7.4491176,
+                -1.2290067,
                 0.0,
-                -1.4449882
+                0.2507171
             ],
             "rotation": [
                 0.0,
@@ -1288,6 +1296,351 @@
                 1.0,
                 1.0
             ]
+        },
+        "28c6dbe0-a4a1-4556-b4c6-a8d832be5847": {
+            "name": "60",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -7.3603329,
+                0.0,
+                -18.0545005
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "3e9d748a-7714-4655-9820-de408a069dab": {
+            "name": "1",
+            "parent": "28c6dbe0-a4a1-4556-b4c6-a8d832be5847",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "610d46b0-1a3a-43eb-a029-c9abe2a0aa91": {
+            "name": "AlberoUmano1",
+            "parent": "3e9d748a-7714-4655-9820-de408a069dab",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "translation": [
+                0.0001487,
+                0.9420548,
+                -0.0000648
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "2865c608-b60d-452c-bc10-74ea8b3b0dbf": {
+            "name": "21",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -6.9535331,
+                0.0,
+                -22.6743545
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "1844287c-74ee-4256-a78a-98b99d410308": {
+            "name": "1",
+            "parent": "2865c608-b60d-452c-bc10-74ea8b3b0dbf",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c53cc593-cb27-45db-921d-d8486ebaf8bf": {
+            "name": "BigTreeHeart",
+            "parent": "1844287c-74ee-4256-a78a-98b99d410308",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.9325413,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "f4eacf1c-4f45-4c9c-807b-9492976e6bf9": {
+            "name": "Light 2",
+            "parent": "28",
+            "components": [
+                {
+                    "type": "light",
+                    "light": {
+                        "attenuation": 0.075,
+                        "type": "sun",
+                        "color": [
+                            1.0,
+                            0.9554325,
+                            0.8196078
+                        ]
+                    }
+                }
+            ],
+            "translation": [
+                1.0000001,
+                3.0,
+                1.0
+            ],
+            "rotation": [
+                0.1205904,
+                -0.0499502,
+                -0.3794095,
+                0.9159756
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "92e810c9-39ac-4a60-8401-daf099308aa5": {
+            "name": "3",
+            "parent": "8c53907c-64f8-49b8-8420-7772515dc599"
+        },
+        "252568cf-8040-4aae-98fa-c523538d24e9": {
+            "link": {
+                "name": "polySurface2_$AssimpFbx$_RotationPivot",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "parent": "92e810c9-39ac-4a60-8401-daf099308aa5"
+        },
+        "45ec5f8b-612e-4d5b-a76f-5f9aafd9ba91": {
+            "link": {
+                "name": "polySurface2_$AssimpFbx$_RotationPivotInverse<polySurface2_$AssimpFbx$_RotationPivot",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "parent": "252568cf-8040-4aae-98fa-c523538d24e9"
+        },
+        "e30f8736-e3cf-4f14-b1d7-6e2c69523924": {
+            "link": {
+                "name": "polySurface2_$AssimpFbx$_ScalingPivot<polySurface2_$AssimpFbx$_RotationPivotInverse<polySurface2_$AssimpFbx$_RotationPivot",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "parent": "45ec5f8b-612e-4d5b-a76f-5f9aafd9ba91"
+        },
+        "2590032e-9cea-4961-b5b2-817e9870c6c0": {
+            "link": {
+                "name": "polySurface2_$AssimpFbx$_ScalingPivotInverse<polySurface2_$AssimpFbx$_ScalingPivot<polySurface2_$AssimpFbx$_RotationPivotInverse<polySurface2_$AssimpFbx$_RotationPivot",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "parent": "e30f8736-e3cf-4f14-b1d7-6e2c69523924"
+        },
+        "536eb258-30bd-4388-b464-f6007439d962": {
+            "link": {
+                "name": "polySurface2<polySurface2_$AssimpFbx$_ScalingPivotInverse<polySurface2_$AssimpFbx$_ScalingPivot<polySurface2_$AssimpFbx$_RotationPivotInverse<polySurface2_$AssimpFbx$_RotationPivot",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "parent": "2590032e-9cea-4961-b5b2-817e9870c6c0",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "055feb5e-67fb-4f9d-9057-dbac9abbfa4c"
+                    }
+                }
+            ]
+        },
+        "d36e4691-cdc7-4355-968e-7561bb3c4a70": {
+            "name": "Physx",
+            "parent": "92e810c9-39ac-4a60-8401-daf099308aa5",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.375,
+                                0.8
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.375,
+                -1.4449882
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "4f3e377e-8908-4b8e-9325-c5530d11ea61": {
+            "name": "10",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c9c1811e-ba5b-4647-aae7-e0094753ae5b": {
+            "name": "11",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "5b8043c8-317e-4d38-97dd-abe68b2dcedc": {
+            "name": "20",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                0.0,
+                0.0,
+                34.6950721
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c": {
+            "name": "22",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "b22da876-d3b3-4f3f-ada3-c2b108bf3f53": {
+            "name": "23",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "62d57314-86af-49c6-a20d-d719ade3e4c2": {
+            "name": "24",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "22456e8b-4475-4b73-87fb-a8a5e3a13598": {
+            "name": "Gameplay Items",
+            "parent": "996d4af5-d835-46f1-87de-d5232608d43f"
+        },
+        "405d3b76-555d-4aee-a644-60e49ab8a3ab": {
+            "name": "Fruits",
+            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598"
+        },
+        "c9fb61ae-8b59-4d08-892f-585800456fa4": {
+            "name": "1",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+        },
+        "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
+            "name": "2",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         }
     },
     "meshes": {
@@ -1428,6 +1781,12 @@
                 "name": "Wall_1",
                 "file": "assets\\models\\Muri\\Muro_A.fbx"
             }
+        },
+        "17b27867-63b9-429e-a0c7-6449c19098ec": {
+            "link": {
+                "name": "polySurface2",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            }
         }
     },
     "textures": {
@@ -1435,6 +1794,24 @@
             "link": {
                 "name": "DefaultTexture",
                 "file": "default"
+            }
+        },
+        "ab4b7097-f68f-4d2f-8894-f082c2155c8b": {
+            "link": {
+                "name": "60.png",
+                "file": "assets\\textures\\Trees\\60.png"
+            }
+        },
+        "5ffc1b6c-1ba6-496b-bc12-0242dfc91713": {
+            "link": {
+                "name": "21.png",
+                "file": "assets\\textures\\Trees\\21.png"
+            }
+        },
+        "10a9a95b-7bad-4621-ae7c-b20fa6ca0802": {
+            "link": {
+                "name": "AngoloTexture.png",
+                "file": "assets\\textures\\Walls\\AngoloTexture.png"
             }
         }
     },
@@ -1444,6 +1821,27 @@
                 "name": "DefaultImage",
                 "file": "default"
             }
+        },
+        "871c20fd-fee3-45d3-912b-bfb4d5824efb": {
+            "link": {
+                "name": "60.png",
+                "file": "assets\\textures\\Trees\\60.png"
+            },
+            "compress": false
+        },
+        "8703b861-84a6-4d79-8ae0-418d1b921cd3": {
+            "link": {
+                "name": "21.png",
+                "file": "assets\\textures\\Trees\\21.png"
+            },
+            "compress": false
+        },
+        "1995af1e-5c20-463e-a369-b0e04d51cfce": {
+            "link": {
+                "name": "AngoloTexture.png",
+                "file": "assets\\textures\\Walls\\AngoloTexture.png"
+            },
+            "compress": false
         }
     },
     "materials": {
@@ -1570,6 +1968,66 @@
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Muri\\Muro_A.fbx"
+            }
+        },
+        "49467962-d10c-47ce-8e04-661f82f883ee": {
+            "name": "60",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "ab4b7097-f68f-4d2f-8894-f082c2155c8b"
+            }
+        },
+        "1ea5dfb0-052f-4490-a415-47416cef570a": {
+            "name": "21",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "5ffc1b6c-1ba6-496b-bc12-0242dfc91713"
+            }
+        },
+        "055feb5e-67fb-4f9d-9057-dbac9abbfa4c": {
+            "name": "AngoloLargo",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "10a9a95b-7bad-4621-ae7c-b20fa6ca0802",
+                "alphaMaskThreshold": 0.3
+            }
+        },
+        "547cfd4e-9716-4c45-b3c5-4de88b332cb7": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
+            }
+        },
+        "d3677709-03ae-49e6-86ac-95753a1d654e": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\textures\\Walls\\test_texture.fbx"
             }
         }
     },
@@ -1895,7 +2353,11 @@
         "assets/models/meta_quest_1_gamepads_credits_Jezza3D.fbx",
         "assets/models/Muri/Angolo_A.fbx",
         "assets/models/Muri/Angolo_B.fbx",
-        "assets/models/Muri/Muro_A.fbx"
+        "assets/models/Muri/Muro_A.fbx",
+        "assets/textures/Trees/60.png",
+        "assets/textures/Trees/21.png",
+        "assets/textures/Walls/test_texture.fbx",
+        "assets/textures/Walls/AngoloTexture.png"
     ],
     "fonts": {
         "147": {
