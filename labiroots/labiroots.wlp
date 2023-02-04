@@ -54,7 +54,8 @@
                 {
                     "type": "player-locomotion",
                     "player-locomotion": {
-                        "_myUseCleanedVersion": true
+                        "_myUseCleanedVersion": true,
+                        "_myVRDirectionReferenceType": "head"
                     }
                 }
             ]
@@ -1635,8 +1636,8 @@
             "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
             "translation": [
                 -8.2132015,
-                0.0,
-                -62.5940437
+                1.5,
+                -29.6566562
             ],
             "rotation": [
                 0.0,
@@ -1684,11 +1685,26 @@
                         "mesh": "p0",
                         "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "gravity": true,
+                        "block": 255,
+                        "groups": 4
+                    }
+                },
+                {
+                    "type": "pp-grabbable"
                 }
             ],
             "translation": [
                 0.0,
-                0.8100276,
+                0.0,
                 0.0
             ],
             "rotation": [
@@ -1698,9 +1714,9 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
-                1.0
+                0.075,
+                0.075,
+                0.075
             ]
         },
         "292dd504-80bf-417e-b1f2-a0c3ea3c899c": {
@@ -1713,11 +1729,24 @@
                         "mesh": "p0",
                         "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
                     }
+                },
+                {
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "groups": 4
+                    }
                 }
             ],
             "translation": [
                 0.0,
-                0.9341683,
+                -0.0325995,
                 0.0
             ],
             "rotation": [
@@ -1727,9 +1756,9 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
-                1.0
+                0.075,
+                0.075,
+                0.075
             ]
         },
         "bdeae7da-70b0-4b89-9417-c27259d2212c": {
@@ -1894,6 +1923,74 @@
                 0.0001487,
                 0.9420548,
                 -0.0000648
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "b8418728-9728-46c6-8041-dedac6ef6fd4": {
+            "name": "Grabber",
+            "parent": "99",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "kinematic": true,
+                        "groups": 128
+                    }
+                },
+                {
+                    "type": "pp-grabber-hand"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.075
+            ]
+        },
+        "043d9aad-ab79-4d70-97b5-5e0f8a3728f4": {
+            "name": "Grabber",
+            "parent": "107",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "kinematic": true,
+                        "groups": 128
+                    }
+                },
+                {
+                    "type": "pp-grabber-hand",
+                    "pp-grabber-hand": {
+                        "_myHandedness": "right"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.075
             ],
             "rotation": [
                 0.0,
@@ -2493,7 +2590,8 @@
             },
             "features": {
                 "ALPHA_MASKED": true
-            }
+            },
+            "doubleSided": true
         },
         "16": {
             "link": {
@@ -2589,7 +2687,8 @@
                     "hand-tracking": true
                 }
             },
-            "viewObject": "21"
+            "viewObject": "21",
+            "visualizePhysX": false
         },
         "scripting": {
             "sourcePaths": [
