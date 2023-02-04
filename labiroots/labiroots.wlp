@@ -1405,6 +1405,12 @@
                         "mesh": "p0",
                         "material": "49467962-d10c-47ce-8e04-661f82f883ee"
                     }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
                 }
             ],
             "translation": [
@@ -1588,7 +1594,7 @@
             "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
             "translation": [
                 -17.628477,
-                1.041174,
+                0.0,
                 6.7526855
             ],
             "rotation": [
@@ -2814,21 +2820,13 @@
                 1.0,
                 1.0,
                 1.0
-            ],
-            "components": [
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
             ]
         },
         "0185bd0a-e47f-4469-bd01-3306e5fc00fb": {
             "name": "1",
             "parent": "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c",
             "translation": [
-                0.0,
+                -3.485548,
                 0.0,
                 0.0
             ],
@@ -2842,14 +2840,6 @@
                 1.0,
                 1.0,
                 1.0
-            ],
-            "components": [
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
             ]
         },
         "2a4a5671-d123-46c2-ae27-e60ece05d1f9": {
@@ -3157,7 +3147,7 @@
             "name": "3",
             "parent": "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c",
             "translation": [
-                0.0,
+                2.379198,
                 0.0,
                 0.0
             ],
@@ -3171,14 +3161,6 @@
                 1.0,
                 1.0,
                 1.0
-            ],
-            "components": [
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
             ]
         },
         "78b73781-11a6-4a9e-b9fc-e8b64fcfe379": {
@@ -3191,7 +3173,29 @@
                         "mesh": "p0",
                         "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
                     }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
                 }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
             ]
         },
         "d60a6a47-5d62-48af-9f56-c5faa9aaae44": {
@@ -3204,11 +3208,17 @@
                         "mesh": "p0",
                         "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
                     }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
                 }
             ],
             "translation": [
-                -4.6827335,
-                -0.1036614,
+                0.0,
+                0.925,
                 0.0
             ],
             "rotation": [
@@ -3233,11 +3243,17 @@
                         "mesh": "p0",
                         "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
                     }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
                 }
             ],
             "translation": [
                 0.0,
-                0.0,
+                0.925,
                 0.0
             ],
             "rotation": [
@@ -4234,13 +4250,15 @@
             "link": {
                 "name": "AlberoGrosso_fase2.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase2.png"
-            }
+            },
+            "compress": false
         },
         "5d76c448-4b4e-469b-9afd-39cd373d4284": {
             "link": {
                 "name": "AlberoGrosso_fase3.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
-            }
+            },
+            "compress": false
         }
     },
     "materials": {
