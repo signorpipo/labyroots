@@ -20,7 +20,7 @@ WL.registerComponent("labiroots-gateway", {
         } else if (this._myReadyCounter > 0) {
             this._myReadyCounter--;
             if (this._myReadyCounter == 0) {
-                Global.myReady = true;
+                Global.myStoryReady = true;
             }
         }
         // ripulire i frutti e le asce 
@@ -42,6 +42,7 @@ Global = {
     mySetup: {},
     myMaze: null,
     myPlayer: null,
+    myStoryReady: false,
     myReady: false,
     myStage: 0,
     myRoots: null
