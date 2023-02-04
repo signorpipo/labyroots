@@ -311,11 +311,11 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         simplifiedParams.myHeight = 1.75;
         simplifiedParams.myRadius = this._myParams.myCharacterRadius;
 
-        simplifiedParams.myAccuracyLevel = PP.CharacterColliderSetupSimplifiedCreationAccuracyLevel.HIGH;
+        simplifiedParams.myAccuracyLevel = PP.CharacterColliderSetupSimplifiedCreationAccuracyLevel.MEDIUM;
 
         simplifiedParams.myIsPlayer = true;
 
-        simplifiedParams.myCheckOnlyFeet = false;
+        simplifiedParams.myCheckOnlyFeet = true;
 
         simplifiedParams.myAverageSpeed = this._myParams.myMaxSpeed;
 
@@ -326,7 +326,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         simplifiedParams.myCollectGroundInfo = true;
         simplifiedParams.myShouldSnapOnGround = true;
         simplifiedParams.myMaxDistanceToSnapOnGround = 0.1;
-        simplifiedParams.myMaxWalkableGroundAngle = 30;
+        simplifiedParams.myMaxWalkableGroundAngle = 0;
         simplifiedParams.myMaxWalkableGroundStepHeight = 0.1;
         simplifiedParams.myShouldNotFallFromEdges = false;
 
