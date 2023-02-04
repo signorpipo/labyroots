@@ -73,6 +73,7 @@ WL.registerComponent('player-locomotion', {
                     this._myPlayerLocomotion.start();
 
                     Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
+                    this._myPlayerLocomotion._myPlayerTransformManager.resetToReal(true);
                 }
             } else {
                 _myTotalRaycasts = 0; // #TODO debug stuff, remove later

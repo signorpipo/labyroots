@@ -55,7 +55,13 @@
                     "type": "player-locomotion",
                     "player-locomotion": {
                         "_myUseCleanedVersion": true,
-                        "_myVRDirectionReferenceType": "head"
+                        "_myVRDirectionReferenceType": "head",
+                        "_myFlyEnabled": true,
+                        "_myMinAngleToFlyUpNonVR": 90.0,
+                        "_myMinAngleToFlyDownNonVR": 90.0,
+                        "_myMinAngleToFlyUpVR": 90.0,
+                        "_myMinAngleToFlyDownVR": 90.0,
+                        "_myMinAngleToFlyRight": 90.0
                     }
                 }
             ],

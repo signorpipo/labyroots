@@ -214,8 +214,10 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
                 params.myDetectionParams.myGroundAngleToIgnoreUpward = this._myCollisionCheckParamsMovement.myGroundAngleToIgnore;
                 params.myDetectionParams.myMustBeOnGround = true;
 
-                params.myDetectionParams.myTeleportBlockLayerFlags.setAllFlagsActive(true);
-                params.myDetectionParams.myTeleportFloorLayerFlags.setAllFlagsActive(true);
+                params.myDetectionParams.myTeleportBlockLayerFlags.setFlagActive(0, true);
+                params.myDetectionParams.myTeleportBlockLayerFlags.setFlagActive(4, true);
+                params.myDetectionParams.myTeleportBlockLayerFlags.setFlagActive(5, true);
+                params.myDetectionParams.myTeleportFloorLayerFlags.copy(params.myDetectionParams.myTeleportBlockLayerFlags);
 
                 params.myDetectionParams.myTeleportFeetPositionMustBeVisible = false;
                 params.myDetectionParams.myTeleportHeadPositionMustBeVisible = false;
@@ -223,7 +225,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
                 params.myDetectionParams.myTeleportParableStartReferenceObject = this._myParams.myTeleportParableStartReferenceObject;
 
-                params.myDetectionParams.myVisibilityBlockLayerFlags.setAllFlagsActive(true);
+                params.myDetectionParams.myVisibilityBlockLayerFlags.copy(params.myDetectionParams.myTeleportBlockLayerFlags);
 
                 params.myVisualizerParams.myTeleportPositionObject = this._myParams.myTeleportPositionObject;
 
@@ -328,7 +330,9 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         simplifiedParams.myMaxWalkableGroundStepHeight = 0.1;
         simplifiedParams.myShouldNotFallFromEdges = false;
 
-        simplifiedParams.myHorizontalCheckBlockLayerFlags.setAllFlagsActive(true);
+        simplifiedParams.myHorizontalCheckBlockLayerFlags.setFlagActive(0, true);
+        simplifiedParams.myHorizontalCheckBlockLayerFlags.setFlagActive(4, true);
+        simplifiedParams.myHorizontalCheckBlockLayerFlags.setFlagActive(5, true);
         let physXComponents = PP.myPlayerObjects.myPlayer.pp_getComponentsHierarchy("physx");
         for (let physXComponent of physXComponents) {
             simplifiedParams.myHorizontalCheckObjectsToIgnore.pp_pushUnique(physXComponent.object, (first, second) => first.pp_equals(second));
