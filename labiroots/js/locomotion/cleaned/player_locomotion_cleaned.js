@@ -102,7 +102,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             params.myNeverResetRealRotationVR = false;
             params.myNeverResetRealHeightVR = true;
 
-            params.myResetRealOnMove = true;
+            params.myResetRealOnMove = false;
 
             params.myDebugActive = false;
 

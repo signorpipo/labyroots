@@ -34,7 +34,7 @@ WL.registerComponent("labiroots-gateway", {
         });
     },
     _loadMaze() {
-        Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup);
+        Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup, this.object);
     }
 });
 
