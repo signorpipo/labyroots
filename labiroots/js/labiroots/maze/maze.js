@@ -1,18 +1,17 @@
 LR.Maze = class Maze {
-    constructor(mazeSetup) {
-        // carica il maze in una matrice fatta di cell
-
+    constructor(mazeSetup, parent) {
         this._myDefaultCellSize = 2;
 
         this._myCellSize = mazeSetup.myCellSize;
         this._myCells = [];
         this._myTopLeftPosition = PP.vec3_create();
+        this._myMazeObjectsParent = parent.pp_addObject();
 
         this.createCells(mazeSetup);
     }
 
     createCells(mazeSetup) {
-        //compute top left position
+        this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
         let grid = mazeSetup.myGrid;
 
@@ -24,8 +23,8 @@ LR.Maze = class Maze {
                 let intValue = parseInt(value);
                 let mazeItemType = intValue;
                 let fruits = 0;
-                if (intValue >= 50) {
-                    mazeItemType = Math.floor(intValue / 10);
+                if (intValue >= 60) {
+                    mazeItemType = Math.floor(intValue / 10) * 10;
                     fruits = intValue % 10;
                 }
 
@@ -36,14 +35,57 @@ LR.Maze = class Maze {
                 cell.myFruits = fruits;
 
                 cell.myCellPosition.vec3_copy(this._myTopLeftPosition);
-                cell.myCellPosition.vec3_add([-((this._myCellSize / 2) + i * this._myCellSize), 0, ((this._myCellSize / 2) + j * this._myCellSize)], cell.myCellPosition);
+                cell.myCellPosition.vec3_add([-((this._myCellSize / 2) + j * this._myCellSize), 0, -((this._myCellSize / 2) + i * this._myCellSize)], cell.myCellPosition);
 
                 this._myCells[i][j] = cell;
             }
         }
     }
 
+    computeTopLeftPosition(mazeSetup) {
+        let row = mazeSetup.myGrid.length;
+        let column = mazeSetup.myGrid[0].length;
+
+        let width = column * this._myCellSize;
+        let depth = row * this._myCellSize;
+
+        let leftPosition = Math.floor(width / 2);
+        leftPosition += leftPosition % 2;
+
+        let topPosition = Math.floor(depth / 2);
+        topPosition += topPosition % 2;
+
+        return [leftPosition, 0, topPosition];
+    }
+
     buildMaze() {
+        let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
+
+        let totalWalls = 0;
+        for (let i = 0; i < this._myCells.length; i++) {
+            let row = this._myCells[i];
+            for (let j = 0; j < row.length; j++) {
+                let cell = row[j];
+
+                if (cell.myStaticMazeItemType != LR.MazeItemType.NONE) {
+                    let cellItems = mazeItems.pp_getObjectByNameChildren("" + cell.myStaticMazeItemType);
+                    if (cellItems != null) {
+                        let randomChild = Math.pp_randomPick(cellItems.pp_getChildren());
+                        if (randomChild != null) {
+                            let objectToSpawn = randomChild.pp_clone();
+                            objectToSpawn.pp_setActive(true);
+                            objectToSpawn.pp_setParent(this._myMazeObjectsParent);
+                            objectToSpawn.pp_setPosition(cell.myCellPosition);
+                            totalWalls += 1;
+                            if (cell.myFruits > 0) {
+                                // get tree component and set fruits
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         // a inizio partita va a creare tutte le mesh e le physx del gioco
         // questo non viene più ricaricato
         // muri, radicione, radici muro, il cuore, l'alberone, alberi umani
