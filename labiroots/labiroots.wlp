@@ -3756,7 +3756,23 @@
         },
         "036fdb68-5fb9-40cb-a9d9-c123861a3141": {
             "name": "1",
-            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc",
+            "translation": [
+                -45.1697311,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "d951cab5-9d18-4840-97f1-081aa9b05cff": {
             "name": "Pivot",
@@ -3798,7 +3814,23 @@
         },
         "0a23cb7e-dfa0-4f88-a3e3-11fc9b1fb880": {
             "name": "2",
-            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc",
+            "translation": [
+                -22.7027454,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "8d9c3a64-c5c7-443f-965e-a7fe99e96ea9": {
             "name": "Pivot",
@@ -3882,7 +3914,23 @@
         },
         "243c9c58-841c-49e4-9361-432311c7393d": {
             "name": "4",
-            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc",
+            "translation": [
+                21.0011367,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "f7eac7bc-9111-4439-9e37-ff47e32982a4": {
             "name": "Pivot",
@@ -3924,7 +3972,23 @@
         },
         "a118fcc4-be9e-418e-8c38-ec6613b24fc6": {
             "name": "5",
-            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc"
+            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc",
+            "translation": [
+                39.3929252,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "456350e3-c528-4d30-8f02-6a73ca4be216": {
             "name": "Pivot",
@@ -4269,19 +4333,22 @@
             "link": {
                 "name": "AlberoGrosso_fase3.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
-            }
+            },
+            "compress": false
         },
         "8c9704c3-5f62-4e05-ae92-15acf4e2f982": {
             "link": {
                 "name": "AlberoGrosso_fase4.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase4.png"
-            }
+            },
+            "compress": false
         },
         "981534ae-abe1-4192-a781-3ec615a49c87": {
             "link": {
                 "name": "AlberoGrosso_fase5.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase5.png"
-            }
+            },
+            "compress": false
         }
     },
     "materials": {
