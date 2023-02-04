@@ -55,6 +55,8 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
     let directionReferenceTransformQuat = PP.quat2_create();
     return function update(dt) {
+        this._myParams.myMaxSpeed = Global.mySetup.myLocomotionSetup.mySpeed;
+
         playerUp = this._myParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
 
         headMovement.vec3_zero();

@@ -66,17 +66,19 @@ WL.registerComponent('player-locomotion', {
         this._myStartCounter = 1;
     },
     update(dt) {
-        if (this._myStartCounter > 0) {
-            this._myStartCounter--;
-            if (this._myStartCounter == 0) {
-                this._myPlayerLocomotion.start();
+        if (Global.myReady) {
+            if (this._myStartCounter > 0) {
+                this._myStartCounter--;
+                if (this._myStartCounter == 0) {
+                    this._myPlayerLocomotion.start();
 
-                Global.myPlayer = this._myPlayerLocomotion.myPlayerTransformManager;
+                    Global.myPlayer = this._myPlayerLocomotion.myPlayerTransformManager;
+                }
+            } else {
+                _myTotalRaycasts = 0; // #TODO debug stuff, remove later
+
+                this._myPlayerLocomotion.update(dt);
             }
-        } else {
-            _myTotalRaycasts = 0; // #TODO debug stuff, remove later
-
-            this._myPlayerLocomotion.update(dt);
         }
 
         //_myTotalRaycastsMax = Math.max(_myTotalRaycasts, _myTotalRaycastsMax);
