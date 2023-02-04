@@ -295,7 +295,11 @@ require('./locomotion/cleaned/player_transform_manager_cleaned');
 
 //LABIROOTS
 
-require('./labiroots/global');
+require('./labiroots/labiroots_gateway');
+
 require('./labiroots/json/file_manager');
-require('./labiroots/json/load_setup');
+
+require('./labiroots/maze/maze');
+require('./labiroots/maze/maze_item_type');
+
 require('./labiroots/test/test');
