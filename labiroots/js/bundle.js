@@ -301,3 +301,5 @@ require('./labiroots/json/file_manager');
 
 require('./labiroots/maze/maze');
 require('./labiroots/maze/maze_item_type');
+
+require('./labiroots/test/test');
