@@ -66,9 +66,20 @@
                 }
             ],
             "translation": [
-                -1.0,
+                0.0,
                 0.0,
                 0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
             ]
         },
         "20": {
@@ -1398,63 +1409,6 @@
                 1.0
             ]
         },
-        "1844287c-74ee-4256-a78a-98b99d410308": {
-            "name": "1",
-            "parent": "2865c608-b60d-452c-bc10-74ea8b3b0dbf",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "components": [
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ]
-        },
-        "c53cc593-cb27-45db-921d-d8486ebaf8bf": {
-            "name": "BigTreeHeart",
-            "parent": "1844287c-74ee-4256-a78a-98b99d410308",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.9325413,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
         "f4eacf1c-4f45-4c9c-807b-9492976e6bf9": {
             "name": "Light 2",
             "parent": "28",
@@ -1574,46 +1528,6 @@
                 1.0
             ]
         },
-        "4f3e377e-8908-4b8e-9325-c5530d11ea61": {
-            "name": "10",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "c9c1811e-ba5b-4647-aae7-e0094753ae5b": {
-            "name": "11",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
         "5b8043c8-317e-4d38-97dd-abe68b2dcedc": {
             "name": "20",
             "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
@@ -1636,7 +1550,23 @@
         },
         "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c": {
             "name": "22",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -17.628477,
+                1.041174,
+                6.7526855
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "b22da876-d3b3-4f3f-ada3-c2b108bf3f53": {
             "name": "23",
@@ -2831,184 +2761,9 @@
             "name": "34",
             "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
         },
-        "48e162be-66dd-4ad0-b174-266017765b41": {
-            "name": "1",
-            "parent": "c9c1811e-ba5b-4647-aae7-e0094753ae5b",
-            "translation": [
-                -13.4632663,
-                0.0,
-                -8.8635368
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "fd5e8476-9517-4d6e-a3e3-c910416f19b8": {
-            "name": "Physx",
-            "parent": "48e162be-66dd-4ad0-b174-266017765b41",
-            "components": [
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.5,
-                                1.375,
-                                1.5
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true,
-                        "groups": 1,
-                        "block": 14
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                1.375,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "eea26e45-0adc-4d74-a44f-7c4ad337cb7b": {
-            "name": "1",
-            "parent": "4f3e377e-8908-4b8e-9325-c5530d11ea61",
-            "translation": [
-                -13.4632663,
-                0.0,
-                -8.8635368
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "10ffb650-3c48-418d-9770-71a1e9df0907": {
-            "name": "Physx",
-            "parent": "eea26e45-0adc-4d74-a44f-7c4ad337cb7b",
-            "components": [
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.5,
-                                1.375,
-                                1.5
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true,
-                        "groups": 1,
-                        "block": 14
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                1.375,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "ec176b41-f3f5-46fa-8c4f-298d7490c57b": {
-            "name": "1",
-            "parent": "2865c608-b60d-452c-bc10-74ea8b3b0dbf",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ],
-            "components": [
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ]
-        },
-        "05226693-ea48-4302-83d5-c288b8087fd6": {
-            "name": "BigTreeHeart",
-            "parent": "ec176b41-f3f5-46fa-8c4f-298d7490c57b",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.9325413,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
         "28ba2e58-02f6-4050-a32d-b9623b0f0e4e": {
-            "name": "1",
-            "parent": "2865c608-b60d-452c-bc10-74ea8b3b0dbf",
+            "name": "2",
+            "parent": "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c",
             "translation": [
                 0.0,
                 0.0,
@@ -3032,44 +2787,15 @@
                         "_myKeepUp": true
                     }
                 }
-            ]
-        },
-        "9930e825-1109-4a6d-86b6-b448fb8fc1cd": {
-            "name": "BigTreeHeart",
-            "parent": "28ba2e58-02f6-4050-a32d-b9623b0f0e4e",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.9325413,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
             ]
         },
         "0185bd0a-e47f-4469-bd01-3306e5fc00fb": {
             "name": "1",
             "parent": "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c",
             "translation": [
-                -6.9535331,
                 0.0,
-                -22.6743545
+                0.0,
+                0.0
             ],
             "rotation": [
                 0.0,
@@ -3089,35 +2815,6 @@
                         "_myKeepUp": true
                     }
                 }
-            ]
-        },
-        "76a3fde4-d0bd-48d4-8685-e08b6768023e": {
-            "name": "BigTreeHeart",
-            "parent": "0185bd0a-e47f-4469-bd01-3306e5fc00fb",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.9325413,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
             ]
         },
         "2a4a5671-d123-46c2-ae27-e60ece05d1f9": {
@@ -3417,13 +3114,17 @@
                 1.0
             ]
         },
-        "8beff602-732c-4a11-bb75-01660cb142eb": {
-            "name": "1",
-            "parent": "5b8043c8-317e-4d38-97dd-abe68b2dcedc",
+        "13035879-c1cb-471e-9b0a-86ab5852b386": {
+            "name": "Test",
+            "parent": "8c53907c-64f8-49b8-8420-7772515dc599"
+        },
+        "8a7d4785-4e82-4e99-a276-b81fb6aea3cb": {
+            "name": "3",
+            "parent": "3bcf8e53-2849-4540-a1dc-ba7b3e5b2e7c",
             "translation": [
-                -6.9535331,
                 0.0,
-                -57.3694267
+                0.0,
+                0.0
             ],
             "rotation": [
                 0.0,
@@ -3445,80 +3146,35 @@
                 }
             ]
         },
-        "2914b9f3-f49e-4033-bc32-afcabe237b0f": {
-            "name": "BigTreeHeart",
-            "parent": "8beff602-732c-4a11-bb75-01660cb142eb",
+        "78b73781-11a6-4a9e-b9fc-e8b64fcfe379": {
+            "name": "BigTreeRoots_Fase2",
+            "parent": "0185bd0a-e47f-4469-bd01-3306e5fc00fb",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "1ea5dfb0-052f-4490-a415-47416cef570a"
+                        "material": "eda81209-f334-4b33-a08e-5640069eef56"
+                    }
+                }
+            ]
+        },
+        "d60a6a47-5d62-48af-9f56-c5faa9aaae44": {
+            "name": "BigTreeRoots_Fase1",
+            "parent": "28ba2e58-02f6-4050-a32d-b9623b0f0e4e",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "ca9f7080-051b-4906-b63e-252dd4d6c887"
                     }
                 }
             ],
             "translation": [
-                0.0,
-                0.9325413,
+                -4.7983188,
+                -0.1036615,
                 0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "bdebd8c0-e97f-4ebb-b06e-c799e293471f": {
-            "name": "Cube",
-            "parent": "eea26e45-0adc-4d74-a44f-7c4ad337cb7b",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p1",
-                        "material": "32"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                1.7878524,
-                -5.5781364
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "496fe72b-cbed-4578-8dd9-a495bdbd4bdf": {
-            "name": "Cone",
-            "parent": "48e162be-66dd-4ad0-b174-266017765b41",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p3",
-                        "material": "144"
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                2.1997866,
-                -3.3880195
             ],
             "rotation": [
                 0.0,
@@ -3692,12 +3348,6 @@
                 "file": "assets\\textures\\Trees\\60.png"
             }
         },
-        "5ffc1b6c-1ba6-496b-bc12-0242dfc91713": {
-            "link": {
-                "name": "21.png",
-                "file": "assets\\textures\\Trees\\21.png"
-            }
-        },
         "10a9a95b-7bad-4621-ae7c-b20fa6ca0802": {
             "link": {
                 "name": "AngoloTexture.png",
@@ -3715,6 +3365,18 @@
                 "name": "Frutto_Rosso.png",
                 "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
             }
+        },
+        "ec8f0cfe-b4d8-49d0-9be9-4889afc65f58": {
+            "link": {
+                "name": "22_2.png",
+                "file": "assets\\textures\\Trees\\22_2.png"
+            }
+        },
+        "92accdea-b738-40c3-bf4c-3a69f0e2ce7f": {
+            "link": {
+                "name": "22_1.png",
+                "file": "assets\\textures\\Trees\\22_1.png"
+            }
         }
     },
     "images": {
@@ -3728,13 +3390,6 @@
             "link": {
                 "name": "60.png",
                 "file": "assets\\textures\\Trees\\60.png"
-            },
-            "compress": false
-        },
-        "8703b861-84a6-4d79-8ae0-418d1b921cd3": {
-            "link": {
-                "name": "21.png",
-                "file": "assets\\textures\\Trees\\21.png"
             },
             "compress": false
         },
@@ -3756,6 +3411,24 @@
             "link": {
                 "name": "Frutto_Rosso.png",
                 "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
+            },
+            "compress": false
+        },
+        "fe795d34-8022-4300-a08a-2f1384c4be77": {
+            "link": {
+                "name": "22_2.png",
+                "file": "assets\\textures\\Trees\\22_2.png"
+            },
+            "compress": false,
+            "maxSize": [
+                2007,
+                2007
+            ]
+        },
+        "d518e846-00ee-4160-8e11-d264b1ef6a84": {
+            "link": {
+                "name": "22_1.png",
+                "file": "assets\\textures\\Trees\\22_1.png"
             },
             "compress": false
         }
@@ -3906,26 +3579,6 @@
                 "diffuseTexture": "ab4b7097-f68f-4d2f-8894-f082c2155c8b"
             }
         },
-        "1ea5dfb0-052f-4490-a415-47416cef570a": {
-            "name": "21",
-            "pipeline": "14",
-            "Phong": {
-                "ambientColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "diffuseColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "ambientFactor": 0.5,
-                "diffuseTexture": "5ffc1b6c-1ba6-496b-bc12-0242dfc91713"
-            }
-        },
         "055feb5e-67fb-4f9d-9057-dbac9abbfa4c": {
             "name": "AngoloLargo",
             "pipeline": "14",
@@ -3968,6 +3621,46 @@
                     0.0,
                     0.0
                 ]
+            }
+        },
+        "ca9f7080-051b-4906-b63e-252dd4d6c887": {
+            "name": "BigTreeRoots_Fase1",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "92accdea-b738-40c3-bf4c-3a69f0e2ce7f",
+                "ambientFactor": 0.5,
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "eda81209-f334-4b33-a08e-5640069eef56": {
+            "name": "BigTreeRoots_Fase2",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "ec8f0cfe-b4d8-49d0-9be9-4889afc65f58"
             }
         }
     },
@@ -4302,7 +3995,9 @@
         "assets/textures/Walls/test_texture.fbx",
         "assets/textures/Walls/AngoloTexture.png",
         "assets/textures/Fruits/Frutto_Blu.png",
-        "assets/textures/Fruits/Frutto_Rosso.png"
+        "assets/textures/Fruits/Frutto_Rosso.png",
+        "assets/textures/Trees/22_2.png",
+        "assets/textures/Trees/22_1.png"
     ],
     "fonts": {
         "147": {
