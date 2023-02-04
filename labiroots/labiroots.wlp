@@ -1633,135 +1633,11 @@
         },
         "405d3b76-555d-4aee-a644-60e49ab8a3ab": {
             "name": "Fruits",
-            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598"
-        },
-        "c9fb61ae-8b59-4d08-892f-585800456fa4": {
-            "name": "1",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
-        },
-        "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
-            "name": "2",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
-        },
-        "0b87ee6f-3030-4c65-960f-c845576fb3c0": {
-            "name": "Grabber",
-            "parent": "99",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "pp-grabber-hand"
-                },
-                {
-                    "type": "physx",
-                    "physx": {
-                        "sphere": {
-                            "radius": 0.075
-                        },
-                        "gravity": false,
-                        "trigger": true,
-                        "allowSimulation": false,
-                        "simulate": true,
-                        "kinematic": true,
-                        "groups": 128,
-                        "allowQuery": true
-                    }
-                }
-            ],
+            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
             "translation": [
-                0.0,
-                0.0,
-                0.075
+                -8.2132015,
+                1.5,
+                -29.6566562
             ],
             "rotation": [
                 0.0,
@@ -1775,108 +1651,295 @@
                 1.0
             ]
         },
-        "5a2cbd25-c658-4058-9bc6-d0b28ba83bf2": {
-            "name": "Grabber",
-            "parent": "107",
+        "c9fb61ae-8b59-4d08-892f-585800456fa4": {
+            "name": "1",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+        },
+        "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
+            "name": "2",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
+            "translation": [
+                -2.7127923,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "7925b204-a4a0-4206-9a1d-e001aba3ea15": {
+            "name": "FruttoBlu",
+            "parent": "c9fb61ae-8b59-4d08-892f-585800456fa4",
             "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
                 {
-                    "type": "pp-grabber-hand",
-                    "pp-grabber-hand": {
-                        "_myHandedness": "right"
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
                     }
                 },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "gravity": true,
+                        "block": 255,
+                        "groups": 4
+                    }
+                },
+                {
+                    "type": "pp-grabbable"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "292dd504-80bf-417e-b1f2-a0c3ea3c899c": {
+            "name": "FruttoBlu",
+            "parent": "de34d2d5-99ee-4cb2-baeb-2055d066e9a2",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
+                    }
+                },
+                {
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "groups": 4
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                -0.0325995,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "bdeae7da-70b0-4b89-9417-c27259d2212c": {
+            "name": "32",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "775edc5b-9cdf-42fd-af04-a48f21b60d6b": {
+            "name": "33",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "3843a201-9085-4a89-899c-df83c1fae845": {
+            "name": "35",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "75f7f216-69f8-4507-b655-ebb98a94dc27": {
+            "name": "35",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "8ecc3ffd-8fc0-4eaf-ae92-729d3285fff9": {
+            "name": "70",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "14aa8b49-0ed3-436e-a829-5b5a94f5e3d3": {
+            "name": "80",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "3ddc2a73-2997-48c8-a596-1f8c758fa456": {
+            "name": "90",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "e1662ae0-6719-4fd0-ac3a-9a27714ec576": {
+            "name": "1",
+            "parent": "8ecc3ffd-8fc0-4eaf-ae92-729d3285fff9",
+            "translation": [
+                -7.3603329,
+                0.0,
+                -18.0545005
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "648a3a22-3d59-4658-933a-182f4e03102d": {
+            "name": "AlberoUmano1",
+            "parent": "e1662ae0-6719-4fd0-ac3a-9a27714ec576",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "translation": [
+                0.0001487,
+                0.9420548,
+                -0.0000648
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "28123506-56bf-4c94-aca3-78970b86de89": {
+            "name": "1",
+            "parent": "14aa8b49-0ed3-436e-a829-5b5a94f5e3d3",
+            "translation": [
+                -7.3603329,
+                0.0,
+                -18.0545005
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "e81ae8a9-3d85-4bbb-80b4-86be3730b5e8": {
+            "name": "AlberoUmano1",
+            "parent": "28123506-56bf-4c94-aca3-78970b86de89",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "translation": [
+                0.0001487,
+                0.9420548,
+                -0.0000648
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "04577bc4-2b59-4f86-a157-beff38d4397d": {
+            "name": "1",
+            "parent": "3ddc2a73-2997-48c8-a596-1f8c758fa456",
+            "translation": [
+                -7.3603329,
+                0.0,
+                -18.0545005
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "af8d8686-fa82-40a4-8632-01d91c2030aa": {
+            "name": "AlberoUmano1",
+            "parent": "04577bc4-2b59-4f86-a157-beff38d4397d",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "translation": [
+                0.0001487,
+                0.9420548,
+                -0.0000648
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "b8418728-9728-46c6-8041-dedac6ef6fd4": {
+            "name": "Grabber",
+            "parent": "99",
+            "components": [
                 {
                     "type": "physx",
                     "physx": {
@@ -1886,9 +1949,41 @@
                         "gravity": false,
                         "trigger": true,
                         "allowSimulation": false,
-                        "simulate": true,
                         "kinematic": true,
                         "groups": 128
+                    }
+                },
+                {
+                    "type": "pp-grabber-hand"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.075
+            ]
+        },
+        "043d9aad-ab79-4d70-97b5-5e0f8a3728f4": {
+            "name": "Grabber",
+            "parent": "107",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "kinematic": true,
+                        "groups": 128
+                    }
+                },
+                {
+                    "type": "pp-grabber-hand",
+                    "pp-grabber-hand": {
+                        "_myHandedness": "right"
                     }
                 }
             ],
@@ -2080,6 +2175,18 @@
                 "name": "AngoloTexture.png",
                 "file": "assets\\textures\\Walls\\AngoloTexture.png"
             }
+        },
+        "988a539e-261a-4ff9-b16e-088f14e69690": {
+            "link": {
+                "name": "Frutto_Blu.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Blu.png"
+            }
+        },
+        "9ccf1cf5-0688-4f66-afa3-cf43aefbb342": {
+            "link": {
+                "name": "Frutto_Rosso.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
+            }
         }
     },
     "images": {
@@ -2107,6 +2214,20 @@
             "link": {
                 "name": "AngoloTexture.png",
                 "file": "assets\\textures\\Walls\\AngoloTexture.png"
+            },
+            "compress": false
+        },
+        "ae52868a-d640-474a-bf27-098700df42bd": {
+            "link": {
+                "name": "Frutto_Blu.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Blu.png"
+            },
+            "compress": false
+        },
+        "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
+            "link": {
+                "name": "Frutto_Rosso.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
             },
             "compress": false
         }
@@ -2289,12 +2410,36 @@
             "link": {
                 "name": "lambert1",
                 "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "pipeline": "14",
+            "name": "FruttoBlu",
+            "Phong": {
+                "ambientFactor": 0.5,
+                "diffuseTexture": "988a539e-261a-4ff9-b16e-088f14e69690"
             }
         },
         "d3677709-03ae-49e6-86ac-95753a1d654e": {
             "link": {
                 "name": "lambert1",
                 "file": "assets\\textures\\Walls\\test_texture.fbx"
+            },
+            "pipeline": "14",
+            "name": "FruttoRosso",
+            "Phong": {
+                "diffuseTexture": "9ccf1cf5-0688-4f66-afa3-cf43aefbb342",
+                "ambientFactor": 0.5,
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "specularColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                ]
             }
         }
     },
@@ -2445,7 +2590,8 @@
             },
             "features": {
                 "ALPHA_MASKED": true
-            }
+            },
+            "doubleSided": true
         },
         "16": {
             "link": {
@@ -2625,7 +2771,9 @@
         "assets/textures/Trees/60.png",
         "assets/textures/Trees/21.png",
         "assets/textures/Walls/test_texture.fbx",
-        "assets/textures/Walls/AngoloTexture.png"
+        "assets/textures/Walls/AngoloTexture.png",
+        "assets/textures/Fruits/Frutto_Blu.png",
+        "assets/textures/Fruits/Frutto_Rosso.png"
     ],
     "fonts": {
         "147": {
