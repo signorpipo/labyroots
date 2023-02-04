@@ -72,6 +72,8 @@ if (WL && WL.Object) {
             "staticFriction": this.staticFriction,
         });
 
+        clonedComponent.backupExtents = this.extents.vec3_clone();
+
         clonedComponent.active = this.active;
 
         return clonedComponent;

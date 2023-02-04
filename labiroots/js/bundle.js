@@ -306,7 +306,8 @@ require('./labiroots/cauldron/billboard_player');
 require('./labiroots/cauldron/story');
 
 require('./labiroots/player/transformation');
-
 require('./labiroots/player/stage_switch');
+require('./labiroots/player/mouth');
+require('./labiroots/player/fruit');
 
 require('./labiroots/test/test');

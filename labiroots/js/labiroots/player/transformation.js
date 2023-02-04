@@ -1,6 +1,7 @@
 WL.registerComponent('transformation', {
 }, {
     init: function () {
+        Global.myTransformation = this;
     },
     start: function () {
         this._myStarted = false;
@@ -57,7 +58,28 @@ WL.registerComponent('transformation', {
         }
 
         this._resetTransformation();
+    },
+    addStage(full = false) {
+        if (Global.myStage < this._myTransformationTimersSetup.length - 1) {
+            if (full) {
+                Global.myStage = Math.max(0, this._myTransformationTimersSetup.length - 2);
+                this._nextStage();
+            } else {
+                this._nextStage();
+            }
+        }
+    },
+    removeStage(full = false) {
+        if (Global.myStage >= 0) {
+            if (full) {
+                Global.myStage = -1;
+                this._nextStage();
+            } else {
+                Global.myStage = Math.max(-1, Global.myStage - 2);
+                this._nextStage();
+            }
+        }
     }
 });
 
-Global
+Global.myTransformation = null;

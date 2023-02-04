@@ -5,7 +5,8 @@ WL.registerComponent('story', {
     },
     start: function () {
         this._myStarted = false;
-        this._myTimer = new PP.Timer(1);
+        this._myResetPhysx = true;
+        this._myTimer = new PP.Timer(2);
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -15,6 +16,28 @@ WL.registerComponent('story', {
                 }
             }
         } else {
+            if (this._myResetActive) {
+                this._myResetActive = false;
+                let physxs = WL.scene.pp_getComponents("physx");
+                for (let physx of physxs) {
+                    physx.active = true;
+                }
+            }
+
+            if (this._myResetPhysx) {
+                this._myResetPhysx = false;
+                this._myResetActive = true;
+
+                let physxs = WL.scene.pp_getComponents("physx");
+                for (let physx of physxs) {
+                    if (physx.backupExtents != null) {
+                        physx.extents = physx.backupExtents;
+                        //physx.backupExtents.vec3_error();
+                        physx.backupExtents = null;
+                    }
+                    physx.active = false;
+                }
+            }
             if (this._myTimer.isRunning()) {
                 this._myTimer.update(dt);
                 if (this._myTimer.isDone()) {
