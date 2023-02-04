@@ -45,13 +45,13 @@ require('./pp/audio/audio_player');
 require('./pp/audio/audio_setup');
 require('./pp/audio/mute_everything');
 
+require('./pp/audio/howler/howler_audio_player');
+
 //	CAULDRON
 require('./pp/cauldron/benchmarks/max_physx');
 require('./pp/cauldron/benchmarks/max_visible_triangles');
 
-require('./pp/cauldron/cauldron/number_over_value');
 require('./pp/cauldron/cauldron/object_pool_manager');
-require('./pp/cauldron/cauldron/physx_collision_collector');
 require('./pp/cauldron/cauldron/save_manager');
 require('./pp/cauldron/cauldron/timer');
 
@@ -67,8 +67,8 @@ require('./pp/cauldron/fsm/state');
 require('./pp/cauldron/fsm/transition');
 require('./pp/cauldron/fsm/states/timer_state');
 
-require('./pp/cauldron/utils/ca_utils');
 require('./pp/cauldron/utils/color_utils');
+require('./pp/cauldron/utils/material_utils');
 require('./pp/cauldron/utils/mesh_utils');
 require('./pp/cauldron/utils/save_utils');
 require('./pp/cauldron/utils/text_utils');
@@ -78,6 +78,7 @@ require('./pp/cauldron/utils/browser_utils');
 require('./pp/cauldron/physics/physics_utils');
 require('./pp/cauldron/physics/physics_raycast_data');
 require('./pp/cauldron/physics/physics_layer_flags');
+require('./pp/cauldron/physics/physics_collision_collector');
 
 require('./pp/cauldron/visual/visual_manager');
 
@@ -101,10 +102,72 @@ require('./pp/debug/components/debug_transform_component');
 require('./pp/debug/components/debug_manager_component');
 
 //	GAMEPLAY
-require('./pp/gameplay/cauldron/direction_2D_to_3D_converter');
 
+//    CAULDRON
+require('./pp/gameplay/cauldron/cauldron/direction_2D_to_3D_converter');
+require('./pp/gameplay/cauldron/cauldron/number_over_value');
+
+require('./pp/gameplay/cauldron/player/player_head_controller');
+require('./pp/gameplay/cauldron/player/player_occlusion');
+require('./pp/gameplay/cauldron/player/components/player_head_controller_component');
+require('./pp/gameplay/cauldron/player/components/player_occlusion_component');
+
+//    CHARACTER CONTROLLER
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_params');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_movement_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_teleport_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_position_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/horizontal_collision_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/horizontal_collision_sliding');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/horizontal_collision_movement_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/horizontal_collision_position_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/vertical_collision_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/collision_surface_check');
+require('./pp/gameplay/character_controller/collision/collision_check_bridge/collision_check_bridge');
+
+require('./pp/gameplay/character_controller/collision/character_collider_setup');
+require('./pp/gameplay/character_controller/collision/character_collider_utils');
+require('./pp/gameplay/character_controller/collision/character_collision_results');
+require('./pp/gameplay/character_controller/collision/character_collision_system');
+require('./pp/gameplay/character_controller/collision/components/character_collision_system_component');
+
+require('./pp/gameplay/character_controller/character_controller');
+require('./pp/gameplay/character_controller/synced_character_controller');
+require('./pp/gameplay/character_controller/character_controller_utils');
+
+require('./pp/gameplay/character_controller/components/character_controller_component');
+
+require('./pp/gameplay/character_controller/player/player_character_controller');
+require('./pp/gameplay/character_controller/player/player_head_character_controller');
+require('./pp/gameplay/character_controller/player/player_hand_character_controller');
+
+require('./pp/gameplay/character_controller/player/components/player_character_controller_component');
+require('./pp/gameplay/character_controller/player/components/player_head_character_controller_component');
+require('./pp/gameplay/character_controller/player/components/player_hand_character_controller_component');
+
+require('./pp/gameplay/character_controller/character_controller_utils');
+
+//    GRAB & THROW
 require('./pp/gameplay/grab_throw/grabbable');
 require('./pp/gameplay/grab_throw/grabber_hand');
+
+//    LOCOMOTION
+require('./pp/gameplay/locomotion/components/global_gravity');
+
+require('./pp/gameplay/locomotion/player/player_locomotion_smooth');
+require('./pp/gameplay/locomotion/player/player_locomotion_rotate');
+require('./pp/gameplay/locomotion/player/player_locomotion_gravity');
+
+require('./pp/gameplay/locomotion/player/teleport/player_locomotion_teleport');
+
+require('./pp/gameplay/locomotion/player/components/player_locomotion_teleport_component');
+require('./pp/gameplay/locomotion/player/components/player_locomotion_smooth_component');
+require('./pp/gameplay/locomotion/player/components/player_locomotion_rotate_component');
+require('./pp/gameplay/locomotion/player/components/player_locomotion_gravity_component');
+
+//    UTILS
+require('./pp/gameplay/utils/ca_utils');
 
 //	INPUT
 require('./pp/input/cauldron/finger_cursor');
@@ -203,3 +266,29 @@ require('./pp/tool/easy_tune/components/easy_tune_import_variables');
 require('./pp/tool/widget_frame/widget_frame_setup');
 require('./pp/tool/widget_frame/widget_frame_ui');
 require('./pp/tool/widget_frame/widget_frame');
+
+//LOCOMOTION
+
+require('./locomotion/locomotion_utils');
+require('./locomotion/player_head_manager');
+require('./locomotion/player_transform_manager');
+require('./locomotion/player_locomotion_rotate');
+require('./locomotion/player_locomotion_movement');
+require('./locomotion/player_locomotion_smooth');
+require('./locomotion/player_obscure_manager');
+require('./locomotion/player_locomotion');
+require('./locomotion/player_locomotion_component');
+
+require('./locomotion/teleport/player_locomotion_teleport_parable');
+require('./locomotion/teleport/player_locomotion_teleport_state');
+require('./locomotion/teleport/player_locomotion_teleport_detection_visualizer');
+require('./locomotion/teleport/player_locomotion_teleport_detection_state');
+require('./locomotion/teleport/player_locomotion_teleport_detection_state_visibility');
+require('./locomotion/teleport/player_locomotion_teleport_teleport_state');
+require('./locomotion/teleport/player_locomotion_teleport_teleport_blink_state');
+require('./locomotion/teleport/player_locomotion_teleport_teleport_shift_state');
+require('./locomotion/teleport/player_locomotion_teleport');
+
+require('./locomotion/cleaned/player_locomotion_cleaned');
+require('./locomotion/cleaned/player_locomotion_smooth_cleaned');
+require('./locomotion/cleaned/player_transform_manager_cleaned');

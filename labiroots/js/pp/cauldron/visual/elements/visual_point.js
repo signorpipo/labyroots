@@ -3,7 +3,7 @@ let visualParams = new PP.VisualPointParams();
 visualParams.myPosition.vec3_copy(position);
 visualParams.myRadius = 0.005;
 visualParams.myMaterial = PP.myDefaultResources.myMaterials.myFlatOpaque.clone();
-visualParams.myMaterial.color = [1, 1, 1, 1];
+visualParams.myMaterial.color = PP.vec4_create(1, 1, 1, 1);
 PP.myVisualManager.draw(visualParams);
 
 or
@@ -14,7 +14,7 @@ let visualPoint = new PP.VisualPoint(visualParams);
 PP.VisualPointParams = class VisualPointParams {
 
     constructor() {
-        this.myPosition = [0, 0, 0];
+        this.myPosition = PP.vec3_create();
         this.myRadius = 0.005;
 
         this.myMesh = null;         // the mesh is scaled along up axis, null means it will default on PP.myDefaultResources.myMeshes.mySphere
@@ -22,7 +22,8 @@ PP.VisualPointParams = class VisualPointParams {
         this.myMaterial = null;     // null means it will default on PP.myDefaultResources.myMaterials.myFlatOpaque
         this.myColor = null;        // if this is set and material is null, it will use the default flat opaque material with this color
 
-        this.myParent = null;       // if this is set the parent will not be the visual root anymore, the positions will be local to this object
+        this.myParent = PP.myVisualData.myRootObject;
+        this.myIsLocal = false;
 
         this.myType = PP.VisualElementType.POINT;
     }
@@ -123,6 +124,7 @@ PP.VisualPoint = class VisualPoint {
         }
 
         clonedParams.myParent = this._myParams.myParent;
+        clonedParams.myIsLocal = this._myParams.myIsLocal;
 
         let clone = new PP.VisualPoint(clonedParams);
         clone.setAutoRefresh(this._myAutoRefresh);
@@ -136,11 +138,17 @@ PP.VisualPoint = class VisualPoint {
 PP.VisualPoint.prototype._refresh = function () {
     let rotation = PP.vec3_create(0, 0, 0);
     return function _refresh() {
-        this._myPointObject.pp_setParent(this._myParams.myParent == null ? PP.myVisualData.myRootObject : this._myParams.myParent, false);
+        this._myPointObject.pp_setParent(this._myParams.myParent, false);
 
-        this._myPointObject.pp_setPositionLocal(this._myParams.myPosition);
-        this._myPointObject.pp_setRotationLocal(rotation);
-        this._myPointObject.pp_setScaleLocal(this._myParams.myRadius);
+        if (this._myParams.myIsLocal) {
+            this._myPointObject.pp_setPositionLocal(this._myParams.myPosition);
+            this._myPointObject.pp_setRotationLocal(rotation);
+            this._myPointObject.pp_setScaleLocal(this._myParams.myRadius);
+        } else {
+            this._myPointObject.pp_setPosition(this._myParams.myPosition);
+            this._myPointObject.pp_setRotation(rotation);
+            this._myPointObject.pp_setScale(this._myParams.myRadius);
+        }
 
         if (this._myParams.myMesh != null) {
             this._myPointMeshComponent.mesh = this._myParams.myMesh;

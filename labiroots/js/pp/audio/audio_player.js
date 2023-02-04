@@ -15,33 +15,47 @@ PP.AudioEvent = {
 };
 
 PP.AudioPlayer = class AudioPlayer {
-    constructor(audioSetupOrAudioFilePath) {
-        if (typeof audioSetupOrAudioFilePath === 'string') {
+    constructor(audioSetupOrAudioFilePath, createAudio = true) {
+        if (audioSetupOrAudioFilePath == null) {
+            this._myAudioSetup = new PP.AudioSetup();
+        } else if (typeof audioSetupOrAudioFilePath === 'string') {
             this._myAudioSetup = new PP.AudioSetup(audioSetupOrAudioFile);
         } else {
             this._myAudioSetup = audioSetupOrAudioFilePath.clone();
         }
 
-        this._myAudio = new Howl({
-            src: [this._myAudioSetup.myAudioFilePath],
-            loop: this._myAudioSetup.myLoop,
-            volume: this._myAudioSetup.myVolume,
-            autoplay: this._myAudioSetup.myAutoplay,
-            rate: this._myAudioSetup.myRate,
-            pool: this._myAudioSetup.myPool,
-            preload: true
-        });
+        this._myAudio = null;
 
-        this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
+        if (createAudio) {
+            this._myAudio = new Howl({
+                src: [this._myAudioSetup.myAudioFilePath],
+                loop: this._myAudioSetup.myLoop,
+                volume: this._myAudioSetup.myVolume,
+                autoplay: this._myAudioSetup.myAutoplay,
+                rate: this._myAudioSetup.myRate,
+                pool: this._myAudioSetup.myPool,
+                pos: (this._myAudioSetup.mySpatial) ? this._myAudioSetup.myPosition : null,
+                refDistance: this._myAudioSetup.myReferenceDistance,
+                preload: this._myAudioSetup.myPreload
+            });
+
+            this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
+        }
 
         this._myLastAudioID = null;
 
-        this._myCallbackMap = new Map();
+        this._myCallbacks = new Map();
         for (let eventKey in PP.AudioEvent) {
-            this._myCallbackMap.set(PP.AudioEvent[eventKey], new Map());    // Signature: callback(audioID)
+            this._myCallbacks.set(PP.AudioEvent[eventKey], new Map());    // Signature: callback(audioID)
         }
 
-        this._addListeners();
+        if (createAudio) {
+            this._addListeners();
+        }
+    }
+
+    isValid() {
+        return this._myAudio != null;
     }
 
     play() {
@@ -171,22 +185,24 @@ PP.AudioPlayer = class AudioPlayer {
     }
 
     registerAudioEventListener(audioEvent, listenerID, callback) {
-        this._myCallbackMap.get(audioEvent).set(listenerID, callback);
+        this._myCallbacks.get(audioEvent).set(listenerID, callback);
     }
 
     unregisterAudioEventListener(audioEvent, listenerID) {
-        this._myCallbackMap.get(audioEvent).delete(listenerID);
+        this._myCallbacks.get(audioEvent).delete(listenerID);
     }
 
     _addListeners() {
-        for (let eventKey in PP.AudioEvent) {
-            let event = PP.AudioEvent[eventKey];
-            this._myAudio.on(event, function (audioID) {
-                let callbacks = this._myCallbackMap.get(event);
-                for (let callback of callbacks.values()) {
-                    callback(audioID);
-                }
-            }.bind(this));
+        if (this._myAudio != null) {
+            for (let eventKey in PP.AudioEvent) {
+                let event = PP.AudioEvent[eventKey];
+                this._myAudio.on(event, function (audioID) {
+                    let callbacks = this._myCallbacks.get(event);
+                    for (let callback of callbacks.values()) {
+                        callback(audioID);
+                    }
+                }.bind(this));
+            }
         }
     }
 };

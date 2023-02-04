@@ -24,7 +24,7 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
             if (index >= 0) WL.onSceneLoaded.splice(index, 1);
         }];
 
-        this.prevHitLocationLocalToTarget = [0, 0, 0];
+        this.prevHitLocationLocalToTarget = PP.vec3_create();
 
         this.pointerId = null;
 
@@ -51,9 +51,12 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
 
         this.globalTarget = this.object.addComponent('cursor-target');
 
+        this.transformQuat = PP.quat2_create();
+        this.rotationQuat = PP.quat_create();
+        this.transformMatrix = PP.mat4_create();
         this.origin = new Float32Array(3);
         this.cursorObjScale = new Float32Array(3);
-        this.direction = [0, 0, 0];
+        this.direction = PP.vec3_create();
         this.tempQuat = new Float32Array(4);
         this.setViewComponent(this.object.getComponent("view"));
         this.isHovering = false;
@@ -196,6 +199,7 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
             if (this.hoveringObject && (this.cursorPos[0] != 0 || this.cursorPos[1] != 0 || this.cursorPos[2] != 0)) {
                 this._setCursorVisibility(true);
                 this.cursorObject.setTranslationWorld(this.cursorPos);
+                this.cursorObject.transformLocal = this.cursorObject.transformLocal.quat2_normalize(this.transformQuat);
                 this._setCursorRayTransform(this.cursorPos);
             } else {
                 if (this.visible && this.cursorRayObject) {
@@ -350,7 +354,10 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
                 this.isDown = true;
             }
         }
-        this.isRealDown = true;
+
+        if (e.inputSource.handedness == this.handedness) {
+            this.isRealDown = true;
+        }
     };
 
     _WL._componentTypes[_WL._componentTypeIndices["cursor"]].prototype.onSelectEnd = function (e) {
@@ -363,7 +370,10 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
                 this.isDown = false;
             }
         }
-        this.isRealDown = false;
+
+        if (e.inputSource.handedness == this.handedness) {
+            this.isRealDown = false;
+        }
     };
 
     _WL._componentTypes[_WL._componentTypeIndices["cursor"]].prototype.onPointerMove = function (e) {
@@ -388,10 +398,10 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
     };
 
     _WL._componentTypes[_WL._componentTypeIndices["cursor"]].prototype.onPointerDown = function (e) {
-        if (this.active) {
-            /* Don't care about secondary pointers or non-left clicks */
-            if ((this.pointerId != null && this.pointerId != e.pointerId) || e.button !== 0) return;
+        /* Don't care about secondary pointers or non-left clicks */
+        if ((this.pointerId != null && this.pointerId != e.pointerId) || e.button !== 0) return;
 
+        if (this.active) {
             const bounds = document.body.getBoundingClientRect();
             let rayHit = this.updateMousePos(e.clientX, e.clientY, bounds.width, bounds.height);
 
@@ -411,10 +421,10 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
     };
 
     _WL._componentTypes[_WL._componentTypeIndices["cursor"]].prototype.onPointerUp = function (e) {
-        if (this.active) {
-            /* Don't care about secondary pointers or non-left clicks */
-            if ((this.pointerId != null && this.pointerId != e.pointerId) || e.button !== 0) return;
+        /* Don't care about secondary pointers or non-left clicks */
+        if ((this.pointerId != null && this.pointerId != e.pointerId) || e.button !== 0) return;
 
+        if (this.active) {
             const bounds = document.body.getBoundingClientRect();
             let rayHit = this.updateMousePos(e.clientX, e.clientY, bounds.width, bounds.height);
 
@@ -533,7 +543,7 @@ if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices[
     };
 
     _WL._componentTypes[_WL._componentTypeIndices["cursor"]].prototype._isMoving = function () {
-        let hitLocationLocalToTarget = [0, 0, 0];
+        let hitLocationLocalToTarget = PP.vec3_create();
         return function _isMoving(hitLocation) {
             let isMoving = false;
 

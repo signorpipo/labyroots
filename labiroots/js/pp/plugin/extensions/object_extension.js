@@ -18,15 +18,18 @@
         - pp_getTransformQuat
         - pp_setTransformWorldMatrix
         
-    Some functions let you specify if u want them to work on the Hierarchy/Descendants/Children where:
+    Some functions let you specify if u want them to work on the Hierarchy/Descendants/Children/Self where:
+        - Self: the current object only
         - Children: direct children of the object
         - Descendants: all the children of the object, including child of child and so on 
         - Hierarchy: Descendants plus the current object
-    By default the functions work on the current object alone:
+    Examples:
         - pp_getComponent
         - pp_getComponentHierarchy
-        - pp_getComponentAmountMapDescendants
+        - pp_getComponentsAmountMapDescendants
         - pp_setActiveChildren
+        - pp_setActiveSelf
+    By default the functions work on the Hierarchy
     On some of the functions where u can specify Hierarchy/Descendants u can also specify 
     if the algorithm should explore by Breadth/Depth, example:
         - pp_getComponentHierarchyBreadth
@@ -71,10 +74,10 @@
         - pp_hasUniformScale
 
         - pp_addComponent
-        - pp_getComponent   / pp_getComponentHierarchy  / pp_getComponentDescendants  / pp_getComponentChildren
-        - pp_getComponents  / pp_getComponentsHierarchy / pp_getComponentsDescendants / pp_getComponentsChildren
+        - pp_getComponent   / pp_getComponentHierarchy  / pp_getComponentDescendants  / pp_getComponentChildren / pp_getComponentSelf
+        - pp_getComponents  / pp_getComponentsHierarchy / pp_getComponentsDescendants / pp_getComponentsChildren / pp_getComponentsSelf
 
-        - pp_setActive  / pp_setActiveSelf  / pp_setActiveHierarchy / pp_setActiveDescendants / pp_setActiveChildren
+        - pp_setActive  / pp_setActiveHierarchy / pp_setActiveDescendants / pp_setActiveChildren / pp_setActiveSelf
 
         - pp_clone      / pp_isCloneable
         
@@ -86,12 +89,13 @@
         - pp_getHierarchy / pp_getHierarchyBreadth / pp_getHierarchyDepth 
         - pp_getDescendants / pp_getDescendantsBreadth / pp_getDescendantsDepth 
         - pp_getChildren
+        - pp_getSelf
 
         - pp_addObject
         - pp_getName    / pp_setName
         - pp_getID
-        - pp_reserveObjects / pp_reserveObjectsHierarchy / pp_reserveObjectsDescendants / pp_reserveObjectsChildren
-        - pp_getComponentAmountMap / pp_getComponentAmountMapHierarchy / pp_getComponentAmountMapDescendants / pp_getComponentAmountMapChildren
+        - pp_reserveObjects / pp_reserveObjectsHierarchy / pp_reserveObjectsDescendants / pp_reserveObjectsChildren / pp_reserveObjectsSelf
+        - pp_getComponentsAmountMap / pp_getComponentsAmountMapHierarchy / pp_getComponentsAmountMapDescendants / pp_getComponentsAmountMapChildren / pp_getComponentsAmountMapSelf
         - pp_markDirty
         - pp_equals
         - pp_destroy
@@ -1802,11 +1806,11 @@ if (WL && WL.Object) {
     };
 
     WL.Object.prototype.pp_getComponent = function (type, index = 0) {
-        return this.getComponent(type, index);
+        return this.pp_getComponentHierarchy(type, index);
     };
 
-    WL.Object.prototype.pp_getComponents = function (type) {
-        return this.getComponents(type);
+    WL.Object.prototype.pp_getComponentSelf = function (type, index = 0) {
+        return this.getComponent(type, index);
     };
 
     WL.Object.prototype.pp_getComponentHierarchy = function (type, index = 0) {
@@ -1840,6 +1844,14 @@ if (WL && WL.Object) {
     WL.Object.prototype.pp_getComponentChildren = function (type, index = 0) {
         let objects = this.pp_getChildren();
         return WL.Object.pp_getComponentObjects(objects, type, index);
+    };
+
+    WL.Object.prototype.pp_getComponents = function (type) {
+        return this.pp_getComponentsHierarchy(type);
+    };
+
+    WL.Object.prototype.pp_getComponentsSelf = function (type) {
+        return this.getComponents(type);
     };
 
     WL.Object.prototype.pp_getComponentsHierarchy = function (type) {
@@ -1962,15 +1974,15 @@ if (WL && WL.Object) {
 
             this.myDeepCloneParams = new PP.DeepCloneParams(); // Used to specify if the object must be deep cloned or not, you can also override the behavior for specific components and variables
 
-            this.myExtraData = new Map(); // This map can be filled with whatever extra data the component clone function could need
+            this.myCustomParamsMap = new Map(); // This map can be filled with whatever custom paramater the component clone function could need
         }
     };
 
     PP.DeepCloneParams = class DeepCloneParams {
         constructor() {
             this._myDeepCloneObject = false;
-            this._myOverrideDeepCloneComponentMap = new Map();
-            this._myOverrideDeepCloneComponentVariableMap = new Map();
+            this._myOverrideDeepCloneComponentsMap = new Map();
+            this._myOverrideDeepCloneComponentsVariablesMap = new Map();
         }
 
         // The implementation is component dependant, not every component implements the deep clone
@@ -1981,25 +1993,25 @@ if (WL && WL.Object) {
         // This value override the deep clone object value
         // The implementation is component dependant, not every component implements the deep clone
         setDeepCloneComponent(componentName, deepClone) {
-            this._myOverrideDeepCloneComponentMap.set(componentName, deepClone);
+            this._myOverrideDeepCloneComponentsMap.set(componentName, deepClone);
         }
 
         // This value override both the deep clone object value and the deep clone component one
         // The implementation is component dependant, not every component variable override is taken into consideration
         setDeepCloneComponentVariable(componentName, variableName, deepClone) {
-            let componentMap = null;
+            let componentsVariablesMap = null;
 
-            if (!this._myOverrideDeepCloneComponentVariableMap.has(componentName)) {
-                this._myOverrideDeepCloneComponentVariableMap.set(componentName, new Map());
+            if (!this._myOverrideDeepCloneComponentsVariablesMap.has(componentName)) {
+                this._myOverrideDeepCloneComponentsVariablesMap.set(componentName, new Map());
             }
 
-            componentMap = this._myOverrideDeepCloneComponentVariableMap.get(componentName);
+            componentsVariablesMap = this._myOverrideDeepCloneComponentsVariablesMap.get(componentName);
 
-            componentMap.set(variableName, deepClone);
+            componentsVariablesMap.set(variableName, deepClone);
         }
 
         isDeepCloneComponent(componentName) {
-            let overrideValue = this._myOverrideDeepCloneComponentMap.get(componentName);
+            let overrideValue = this._myOverrideDeepCloneComponentsMap.get(componentName);
 
             if (overrideValue != null) {
                 return overrideValue;
@@ -2009,9 +2021,9 @@ if (WL && WL.Object) {
         }
 
         isDeepCloneComponentVariable(componentName, variableName) {
-            let componentMap = this._myOverrideDeepCloneComponentVariableMap.get(componentName);
-            if (componentMap != null) {
-                let overrideValue = componentMap.get(variableName);
+            let componentsVariablesMap = this._myOverrideDeepCloneComponentsVariablesMap.get(componentName);
+            if (componentsVariablesMap != null) {
+                let overrideValue = componentsVariablesMap.get(variableName);
                 if (overrideValue != null) {
                     return overrideValue;
                 }
@@ -2079,7 +2091,7 @@ if (WL && WL.Object) {
                     let objectToClone = cloneData[0];
                     let currentClonedObject = cloneData[1];
 
-                    let components = objectToClone.pp_getComponents();
+                    let components = objectToClone.pp_getComponentsSelf();
                     for (let component of components) {
                         if (component.pp_clone != null) {
                             let cloneComponent = false;
@@ -2107,7 +2119,7 @@ if (WL && WL.Object) {
                     let componentToClone = cloneData[0];
                     let currentClonedObject = cloneData[1];
 
-                    let clonedComponent = componentToClone.pp_clone(currentClonedObject, params.myDeepCloneParams, params.myExtraData);
+                    let clonedComponent = componentToClone.pp_clone(currentClonedObject, params.myDeepCloneParams, params.myCustomParamsMap);
                     if (componentToClone.pp_clonePostProcess != null) {
                         componentsToPostProcessData.push([componentToClone, clonedComponent]);
                     }
@@ -2120,7 +2132,7 @@ if (WL && WL.Object) {
                     let componentToClone = cloneData[0];
                     let currentClonedComponent = cloneData[1];
 
-                    componentToClone.pp_clonePostProcess(currentClonedComponent, params.myDeepCloneParams, params.myExtraData);
+                    componentToClone.pp_clonePostProcess(currentClonedComponent, params.myDeepCloneParams, params.myCustomParamsMap);
                 }
             }
 
@@ -2141,7 +2153,7 @@ if (WL && WL.Object) {
         while (isCloneable && objects.length > 0) {
             let object = objects.shift();
 
-            let components = this.pp_getComponents();
+            let components = this.pp_getComponentsSelf();
             for (let component of components) {
                 let cloneComponent = false;
                 if (params.myComponentsToInclude.length > 0) {
@@ -2205,11 +2217,11 @@ if (WL && WL.Object) {
         let endChildren = endComponents;
         let separator = ",";
         let newLineTab = newLine.concat(tab, tab);
-        return function pp_toString() {
+        return function pp_toStringExtended() {
             let objectString = "";
             objectString = objectString.concat(startObject, newLine);
 
-            let components = this.pp_getComponents();
+            let components = this.pp_getComponentsSelf();
             let children = this.pp_getChildren();
             let name = this.pp_getName();
 
@@ -2284,7 +2296,7 @@ if (WL && WL.Object) {
         let componentsLabel = "components: ";
         let separator = ", ";
         let newLineTab = newLine.concat(tab);
-        return function pp_toString() {
+        return function pp_toStringCompact() {
             let objectString = "";
 
             let name = this.pp_getName();
@@ -2294,7 +2306,7 @@ if (WL && WL.Object) {
                 objectString = objectString.concat(nameLabel, emptyName);
             }
 
-            let components = this.pp_getComponents();
+            let components = this.pp_getComponentsSelf();
             if (components.length > 0) {
                 objectString = objectString.concat(separator, componentsLabel);
                 for (let i = 0; i < components.length; i++) {
@@ -2468,6 +2480,10 @@ if (WL && WL.Object) {
         return this.children;
     };
 
+    WL.Object.prototype.pp_getSelf = function () {
+        return this;
+    };
+
     //Cauldron
 
     WL.Object.prototype.pp_addObject = function () {
@@ -2499,26 +2515,34 @@ if (WL && WL.Object) {
     };
 
     WL.Object.prototype.pp_reserveObjects = function (count) {
-        let componentAmountMap = this.pp_getComponentAmountMap();
-        this._pp_reserveObjects(count, componentAmountMap);
+        this.pp_reserveObjectsHierarchy(count);
+    };
+
+    WL.Object.prototype.pp_reserveObjectsSelf = function (count) {
+        let componentsAmountMap = this.pp_getComponentsAmountMapSelf();
+        this._pp_reserveObjects(count, componentsAmountMap);
     };
 
     WL.Object.prototype.pp_reserveObjectsHierarchy = function (count) {
-        let componentAmountMap = this.pp_getComponentAmountMapHierarchy();
-        this._pp_reserveObjects(count, componentAmountMap);
+        let componentsAmountMap = this.pp_getComponentsAmountMapHierarchy();
+        this._pp_reserveObjects(count, componentsAmountMap);
     };
 
     WL.Object.prototype.pp_reserveObjectsDescendants = function (count) {
-        let componentAmountMap = this.pp_getComponentAmountMapDescendants();
-        this._pp_reserveObjects(count, componentAmountMap);
+        let componentsAmountMap = this.pp_getComponentsAmountMapDescendants();
+        this._pp_reserveObjects(count, componentsAmountMap);
     };
 
     WL.Object.prototype.pp_reserveObjectsChildren = function (count) {
-        let componentAmountMap = this.pp_getComponentAmountMapChildren();
-        this._pp_reserveObjects(count, componentAmountMap);
+        let componentsAmountMap = this.pp_getComponentsAmountMapChildren();
+        this._pp_reserveObjects(count, componentsAmountMap);
     };
 
-    WL.Object.prototype.pp_getComponentAmountMap = function (amountMap = new Map()) {
+    WL.Object.prototype.pp_getComponentsAmountMap = function (amountMap = new Map()) {
+        return this.pp_getComponentsAmountMapHierarchy(amountMap);
+    };
+
+    WL.Object.prototype.pp_getComponentsAmountMapSelf = function (amountMap = new Map()) {
         let objectsAmount = amountMap.get("object");
         if (objectsAmount == null) {
             objectsAmount = 0;
@@ -2526,7 +2550,7 @@ if (WL && WL.Object) {
         objectsAmount += 1;
         amountMap.set("object", objectsAmount);
 
-        let components = this.pp_getComponents();
+        let components = this.pp_getComponentsSelf();
         for (let component of components) {
             let type = component.type;
             let typeAmount = amountMap.get(type);
@@ -2540,31 +2564,31 @@ if (WL && WL.Object) {
         return amountMap;
     };
 
-    WL.Object.prototype.pp_getComponentAmountMapHierarchy = function (amountMap = new Map()) {
+    WL.Object.prototype.pp_getComponentsAmountMapHierarchy = function (amountMap = new Map()) {
         let hierarchy = this.pp_getHierarchy();
 
         for (let object of hierarchy) {
-            object.pp_getComponentAmountMap(amountMap);
+            object.pp_getComponentsAmountMapSelf(amountMap);
         }
 
         return amountMap;
     };
 
-    WL.Object.prototype.pp_getComponentAmountMapDescendants = function (amountMap = new Map()) {
+    WL.Object.prototype.pp_getComponentsAmountMapDescendants = function (amountMap = new Map()) {
         let descendants = this.pp_getDescendants();
 
         for (let object of descendants) {
-            object.pp_getComponentAmountMap(amountMap);
+            object.pp_getComponentsAmountMapSelf(amountMap);
         }
 
         return amountMap;
     };
 
-    WL.Object.prototype.pp_getComponentAmountMapChildren = function (amountMap = new Map()) {
+    WL.Object.prototype.pp_getComponentsAmountMapChildren = function (amountMap = new Map()) {
         let children = this.pp_getChildren();
 
         for (let object of children) {
-            object.pp_getComponentAmountMap(amountMap);
+            object.pp_getComponentsAmountMapSelf(amountMap);
         }
 
         return amountMap;
@@ -2666,12 +2690,12 @@ if (WL && WL.Object) {
         return Math.min(Math.max(value, min), max);
     };
 
-    WL.Object.prototype._pp_reserveObjects = function (count, componentAmountMap) {
-        let objectsToReserve = componentAmountMap.get("object") * count;
-        componentAmountMap.delete("object");
+    WL.Object.prototype._pp_reserveObjects = function (count, componentsAmountMap) {
+        let objectsToReserve = componentsAmountMap.get("object") * count;
+        componentsAmountMap.delete("object");
 
         let componentsToReserve = {};
-        for (let [componentName, componentCount] of componentAmountMap.entries()) {
+        for (let [componentName, componentCount] of componentsAmountMap.entries()) {
             componentsToReserve[componentName] = componentCount * count;
         }
 
@@ -2701,7 +2725,7 @@ if (WL && WL.Object) {
             let secondAxis = axes[priority[1]];
             let thirdAxis = axes[priority[2]];
 
-            if (firstAxis == null) {
+            if (firstAxis == null || firstAxis.vec3_length() <= this._pp_epsilon) {
                 return;
             }
 
