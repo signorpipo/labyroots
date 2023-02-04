@@ -41,6 +41,9 @@
                 },
                 {
                     "type": "pp-debug-manager"
+                },
+                {
+                    "type": "load-setup"
                 }
             ]
         },
@@ -808,6 +811,18 @@
                 0.0,
                 -0.25,
                 0.0
+            ]
+        },
+        "3040ad15-c83e-430d-aed3-f397e6602c36": {
+            "name": "UI",
+            "parent": "19",
+            "components": [
+                {
+                    "type": "pp-show-fps",
+                    "pp-show-fps": {
+                        "_myTextMaterial": "110"
+                    }
+                }
             ]
         }
     },

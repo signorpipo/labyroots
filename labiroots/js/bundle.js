@@ -292,3 +292,9 @@ require('./locomotion/teleport/player_locomotion_teleport');
 require('./locomotion/cleaned/player_locomotion_cleaned');
 require('./locomotion/cleaned/player_locomotion_smooth_cleaned');
 require('./locomotion/cleaned/player_transform_manager_cleaned');
+
+//LABIROOTS
+
+require('./labiroots/global');
+require('./labiroots/json/file_manager');
+require('./labiroots/json/load_setup');
