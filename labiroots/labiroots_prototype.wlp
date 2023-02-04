@@ -839,8 +839,7 @@
                     "active": false
                 },
                 {
-                    "type": "test",
-                    "active": true
+                    "type": "test"
                 }
             ],
             "translation": [
@@ -878,6 +877,15 @@
                 1.0,
                 1.0,
                 1.0
+            ],
+            "components": [
+                {
+                    "type": "pp-set-active",
+                    "active": true,
+                    "pp-set-active": {
+                        "_myActive": false
+                    }
+                }
             ]
         },
         "b196632f-b02b-4f5d-a0af-934f56ea5bdf": {
@@ -2322,24 +2330,25 @@
                     "mesh": {
                         "mesh": "p0",
                         "material": "3c827c22-4442-4a04-879c-6c127e5d261b"
-                    }
+                    },
+                    "active": true
                 }
             ],
             "translation": [
                 7.8303375,
-                1.6341176,
-                5.5000677
+                1.6341178,
+                5.5000681
             ],
             "rotation": [
                 -0.0603349,
                 -0.7045279,
-                -0.0603349,
-                0.7045279
+                -0.0603348,
+                0.704528
             ],
             "scale": [
-                1.6999976,
+                1.6999971,
                 1.6999999,
-                1.6999983
+                1.6999979
             ]
         },
         "42b7149a-85c8-4e93-bd1d-e1b5565b48e1": {
@@ -4699,7 +4708,8 @@
                 "js/pp/cauldron/visual/elements",
                 "js/pp/cauldron/visual/components",
                 "js/pp/cauldron/visual",
-                "js/locomotion/teleport"
+                "js/locomotion/teleport",
+                "js/labiroots/test"
             ],
             "useInternalBundler": false
         },
