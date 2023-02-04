@@ -54,7 +54,8 @@
                 {
                     "type": "player-locomotion",
                     "player-locomotion": {
-                        "_myUseCleanedVersion": true
+                        "_myUseCleanedVersion": true,
+                        "_myVRDirectionReferenceType": "head"
                     }
                 }
             ]
@@ -1641,6 +1642,272 @@
         "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
             "name": "2",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+        },
+        "0b87ee6f-3030-4c65-960f-c845576fb3c0": {
+            "name": "Grabber",
+            "parent": "99",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "pp-grabber-hand"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "simulate": true,
+                        "kinematic": true,
+                        "groups": 128,
+                        "allowQuery": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.075
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "5a2cbd25-c658-4058-9bc6-d0b28ba83bf2": {
+            "name": "Grabber",
+            "parent": "107",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "pp-grabber-hand",
+                    "pp-grabber-hand": {
+                        "_myHandedness": "right"
+                    }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "gravity": false,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "simulate": true,
+                        "kinematic": true,
+                        "groups": 128
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.075
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         }
     },
     "meshes": {
@@ -2274,7 +2541,8 @@
                     "hand-tracking": true
                 }
             },
-            "viewObject": "21"
+            "viewObject": "21",
+            "visualizePhysX": false
         },
         "scripting": {
             "sourcePaths": [
