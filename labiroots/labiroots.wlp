@@ -3901,7 +3901,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "1226acad-4d43-4af8-833e-cf410ed3226b"
+                        "material": "1de0b560-bb93-4196-86a9-d95e26852992"
                     }
                 }
             ],
@@ -3943,7 +3943,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "1226acad-4d43-4af8-833e-cf410ed3226b"
+                        "material": "f5a6ddb1-042d-4937-b738-f231488eba39"
                     }
                 }
             ],
@@ -4181,6 +4181,18 @@
                 "name": "AlberoGrosso_fase3.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
             }
+        },
+        "57960eda-0402-4838-a70c-2b2e9615bc72": {
+            "link": {
+                "name": "AlberoGrosso_fase4.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase4.png"
+            }
+        },
+        "eef348b6-5eb3-4e81-b240-8ea80b2716f9": {
+            "link": {
+                "name": "AlberoGrosso_fase5.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase5.png"
+            }
         }
     },
     "images": {
@@ -4257,8 +4269,19 @@
             "link": {
                 "name": "AlberoGrosso_fase3.png",
                 "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
-            },
-            "compress": false
+            }
+        },
+        "8c9704c3-5f62-4e05-ae92-15acf4e2f982": {
+            "link": {
+                "name": "AlberoGrosso_fase4.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase4.png"
+            }
+        },
+        "981534ae-abe1-4192-a781-3ec615a49c87": {
+            "link": {
+                "name": "AlberoGrosso_fase5.png",
+                "file": "assets\\textures\\Trees\\AlberoGrosso_fase5.png"
+            }
         }
     },
     "materials": {
@@ -4609,11 +4632,43 @@
         },
         "1de0b560-bb93-4196-86a9-d95e26852992": {
             "name": "AlberoFase4",
-            "pipeline": "14"
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "57960eda-0402-4838-a70c-2b2e9615bc72"
+            }
         },
         "f5a6ddb1-042d-4937-b738-f231488eba39": {
             "name": "AlberoFase5",
-            "pipeline": "14"
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "eef348b6-5eb3-4e81-b240-8ea80b2716f9"
+            }
         }
     },
     "shaders": {
@@ -4969,7 +5024,9 @@
         "assets/textures/Trees/RadiciAlbero_fase2Fixed.png",
         "assets/textures/Trees/AlberoGrosso_fase1.png",
         "assets/textures/Trees/AlberoGrosso_fase2.png",
-        "assets/textures/Trees/AlberoGrosso_fase3.png"
+        "assets/textures/Trees/AlberoGrosso_fase3.png",
+        "assets/textures/Trees/AlberoGrosso_fase4.png",
+        "assets/textures/Trees/AlberoGrosso_fase5.png"
     ],
     "fonts": {
         "147": {
