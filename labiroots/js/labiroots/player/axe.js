@@ -18,20 +18,20 @@ WL.registerComponent('axe', {
             this._myPhysX = this.object.pp_getComponentChildren('physx');
             this._myPhysX.onCollision(this._onCollision.bind(this));
             this._myToDestroy = [];
-            this._myTimerDestroy = new PP.Timer(0.5, false);
+            this._myTimerDestroy = new PP.Timer(0, false);
 
             this._myGrabbable = this.object.pp_getComponent('pp-grabbable');
         }
 
         if (this._myTimerDestroy.isRunning()) {
-            if (this._myTimerDestroy.update(dt)) {
-                if (this._myTimerDestroy.isDone()) {
-                    for (let object of this._myToDestroy) {
-                        object.pp_destroy();
-                    }
-
-                    this._myToDestroy = [];
+            this._myTimerDestroy.update(dt)
+            if (this._myTimerDestroy.isDone()) {
+                for (let object of this._myToDestroy) {
+                    //object.pp_destroy();
+                    object.pp_setActive(false);
                 }
+
+                this._myToDestroy = [];
             }
         }
 
@@ -56,6 +56,7 @@ WL.registerComponent('axe', {
     },
     resetTransformRespawn() {
         this._myGrabbable.release();
+        this._myResetPos = true;
         this.object.pp_setTransformQuat(this._myRespawnTransform);
     },
     _onCollision(type, physXComponent) {
@@ -69,7 +70,7 @@ WL.registerComponent('axe', {
                 if (root) {
                     if (root._myHit > 0) {
                         if (root.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
                     }
                 }
@@ -78,10 +79,10 @@ WL.registerComponent('axe', {
                 if (rootWall) {
                     if (rootWall._myHit > 0) {
                         if (rootWall.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
                         if (rootWall._myHit == 0) {
-                            rootWall.object.pp_setActive(false);
+                            //rootWall.object.pp_setActive(false);
                             this._myToDestroy.push(rootWall.object);
                             this._myTimerDestroy.start();
                         }
@@ -92,11 +93,11 @@ WL.registerComponent('axe', {
                 if (bigTree) {
                     if (bigTree._myHit > 0) {
                         if (bigTree.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
 
                         if (bigTree._myHit == 0) {
-                            bigTree.object.pp_setActive(false);
+                            //bigTree.object.pp_setActive(false);
                             this._myToDestroy.push(bigTree.object);
                             this._myTimerDestroy.start();
                             // suono vittoria
@@ -109,18 +110,25 @@ WL.registerComponent('axe', {
                 if (humanTree) {
                     if (humanTree._myHit > 0) {
                         if (humanTree.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
 
                         if (humanTree._myHit == 0) {
-                            humanTree.object.pp_setActive(false);
-                            this._myToDestroy.push(bigTree.object);
+                            //humanTree.object.pp_setActive(false);
+                            this._myToDestroy.push(humanTree.object);
 
                             let fruits = humanTree._myFruits;
                             for (let fruit of fruits) {
                                 if (!fruit._myGathered) {
-                                    fruit.pp_setActive(false);
-                                    this._myToDestroy.push(fruit);
+                                    let fruitFall = true;
+
+                                    if (!fruitFall) {
+                                        this._myToDestroy.push(fruit);
+                                    } else {
+                                        fruit.pp_setParent(null);
+                                        fruit.pp_getComponent("physx").kinematic = false;
+                                    }
+                                    //fruit.pp_setActive(false);
                                 }
                             }
 
@@ -133,6 +141,8 @@ WL.registerComponent('axe', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+
+        clonedComponent._myStartTransform.quat2_copy(this._myStartTransform);
 
         return clonedComponent;
     }

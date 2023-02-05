@@ -5,18 +5,18 @@ WL.registerComponent('mouth', {
     start: function () {
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myPhysX.onCollision(this._onCollision.bind(this));
-        this._myTimerDestroy = new PP.Timer(0.5, false);
+        this._myTimerDestroy = new PP.Timer(0, false);
         this._myFruitToDestroy = [];
     },
     update: function (dt) {
         if (this._myTimerDestroy.isRunning()) {
-            if (this._myTimerDestroy.update(dt)) {
-                if (this._myTimerDestroy.isDone()) {
-                    for (let object of this._myFruitToDestroy) {
-                        object.pp_destroy();
-                    }
-                    this._myFruitToDestroy = [];
+            this._myTimerDestroy.update(dt)
+            if (this._myTimerDestroy.isDone()) {
+                for (let object of this._myFruitToDestroy) {
+                    //object.pp_destroy();
+                    object.pp_setActive(false);
                 }
+                this._myFruitToDestroy = [];
             }
         }
     },
@@ -27,7 +27,7 @@ WL.registerComponent('mouth', {
                 if (!fruit._myUsed) {
                     fruit.activateEffect();
                     if (fruit._myUsed) {
-                        fruit.object.pp_setActive(false);
+                        //fruit.object.pp_setActive(false);
                         this._myFruitToDestroy.push(fruit.object);
                         this._myTimerDestroy.start();
                     }

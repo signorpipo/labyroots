@@ -17,6 +17,12 @@ WL.registerComponent('pp-grabbable', {
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myOldKinematicValue = null;
     },
+    update(dt) {
+        if (!this._myPhysX) {
+            this._myPhysX = this.object.pp_getComponent('physx');
+        }
+
+    },
     onDeactivate: function () {
         this.release();
     },
@@ -33,6 +39,8 @@ WL.registerComponent('pp-grabbable', {
         this.object.pp_setParent(grabber);
 
         this._myIsGrabbed = true;
+
+        this._myGrabber = grabber;
 
         this._myGrabCallbacks.forEach(function (callback) { callback(grabber, this); }.bind(this));
     },

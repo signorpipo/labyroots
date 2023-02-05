@@ -2,12 +2,11 @@ WL.registerComponent('human-tree', {
     _myType: { type: WL.Type.Int, default: 60 }
 }, {
     init: function () {
-        this._myPoints = [];
+        this._myPoints = null;
     },
     start: function () {
         this._myStarted = false;
         this._myHit = 0;
-        this._myPoints = this.object.pp_getChildren();
 
         this._myFruits = [];
     },
@@ -29,6 +28,10 @@ WL.registerComponent('human-tree', {
         return clonedComponent;
     },
     spawnFruits(fruitAmount) {
+        if (this._myPoints == null) {
+            this._myPoints = this.object.pp_getChildren();
+            this._myPoints.pp_remove((object) => object.pp_getComponent("physx") != null);
+        }
         if (fruitAmount == 8) {
             fruitAmount = Math.pp_randomInt(0, this._myPoints.length);
         } else if (fruitAmount == 9) {
