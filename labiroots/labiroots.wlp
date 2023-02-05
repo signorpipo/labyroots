@@ -1181,7 +1181,7 @@
             ]
         },
         "c9fb61ae-8b59-4d08-892f-585800456fa4": {
-            "name": "60",
+            "name": "70",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
                 -0.8459166,
@@ -1201,10 +1201,10 @@
             ]
         },
         "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
-            "name": "70",
+            "name": "80",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
-                0.9937732,
+                0.9381825,
                 0.0,
                 0.0
             ],
@@ -1443,6 +1443,12 @@
                     "type": "billboard-player",
                     "billboard-player": {
                         "_myKeepUp": true
+                    }
+                },
+                {
+                    "type": "human-tree",
+                    "human-tree": {
+                        "_myType": 90
                     }
                 }
             ],
@@ -2536,7 +2542,7 @@
             ]
         },
         "9c7d9729-760a-4b57-b211-5e176e88b1a3": {
-            "name": "80",
+            "name": "60",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         },
         "b78aef29-41b5-4254-a878-64d56f86fc57": {
@@ -7078,6 +7084,9 @@
                     }
                 },
                 {
+                    "type": "human-tree"
+                },
+                {
                     "type": "billboard-player",
                     "billboard-player": {
                         "_myKeepUp": true
@@ -7117,6 +7126,12 @@
                     "billboard-player": {
                         "_myKeepUp": true
                     }
+                },
+                {
+                    "type": "human-tree",
+                    "human-tree": {
+                        "_myType": 70
+                    }
                 }
             ],
             "translation": [
@@ -7148,7 +7163,16 @@
                     }
                 },
                 {
-                    "type": "billboard-player"
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                },
+                {
+                    "type": "human-tree",
+                    "human-tree": {
+                        "_myType": 80
+                    }
                 }
             ],
             "translation": [
@@ -7214,7 +7238,7 @@
             ]
         },
         "7ea432f0-e522-4c7d-b12e-5ed5587aa236": {
-            "name": "FruttoGiallo2",
+            "name": "FruttoRosso2",
             "parent": "aa179823-35a9-4ca9-a89e-c03c8b1f5af3",
             "components": [
                 {
@@ -7260,7 +7284,23 @@
         },
         "aa179823-35a9-4ca9-a89e-c03c8b1f5af3": {
             "name": "90",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
+            "translation": [
+                1.7917256,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "e5317529-f25c-4705-8c04-8d1682966190": {
             "name": "Axe",
@@ -7718,6 +7758,751 @@
                         "material": "12b8acea-811d-4a6e-aa3b-91170fa5843b"
                     }
                 }
+            ]
+        },
+        "8c1047df-cd11-4c2d-8549-81534c72ef82": {
+            "name": "25",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -17.628477,
+                0.0,
+                6.7526855
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "d631d297-b5a0-4fcc-b704-02a1b592289d": {
+            "name": "2",
+            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "66604715-609b-4046-9267-b87f31af19a5": {
+            "name": "BigTreeRoots_Fase2",
+            "parent": "d631d297-b5a0-4fcc-b704-02a1b592289d",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "79ca3ce2-406f-4b38-a05b-ef70603492d3": {
+            "name": "1",
+            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
+            "translation": [
+                -3.485548,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "a8646abc-4d61-4e26-b2a4-7517fa1d1c3e": {
+            "name": "BigTreeRoots_Fase1",
+            "parent": "79ca3ce2-406f-4b38-a05b-ef70603492d3",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "f21810c3-2f08-4996-ba97-aefcf6893af6": {
+            "name": "3",
+            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
+            "translation": [
+                2.379198,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "996a1fbc-2592-47f1-9a26-9bfb1b2bc718": {
+            "name": "BigTreeRoots_Fase3",
+            "parent": "f21810c3-2f08-4996-ba97-aefcf6893af6",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "093193b3-222a-4ce4-9b98-56ecab87d35a": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                -0.731018,
+                0.1452343,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "1168ea06-f3a7-4407-9572-1e32060d69b0": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                0.5596332,
+                -0.1311264,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "0920d7a1-bbab-4ead-90f0-b42ee1d5e0a8": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                0.2386293,
+                0.1639775,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "60a0816c-dbf8-4d19-9037-ba64b50f6ee9": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                0.3597993,
+                0.6965973,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "fb213791-6b7f-48dd-8e71-54af2fedf0d2": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                -0.3092184,
+                0.547196,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "9a281749-0f51-4a2c-b123-c5d75d99e7c4": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                0.033288,
+                0.6903451,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "4e5f2a06-ea38-446f-b9f6-fd2a198e1df4": {
+            "name": "Empty.000",
+            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
+            "translation": [
+                -0.399105,
+                0.2694239,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "b24d3456-d21d-48a6-ad9a-ced695ebaf8e": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                -0.731018,
+                0.1452342,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "4b54e0d3-f15a-4a0c-b3c7-fa8e8f94208b": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                0.5596332,
+                -0.1311264,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "68e2eea0-be9c-45b4-9869-0008d46ac1e9": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                0.2386293,
+                0.1639775,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "d2ce8d24-682b-4f0c-b28f-a18e96f4c521": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                0.3597993,
+                0.6965972,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "2c99455d-8292-4904-b7b3-912c35e62094": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                -0.3092184,
+                0.547196,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "380718d0-6bc3-4534-89d0-f412943ac5bf": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                0.033288,
+                0.6903452,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c96e7e4b-9a8f-4872-88a5-f1abdc0e16d8": {
+            "name": "Empty.000",
+            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
+            "translation": [
+                -0.399105,
+                0.2694239,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "fa899066-6b33-4cf4-816c-99191980aadb": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                -0.7310179,
+                0.1452343,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "020751c9-2767-4f89-9e8e-3c5d5444453c": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                0.5596332,
+                -0.1311264,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "65eda6ca-3fc9-4124-975e-be693360d04b": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                0.2386293,
+                0.1639775,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "8fb27827-5516-4b1b-a705-44a588f70e86": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                0.3597993,
+                0.6965973,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "3680b2cf-22a9-4e75-8579-66b1ba193471": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                -0.3092182,
+                0.547196,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "80142bd1-ab00-463c-987d-1bc7926535cd": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                0.033288,
+                0.6903451,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "cc1d2a3b-78ac-438a-95d0-f1da1725b6d3": {
+            "name": "Empty.000",
+            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
+            "translation": [
+                -0.3991049,
+                0.2694239,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "923c0969-25a1-4e57-bc7d-b2c6f7c4d356": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                -0.7310175,
+                0.1452343,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "82937ff3-0701-4a34-8f0f-fd91e5f5b3ad": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                0.5596332,
+                -0.1311264,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "0ba19ca4-660a-4e2e-ae2d-1ddf282d516a": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                0.2386293,
+                0.1639775,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "40b54e02-1742-433e-aefe-b2a37502583d": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                0.3597993,
+                0.6965973,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "85c4c5f4-c814-48cf-b3a4-70f8b698c213": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                -0.3092184,
+                0.547196,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "8a8e282d-b8be-4c38-99ea-a7f68b694a65": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                0.033288,
+                0.6903451,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "8615fed1-b058-407e-94a3-667621c4e398": {
+            "name": "Empty.000",
+            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
+            "translation": [
+                -0.399105,
+                0.2694239,
+                0.1904602
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
             ]
         }
     },
@@ -8386,7 +9171,7 @@
             "pipeline": "14",
             "name": "FruttoRosso",
             "Phong": {
-                "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f",
+                "diffuseTexture": "9ccf1cf5-0688-4f66-afa3-cf43aefbb342",
                 "ambientFactor": 0.5,
                 "diffuseColor": [
                     0.0,

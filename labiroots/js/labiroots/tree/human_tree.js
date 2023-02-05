@@ -12,6 +12,8 @@ WL.registerComponent('human-tree', {
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
 
+        clonedComponent._myType = this._myType;
+
         return clonedComponent;
     },
     spawnFruits(fruitAmount) {
@@ -22,7 +24,7 @@ WL.registerComponent('human-tree', {
         }
 
         let points = this._myPoints.pp_clone();
-        while (fruitAmount > 0) {
+        while (fruitAmount > 0 && points.length > 0) {
             fruitAmount--;
             let point = Math.pp_randomPick(points);
             points.pp_removeEqual(point);
