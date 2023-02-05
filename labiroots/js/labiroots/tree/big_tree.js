@@ -15,6 +15,7 @@ WL.registerComponent('big-tree', {
         this._myPhases = [];
 
         this._myCurrentPhase = 0;
+        this.avoidIncrement = false;
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -47,18 +48,31 @@ WL.registerComponent('big-tree', {
             }
 
             this._myCurrentPhase++;
-            this._myPhases[this._myCurrentPhase].pp_setActive(true);
+            this._myPhases[Math.floor(this._myCurrentPhase / 2)].pp_setActive(true);
         }
     },
     hit() {
         let hitted = false;
 
         if (this._myBigTreeRoots == 0) {
+
+            if (!this.avoidIncrement) {
+                this._myCurrentPhase++;
+            }
+
             if (this._myHit > 0) {
 
                 this._myHit--;
                 hitted = true;
                 //suono
+
+                for (let phase of this._myPhases) {
+                    phase.pp_setActive(false);
+                }
+
+                this._myCurrentPhase++;
+                this._myPhases[Math.floor(this._myCurrentPhase / 2)].pp_setActive(true);
+                this.avoidIncrement = true;
             }
         }
 

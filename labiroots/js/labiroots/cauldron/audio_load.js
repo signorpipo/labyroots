@@ -58,7 +58,6 @@ WL.registerComponent('audio-load', {
             manager.addAudioSetup(AudioID.COLPO_NORMALE_1, audioSetup);
         }
 
-
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
             audioSetup.myRate = 1;
@@ -74,7 +73,6 @@ WL.registerComponent('audio-load', {
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
         }
-
 
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Raccolta frutto.wav");

@@ -169,8 +169,8 @@ WL.registerComponent('axe', {
 
                         if (bigTree._myHit == 0) {
                             //bigTree.object.pp_setActive(false);
-                            this._myToDestroy.push(bigTree.object);
-                            this._myTimerDestroy.start();
+                            //this._myToDestroy.push(bigTree.object);
+                            //this._myTimerDestroy.start();
                             // suono vittoria
                             // vibrazione
                         }
