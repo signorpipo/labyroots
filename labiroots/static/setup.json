@@ -18,7 +18,7 @@
 "myPlayerSetup":
 	{
 		"myTransformationTimers": [20000,2,2,2,1],
-		"myAxeSpeedToHit": 1
+		"myAxeSpeedToHit": 0.4
 	},
 "myMazeSetup":
 	{

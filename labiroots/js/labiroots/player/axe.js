@@ -18,20 +18,20 @@ WL.registerComponent('axe', {
             this._myPhysX = this.object.pp_getComponentChildren('physx');
             this._myPhysX.onCollision(this._onCollision.bind(this));
             this._myToDestroy = [];
-            this._myTimerDestroy = new PP.Timer(0.5, false);
+            this._myTimerDestroy = new PP.Timer(0, false);
 
             this._myGrabbable = this.object.pp_getComponent('pp-grabbable');
         }
 
         if (this._myTimerDestroy.isRunning()) {
-            if (this._myTimerDestroy.update(dt)) {
-                if (this._myTimerDestroy.isDone()) {
-                    for (let object of this._myToDestroy) {
-                        object.pp_destroy();
-                    }
-
-                    this._myToDestroy = [];
+            this._myTimerDestroy.update(dt)
+            if (this._myTimerDestroy.isDone()) {
+                for (let object of this._myToDestroy) {
+                    //object.pp_destroy();
+                    object.pp_setActive(false);
                 }
+
+                this._myToDestroy = [];
             }
         }
 
@@ -62,6 +62,7 @@ WL.registerComponent('axe', {
         if (!Global.myReady) {
             return;
         }
+        console.error(this._mySpeed);
 
         if (this._myGrabbable.isGrabbed() && this._mySpeed >= Global.mySetup.myPlayerSetup.myAxeSpeedToHit) {
             if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
@@ -81,7 +82,7 @@ WL.registerComponent('axe', {
                             this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
                         }
                         if (rootWall._myHit == 0) {
-                            rootWall.object.pp_setActive(false);
+                            //rootWall.object.pp_setActive(false);
                             this._myToDestroy.push(rootWall.object);
                             this._myTimerDestroy.start();
                         }
@@ -96,7 +97,7 @@ WL.registerComponent('axe', {
                         }
 
                         if (bigTree._myHit == 0) {
-                            bigTree.object.pp_setActive(false);
+                            //bigTree.object.pp_setActive(false);
                             this._myToDestroy.push(bigTree.object);
                             this._myTimerDestroy.start();
                             // suono vittoria
@@ -113,13 +114,13 @@ WL.registerComponent('axe', {
                         }
 
                         if (humanTree._myHit == 0) {
-                            humanTree.object.pp_setActive(false);
-                            this._myToDestroy.push(bigTree.object);
+                            //humanTree.object.pp_setActive(false);
+                            this._myToDestroy.push(humanTree.object);
 
                             let fruits = humanTree._myFruits;
                             for (let fruit of fruits) {
                                 if (!fruit._myGathered) {
-                                    fruit.pp_setActive(false);
+                                    //fruit.pp_setActive(false);
                                     this._myToDestroy.push(fruit);
                                 }
                             }

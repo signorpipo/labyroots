@@ -339,7 +339,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         simplifiedParams.myShouldSnapOnGround = true;
         simplifiedParams.myMaxDistanceToSnapOnGround = 0.1;
         simplifiedParams.myMaxWalkableGroundAngle = 0;
-        simplifiedParams.myMaxWalkableGroundStepHeight = 0.1;
+        simplifiedParams.myMaxWalkableGroundStepHeight = 0.2;
         simplifiedParams.myShouldNotFallFromEdges = false;
 
         simplifiedParams.myHorizontalCheckBlockLayerFlags.setFlagActive(0, true);
@@ -357,7 +357,6 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
         let colliderSetup = PP.CharacterColliderUtils.createCharacterColliderSetupSimplified(simplifiedParams);
 
-        colliderSetup.myVerticalCheckSetup.myVerticalPositionCheckEnabled = false;
         colliderSetup.myVerticalCheckSetup.myVerticalPositionCheckEnabled = false;
         colliderSetup.myVerticalCheckSetup.myVerticalCheckCircumferenceSlices = 3;
 

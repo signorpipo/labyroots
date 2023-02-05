@@ -17,6 +17,12 @@ WL.registerComponent('pp-grabbable', {
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myOldKinematicValue = null;
     },
+    update(dt) {
+        if (!this._myPhysX) {
+            this._myPhysX = this.object.pp_getComponent('physx');
+        }
+
+    },
     onDeactivate: function () {
         this.release();
     },
