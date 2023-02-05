@@ -46,7 +46,7 @@ WL.registerComponent('root', {
             // suono
             if (this._myHit == 0) {
                 this._myPhases[2].pp_setActive(true);
-                let tree = WL.scene.pp_getComponent("big_tree");
+                let tree = WL.scene.pp_getComponent("big-tree");
                 if (tree) {
                     tree.rootDie();
                 }

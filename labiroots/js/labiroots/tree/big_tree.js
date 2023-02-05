@@ -47,7 +47,7 @@ WL.registerComponent('big-tree', {
             }
 
             this._myCurrentPhase++;
-            this._myPhases[this._myCurrentPhase].pp_setActive(false);
+            this._myPhases[this._myCurrentPhase].pp_setActive(true);
         }
     },
     hit() {
