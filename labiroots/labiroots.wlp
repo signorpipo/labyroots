@@ -2150,24 +2150,6 @@
             "name": "Stage 1",
             "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
         },
-        "4e780c8f-02e3-4796-98b2-1ef0b0885817": {
-            "name": "Empty",
-            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
         "cb3baadb-6fe2-4e13-868a-449e420701d9": {
             "name": "Stage 2",
             "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
@@ -2950,7 +2932,14 @@
                 "name": "polySurface11<polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Muro_3.fbx"
             },
-            "parent": "be04e60f-b2d0-4399-90b8-cd7ec87836b5"
+            "parent": "be04e60f-b2d0-4399-90b8-cd7ec87836b5",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "bc12f6a3-7b61-447e-97aa-b8a8246327ca": {
             "name": "3",
@@ -3069,7 +3058,14 @@
                 "name": "polySurface11<polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Muro_3.fbx"
             },
-            "parent": "d1fd2d6a-4f22-47ce-bc14-452b8bfe374b"
+            "parent": "d1fd2d6a-4f22-47ce-bc14-452b8bfe374b",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "c084d78c-f0bf-4ca8-aa50-f6386d9a6153": {
             "name": "2",
@@ -3285,7 +3281,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "112"
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
                     }
                 }
             ]
@@ -3328,7 +3324,14 @@
                 "name": "polySurface12<polySurface12_$AssimpFbx$_ScalingPivotInverse<polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Muro_2.fbx"
             },
-            "parent": "b98fc2bd-3a43-498b-906e-1bf9fa164a3e"
+            "parent": "b98fc2bd-3a43-498b-906e-1bf9fa164a3e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "3a6a729e-dd31-456a-beac-cc53da62aae8": {
             "name": "Mouth",
@@ -7136,6 +7139,106 @@
                 "file": "assets\\models\\ASCIA.fbx"
             },
             "parent": "c3b660bc-130c-4f3e-b78a-ad2f09f36ead"
+        },
+        "09b04841-231c-4bee-b74e-1b9bc4edef21": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+            "translation": [
+                0.0,
+                0.0,
+                -0.035
+            ],
+            "rotation": [
+                0.9238795,
+                0.0,
+                0.0,
+                0.3826834
+            ],
+            "scale": [
+                0.0149999,
+                0.0149999,
+                0.0149999
+            ]
+        },
+        "9b787550-2433-46f8-8798-6efcd3cd4f24": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "09b04841-231c-4bee-b74e-1b9bc4edef21"
+        },
+        "6f4d1c55-2955-4956-bb87-7a7653b81005": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "9b787550-2433-46f8-8798-6efcd3cd4f24"
+        },
+        "8f53b065-76df-478c-9926-15867c5b30fc": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "6f4d1c55-2955-4956-bb87-7a7653b81005"
+        },
+        "9f88d8f7-8759-41ce-a0b5-f71b03898d3b": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "8f53b065-76df-478c-9926-15867c5b30fc"
+        },
+        "a1fa440f-8869-4f09-b967-76a4dc0a02f8": {
+            "link": {
+                "name": "Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "9f88d8f7-8759-41ce-a0b5-f71b03898d3b"
+        },
+        "0c64a890-4d3b-4bdb-aeca-02562c4cb26b": {
+            "link": {
+                "name": "Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "a1fa440f-8869-4f09-b967-76a4dc0a02f8"
+        },
+        "f0c813c5-4136-4e4f-abb3-04db2686ce0a": {
+            "link": {
+                "name": "Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "0c64a890-4d3b-4bdb-aeca-02562c4cb26b"
+        },
+        "f423ee3a-9c8a-4342-b5d0-4d080d4e4fa0": {
+            "link": {
+                "name": "Hand2_Dx_$AssimpFbx$_RotationPivotInverse<Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "f0c813c5-4136-4e4f-abb3-04db2686ce0a"
+        },
+        "bf32342d-4aa1-410e-9aae-62e9100b309c": {
+            "link": {
+                "name": "Hand2_Dx_$AssimpFbx$_ScalingPivot<Hand2_Dx_$AssimpFbx$_RotationPivotInverse<Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "f423ee3a-9c8a-4342-b5d0-4d080d4e4fa0"
+        },
+        "677fe392-be9b-4950-9e44-0546d83061c4": {
+            "link": {
+                "name": "Hand2_Dx_$AssimpFbx$_ScalingPivotInverse<Hand2_Dx_$AssimpFbx$_ScalingPivot<Hand2_Dx_$AssimpFbx$_RotationPivotInverse<Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "bf32342d-4aa1-410e-9aae-62e9100b309c"
+        },
+        "a8e14f54-cb50-45a2-8b97-2297925922d4": {
+            "link": {
+                "name": "Hand2_Dx<Hand2_Dx_$AssimpFbx$_ScalingPivotInverse<Hand2_Dx_$AssimpFbx$_ScalingPivot<Hand2_Dx_$AssimpFbx$_RotationPivotInverse<Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            },
+            "parent": "677fe392-be9b-4950-9e44-0546d83061c4"
         }
     },
     "meshes": {
@@ -7341,6 +7444,12 @@
             "link": {
                 "name": "ANgolo_5",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
+            }
+        },
+        "b8ed6f8c-6d48-48d3-8e9e-abb3487055a9": {
+            "link": {
+                "name": "Hand2_Dx",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
             }
         }
     },
@@ -8120,6 +8229,31 @@
                 "ambientFactor": 0.5,
                 "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f"
             }
+        },
+        "ee24e21b-153e-463b-a973-75e7ead303a9": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\models\\Mani\\Mano_Destra.fbx"
+            }
+        },
+        "3ab61b52-b9fd-472f-a3fc-5994e607693e": {
+            "name": "Muri",
+            "pipeline": "13",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.3185959,
+                    0.309727,
+                    0.3725489,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
         }
     },
     "shaders": {
@@ -8496,7 +8630,8 @@
         "assets/textures/Trees/Albero_Blu.png",
         "assets/textures/Trees/Albero_Rosso.png",
         "assets/textures/Trees/Albero_Giallo.png",
-        "assets/textures/Fruits/Frutto_Giallo.png"
+        "assets/textures/Fruits/Frutto_Giallo.png",
+        "assets/models/Mani/Mano_Destra.fbx"
     ],
     "fonts": {
         "147": {
