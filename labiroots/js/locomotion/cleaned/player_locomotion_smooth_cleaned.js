@@ -121,7 +121,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             }
         }
 
-        if (!PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+        if (true || !PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (!this._myLocomotionRuntimeParams.myIsFlying) {
                 this._myGravitySpeed += this._myParams.myGravityAcceleration * dt;
                 verticalMovement = playerUp.vec3_scale(this._myGravitySpeed * dt, verticalMovement);
