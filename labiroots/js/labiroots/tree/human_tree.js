@@ -33,6 +33,9 @@ WL.registerComponent('human-tree', {
             fruitAmount = Math.pp_randomInt(0, this._myPoints.length);
         } else if (fruitAmount == 9) {
             fruitAmount = Math.pp_randomInt(1, this._myPoints.length);
+        } else if (fruitAmount == 7) {
+            fruitAmount = Math.pp_randomInt(Global.mySetup.myTreeSetup.myMinHumanFruits, Global.mySetup.myTreeSetup.myMaxHumanFruits);
+            console.error(fruitAmount);
         }
 
         let points = this._myPoints.pp_clone();

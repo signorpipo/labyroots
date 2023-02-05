@@ -68,7 +68,20 @@ LR.Maze = class Maze {
                 let cell = row[j];
 
                 if (cell.myStaticMazeItemType != LR.MazeItemType.NONE) {
-                    let cellItems = mazeItems.pp_getObjectByNameChildren("" + cell.myStaticMazeItemType);
+
+                    let cellType = cell.myStaticMazeItemType;
+                    if (cellType == LR.MazeItemType.HUMAN_TREE_0) {
+                        let types = [];
+                        types.push(Global.myPerfectFruit);
+                        for (let i = 0; i < Global.mySetup.myTreeSetup.myPerfectTreeRatio; i++) {
+                            types.push(Global.myGoodFruit);
+                            types.push(Global.myBadFruit);
+                        }
+                        cellType = Math.pp_randomPick(types);
+                        console.error(cellType, cell.myFruits);
+                    }
+
+                    let cellItems = mazeItems.pp_getObjectByNameChildren("" + cellType);
                     if (cellItems != null) {
                         let randomChild = Math.pp_randomPick(cellItems.pp_getChildren());
                         if (randomChild != null) {
