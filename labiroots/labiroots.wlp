@@ -887,7 +887,7 @@
             "translation": [
                 -0.0496103,
                 0.0,
-                -34.6950721
+                -200.0
             ],
             "rotation": [
                 0.0,
@@ -2349,8 +2349,8 @@
             "name": "Pivot",
             "parent": "036fdb68-5fb9-40cb-a9d9-c123861a3141",
             "scale": [
-                10.0,
-                10.0,
+                6.3499999,
+                6.3499999,
                 1.0
             ]
         },
@@ -2407,8 +2407,8 @@
             "name": "Pivot",
             "parent": "0a23cb7e-dfa0-4f88-a3e3-11fc9b1fb880",
             "scale": [
-                10.0,
-                10.0,
+                6.3499999,
+                6.3499999,
                 1.0
             ]
         },
@@ -2465,8 +2465,8 @@
             "name": "Pivot",
             "parent": "b9e6b49b-1536-4e80-81ec-80d8f5f5bcb1",
             "scale": [
-                10.0,
-                10.0,
+                6.3499999,
+                6.3499999,
                 1.0
             ]
         },
@@ -2523,8 +2523,8 @@
             "name": "Pivot",
             "parent": "243c9c58-841c-49e4-9361-432311c7393d",
             "scale": [
-                10.0,
-                10.0,
+                6.3499999,
+                6.3499999,
                 1.0
             ]
         },
@@ -2581,8 +2581,8 @@
             "name": "Pivot",
             "parent": "a118fcc4-be9e-418e-8c38-ec6613b24fc6",
             "scale": [
-                10.0,
-                10.0,
+                6.3499999,
+                6.3499999,
                 1.0
             ]
         },
@@ -3422,7 +3422,7 @@
             "translation": [
                 -2.0,
                 0.0,
-                -22.0
+                -200.0
             ],
             "components": [
                 {
@@ -7841,70 +7841,6 @@
                 }
             ]
         },
-        "57f0a7a6-200e-4220-b93e-9c18415b3304": {
-            "name": "MuroB",
-            "parent": "de312993-6b7d-4c65-a920-2acf3d133837"
-        },
-        "8f05da47-b7bc-486f-9db2-8473662b8e18": {
-            "name": "Pivot",
-            "parent": "57f0a7a6-200e-4220-b93e-9c18415b3304",
-            "translation": [
-                0.0,
-                7.5135726,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "17f6728e-bf34-41fd-8bb5-f71429cedff3": {
-            "link": {
-                "name": "polySurface19_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            },
-            "parent": "8f05da47-b7bc-486f-9db2-8473662b8e18",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        "44e8d17a-628b-49b2-a1bc-e3271158cafa": {
-            "link": {
-                "name": "polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            },
-            "parent": "17f6728e-bf34-41fd-8bb5-f71429cedff3"
-        },
-        "c7ec0851-4eaa-4e6a-be72-e52335a6e13d": {
-            "link": {
-                "name": "polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            },
-            "parent": "44e8d17a-628b-49b2-a1bc-e3271158cafa"
-        },
-        "bdf9e801-95ba-4018-a12a-a0dbc42b7a52": {
-            "link": {
-                "name": "polySurface19_$AssimpFbx$_ScalingPivotInverse<polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            },
-            "parent": "c7ec0851-4eaa-4e6a-be72-e52335a6e13d"
-        },
-        "5d43f8d3-1582-48bc-9d47-fc90d821fc28": {
-            "link": {
-                "name": "polySurface19<polySurface19_$AssimpFbx$_ScalingPivotInverse<polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            },
-            "parent": "bdf9e801-95ba-4018-a12a-a0dbc42b7a52"
-        },
         "1abca42b-8c05-4ed7-bb00-8ad937fe708b": {
             "name": "PhysX",
             "parent": "05081c1c-e89f-4070-b72e-7d5b06d79b4c",
@@ -7932,26 +7868,6 @@
                 0.130923,
                 0.1675595,
                 0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "48931aee-b7b9-4a33-afd2-e204bfa3e8d1": {
-            "name": "25",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
-            "translation": [
-                -15.6695413,
-                0.0,
-                6.7526855
             ],
             "rotation": [
                 0.0,
@@ -8589,8 +8505,8 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
@@ -8644,8 +8560,8 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
@@ -8699,8 +8615,8 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
@@ -8757,8 +8673,8 @@
                         "shape": "box",
                         "box": {
                             "extents": [
-                                0.25,
-                                1.0,
+                                0.5,
+                                2.0,
                                 0.125
                             ]
                         }
@@ -8766,16 +8682,36 @@
                 }
             ]
         },
-        "bc37587b-36c2-4dfc-963a-6e9c76427aa6": {
+        "32138cac-1f03-4c44-b0ea-e0e8a2f67731": {
+            "name": "25",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -13.7708797,
+                0.0,
+                6.5062255
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68": {
             "name": "1",
-            "parent": "48931aee-b7b9-4a33-afd2-e204bfa3e8d1",
+            "parent": "32138cac-1f03-4c44-b0ea-e0e8a2f67731",
             "components": [
                 {
                     "type": "root",
                     "root": {
-                        "_myNormal": "6eb2e447-b431-49c7-b02f-c8ec75562955",
-                        "_myHurt": "b72c1a81-1568-477b-9f87-8d29d4aae0f5",
-                        "_myDead": "ff224f48-82d0-4c71-af04-cba2220130b6"
+                        "_myNormal": "890edc89-b1d7-475a-9ff6-84260e09e3a3",
+                        "_myHurt": "acc48be9-89b4-4679-a5e8-0cc70c613aa0",
+                        "_myDead": "2754cc8a-72cb-49b7-aedd-5bed4884ffd0"
                     }
                 },
                 {
@@ -8784,8 +8720,8 @@
                         "shape": "box",
                         "box": {
                             "extents": [
-                                0.25,
-                                1.0,
+                                0.5,
+                                2.0,
                                 0.125
                             ]
                         }
@@ -8809,9 +8745,9 @@
                 1.0
             ]
         },
-        "b72c1a81-1568-477b-9f87-8d29d4aae0f5": {
+        "e48772eb-7cb2-4ca4-aa1f-1b70402b5b50": {
             "name": "2",
-            "parent": "bc37587b-36c2-4dfc-963a-6e9c76427aa6",
+            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
             "translation": [
                 0.0,
                 0.0,
@@ -8824,14 +8760,14 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
-        "7ed9a85d-80df-41b1-8955-bfe21f3d3e15": {
+        "b1e016ea-5779-4740-82a3-41b1a1e61d8e": {
             "name": "BigTreeRoots_Fase2",
-            "parent": "b72c1a81-1568-477b-9f87-8d29d4aae0f5",
+            "parent": "e48772eb-7cb2-4ca4-aa1f-1b70402b5b50",
             "components": [
                 {
                     "type": "mesh",
@@ -8864,9 +8800,9 @@
                 1.0
             ]
         },
-        "ff224f48-82d0-4c71-af04-cba2220130b6": {
-            "name": "3",
-            "parent": "bc37587b-36c2-4dfc-963a-6e9c76427aa6",
+        "8b1c85c3-990d-4d8c-9ac6-6e1fd1857a5a": {
+            "name": "1",
+            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
             "translation": [
                 0.0,
                 0.0,
@@ -8879,20 +8815,20 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
-        "3971f197-65ee-4318-8658-53f2f917eeb5": {
-            "name": "BigTreeRoots_Fase3",
-            "parent": "ff224f48-82d0-4c71-af04-cba2220130b6",
+        "78a8d41f-70a1-4dec-b14f-b6920c7d9e52": {
+            "name": "BigTreeRoots_Fase1",
+            "parent": "8b1c85c3-990d-4d8c-9ac6-6e1fd1857a5a",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
+                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
                     }
                 },
                 {
@@ -8919,9 +8855,9 @@
                 1.0
             ]
         },
-        "6eb2e447-b431-49c7-b02f-c8ec75562955": {
-            "name": "1",
-            "parent": "bc37587b-36c2-4dfc-963a-6e9c76427aa6",
+        "b2813f6c-fd71-48f0-83e6-81997d224af5": {
+            "name": "3",
+            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
             "translation": [
                 0.0,
                 0.0,
@@ -8934,20 +8870,20 @@
                 1.0
             ],
             "scale": [
-                1.0,
-                1.0,
+                1.8999999,
+                1.8999999,
                 1.0
             ]
         },
-        "84b9bae8-474c-4e9b-ac53-03d59abd1160": {
-            "name": "BigTreeRoots_Fase1",
-            "parent": "6eb2e447-b431-49c7-b02f-c8ec75562955",
+        "b26ce7a1-5176-4bdd-9db7-4e65d022e8f7": {
+            "name": "BigTreeRoots_Fase3",
+            "parent": "b2813f6c-fd71-48f0-83e6-81997d224af5",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
+                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
                     }
                 },
                 {
@@ -10490,7 +10426,7 @@
                 }
             },
             "viewObject": "21",
-            "visualizePhysX": false
+            "visualizePhysX": true
         },
         "scripting": {
             "sourcePaths": [
