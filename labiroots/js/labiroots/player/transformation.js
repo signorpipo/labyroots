@@ -10,6 +10,11 @@ WL.registerComponent('transformation', {
         Global.myStage = 0;
 
         this._myLastFreeCell = null;
+
+        this._myLamenti = [];
+        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
+        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
+        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -59,11 +64,11 @@ WL.registerComponent('transformation', {
 
             PP.myLeftGamepad.pulse(0.5, 0.5);
             PP.myRightGamepad.pulse(0.5, 0.5);
-
-            let audioPlayer = PP.myAudioManager.createAudioPlayer(AudioID.CHANGE_HUMAN_PHASE);
-            audioPlayer.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-            audioPlayer.play();
         }
+
+        let player = Math.pp_randomPick(this._myLamenti);
+        player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+        player.play();
     },
     _death() {
         this._spawnTree();

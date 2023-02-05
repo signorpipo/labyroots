@@ -38,6 +38,14 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         }
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
+
+        this._myStepDelay = 0.5;
+        this._myStepTimer = new PP.Timer(this._myStepDelay);
+
+        this._mySteps = [];
+        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+        this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_2);
+        this._mySteps[2] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
     }
 
     update(dt) {
@@ -55,6 +63,8 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
     let directionReferenceTransformQuat = PP.quat2_create();
     return function update(dt) {
+        this._myStepTimer.update(dt);
+
         this._myParams.myMaxSpeed = Global.mySetup.myLocomotionSetup.mySpeed;
 
         playerUp = this._myParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
@@ -66,6 +76,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
         axes[1] = Math.abs(axes[1]) > this._myParams.myMovementMinStickIntensityThreshold ? axes[1] : 0;
 
         let horizontalMovement = false;
+        let speedUsed = 0;
         if (!axes.vec2_isZero()) {
             this._myStickIdleTimer.start();
 
@@ -83,6 +94,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 headMovement = direction.vec3_scale(speed * dt, headMovement);
 
                 horizontalMovement = true;
+                speedUsed = speed;
             }
         } else {
             if (this._myStickIdleTimer.isRunning()) {
@@ -122,6 +134,18 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             this._myParams.myPlayerTransformManager.move(headMovement, this._myLocomotionRuntimeParams.myCollisionRuntimeParams);
             if (horizontalMovement) {
                 this._myParams.myPlayerTransformManager.resetReal(true, false, false);
+            }
+
+            if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.01) {
+                if (this._myStepTimer.isDone()) {
+                    let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, speedUsed / 2);
+                    this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.1));
+
+                    let player = Math.pp_randomPick(this._mySteps);
+                    player.setPosition(this._myParams.myPlayerTransformManager.getPosition());
+                    player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                    player.play();
+                }
             }
 
             if (this._myGravitySpeed > 0 && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myIsOnCeiling ||

@@ -34,11 +34,23 @@ WL.registerComponent('fruit', {
         this._myGathered = false;
         this._myUsed = false;
         this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+        this._myIsGrabbed = false;
+
+        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
+        this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
     },
     update: function (dt) {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
+                if (!this._myIsGrabbed) {
+                    this._myAudioPrendi.setPosition(this.object.pp_getPosition());
+                    this._myAudioPrendi.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                    this._myAudioPrendi.play();
+                }
                 this._myGathered = true;
+                this._myIsGrabbed = true;
+            } else {
+                this._myIsGrabbed = false;
             }
         } else {
             this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
@@ -58,6 +70,10 @@ WL.registerComponent('fruit', {
         if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
+
+            this._myAudioMangia.setPosition(this.object.pp_getPosition());
+            this._myAudioMangia.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            this._myAudioMangia.play();
         }
     }
 });
