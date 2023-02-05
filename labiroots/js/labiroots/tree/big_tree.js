@@ -13,26 +13,26 @@ WL.registerComponent('big-tree', {
         this._myHit = 0;
 
         this._myPhases = [];
-        this._myPhases.push(this._myPhase1);
-        this._myPhases.push(this._myPhase2);
-        this._myPhases.push(this._myPhase3);
-        this._myPhases.push(this._myPhase4);
-        this._myPhases.push(this._myPhase5);
 
         this._myCurrentPhase = 0;
-
-        for (let phase of this._myPhases) {
-            phase.pp_setActive(false);
-        }
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myReady) {
+                let children = this.object.pp_getChildren();
+                for (let i = 0; i < children.length; i++) {
+                    this._myPhases[parseInt(children[i].pp_getName()) - 1] = children[i];
+                }
+
+                for (let phase of this._myPhases) {
+                    phase.pp_setActive(false);
+                }
+
                 this._myStarted = true;
                 this._myBigTreeRoots = Global.mySetup.myTreeSetup.myBigTreeRoots;
                 this._myHit = Global.mySetup.myTreeSetup.myBigTreeHit;
 
-                this._myPhases[0].pp_setActive(false);
+                this._myPhases[0].pp_setActive(true);
             }
         } else {
 
@@ -47,7 +47,7 @@ WL.registerComponent('big-tree', {
             }
 
             this._myCurrentPhase++;
-            this._myPhases[this._myCurrentPhase].pp_setActive(false);
+            this._myPhases[this._myCurrentPhase].pp_setActive(true);
         }
     },
     hit() {
@@ -69,4 +69,7 @@ WL.registerComponent('big-tree', {
 
         return clonedComponent;
     },
+    pp_clonePostProcess() {
+        this.start();
+    }
 });

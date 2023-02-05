@@ -116,10 +116,6 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 headMovement = headMovement.vec3_add(verticalMovement, headMovement);
             }
 
-            if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
-                headMovement.vec3_zero();
-            }
-
             feetTransformQuat = this._myParams.myPlayerTransformManager.getTransformQuat(feetTransformQuat);
 
             globalDT = dt;
@@ -132,8 +128,6 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 this._myGravitySpeed < 0 && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myIsOnGround) {
                 this._myGravitySpeed = 0;
             }
-        } else {
-            this._myParams.myPlayerTransformManager.move(headMovement, this._myLocomotionRuntimeParams.myCollisionRuntimeParams, true);
         }
 
         if (this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myIsOnGround) {
