@@ -5,9 +5,21 @@ WL.registerComponent('human-tree', {
         this._myPoints = [];
     },
     start: function () {
+        this._myStarted = false;
+        this._myHit = 0;
         this._myPoints = this.object.pp_getChildren();
+
+        this._myFruits = [];
     },
     update: function (dt) {
+        if (!this._myStarted) {
+            if (Global.myReady) {
+                this._myStarted = true;
+                this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit;
+            }
+        } else {
+
+        }
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -33,7 +45,20 @@ WL.registerComponent('human-tree', {
             fruit.pp_setParent(this.object);
             fruit.pp_setTransformLocalQuat(point.pp_getTransformLocalQuat());
             fruit.pp_setActive(true);
+
+            this._myFruits.push(fruit);
         }
+    },
+    hit() {
+        let hitted = false;
+
+        if (this._myHit > 0) {
+            this._myHit--;
+            hitted = true;
+            // suono
+        }
+
+        return hitted;
     },
     pp_clonePostProcess() {
         this.start();

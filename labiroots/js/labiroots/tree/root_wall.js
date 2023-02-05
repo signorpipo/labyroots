@@ -17,10 +17,15 @@ WL.registerComponent('root-wall', {
         }
     },
     hit() {
+        let hitted = false;
+
         if (this._myHit > 0) {
             this._myHit--;
+            hitted = true;
             // suono
         }
+
+        return hitted;
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);

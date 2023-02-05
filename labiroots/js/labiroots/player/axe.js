@@ -68,14 +68,18 @@ WL.registerComponent('axe', {
                 let root = physXComponent.object.pp_getComponent("root");
                 if (root) {
                     if (root._myHit > 0) {
-                        root.hit();
+                        if (root.hit()) {
+                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                        }
                     }
                 }
 
                 let rootWall = physXComponent.object.pp_getComponent("root-wall");
                 if (rootWall) {
                     if (rootWall._myHit > 0) {
-                        rootWall.hit();
+                        if (rootWall.hit()) {
+                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                        }
                         if (rootWall._myHit == 0) {
                             rootWall.object.pp_setActive(false);
                             this._myToDestroy.push(rootWall.object);
@@ -87,13 +91,40 @@ WL.registerComponent('axe', {
                 let bigTree = physXComponent.object.pp_getComponent("big-tree");
                 if (bigTree) {
                     if (bigTree._myHit > 0) {
-                        bigTree.hit();
+                        if (bigTree.hit()) {
+                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                        }
+
                         if (bigTree._myHit == 0) {
                             bigTree.object.pp_setActive(false);
                             this._myToDestroy.push(bigTree.object);
                             this._myTimerDestroy.start();
                             // suono vittoria
                             // vibrazione
+                        }
+                    }
+                }
+
+                let humanTree = physXComponent.object.pp_getComponent("human-tree");
+                if (humanTree) {
+                    if (humanTree._myHit > 0) {
+                        if (humanTree.hit()) {
+                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                        }
+
+                        if (humanTree._myHit == 0) {
+                            humanTree.object.pp_setActive(false);
+                            this._myToDestroy.push(bigTree.object);
+
+                            let fruits = humanTree._myFruits;
+                            for (let fruit of fruits) {
+                                if (!fruit._myGathered) {
+                                    fruit.pp_setActive(false);
+                                    this._myToDestroy.push(fruit);
+                                }
+                            }
+
+                            this._myTimerDestroy.start();
                         }
                     }
                 }

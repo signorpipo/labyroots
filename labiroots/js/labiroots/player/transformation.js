@@ -8,6 +8,8 @@ WL.registerComponent('transformation', {
         this._myTransformationTimersSetup = null;
         this._myTransformationTimer = new PP.Timer(0);
         Global.myStage = 0;
+
+        this._myLastFreeCell = null;
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -15,6 +17,15 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+
+            let playerPosition = Global.myPlayer.getPosition();
+            let currentCell = Global.myMaze.getCellByPosition(playerPosition);
+            if (currentCell) {
+                if (currentCell.myStaticMazeItemType == LR.MazeItemType.NONE) {
+                    this._myLastFreeCell = currentCell;
+                }
+            }
+
             this._myTransformationTimer.update(dt);
             if (this._myTransformationTimer.isDone()) {
                 if (Global.myPlayerLocomotion.canStop()) {
@@ -24,6 +35,11 @@ WL.registerComponent('transformation', {
                 }
             }
         }
+
+        if (this._myLastFreeCell != null) {
+            //PP.myDebugVisualManager.drawPoint(0, this._myLastFreeCell.myCellPosition, [0, 0, 0, 1], 0.05);
+        }
+
     },
     _start() {
         this._myStarted = true;
@@ -46,10 +62,11 @@ WL.registerComponent('transformation', {
         }
     },
     _death() {
+        this._spawnTree();
         // crea albero nella cella corrente
         // dici alle radici che sei morto
 
-        let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_RESPAWN);
+        let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 
         if (cell != null) {
             Global.myPlayer.teleportPosition(cell[0].myCellPosition, null, true);
@@ -61,7 +78,27 @@ WL.registerComponent('transformation', {
             Global.myAxe.pp_getComponent("axe").resetTransformRespawn();
         }
 
+        this._myLastFreeCell = null;
+
         this._resetTransformation();
+    },
+    _spawnTree() {
+        if (this._myLastFreeCell != null) {
+            let positionTree = this._myLastFreeCell.getRandomPositionOnCell();
+            let types = [];
+            types.push(Global.myPerfectFruit);
+            for (let i = 0; i < Global.mySetup.myTreeSetup.myPerfectTreeRatio; i++) {
+                types.push(Global.myGoodFruit);
+                types.push(Global.myBadFruit);
+            }
+            let randomType = Math.pp_randomPick(types);
+
+            let tree = Global.myTrees[randomType].pp_clone();
+            tree.pp_setPosition(positionTree);
+            tree.pp_getComponent("human-tree").spawnFruits(Math.pp_randomInt(Global.mySetup.myTreeSetup.myMinHumanFruits, Global.mySetup.myTreeSetup.myMaxHumanFruits));
+            tree.pp_setActive(true);
+        }
+
     },
     addStage(full = false) {
         if (Global.myStage < this._myTransformationTimersSetup.length - 1) {

@@ -101,37 +101,22 @@ LR.Maze = class Maze {
 
     getCellByPosition(position) {
         let cellCoordinates = this.convertCellPositionToCellCoordinates(position);
-
-        let cell = null;
-
-        let cellRow = this._myCells[cellCoordinates[0]];
-        if (cellRow != null) {
-            cell = cellRow[cellCoordinates[1]];
-        }
-
-        if (cell == null) {
-            cell = this.createCell(cellCoordinates);
-        }
-
-        return cell;
+        return this._myCells[cellCoordinates[0]][cellCoordinates[1]];
     }
 
     convertCellPositionToCellCoordinates(position) {
+        let cellCoordinates = [0, 0];
+        let positionTopLeft = position.vec3_sub(this._myTopLeftPosition);
 
+        cellCoordinates[0] = Math.max(0, -(Math.floor(positionTopLeft[2] / this._myCellSize) + 1));
+        cellCoordinates[1] = Math.max(0, -(Math.floor(positionTopLeft[0] / this._myCellSize) + 1));
+
+        return cellCoordinates;
     }
 
     convertCellCoordinatesToCellPosition(cellCoordinates) {
-
-    }
-
-    createCell(cellCoordinates) {
-        let cell = new MazeCell();
-
-        cell.myCellCoordinates.vec2_copy(cellCoordinates);
-        cell.myCellPosition = this.convertCellCoordinatesToCellPosition(cellCoordinates);
-        cell.myCellSize = this._myCellSize;
-
-        return cell;
+        let position = [-((this._myCellSize / 2) + cellCoordinates[1] * this._myCellSize), 0, -((this._myCellSize / 2) + cellCoordinates[0] * this._myCellSize)];
+        return position;
     }
 
     getCellsByType(itemType) {
@@ -166,7 +151,7 @@ LR.MazeCell = class MazeCell {
     getRandomPositionOnCell() {
         let randomDistance = Math.pp_random(0, this.myCellSize / 2);
         let randomAngle = Math.pp_random(0, 360);
-        let randomDirection = this.myHorizontalDirection.vec3_rotateAxis(randomAngle, PP.vec3_create(0, 1, 0), randomDirection);
+        let randomDirection = this.myHorizontalDirection.vec3_rotateAxis(randomAngle, PP.vec3_create(0, 1, 0));
         randomDirection.vec3_scale(randomDistance, randomDirection);
         let randomPosition = this.myCellPosition.vec3_add(randomDirection, randomDirection);
 

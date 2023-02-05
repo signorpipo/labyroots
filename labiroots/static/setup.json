@@ -6,10 +6,14 @@
 	},
 "myTreeSetup":
 	{
+		"myHumanTreeHit": 3,
 		"myRootHit": 3,
 		"myBigTreeHit": 3,
 		"myRootWallHit": 3,
-		"myBigTreeRoots": 4
+		"myBigTreeRoots": 4,
+		"myPerfectTreeRatio": 3,
+		"myMinHumanFruits": 1,
+		"myMaxHumanFruits": 3
 	},
 "myPlayerSetup":
 	{
