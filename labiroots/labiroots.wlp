@@ -1014,44 +1014,9 @@
             "name": "1",
             "parent": "28c6dbe0-a4a1-4556-b4c6-a8d832be5847",
             "translation": [
-                0.0,
+                -5.5020775,
                 0.0,
                 0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "610d46b0-1a3a-43eb-a029-c9abe2a0aa91": {
-            "name": "AlberoUmano1",
-            "parent": "3e9d748a-7714-4655-9820-de408a069dab",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0001487,
-                0.9420548,
-                -0.0000648
             ],
             "rotation": [
                 0.0,
@@ -1217,13 +1182,29 @@
         },
         "c9fb61ae-8b59-4d08-892f-585800456fa4": {
             "name": "60",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
+            "translation": [
+                -0.8459166,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
             "name": "70",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
-                -2.7127923,
+                0.9937732,
                 0.0,
                 0.0
             ],
@@ -1264,6 +1245,9 @@
                 },
                 {
                     "type": "pp-grabbable"
+                },
+                {
+                    "type": "fruit"
                 }
             ],
             "translation": [
@@ -1284,7 +1268,7 @@
             ]
         },
         "292dd504-80bf-417e-b1f2-a0c3ea3c899c": {
-            "name": "FruttoBlu",
+            "name": "FruttoRosso",
             "parent": "de34d2d5-99ee-4cb2-baeb-2055d066e9a2",
             "components": [
                 {
@@ -1306,6 +1290,9 @@
                         "kinematic": true,
                         "groups": 4
                     }
+                },
+                {
+                    "type": "fruit"
                 }
             ],
             "translation": [
@@ -1401,71 +1388,13 @@
                 1.0
             ]
         },
-        "648a3a22-3d59-4658-933a-182f4e03102d": {
-            "name": "AlberoUmano1",
-            "parent": "e1662ae0-6719-4fd0-ac3a-9a27714ec576",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
-                    }
-                }
-            ],
-            "translation": [
-                0.0001487,
-                0.9420548,
-                -0.0000648
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
         "28123506-56bf-4c94-aca3-78970b86de89": {
             "name": "1",
             "parent": "14aa8b49-0ed3-436e-a829-5b5a94f5e3d3",
             "translation": [
-                -7.3603329,
+                -1.7742124,
                 0.0,
                 -18.0545005
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "e81ae8a9-3d85-4bbb-80b4-86be3730b5e8": {
-            "name": "AlberoUmano1",
-            "parent": "28123506-56bf-4c94-aca3-78970b86de89",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
-                    }
-                }
-            ],
-            "translation": [
-                0.0001487,
-                0.9420548,
-                -0.0000648
             ],
             "rotation": [
                 0.0,
@@ -1483,7 +1412,7 @@
             "name": "1",
             "parent": "3ddc2a73-2997-48c8-a596-1f8c758fa456",
             "translation": [
-                -7.3603329,
+                1.5166201,
                 0.0,
                 -18.0545005
             ],
@@ -1500,14 +1429,20 @@
             ]
         },
         "af8d8686-fa82-40a4-8632-01d91c2030aa": {
-            "name": "AlberoUmano1",
-            "parent": "04577bc4-2b59-4f86-a157-beff38d4397d",
+            "name": "AlberoPrototipato",
+            "parent": "c44d8b40-60db-4f68-a05e-be17e32f6a6c",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
                         "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
                     }
                 }
             ],
@@ -6846,6 +6781,361 @@
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
             "parent": "cc873ba1-2394-4da7-98bd-a2784e644a97"
+        },
+        "c44d8b40-60db-4f68-a05e-be17e32f6a6c": {
+            "name": "Pivot",
+            "parent": "04577bc4-2b59-4f86-a157-beff38d4397d",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "3807e6d8-4c26-4dff-a1bf-9875595c6502": {
+            "name": "Pivot",
+            "parent": "3e9d748a-7714-4655-9820-de408a069dab",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "d2199533-5b12-4a16-a3f3-a6fddf31697a": {
+            "name": "Pivot",
+            "parent": "e1662ae0-6719-4fd0-ac3a-9a27714ec576"
+        },
+        "235abdba-4567-49b0-a496-92a10153503d": {
+            "name": "Pivot",
+            "parent": "28123506-56bf-4c94-aca3-78970b86de89",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "feadefc9-b0c3-41fc-a041-f292a7edfa88": {
+            "name": "AlberoBlu",
+            "parent": "3807e6d8-4c26-4dff-a1bf-9875595c6502",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "e241c7a0-d535-4a70-b1f2-91426a1d9964"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.8799999,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "9e72d912-9cb4-4054-af51-9d5f30aeb20a": {
+            "name": "AlberoRosso",
+            "parent": "d2199533-5b12-4a16-a3f3-a6fddf31697a",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "d2312430-972c-4cad-8e8b-d962402ea8ee"
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.8799999,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c5d3d710-4867-4281-ae3d-ad1c854e401e": {
+            "name": "AlberoGiallo",
+            "parent": "235abdba-4567-49b0-a496-92a10153503d",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "29ed7b79-b73a-4fe0-8605-19847278c801"
+                    }
+                },
+                {
+                    "type": "billboard-player"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.8799999,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "2fe98230-c82b-4784-93e2-2fd5e0a37803": {
+            "name": "FruttoGiallo",
+            "parent": "9c7d9729-760a-4b57-b211-5e176e88b1a3",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "e5925a6f-d345-4eb3-a928-f6ec5ef39902"
+                    }
+                },
+                {
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "groups": 4
+                    }
+                },
+                {
+                    "type": "fruit"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "7ea432f0-e522-4c7d-b12e-5ed5587aa236": {
+            "name": "FruttoGiallo2",
+            "parent": "aa179823-35a9-4ca9-a89e-c03c8b1f5af3",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
+                    }
+                },
+                {
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "sphere": {
+                            "radius": 0.075
+                        },
+                        "kinematic": true,
+                        "groups": 4
+                    }
+                },
+                {
+                    "type": "fruit"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.075,
+                0.075,
+                0.075
+            ]
+        },
+        "aa179823-35a9-4ca9-a89e-c03c8b1f5af3": {
+            "name": "90",
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+        },
+        "e5317529-f25c-4705-8c04-8d1682966190": {
+            "name": "Axe",
+            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
+            "components": [
+                {
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "gravity": true,
+                        "kinematic": true,
+                        "trigger": false,
+                        "allowSimulation": true,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.035,
+                                0.125,
+                                0.035
+                            ]
+                        },
+                        "groups": 8,
+                        "block": 253
+                    }
+                }
+            ],
+            "translation": [
+                -2.8769958,
+                1.5,
+                -22.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "98f7455d-e7d5-49cc-a40d-5ba70b9be1a7": {
+            "link": {
+                "name": "polySurface5_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\ASCIA.fbx"
+            },
+            "parent": "e5317529-f25c-4705-8c04-8d1682966190",
+            "translation": [
+                0.0099999,
+                0.09,
+                0.0
+            ],
+            "scale": [
+                0.05,
+                0.05,
+                0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "803a124c-fafc-4573-989e-8200429a62a6": {
+            "link": {
+                "name": "polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\ASCIA.fbx"
+            },
+            "parent": "98f7455d-e7d5-49cc-a40d-5ba70b9be1a7"
+        },
+        "cb75dfbd-6e73-4ca1-8e55-8c813d681e8b": {
+            "link": {
+                "name": "polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\ASCIA.fbx"
+            },
+            "parent": "803a124c-fafc-4573-989e-8200429a62a6"
+        },
+        "c3b660bc-130c-4f3e-b78a-ad2f09f36ead": {
+            "link": {
+                "name": "polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\ASCIA.fbx"
+            },
+            "parent": "cb75dfbd-6e73-4ca1-8e55-8c813d681e8b"
+        },
+        "43c2857a-6f47-497e-a266-38d90d9f1cd2": {
+            "link": {
+                "name": "polySurface5<polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\ASCIA.fbx"
+            },
+            "parent": "c3b660bc-130c-4f3e-b78a-ad2f09f36ead"
         }
     },
     "meshes": {
@@ -7138,6 +7428,30 @@
                 "name": "radici_muro.png",
                 "file": "assets\\textures\\Trees\\radici_muro.png"
             }
+        },
+        "c309d079-8193-42a6-8105-02c05470331a": {
+            "link": {
+                "name": "Albero_Blu.png",
+                "file": "assets\\textures\\Trees\\Albero_Blu.png"
+            }
+        },
+        "34073829-de02-4617-8acf-ad6822de9d24": {
+            "link": {
+                "name": "Albero_Rosso.png",
+                "file": "assets\\textures\\Trees\\Albero_Rosso.png"
+            }
+        },
+        "551c1ef7-11c1-47c5-afce-e2e9166a2a6c": {
+            "link": {
+                "name": "Albero_Giallo.png",
+                "file": "assets\\textures\\Trees\\Albero_Giallo.png"
+            }
+        },
+        "7a4f7fc6-d98f-42ac-b19a-a1545a96159f": {
+            "link": {
+                "name": "Frutto_Giallo.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
+            }
         }
     },
     "images": {
@@ -7235,6 +7549,34 @@
             "link": {
                 "name": "radici_muro.png",
                 "file": "assets\\textures\\Trees\\radici_muro.png"
+            },
+            "compress": false
+        },
+        "7f7327bb-de83-4205-9d6f-bfc722bb2f76": {
+            "link": {
+                "name": "Albero_Blu.png",
+                "file": "assets\\textures\\Trees\\Albero_Blu.png"
+            },
+            "compress": false
+        },
+        "19038d66-4612-403a-8dd2-2eb13b1dc196": {
+            "link": {
+                "name": "Albero_Rosso.png",
+                "file": "assets\\textures\\Trees\\Albero_Rosso.png"
+            },
+            "compress": false
+        },
+        "a01a037e-3c11-4b09-974b-54b3c1fec2aa": {
+            "link": {
+                "name": "Albero_Giallo.png",
+                "file": "assets\\textures\\Trees\\Albero_Giallo.png"
+            },
+            "compress": false
+        },
+        "d1343922-519e-449f-931b-4207d62acec9": {
+            "link": {
+                "name": "Frutto_Giallo.png",
+                "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
             },
             "compress": false
         }
@@ -7425,7 +7767,7 @@
             "pipeline": "14",
             "name": "FruttoRosso",
             "Phong": {
-                "diffuseTexture": "9ccf1cf5-0688-4f66-afa3-cf43aefbb342",
+                "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f",
                 "ambientFactor": 0.5,
                 "diffuseColor": [
                     0.0,
@@ -7697,6 +8039,86 @@
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
+            }
+        },
+        "e241c7a0-d535-4a70-b1f2-91426a1d9964": {
+            "name": "AlberoBlu",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "c309d079-8193-42a6-8105-02c05470331a"
+            }
+        },
+        "d2312430-972c-4cad-8e8b-d962402ea8ee": {
+            "name": "AlberoRosso",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "34073829-de02-4617-8acf-ad6822de9d24"
+            }
+        },
+        "29ed7b79-b73a-4fe0-8605-19847278c801": {
+            "name": "AlberoGiallo",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseTexture": "551c1ef7-11c1-47c5-afce-e2e9166a2a6c",
+                "ambientFactor": 0.5
+            }
+        },
+        "e5925a6f-d345-4eb3-a928-f6ec5ef39902": {
+            "name": "FruttoGiallo",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f"
             }
         }
     },
@@ -8070,7 +8492,11 @@
         "assets/models/Angoli/Angolo_A.fbx",
         "assets/models/Angoli/Angolo_B.fbx",
         "assets/models/Angoli/Angolo_1.fbx",
-        "assets/models/Angoli/Angolo_2.fbx"
+        "assets/models/Angoli/Angolo_2.fbx",
+        "assets/textures/Trees/Albero_Blu.png",
+        "assets/textures/Trees/Albero_Rosso.png",
+        "assets/textures/Trees/Albero_Giallo.png",
+        "assets/textures/Fruits/Frutto_Giallo.png"
     ],
     "fonts": {
         "147": {
