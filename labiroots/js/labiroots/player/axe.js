@@ -1,8 +1,6 @@
 WL.registerComponent('axe', {
 }, {
     init: function () {
-    },
-    start: function () {
         this._myFirstUpdate = true;
         this._myStartTransform = PP.quat2_create();
         this._myRespawnTransform = PP.quat2_create();
@@ -10,12 +8,14 @@ WL.registerComponent('axe', {
 
         this._mySpeed = 0;
     },
+    start: function () {
+    },
 
     update: function (dt) {
         if (this._myFirstUpdate) {
             this._myFirstUpdate = false;
 
-            this._myPhysX = this.object.pp_getComponent('physx');
+            this._myPhysX = this.object.pp_getComponentChildren('physx');
             this._myPhysX.onCollision(this._onCollision.bind(this));
             this._myToDestroy = [];
             this._myTimerDestroy = new PP.Timer(0.5, false);

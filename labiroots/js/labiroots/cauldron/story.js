@@ -7,14 +7,14 @@ WL.registerComponent('story', {
         this._myStarted = false;
         this._myResetPhysx = true;
         this._myTimer = new PP.Timer(1);
-
-        Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
                     this._myStarted = true;
+
+                    Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                 }
             }
         } else {

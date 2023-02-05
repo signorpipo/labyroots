@@ -36,8 +36,12 @@ WL.registerComponent('fruit', {
         this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
     },
     update: function (dt) {
-        if (this._myGrabbable.isGrabbed()) {
-            this._myGathered = true;
+        if (this._myGrabbable != null) {
+            if (this._myGrabbable.isGrabbed()) {
+                this._myGathered = true;
+            }
+        } else {
+            this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
         }
     },
     pp_clone(targetObject) {
@@ -51,7 +55,7 @@ WL.registerComponent('fruit', {
         this.start();
     },
     activateEffect() {
-        if (!this._myUsed && this._myGrabbable.isGrabbed()) {
+        if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
         }
