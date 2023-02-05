@@ -2646,7 +2646,14 @@
                 "name": "polySurface8<polySurface8_$AssimpFbx$_ScalingPivotInverse<polySurface8_$AssimpFbx$_ScalingPivot<polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Muro_1.fbx"
             },
-            "parent": "0d70224d-6aa3-41c3-981a-ec790a03f70f"
+            "parent": "0d70224d-6aa3-41c3-981a-ec790a03f70f",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "94d90252-e67f-428a-ba48-23ef8356a8c6": {
             "name": "Pivot",
@@ -3237,7 +3244,14 @@
                 "name": "polySurface8<polySurface8_$AssimpFbx$_ScalingPivotInverse<polySurface8_$AssimpFbx$_ScalingPivot<polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Muri\\Muro_1.fbx"
             },
-            "parent": "4b50d238-2d74-4785-9c6b-8a89bc542c6f"
+            "parent": "4b50d238-2d74-4785-9c6b-8a89bc542c6f",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "f2e14651-db06-4027-b90c-285afa03261c": {
             "link": {
@@ -3805,7 +3819,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "abd87cf8-be6e-4909-9c00-c10753db903b"
+            "parent": "abd87cf8-be6e-4909-9c00-c10753db903b",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "a9b1435e-5d36-4207-a86e-090fdbb88c14": {
             "link": {
@@ -3845,7 +3866,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "b0cd9826-dc54-477e-b5d5-caacb9f7757c"
+            "parent": "b0cd9826-dc54-477e-b5d5-caacb9f7757c",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "0b2e7a9e-ee69-4321-a39e-aaa19bfafc94": {
             "name": "2",
@@ -3944,7 +3972,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "bef1b38e-834f-4b6c-95fa-6888c10e5209"
+            "parent": "bef1b38e-834f-4b6c-95fa-6888c10e5209",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "cd3d059f-16bf-48a8-8138-974c024e6071": {
             "name": "Pivot",
@@ -4103,7 +4138,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "6f572349-1729-495c-87dd-2ee603f6e3b9"
+            "parent": "6f572349-1729-495c-87dd-2ee603f6e3b9",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "b49b60ba-c65d-4f36-b345-44865d663bc2": {
             "name": "1",
@@ -4202,7 +4244,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "c1e87e8f-4a76-4b3c-86cf-1142e31be957"
+            "parent": "c1e87e8f-4a76-4b3c-86cf-1142e31be957",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "e1aa3bd0-971f-4983-9778-c532fbaf8d01": {
             "name": "2",
@@ -4301,7 +4350,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "75fe90e1-54d6-4c9b-832c-3a1e2c2d31e0"
+            "parent": "75fe90e1-54d6-4c9b-832c-3a1e2c2d31e0",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "f900031e-2b08-4d1d-bf88-b6168cfec059": {
             "name": "2",
@@ -4400,7 +4456,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "10bebde8-acbe-4a6a-9d6b-358c49dbf598"
+            "parent": "10bebde8-acbe-4a6a-9d6b-358c49dbf598",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "3c17e838-5b72-43ef-b1a2-22beb9524494": {
             "name": "1",
@@ -4549,7 +4612,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "fc23d28b-196d-4a0c-8879-0127cee8d383"
+            "parent": "fc23d28b-196d-4a0c-8879-0127cee8d383",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "ae0768d8-a98f-41d6-8e9a-9a53a16632fa": {
             "name": "1",
@@ -4648,7 +4718,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "4f689331-aace-4497-8989-c4451130eab9"
+            "parent": "4f689331-aace-4497-8989-c4451130eab9",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "0c52b87a-9cea-4cc5-aa1c-d319da644dc2": {
             "name": "2",
@@ -4747,7 +4824,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "d84f19c3-cc4b-4dca-b167-fb9f4b956a5e"
+            "parent": "d84f19c3-cc4b-4dca-b167-fb9f4b956a5e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "4df42fe2-7384-4d3b-b973-688f6d6918d0": {
             "name": "2",
@@ -4846,7 +4930,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "17184ac1-e99a-40f2-93dd-32b781c1b37f"
+            "parent": "17184ac1-e99a-40f2-93dd-32b781c1b37f",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "f74fc854-3ab9-4b74-9ae9-9899253cc050": {
             "name": "1",
@@ -4995,7 +5086,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "146ea24a-db4d-4311-a866-938c7b630308"
+            "parent": "146ea24a-db4d-4311-a866-938c7b630308",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "5ab6d1f7-6785-4a64-9ade-04b1bf95ec81": {
             "name": "1",
@@ -5094,7 +5192,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "2fe65470-99a1-4e24-a8e7-513231a634e3"
+            "parent": "2fe65470-99a1-4e24-a8e7-513231a634e3",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "1c72983b-e130-4799-9670-0d98ddd61bdd": {
             "name": "2",
@@ -5193,7 +5298,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "77b0a021-6787-4a83-8b2a-4eac34882760"
+            "parent": "77b0a021-6787-4a83-8b2a-4eac34882760",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "c69568fa-74f8-4386-a5ff-2329bd674080": {
             "name": "2",
@@ -5292,7 +5404,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "449b4890-c3eb-4b2c-8548-c82b25a91561"
+            "parent": "449b4890-c3eb-4b2c-8548-c82b25a91561",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "4a350bcb-211c-4881-9973-30e1bdf8b724": {
             "name": "1",
@@ -5441,7 +5560,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "89cbe78e-606e-4855-bc53-4c40546eb848"
+            "parent": "89cbe78e-606e-4855-bc53-4c40546eb848",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "35b7dc36-4ada-4373-8f9b-78424c4b8f12": {
             "name": "1",
@@ -5540,7 +5666,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "1671092f-fe02-4ca7-b666-2e9c50afdb29"
+            "parent": "1671092f-fe02-4ca7-b666-2e9c50afdb29",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "ba8e843d-ab94-4e44-a45f-cfd40d6b8ac6": {
             "name": "2",
@@ -5639,7 +5772,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "31583a3f-c4b6-4b60-91d9-936176769077"
+            "parent": "31583a3f-c4b6-4b60-91d9-936176769077",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "346e06d9-a46c-4e99-bb73-f468d37d812a": {
             "name": "2",
@@ -5738,7 +5878,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "4b2aa247-d278-4945-b1d8-d10a88b2b6b1"
+            "parent": "4b2aa247-d278-4945-b1d8-d10a88b2b6b1",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "cf4587d3-8035-4402-a625-5e3286d1760f": {
             "name": "1",
@@ -5887,7 +6034,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "b65868eb-eba2-46ba-a98b-e9ef11fa6e1e"
+            "parent": "b65868eb-eba2-46ba-a98b-e9ef11fa6e1e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "e9357ee1-467b-45c9-a134-9394fc209719": {
             "name": "1",
@@ -5986,7 +6140,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "c04dad43-823c-423c-8a61-b5ac065ebe9d"
+            "parent": "c04dad43-823c-423c-8a61-b5ac065ebe9d",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "8eec3c14-469f-4b58-94ca-33c4eed1e367": {
             "name": "2",
@@ -6085,7 +6246,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "5345b084-acda-447a-8b0e-71f65e684ae1"
+            "parent": "5345b084-acda-447a-8b0e-71f65e684ae1",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "d7e89bdb-fcf2-4f64-a6a5-ba05a3fae676": {
             "name": "1",
@@ -6234,7 +6402,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "acdd9a7a-e4ff-497a-afad-8d32d233b5d9"
+            "parent": "acdd9a7a-e4ff-497a-afad-8d32d233b5d9",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "4559bf3e-3b2c-4744-aeb4-eb4045b72c89": {
             "name": "1",
@@ -6333,7 +6508,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "fac20fec-1014-4c4a-b386-9b73845e2a0f"
+            "parent": "fac20fec-1014-4c4a-b386-9b73845e2a0f",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "66198cd1-2050-4efd-8533-b5ddfa77781f": {
             "name": "2",
@@ -6432,7 +6614,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "2d163453-883c-4ecc-a51b-4c13bc1a5f51"
+            "parent": "2d163453-883c-4ecc-a51b-4c13bc1a5f51",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "775edc5b-9cdf-42fd-af04-a48f21b60d6b": {
             "name": "33",
@@ -6585,7 +6774,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "3c1b296d-3800-42cd-b2ee-b7a5dc31de62"
+            "parent": "3c1b296d-3800-42cd-b2ee-b7a5dc31de62",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "bf6ef3a3-9937-4886-a845-6f29601145ec": {
             "name": "1",
@@ -6684,7 +6880,14 @@
                 "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
             },
-            "parent": "de8ffede-2686-4963-85e8-d05cab169e20"
+            "parent": "de8ffede-2686-4963-85e8-d05cab169e20",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "b9498f44-133e-49e3-afda-f2cb015cb8f1": {
             "name": "2",
@@ -6783,7 +6986,14 @@
                 "name": "ANgolo_5<ANgolo_5_$AssimpFbx$_ScalingPivotInverse<ANgolo_5_$AssimpFbx$_ScalingPivot<ANgolo_5_$AssimpFbx$_RotationPivotInverse<ANgolo_5_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             },
-            "parent": "cc873ba1-2394-4da7-98bd-a2784e644a97"
+            "parent": "cc873ba1-2394-4da7-98bd-a2784e644a97",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                    }
+                }
+            ]
         },
         "c44d8b40-60db-4f68-a05e-be17e32f6a6c": {
             "name": "Pivot",
@@ -8244,12 +8454,6 @@
                     0.0,
                     0.0,
                     0.0,
-                    1.0
-                ],
-                "diffuseColor": [
-                    0.3185959,
-                    0.309727,
-                    0.3725489,
                     1.0
                 ],
                 "ambientFactor": 0.5
