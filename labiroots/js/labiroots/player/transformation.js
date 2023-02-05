@@ -58,7 +58,7 @@ WL.registerComponent('transformation', {
         }
 
         if (Global.myAxe != null) {
-            Global.myAxe.resetTransformRespawn();
+            Global.myAxe.pp_getComponent("axe").resetTransformRespawn();
         }
 
         this._resetTransformation();
