@@ -296,7 +296,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             }
         }
 
-        this._myPlayerObscureManager.update(dt);
+        //this._myPlayerObscureManager.update(dt);
     }
 
     setIdle(idle) {
