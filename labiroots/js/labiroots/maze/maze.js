@@ -23,7 +23,7 @@ LR.Maze = class Maze {
                 let intValue = parseInt(value);
                 let mazeItemType = intValue;
                 let fruits = 0;
-                if (intValue >= 60) {
+                if (intValue >= 50) {
                     mazeItemType = Math.floor(intValue / 10) * 10;
                     fruits = intValue % 10;
                 }
@@ -79,6 +79,10 @@ LR.Maze = class Maze {
                             totalWalls += 1;
                             if (cell.myFruits > 0) {
                                 // get tree component and set fruits
+                            }
+
+                            if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
+                                Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
                             }
                         }
                     }

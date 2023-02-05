@@ -10,6 +10,22 @@ WL.registerComponent('fruit', {
                 indexes.pp_removeEqual(random);
                 Global.myFruitRandomPowers[firstIndex] = Global.myFruitPowers[random];
                 firstIndex += 10;
+
+                if (random == 0) {
+                    Global.myGoodFruit = firstIndex;
+                }
+
+                if (random == 1) {
+                    Global.myBadFruit = firstIndex;
+                }
+
+                if (random == 2) {
+                    Global.myPerfectFruit = firstIndex;
+                }
+
+                if (random == 3) {
+                    Global.myEvilFruit = firstIndex;
+                }
             }
         }
     },
@@ -50,4 +66,9 @@ Global.myFruitPowers[0] = decreaseStage;
 Global.myFruitPowers[1] = increaseStage;
 Global.myFruitPowers[2] = decreaseStage;
 Global.myFruitPowers[3] = increaseStage;
+
+Global.myGoodFruit = null;
+Global.myBadFruit = null;
+Global.myPerfectFruit = null;
+Global.myEvilFruit = null;
 

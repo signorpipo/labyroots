@@ -4,7 +4,7 @@ WL.registerComponent('axe', {
     },
     start: function () {
         this._myFirstUpdate = true;
-        this._myStartTransform = null;
+        this._myStartTransform = PP.quat2_create();
         this._myRespawnTransform = null;
         this._myPrevPosition = [0, 0, 0];
 
@@ -46,9 +46,11 @@ WL.registerComponent('axe', {
 
         this._myPrevPosition.vec3_copy(currentPosition);
     },
-    setStartTransforms(startTransform, respawnTransform) {
-        this._myStartTransform = startTransform;
-        this._myRespawnTransform = respawnTransform;
+    setStartTransforms(cellPosition) {
+        let axePosition = cellPosition.vec3_add([0, 1.4, -0.20]);
+        axeRotation = [45, -55, -15];
+        this._myStartTransform.quat2_setPositionRotationQuat(axePosition, axeRotation.vec3_degreesToQuat());
+        this._myRespawnTransform = this._myStartTransform;
 
         this.object.pp_setTransformQuat(this._myStartTransform);
     },

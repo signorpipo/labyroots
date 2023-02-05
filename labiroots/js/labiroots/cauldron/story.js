@@ -41,6 +41,7 @@ WL.registerComponent('story', {
             if (this._myTimer.isRunning()) {
                 this._myTimer.update(dt);
                 if (this._myTimer.isDone()) {
+                    Global.myAxe.pp_setActive(true);
                     Global.myReady = true;
                 }
             }
