@@ -99,6 +99,7 @@ LR.Maze = class Maze {
 
                             if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
                                 Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
+                                Global.myAxeCell = cell;
                             }
                         }
                     }
@@ -146,6 +147,8 @@ LR.Maze = class Maze {
         return cells;
     }
 }
+
+Global.myAxeCell = null;
 
 LR.MazeCell = class MazeCell {
     constructor() {

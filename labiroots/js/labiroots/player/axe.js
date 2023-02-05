@@ -56,6 +56,7 @@ WL.registerComponent('axe', {
     },
     resetTransformRespawn() {
         this._myGrabbable.release();
+        this._myResetPos = true;
         this.object.pp_setTransformQuat(this._myRespawnTransform);
     },
     _onCollision(type, physXComponent) {
@@ -128,7 +129,6 @@ WL.registerComponent('axe', {
                                         fruit.pp_getComponent("physx").kinematic = false;
                                     }
                                     //fruit.pp_setActive(false);
-
                                 }
                             }
 
@@ -141,6 +141,8 @@ WL.registerComponent('axe', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+
+        clonedComponent._myStartTransform.quat2_copy(this._myStartTransform);
 
         return clonedComponent;
     }

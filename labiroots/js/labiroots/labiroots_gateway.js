@@ -29,7 +29,7 @@ WL.registerComponent("labiroots-gateway", {
                 Global.myFruits[LR.MazeItemType.HUMAN_TREE_4] = fruit4;
 
                 let axe = gameplayItems.pp_getObjectByName("Axe");
-                Global.myAxe = axe;
+                Global.myAxe = axe.pp_clone();
             }
 
             let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
