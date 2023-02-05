@@ -331,7 +331,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
         simplifiedParams.myAverageSpeed = this._myParams.myMaxSpeed;
 
-        simplifiedParams.myCanFly = this._myParams.myFlyEnabled;
+        simplifiedParams.myCanFly = false;
 
         simplifiedParams.myShouldSlideAgainstWall = true;
 
@@ -356,6 +356,10 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
         simplifiedParams.myVerticalCheckDebugActive = false;
 
         let colliderSetup = PP.CharacterColliderUtils.createCharacterColliderSetupSimplified(simplifiedParams);
+
+        colliderSetup.myVerticalCheckSetup.myVerticalPositionCheckEnabled = false;
+        colliderSetup.myVerticalCheckSetup.myVerticalPositionCheckEnabled = false;
+        colliderSetup.myVerticalCheckSetup.myVerticalCheckCircumferenceSlices = 3;
 
         this._myCollisionCheckParamsMovement = PP.CollisionCheckBridge.convertCharacterColliderSetupToCollisionCheckParams(colliderSetup, this._myCollisionCheckParamsMovement);
     }

@@ -13,7 +13,7 @@ WL.registerComponent('pp-grabbable', {
         this._myReleaseCallbacks = new Map();   // Signature: callback(grabber, grabbable, isThrow)
     },
     start: function () {
-        this._myOldParent = this.object.parent;
+        this._myOldParent = null;
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myOldKinematicValue = null;
     },
@@ -29,7 +29,7 @@ WL.registerComponent('pp-grabbable', {
 
         this._myPhysX.kinematic = true;
 
-        this._myOldParent = this.object.parent;
+        this._myOldParent = null;
         this.object.pp_setParent(grabber);
 
         this._myIsGrabbed = true;

@@ -78,6 +78,10 @@ LR.Maze = class Maze {
                             objectToSpawn.pp_setPosition(cell.myCellPosition);
                             totalWalls += 1;
                             if (cell.myFruits > 0) {
+                                let tree = objectToSpawn.pp_getComponent("human-tree");
+                                if (tree != null) {
+                                    tree.spawnFruits(cell.myFruits);
+                                }
                                 // get tree component and set fruits
                             }
 

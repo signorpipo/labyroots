@@ -34,7 +34,6 @@ WL.registerComponent('fruit', {
         this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
     },
     update: function (dt) {
-        //attivare se grabbato
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -42,6 +41,9 @@ WL.registerComponent('fruit', {
         clonedComponent._myType = this._myType;
 
         return clonedComponent;
+    },
+    pp_clonePostProcess() {
+        this.start();
     },
     activateEffect() {
         if (!this._myUsed && this._myGrabbable.isGrabbed()) {
