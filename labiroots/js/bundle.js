@@ -304,6 +304,7 @@ require('./labiroots/maze/maze_item_type');
 
 require('./labiroots/cauldron/billboard_player');
 require('./labiroots/cauldron/story');
+require('./labiroots/cauldron/audio_load');
 
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');

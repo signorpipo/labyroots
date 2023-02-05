@@ -7,6 +7,8 @@ WL.registerComponent('story', {
         this._myStarted = false;
         this._myResetPhysx = true;
         this._myTimer = new PP.Timer(1);
+
+        Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -43,8 +45,11 @@ WL.registerComponent('story', {
                 if (this._myTimer.isDone()) {
                     Global.myAxe.pp_setActive(true);
                     Global.myReady = true;
+                    Global.myMusicPlayer.play();
                 }
             }
         }
     }
 });
+
+Global.myMusicPlayer = null;

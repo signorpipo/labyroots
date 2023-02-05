@@ -78,7 +78,6 @@ LR.Maze = class Maze {
                             types.push(Global.myBadFruit);
                         }
                         cellType = Math.pp_randomPick(types);
-                        console.error(cellType, cell.myFruits);
                     }
 
                     let cellItems = mazeItems.pp_getObjectByNameChildren("" + cellType);

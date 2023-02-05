@@ -59,6 +59,10 @@ WL.registerComponent('transformation', {
 
             PP.myLeftGamepad.pulse(0.5, 0.5);
             PP.myRightGamepad.pulse(0.5, 0.5);
+
+            let audioPlayer = PP.myAudioManager.createAudioPlayer(AudioID.CHANGE_HUMAN_PHASE);
+            audioPlayer.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            audioPlayer.play();
         }
     },
     _death() {

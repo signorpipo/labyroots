@@ -163,6 +163,12 @@ WL.registerComponent('pp-grabber-hand', {
                 if (this._myActiveGrabButton == null) {
                     this._myActiveGrabButton = grabButton;
                 }
+
+                let intensity = 0.2;
+                let pulseInfo = this._myGamepad.getPulseInfo();
+                if (pulseInfo.myIntensity <= intensity) {
+                    this._myGamepad.pulse(intensity, 0.1);
+                }
             }
         }
     },
