@@ -15,6 +15,7 @@ WL.registerComponent('fruit', {
     },
     start: function () {
         this._myUsed = false;
+        this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
     },
     update: function (dt) {
         //attivare se grabbato
@@ -27,7 +28,7 @@ WL.registerComponent('fruit', {
         return clonedComponent;
     },
     activateEffect() {
-        if (!this._myUsed) {
+        if (!this._myUsed && this._myGrabbable.isGrabbed()) {
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
         }

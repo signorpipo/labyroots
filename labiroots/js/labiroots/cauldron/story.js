@@ -6,7 +6,7 @@ WL.registerComponent('story', {
     start: function () {
         this._myStarted = false;
         this._myResetPhysx = true;
-        this._myTimer = new PP.Timer(2);
+        this._myTimer = new PP.Timer(1);
     },
     update: function (dt) {
         if (!this._myStarted) {

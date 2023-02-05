@@ -26,9 +26,11 @@ WL.registerComponent('mouth', {
             if (fruit) {
                 if (!fruit._myUsed) {
                     fruit.activateEffect();
-                    fruit.object.pp_setActive(false);
-                    this._myFruitToDestroy.push(fruit.object);
-                    this._myTimerDestroy.start();
+                    if (fruit._myUsed) {
+                        fruit.object.pp_setActive(false);
+                        this._myFruitToDestroy.push(fruit.object);
+                        this._myTimerDestroy.start();
+                    }
                 }
             }
         }
