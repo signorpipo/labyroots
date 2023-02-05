@@ -45,7 +45,8 @@ Global = {
     myStoryReady: false,
     myReady: false,
     myStage: 0,
-    myRoots: null
+    myRoots: null,
+    myAxe: null
 };
 
 LR = {};

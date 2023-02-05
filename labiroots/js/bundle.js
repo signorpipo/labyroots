@@ -308,6 +308,11 @@ require('./labiroots/cauldron/story');
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');
 require('./labiroots/player/mouth');
-require('./labiroots/player/fruit');
+
+require('./labiroots/tree/fruit');
+require('./labiroots/tree/root');
+require('./labiroots/tree/root_wall');
+require('./labiroots/tree/big_tree');
+require('./labiroots/tree/human_tree');
 
 require('./labiroots/test/test');
