@@ -1181,7 +1181,7 @@
             ]
         },
         "c9fb61ae-8b59-4d08-892f-585800456fa4": {
-            "name": "70",
+            "name": "60",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
                 -0.8459166,
@@ -1201,10 +1201,10 @@
             ]
         },
         "de34d2d5-99ee-4cb2-baeb-2055d066e9a2": {
-            "name": "80",
+            "name": "70",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
-                0.9381825,
+                0.9937732,
                 0.0,
                 0.0
             ],
@@ -1443,12 +1443,6 @@
                     "type": "billboard-player",
                     "billboard-player": {
                         "_myKeepUp": true
-                    }
-                },
-                {
-                    "type": "human-tree",
-                    "human-tree": {
-                        "_myType": 90
                     }
                 }
             ],
@@ -2542,7 +2536,7 @@
             ]
         },
         "9c7d9729-760a-4b57-b211-5e176e88b1a3": {
-            "name": "60",
+            "name": "80",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         },
         "b78aef29-41b5-4254-a878-64d56f86fc57": {
@@ -3424,6 +3418,9 @@
                         "groups": 8,
                         "block": 253
                     }
+                },
+                {
+                    "type": "axe"
                 }
             ],
             "translation": [
@@ -3442,57 +3439,6 @@
                 1.0,
                 1.0
             ]
-        },
-        "599a40f3-2e24-4aba-9c6c-e7c6a3e61382": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "bd649078-d25e-4674-b42e-6ec2ed8cabe9",
-            "translation": [
-                0.0099999,
-                0.09,
-                0.0
-            ],
-            "scale": [
-                0.05,
-                0.05,
-                0.05
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ]
-        },
-        "1ab1d1e8-2b6f-45f9-9d7f-800e59a3ba76": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "599a40f3-2e24-4aba-9c6c-e7c6a3e61382"
-        },
-        "8b45ebbf-40a8-4099-b348-02fd49555545": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "1ab1d1e8-2b6f-45f9-9d7f-800e59a3ba76"
-        },
-        "2d5c5658-20cd-457c-9cd0-3e6e02f69294": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "8b45ebbf-40a8-4099-b348-02fd49555545"
-        },
-        "7999cc44-e092-443c-805f-67b040b39aac": {
-            "link": {
-                "name": "polySurface5<polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "2d5c5658-20cd-457c-9cd0-3e6e02f69294"
         },
         "0f885d85-b616-4f03-b369-632df4c23bc3": {
             "name": "FruttoBlu",
@@ -7084,9 +7030,6 @@
                     }
                 },
                 {
-                    "type": "human-tree"
-                },
-                {
                     "type": "billboard-player",
                     "billboard-player": {
                         "_myKeepUp": true
@@ -7126,12 +7069,6 @@
                     "billboard-player": {
                         "_myKeepUp": true
                     }
-                },
-                {
-                    "type": "human-tree",
-                    "human-tree": {
-                        "_myType": 70
-                    }
                 }
             ],
             "translation": [
@@ -7163,16 +7100,7 @@
                     }
                 },
                 {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                },
-                {
-                    "type": "human-tree",
-                    "human-tree": {
-                        "_myType": 80
-                    }
+                    "type": "billboard-player"
                 }
             ],
             "translation": [
@@ -7238,7 +7166,7 @@
             ]
         },
         "7ea432f0-e522-4c7d-b12e-5ed5587aa236": {
-            "name": "FruttoRosso2",
+            "name": "FruttoGiallo2",
             "parent": "aa179823-35a9-4ca9-a89e-c03c8b1f5af3",
             "components": [
                 {
@@ -7284,121 +7212,7 @@
         },
         "aa179823-35a9-4ca9-a89e-c03c8b1f5af3": {
             "name": "90",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
-            "translation": [
-                1.7917256,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "e5317529-f25c-4705-8c04-8d1682966190": {
-            "name": "Axe",
-            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
-            "components": [
-                {
-                    "type": "pp-grabbable"
-                },
-                {
-                    "type": "physx",
-                    "physx": {
-                        "gravity": true,
-                        "kinematic": true,
-                        "trigger": false,
-                        "allowSimulation": true,
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.035,
-                                0.125,
-                                0.035
-                            ]
-                        },
-                        "groups": 8,
-                        "block": 253
-                    }
-                },
-                {
-                    "type": "axe"
-                }
-            ],
-            "translation": [
-                -2.8769958,
-                1.5,
-                -22.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "98f7455d-e7d5-49cc-a40d-5ba70b9be1a7": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "e5317529-f25c-4705-8c04-8d1682966190",
-            "translation": [
-                0.0099999,
-                0.09,
-                0.0
-            ],
-            "scale": [
-                0.05,
-                0.05,
-                0.05
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ]
-        },
-        "803a124c-fafc-4573-989e-8200429a62a6": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "98f7455d-e7d5-49cc-a40d-5ba70b9be1a7"
-        },
-        "cb75dfbd-6e73-4ca1-8e55-8c813d681e8b": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "803a124c-fafc-4573-989e-8200429a62a6"
-        },
-        "c3b660bc-130c-4f3e-b78a-ad2f09f36ead": {
-            "link": {
-                "name": "polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "cb75dfbd-6e73-4ca1-8e55-8c813d681e8b"
-        },
-        "43c2857a-6f47-497e-a266-38d90d9f1cd2": {
-            "link": {
-                "name": "polySurface5<polySurface5_$AssimpFbx$_ScalingPivotInverse<polySurface5_$AssimpFbx$_ScalingPivot<polySurface5_$AssimpFbx$_RotationPivotInverse<polySurface5_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\ASCIA.fbx"
-            },
-            "parent": "c3b660bc-130c-4f3e-b78a-ad2f09f36ead"
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
         },
         "09b04841-231c-4bee-b74e-1b9bc4edef21": {
             "link": {
@@ -7760,68 +7574,40 @@
                 }
             ]
         },
-        "8c1047df-cd11-4c2d-8549-81534c72ef82": {
-            "name": "25",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
-            "translation": [
-                -17.628477,
-                0.0,
-                6.7526855
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "d631d297-b5a0-4fcc-b704-02a1b592289d": {
-            "name": "2",
-            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "66604715-609b-4046-9267-b87f31af19a5": {
-            "name": "BigTreeRoots_Fase2",
-            "parent": "d631d297-b5a0-4fcc-b704-02a1b592289d",
+        "05081c1c-e89f-4070-b72e-7d5b06d79b4c": {
+            "name": "Axe",
+            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
             "components": [
                 {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
+                    "type": "pp-grabbable"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "gravity": true,
+                        "kinematic": true,
+                        "trigger": false,
+                        "allowSimulation": true,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.035,
+                                0.125,
+                                0.035
+                            ]
+                        },
+                        "groups": 8,
+                        "block": 253
                     }
                 },
                 {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
+                    "type": "axe"
                 }
             ],
             "translation": [
-                0.0,
-                0.925,
-                0.0
+                -2.8769958,
+                1.5,
+                -22.0
             ],
             "rotation": [
                 0.0,
@@ -7835,674 +7621,114 @@
                 1.0
             ]
         },
-        "79ca3ce2-406f-4b38-a05b-ef70603492d3": {
-            "name": "1",
-            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
+        "36bb7a51-59d9-4d4d-b052-43d057fc930c": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "bd649078-d25e-4674-b42e-6ec2ed8cabe9",
             "translation": [
-                -3.485548,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
+                0.1,
+                0.8999999,
+                -3.5762786865234375e-7
             ],
             "scale": [
-                1.0,
-                1.0,
-                1.0
+                0.05,
+                0.05,
+                0.05
             ]
         },
-        "a8646abc-4d61-4e26-b2a4-7517fa1d1c3e": {
-            "name": "BigTreeRoots_Fase1",
-            "parent": "79ca3ce2-406f-4b38-a05b-ef70603492d3",
+        "18e3e072-4a32-4211-8ff3-d568346543ea": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "36bb7a51-59d9-4d4d-b052-43d057fc930c"
+        },
+        "06267bf8-5633-4541-bc95-ec24264a4e00": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "18e3e072-4a32-4211-8ff3-d568346543ea"
+        },
+        "fed60359-b6b5-4df2-bfeb-ffa31431c04d": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "06267bf8-5633-4541-bc95-ec24264a4e00"
+        },
+        "3e24f78e-1c3f-4c5a-9ac3-1794ba77ab64": {
+            "link": {
+                "name": "polySurface11<polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "fed60359-b6b5-4df2-bfeb-ffa31431c04d",
             "components": [
                 {
-                    "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
-                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
+                        "material": "fb0fd49f-f132-4450-8163-4b789b6d4671"
                     }
                 }
-            ],
+            ]
+        },
+        "3bd939aa-afba-4ca5-9645-7e064ef244e1": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "05081c1c-e89f-4070-b72e-7d5b06d79b4c",
             "translation": [
-                0.0,
-                0.925,
+                0.0999999,
+                0.9,
                 0.0
+            ],
+            "scale": [
+                0.05,
+                0.05,
+                0.05
             ],
             "rotation": [
                 0.0,
                 0.0,
                 0.0,
                 1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
             ]
         },
-        "f21810c3-2f08-4996-ba97-aefcf6893af6": {
-            "name": "3",
-            "parent": "8c1047df-cd11-4c2d-8549-81534c72ef82",
-            "translation": [
-                2.379198,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
+        "54500473-ccf9-49cd-b3d1-463224b76bb0": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "3bd939aa-afba-4ca5-9645-7e064ef244e1"
         },
-        "996a1fbc-2592-47f1-9a26-9bfb1b2bc718": {
-            "name": "BigTreeRoots_Fase3",
-            "parent": "f21810c3-2f08-4996-ba97-aefcf6893af6",
+        "e1920ef6-357f-4e97-aa1c-3eba98ef3f88": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "54500473-ccf9-49cd-b3d1-463224b76bb0"
+        },
+        "6cdfe563-81f6-4b33-9197-cd2e0a71e323": {
+            "link": {
+                "name": "polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "e1920ef6-357f-4e97-aa1c-3eba98ef3f88"
+        },
+        "ea0f414f-c730-40b0-8a36-877f79badb14": {
+            "link": {
+                "name": "polySurface11<polySurface11_$AssimpFbx$_ScalingPivotInverse<polySurface11_$AssimpFbx$_ScalingPivot<polySurface11_$AssimpFbx$_RotationPivotInverse<polySurface11_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            },
+            "parent": "6cdfe563-81f6-4b33-9197-cd2e0a71e323",
             "components": [
                 {
-                    "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
-                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
+                        "material": "fb0fd49f-f132-4450-8163-4b789b6d4671"
                     }
                 }
-            ],
-            "translation": [
-                0.0,
-                0.925,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "093193b3-222a-4ce4-9b98-56ecab87d35a": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                -0.731018,
-                0.1452343,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "1168ea06-f3a7-4407-9572-1e32060d69b0": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                0.5596332,
-                -0.1311264,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "0920d7a1-bbab-4ead-90f0-b42ee1d5e0a8": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                0.2386293,
-                0.1639775,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "60a0816c-dbf8-4d19-9037-ba64b50f6ee9": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                0.3597993,
-                0.6965973,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "fb213791-6b7f-48dd-8e71-54af2fedf0d2": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                -0.3092184,
-                0.547196,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "9a281749-0f51-4a2c-b123-c5d75d99e7c4": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                0.033288,
-                0.6903451,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "4e5f2a06-ea38-446f-b9f6-fd2a198e1df4": {
-            "name": "Empty.000",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "translation": [
-                -0.399105,
-                0.2694239,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "b24d3456-d21d-48a6-ad9a-ced695ebaf8e": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                -0.731018,
-                0.1452342,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "4b54e0d3-f15a-4a0c-b3c7-fa8e8f94208b": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                0.5596332,
-                -0.1311264,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "68e2eea0-be9c-45b4-9869-0008d46ac1e9": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                0.2386293,
-                0.1639775,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "d2ce8d24-682b-4f0c-b28f-a18e96f4c521": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                0.3597993,
-                0.6965972,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "2c99455d-8292-4904-b7b3-912c35e62094": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                -0.3092184,
-                0.547196,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "380718d0-6bc3-4534-89d0-f412943ac5bf": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                0.033288,
-                0.6903452,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "c96e7e4b-9a8f-4872-88a5-f1abdc0e16d8": {
-            "name": "Empty.000",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "translation": [
-                -0.399105,
-                0.2694239,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "fa899066-6b33-4cf4-816c-99191980aadb": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                -0.7310179,
-                0.1452343,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "020751c9-2767-4f89-9e8e-3c5d5444453c": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                0.5596332,
-                -0.1311264,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "65eda6ca-3fc9-4124-975e-be693360d04b": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                0.2386293,
-                0.1639775,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "8fb27827-5516-4b1b-a705-44a588f70e86": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                0.3597993,
-                0.6965973,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "3680b2cf-22a9-4e75-8579-66b1ba193471": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                -0.3092182,
-                0.547196,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "80142bd1-ab00-463c-987d-1bc7926535cd": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                0.033288,
-                0.6903451,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "cc1d2a3b-78ac-438a-95d0-f1da1725b6d3": {
-            "name": "Empty.000",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "translation": [
-                -0.3991049,
-                0.2694239,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "923c0969-25a1-4e57-bc7d-b2c6f7c4d356": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                -0.7310175,
-                0.1452343,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "82937ff3-0701-4a34-8f0f-fd91e5f5b3ad": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                0.5596332,
-                -0.1311264,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "0ba19ca4-660a-4e2e-ae2d-1ddf282d516a": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                0.2386293,
-                0.1639775,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "40b54e02-1742-433e-aefe-b2a37502583d": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                0.3597993,
-                0.6965973,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "85c4c5f4-c814-48cf-b3a4-70f8b698c213": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                -0.3092184,
-                0.547196,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "8a8e282d-b8be-4c38-99ea-a7f68b694a65": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                0.033288,
-                0.6903451,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "8615fed1-b058-407e-94a3-667621c4e398": {
-            "name": "Empty.000",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "translation": [
-                -0.399105,
-                0.2694239,
-                0.1904602
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
             ]
         }
     },
@@ -8734,6 +7960,18 @@
                 "name": "Hand_Lx_close",
                 "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
             }
+        },
+        "ac821f90-d8b3-428d-bb2b-19a6c38724c7": {
+            "link": {
+                "name": "polySurface11",
+                "file": "assets\\models\\aXE_DEF.fbx"
+            }
+        },
+        "5886c0a2-623b-4a24-9068-35dbe87c3608": {
+            "link": {
+                "name": "polySurface11",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            }
         }
     },
     "textures": {
@@ -8855,6 +8093,24 @@
             "link": {
                 "name": "texture_0",
                 "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            }
+        },
+        "79706952-f8a8-48d5-a71c-8799f1cbd4d1": {
+            "link": {
+                "name": "aXE_DEF_lambert1_AlbedoTransparency.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.png"
+            }
+        },
+        "dc9c23ee-d4c7-4446-84f5-9d34bddf9429": {
+            "link": {
+                "name": "aXE_DEF_lambert1_Normal.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_Normal.png"
+            }
+        },
+        "262922d7-28a2-4967-882d-df172bf88247": {
+            "link": {
+                "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
             }
         }
     },
@@ -8981,6 +8237,27 @@
             "link": {
                 "name": "Frutto_Giallo.png",
                 "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
+            },
+            "compress": false
+        },
+        "eff7edfc-888b-4815-9d8c-a080d5dd56b4": {
+            "link": {
+                "name": "aXE_DEF_lambert1_AlbedoTransparency.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.png"
+            },
+            "compress": false
+        },
+        "deb95d87-2eff-45f9-ad78-d79824fbfcf6": {
+            "link": {
+                "name": "aXE_DEF_lambert1_Normal.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_Normal.png"
+            },
+            "compress": false
+        },
+        "fb52aa1b-3917-40ee-a6c8-7fee007b6cba": {
+            "link": {
+                "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
+                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
             },
             "compress": false
         }
@@ -9171,7 +8448,7 @@
             "pipeline": "14",
             "name": "FruttoRosso",
             "Phong": {
-                "diffuseTexture": "9ccf1cf5-0688-4f66-afa3-cf43aefbb342",
+                "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f",
                 "ambientFactor": 0.5,
                 "diffuseColor": [
                     0.0,
@@ -9559,6 +8836,40 @@
                 "name": "Hand_Dx_close2_defaultMat1",
                 "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
             }
+        },
+        "45de3ed5-2933-430f-89a2-1146feec2588": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\models\\aXE_DEF.fbx"
+            }
+        },
+        "fb0fd49f-f132-4450-8163-4b789b6d4671": {
+            "name": "Axe",
+            "pipeline": "145",
+            "Phong": {
+                "diffuseTexture": "79706952-f8a8-48d5-a71c-8799f1cbd4d1",
+                "normalTexture": "dc9c23ee-d4c7-4446-84f5-9d34bddf9429",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "emissiveTexture": "262922d7-28a2-4967-882d-df172bf88247"
+            }
+        },
+        "e0a9e88b-559e-45a8-9437-8bc35eed05e6": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            }
         }
     },
     "shaders": {
@@ -9938,7 +9249,12 @@
         "assets/textures/Fruits/Frutto_Giallo.png",
         "assets/models/Mani/Mano_Destra.fbx",
         "assets/models/Mani/Hand_Lx_close.fbx",
-        "assets/models/Mani/Hand_Dx_close.fbx"
+        "assets/models/Mani/Hand_Dx_close.fbx",
+        "assets/models/aXE_DEF.fbx",
+        "assets/textures/Axe/aXE_DEF_lambert1_AlbedoTransparency.png",
+        "assets/textures/Axe/aXE_DEF_lambert1_Normal.png",
+        "assets/textures/Axe/aXE_DEF_lambert1_MetallicSmoothness.png",
+        "assets/models/Axes/aXE_DEF.fbx"
     ],
     "fonts": {
         "147": {
