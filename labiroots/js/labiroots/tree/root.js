@@ -9,16 +9,24 @@ WL.registerComponent('root', {
         this._myStarted = false;
         this._myHit = 0;
 
-        this._myNormal.pp_setActive(false);
-        this._myHurt.pp_setActive(false);
-        this._myDead.pp_setActive(false);
+        this._myCurrentPhase = 0;
+        this._myPhases = [];
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myReady) {
+                let children = this.object.pp_getChildren();
+                for (let i = 0; i < children.length; i++) {
+                    this._myPhases[parseInt(children[i].pp_getName()) - 1] = children[i];
+                }
+
+                for (let phase of this._myPhases) {
+                    phase.pp_setActive(false);
+                }
+
                 this._myStarted = true;
                 this._myHit = Global.mySetup.myTreeSetup.myRootHit;
-                this._myNormal.pp_setActive(true);
+                this._myPhases[0].pp_setActive(true);
             }
         } else {
 
@@ -31,19 +39,19 @@ WL.registerComponent('root', {
             this._myHit--;
             hitted = true;
 
-            this._myNormal.pp_setActive(false);
-            this._myHurt.pp_setActive(false);
-            this._myDead.pp_setActive(false);
+            for (let phase of this._myPhases) {
+                phase.pp_setActive(false);
+            }
 
             // suono
             if (this._myHit == 0) {
-                this._myDead.pp_setActive(true);
+                this._myPhases[2].pp_setActive(true);
                 let tree = WL.scene.pp_getComponent("big_tree");
                 if (tree) {
                     tree.rootDie();
                 }
             } else {
-                this._myHurt.pp_setActive(true);
+                this._myPhases[1].pp_setActive(true);
             }
         }
 
