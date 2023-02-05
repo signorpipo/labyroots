@@ -5,7 +5,7 @@ WL.registerComponent('axe', {
     start: function () {
         this._myFirstUpdate = true;
         this._myStartTransform = PP.quat2_create();
-        this._myRespawnTransform = null;
+        this._myRespawnTransform = PP.quat2_create();
         this._myPrevPosition = [0, 0, 0];
 
         this._mySpeed = 0;
