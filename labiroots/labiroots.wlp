@@ -3540,11 +3540,11 @@
                 "name": "Hand_Lx_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Mani\\Mano_Sinistra.fbx"
             },
-            "parent": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+            "parent": "9f5806db-c077-426c-9f79-d7825fce8af4",
             "translation": [
-                0.0,
                 -0.0,
-                -0.035
+                -0.0000019,
+                -0.0349998
             ],
             "scale": [
                 0.0149999,
@@ -3553,9 +3553,9 @@
             ],
             "rotation": [
                 0.9238795,
+                -0.0,
                 0.0,
-                0.0,
-                0.3826834
+                0.3826833
             ],
             "components": [
                 {
@@ -3641,7 +3641,14 @@
                 "name": "Hand2_Lx<Hand2_Lx_$AssimpFbx$_ScalingPivotInverse<Hand2_Lx_$AssimpFbx$_ScalingPivot<Hand2_Lx_$AssimpFbx$_RotationPivotInverse<Hand2_Lx_$AssimpFbx$_RotationPivot<Hand_Lx_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx<Hand_Lx_$AssimpFbx$_GeometricTranslation<Hand_Lx_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_$AssimpFbx$_ScalingPivot<Hand_Lx_$AssimpFbx$_RotationPivotInverse<Hand_Lx_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Mani\\Mano_Sinistra.fbx"
             },
-            "parent": "2268e6fb-eb34-4c8d-9591-7ac01ee80c98"
+            "parent": "2268e6fb-eb34-4c8d-9591-7ac01ee80c98",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "12b8acea-811d-4a6e-aa3b-91170fa5843b"
+                    }
+                }
+            ]
         },
         "2c0a8b50-eeef-49df-ade2-dca46d8898ca": {
             "name": "2",
@@ -7280,6 +7287,9 @@
                         "groups": 8,
                         "block": 253
                     }
+                },
+                {
+                    "type": "axe"
                 }
             ],
             "translation": [
@@ -7355,7 +7365,150 @@
                 "name": "Hand_Dx_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Mani\\Mano_Destra.fbx"
             },
-            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+            "parent": "85c60095-e941-4e21-ad59-e6eed85a73c3",
+            "translation": [
+                -0.0,
+                -0.0000019,
+                -0.0349998
+            ],
+            "rotation": [
+                0.9238795,
+                -0.0,
+                0.0,
+                0.3826833
+            ],
+            "scale": [
+                0.0149999,
+                0.0149999,
+                0.0149999
+            ]
+        },
+        "9f5806db-c077-426c-9f79-d7825fce8af4": {
+            "name": "mano",
+            "parent": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+            "components": [
+                {
+                    "type": "swap-grab-hand",
+                    "swap-grab-hand": {
+                        "_myNormalHand": "575271ab-ab06-4f9c-875c-c7afc7d93899",
+                        "_myGrabHand": "f724dc3c-1439-463f-a26b-119570470897"
+                    }
+                }
+            ]
+        },
+        "f724dc3c-1439-463f-a26b-119570470897": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "9f5806db-c077-426c-9f79-d7825fce8af4",
+            "translation": [
+                0.0,
+                0.0,
+                -0.035
+            ],
+            "rotation": [
+                0.9238795,
+                0.0,
+                0.0,
+                0.3826834
+            ],
+            "scale": [
+                0.0149999,
+                0.0149999,
+                0.0149999
+            ]
+        },
+        "b638ff7d-139b-415a-9389-e88d72b466c3": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "f724dc3c-1439-463f-a26b-119570470897"
+        },
+        "8455da7a-a653-4fdb-8d65-ed1a64b00009": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "b638ff7d-139b-415a-9389-e88d72b466c3"
+        },
+        "73acb719-f6c1-4443-9668-1c013797f174": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "8455da7a-a653-4fdb-8d65-ed1a64b00009"
+        },
+        "27b7d5b6-8118-48d9-95a3-0324c69827b9": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "73acb719-f6c1-4443-9668-1c013797f174"
+        },
+        "586c388e-7b2d-4fa4-8217-31bdcafe6a10": {
+            "link": {
+                "name": "Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "27b7d5b6-8118-48d9-95a3-0324c69827b9"
+        },
+        "c1ba9c9c-9d4c-4242-bc6c-1c34f83b07e2": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "586c388e-7b2d-4fa4-8217-31bdcafe6a10"
+        },
+        "c5350c2e-434e-4ca1-a16d-d107b0be3e94": {
+            "link": {
+                "name": "Hand_Lx_close001_$AssimpFbx$_RotationPivot<Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "c1ba9c9c-9d4c-4242-bc6c-1c34f83b07e2"
+        },
+        "1c89d1e1-d7a7-4f7d-bfb1-a41e9807a36a": {
+            "link": {
+                "name": "Hand_Lx_close001_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close001_$AssimpFbx$_RotationPivot<Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "c5350c2e-434e-4ca1-a16d-d107b0be3e94"
+        },
+        "7c0a4cd7-dc25-4a1c-9027-d3817989b628": {
+            "link": {
+                "name": "Hand_Lx_close001_$AssimpFbx$_ScalingPivot<Hand_Lx_close001_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close001_$AssimpFbx$_RotationPivot<Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "1c89d1e1-d7a7-4f7d-bfb1-a41e9807a36a"
+        },
+        "dbfc5ea1-8bd7-4255-82d5-c9cdf4b0c730": {
+            "link": {
+                "name": "Hand_Lx_close001_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close001_$AssimpFbx$_ScalingPivot<Hand_Lx_close001_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close001_$AssimpFbx$_RotationPivot<Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "7c0a4cd7-dc25-4a1c-9027-d3817989b628"
+        },
+        "ed52cddf-1210-4217-8207-9e4e200c5db9": {
+            "link": {
+                "name": "Hand_Lx_close001<Hand_Lx_close001_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close001_$AssimpFbx$_ScalingPivot<Hand_Lx_close001_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close001_$AssimpFbx$_RotationPivot<Hand_Lx_close_$AssimpFbx$_GeometricTranslationInverse<Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_GeometricTranslation<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            },
+            "parent": "dbfc5ea1-8bd7-4255-82d5-c9cdf4b0c730",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "12b8acea-811d-4a6e-aa3b-91170fa5843b"
+                    }
+                }
+            ]
+        },
+        "3d07ce01-7617-4f58-a180-b1e6a048e4d1": {
+            "link": {
+                "name": "Hand_Dx_close_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "85c60095-e941-4e21-ad59-e6eed85a73c3",
             "translation": [
                 0.0,
                 0.0,
@@ -7448,7 +7601,124 @@
                 "name": "Hand2_Dx<Hand2_Dx_$AssimpFbx$_ScalingPivotInverse<Hand2_Dx_$AssimpFbx$_ScalingPivot<Hand2_Dx_$AssimpFbx$_RotationPivotInverse<Hand2_Dx_$AssimpFbx$_RotationPivot<Hand_Dx_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx<Hand_Dx_$AssimpFbx$_GeometricTranslation<Hand_Dx_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_$AssimpFbx$_ScalingPivot<Hand_Dx_$AssimpFbx$_RotationPivotInverse<Hand_Dx_$AssimpFbx$_RotationPivot",
                 "file": "assets\\models\\Mani\\Mano_Destra.fbx"
             },
-            "parent": "677fe392-be9b-4950-9e44-0546d83061c4"
+            "parent": "677fe392-be9b-4950-9e44-0546d83061c4",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "12b8acea-811d-4a6e-aa3b-91170fa5843b"
+                    }
+                }
+            ]
+        },
+        "85c60095-e941-4e21-ad59-e6eed85a73c3": {
+            "name": "mano",
+            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+            "components": [
+                {
+                    "type": "swap-grab-hand",
+                    "swap-grab-hand": {
+                        "_myHandedness": "right",
+                        "_myNormalHand": "09b04841-231c-4bee-b74e-1b9bc4edef21",
+                        "_myGrabHand": "3d07ce01-7617-4f58-a180-b1e6a048e4d1"
+                    }
+                }
+            ]
+        },
+        "a91f3701-e295-4138-9a8f-5d4d4fadfffd": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "3d07ce01-7617-4f58-a180-b1e6a048e4d1",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "ddc4f817-fa96-4e94-b83f-2e9940a6192f": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "a91f3701-e295-4138-9a8f-5d4d4fadfffd"
+        },
+        "3c4c34e3-d36d-4b21-af2f-f15d30ae825c": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "ddc4f817-fa96-4e94-b83f-2e9940a6192f"
+        },
+        "2c9306ab-48e7-4032-b0d5-7a42550d8233": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "3c4c34e3-d36d-4b21-af2f-f15d30ae825c"
+        },
+        "e48a859c-5fc4-466d-8031-14751a785ba0": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "2c9306ab-48e7-4032-b0d5-7a42550d8233"
+        },
+        "7c589723-d153-47d3-8907-7e45244fe1bb": {
+            "link": {
+                "name": "Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "e48a859c-5fc4-466d-8031-14751a785ba0"
+        },
+        "ec585f5b-000f-4d20-9f1b-509ac0dc3045": {
+            "link": {
+                "name": "Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "7c589723-d153-47d3-8907-7e45244fe1bb"
+        },
+        "25fe2d94-5cec-4802-8301-af2ac43e9bb6": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_RotationPivot<Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "ec585f5b-000f-4d20-9f1b-509ac0dc3045"
+        },
+        "d0dbe687-7686-4016-85dd-764478ec08df": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot<Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "25fe2d94-5cec-4802-8301-af2ac43e9bb6"
+        },
+        "1feaac54-63db-4ddc-9423-bda36c75dca0": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot<Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "d0dbe687-7686-4016-85dd-764478ec08df"
+        },
+        "61b9d644-7e64-4da1-ab44-89abb3a89a7e": {
+            "link": {
+                "name": "Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot<Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "1feaac54-63db-4ddc-9423-bda36c75dca0"
+        },
+        "84e9c316-fde2-47ec-9d08-d90a1d5c7cb2": {
+            "link": {
+                "name": "Hand_Lx_close<Hand_Lx_close_$AssimpFbx$_ScalingPivotInverse<Hand_Lx_close_$AssimpFbx$_ScalingPivot<Hand_Lx_close_$AssimpFbx$_RotationPivotInverse<Hand_Lx_close_$AssimpFbx$_RotationPivot<Hand_Dx_close1_$AssimpFbx$_GeometricTranslationInverse<Hand_Dx_close1<Hand_Dx_close1_$AssimpFbx$_GeometricTranslation<Hand_Dx_close1_$AssimpFbx$_ScalingPivotInverse<Hand_Dx_close1_$AssimpFbx$_ScalingPivot<Hand_Dx_close1_$AssimpFbx$_RotationPivotInverse<Hand_Dx_close1_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            },
+            "parent": "61b9d644-7e64-4da1-ab44-89abb3a89a7e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "12b8acea-811d-4a6e-aa3b-91170fa5843b"
+                    }
+                }
+            ]
         }
     },
     "meshes": {
@@ -7661,6 +7931,24 @@
                 "name": "Hand2_Dx",
                 "file": "assets\\models\\Mani\\Mano_Destra.fbx"
             }
+        },
+        "9fd84704-871c-4b46-819b-3ac4a5f36be0": {
+            "link": {
+                "name": "Hand_Lx_close001",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            }
+        },
+        "9a9040c2-6aaa-44e3-acff-6677ace4939e": {
+            "link": {
+                "name": "Hand_Dx_close3",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            }
+        },
+        "149": {
+            "link": {
+                "name": "Hand_Lx_close",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            }
         }
     },
     "textures": {
@@ -7770,6 +8058,18 @@
             "link": {
                 "name": "Frutto_Giallo.png",
                 "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
+            }
+        },
+        "14400bc1-6b6e-4d9f-a971-031c824d303f": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            }
+        },
+        "0c18e64d-4c79-4f19-b5d5-96eb21b50102": {
+            "link": {
+                "name": "texture_0",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
             }
         }
     },
@@ -8458,6 +8758,22 @@
                 ],
                 "ambientFactor": 0.5
             }
+        },
+        "6a1eca7f-6fee-48fd-b063-bded35ce84bd": {
+            "link": {
+                "name": "Hand_Dx_close2_defaultMat1",
+                "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
+            }
+        },
+        "12b8acea-811d-4a6e-aa3b-91170fa5843b": {
+            "name": "Mano",
+            "pipeline": "13"
+        },
+        "9d08436f-534a-4f72-b8e6-2405a0bf90a7": {
+            "link": {
+                "name": "Hand_Dx_close2_defaultMat1",
+                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
+            }
         }
     },
     "shaders": {
@@ -8835,7 +9151,9 @@
         "assets/textures/Trees/Albero_Rosso.png",
         "assets/textures/Trees/Albero_Giallo.png",
         "assets/textures/Fruits/Frutto_Giallo.png",
-        "assets/models/Mani/Mano_Destra.fbx"
+        "assets/models/Mani/Mano_Destra.fbx",
+        "assets/models/Mani/Hand_Lx_close.fbx",
+        "assets/models/Mani/Hand_Dx_close.fbx"
     ],
     "fonts": {
         "147": {
