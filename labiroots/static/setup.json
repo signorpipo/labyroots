@@ -6,7 +6,7 @@
 	},
 "myPlayerSetup":
 	{
-		"myTransformationTimers": [2,2,2,2,1]
+		"myTransformationTimers": [2000,2,2,2,1]
 	},
 "myMazeSetup":
 	{
