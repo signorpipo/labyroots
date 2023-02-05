@@ -308,6 +308,7 @@ require('./labiroots/cauldron/story');
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');
 require('./labiroots/player/mouth');
+require('./labiroots/player/swap_grab_hand');
 
 require('./labiroots/tree/fruit');
 require('./labiroots/tree/root');
