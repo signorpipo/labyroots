@@ -9,6 +9,17 @@ WL.registerComponent('axe', {
         this._mySpeed = 0;
     },
     start: function () {
+        this._myIsGrabbed = false;
+        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
+        this._myAudioColpi = [];
+        this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);
+        this._myAudioColpi[1] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_2);
+        this._myAudioColpoFinale = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_FINALE);
+
+        this._myLamenti = [];
+        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
+        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
+        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
     },
 
     update: function (dt) {
@@ -32,6 +43,19 @@ WL.registerComponent('axe', {
                 }
 
                 this._myToDestroy = [];
+            }
+        }
+
+        if (this._myGrabbable != null) {
+            if (this._myGrabbable.isGrabbed()) {
+                if (!this._myIsGrabbed) {
+                    this._myAudioPrendi.setPosition(this.object.pp_getPosition());
+                    this._myAudioPrendi.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                    this._myAudioPrendi.play();
+                }
+                this._myIsGrabbed = true;
+            } else {
+                this._myIsGrabbed = false;
             }
         }
 
@@ -71,6 +95,21 @@ WL.registerComponent('axe', {
                     if (root._myHit > 0) {
                         if (root.hit()) {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            let player = this._myAudioColpoFinale;
+                            if (root._myHit > 0) {
+                                player = Math.pp_randomPick(this._myAudioColpi);
+                            }
+
+                            player.setPosition(this.object.pp_getPosition());
+                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.play();
+
+                            if (root._myHit == 0) {
+                                let player = Math.pp_randomPick(this._myLamenti);
+                                player.setPosition(root.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.play();
+                            }
                         }
                     }
                 }
@@ -80,6 +119,22 @@ WL.registerComponent('axe', {
                     if (rootWall._myHit > 0) {
                         if (rootWall.hit()) {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            let player = this._myAudioColpoFinale;
+                            if (rootWall._myHit > 0) {
+                                player = Math.pp_randomPick(this._myAudioColpi);
+                            }
+
+                            player.setPosition(this.object.pp_getPosition());
+                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.play();
+
+                            if (rootWall._myHit == 0) {
+                                let player = Math.pp_randomPick(this._myLamenti);
+                                player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.play();
+                            }
                         }
                         if (rootWall._myHit == 0) {
                             //rootWall.object.pp_setActive(false);
@@ -94,6 +149,22 @@ WL.registerComponent('axe', {
                     if (bigTree._myHit > 0) {
                         if (bigTree.hit()) {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            let player = this._myAudioColpoFinale;
+                            if (bigTree._myHit > 0) {
+                                player = Math.pp_randomPick(this._myAudioColpi);
+                            }
+
+                            player.setPosition(this.object.pp_getPosition());
+                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.play();
+
+                            if (bigTree._myHit == 0) {
+                                let player = Math.pp_randomPick(this._myLamenti);
+                                player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.play();
+                            }
                         }
 
                         if (bigTree._myHit == 0) {
@@ -111,9 +182,24 @@ WL.registerComponent('axe', {
                     if (humanTree._myHit > 0) {
                         if (humanTree.hit()) {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            let player = this._myAudioColpoFinale;
+                            if (humanTree._myHit > 0) {
+                                player = Math.pp_randomPick(this._myAudioColpi);
+                            }
+
+                            player.setPosition(this.object.pp_getPosition());
+                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.play();
                         }
 
                         if (humanTree._myHit == 0) {
+
+                            let player = Math.pp_randomPick(this._myLamenti);
+                            player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 1, 0]));
+                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.play();
+
                             //humanTree.object.pp_setActive(false);
                             this._myToDestroy.push(humanTree.object);
 

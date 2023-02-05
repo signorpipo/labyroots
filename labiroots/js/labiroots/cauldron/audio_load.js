@@ -11,17 +11,101 @@ WL.registerComponent('audio-load', {
         let manager = PP.myAudioManager;
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/music/temp_music.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.wav");
             audioSetup.myLoop = true;
             audioSetup.mySpatial = false;
-            audioSetup.myVolume = 0.45;
+            audioSetup.myVolume = 0.75;
             manager.addAudioSetup(AudioID.MUSIC, audioSetup);
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/temp_sound.wav");
-            audioSetup.myReferenceDistance = 1000000;
-            manager.addAudioSetup(AudioID.CHANGE_HUMAN_PHASE, audioSetup);
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_1, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_2, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_3, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Ascia su muro di radici.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.COLPO_FINALE, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.COLPO_NORMALE_1, audioSetup);
+        }
+
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.COLPO_NORMALE_2, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
+        }
+
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Raccolta frutto.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.PRENDI_FRUTTO, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 3;
+            audioSetup.myReferenceDistance = 1.5;
+            manager.addAudioSetup(AudioID.PASSO_1, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 3;
+            audioSetup.myReferenceDistance = 1.5;
+            manager.addAudioSetup(AudioID.PASSO_2, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 3;
+            audioSetup.myReferenceDistance = 1.5;
+            manager.addAudioSetup(AudioID.PASSO_3, audioSetup);
         }
 
         manager.createAudioPlayer(AudioID.AXE_HIT);
@@ -33,20 +117,15 @@ WL.registerComponent('audio-load', {
 
 AudioID = {
     MUSIC: 0,
-    AXE_HIT: 1,
-    AXE_SWOOSH: 2,
-    CHANGE_HUMAN_PHASE: 3,
-    DIE: 4,
-    RESPAWN: 5,
-    ROOT_DIE: 6,
-    ROOT_HIT: 7,
-    BIG_TREE_HIT: 8,
-    GRAB_FRUIT: 9,
-    GRAB_AXE: 10,
-    EAT_FRUIT: 11,
-    METEOR_FALL: 12,
-    METEOR_IMPACT: 13,
-    WALL_ROOT_DIE: 14,
-    HUMAN_TREE_DIE: 15,
-    VICTORY: 16,
+    LAMENTO_1: 1,
+    LAMENTO_2: 2,
+    LAMENTO_3: 3,
+    COLPO_FINALE: 4,
+    COLPO_NORMALE_1: 5,
+    COLPO_NORMALE_2: 6,
+    MANGIA_FRUTTO: 7,
+    PRENDI_FRUTTO: 8,
+    PASSO_1: 10,
+    PASSO_2: 11,
+    PASSO_3: 12
 };
