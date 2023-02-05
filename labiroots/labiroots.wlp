@@ -50,6 +50,15 @@
                     "story": {
                         "_myOnlyVR": false
                     }
+                },
+                {
+                    "type": "pp-audio-manager"
+                },
+                {
+                    "type": "audio-load"
+                },
+                {
+                    "type": "pp-mute-everything"
                 }
             ]
         },
