@@ -337,9 +337,9 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
         simplifiedParams.myCollectGroundInfo = true;
         simplifiedParams.myShouldSnapOnGround = true;
-        simplifiedParams.myMaxDistanceToSnapOnGround = 0.1;
-        simplifiedParams.myMaxWalkableGroundAngle = 0;
-        simplifiedParams.myMaxWalkableGroundStepHeight = 0.2;
+        simplifiedParams.myMaxDistanceToSnapOnGround = 0.3;
+        simplifiedParams.myMaxWalkableGroundAngle = 70;
+        simplifiedParams.myMaxWalkableGroundStepHeight = 0.3;
         simplifiedParams.myShouldNotFallFromEdges = false;
 
         simplifiedParams.myHorizontalCheckBlockLayerFlags.setFlagActive(0, true);

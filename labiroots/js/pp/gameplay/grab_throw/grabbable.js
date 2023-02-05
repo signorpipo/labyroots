@@ -40,6 +40,8 @@ WL.registerComponent('pp-grabbable', {
 
         this._myIsGrabbed = true;
 
+        this._myGrabber = grabber;
+
         this._myGrabCallbacks.forEach(function (callback) { callback(grabber, this); }.bind(this));
     },
     throw: function (linearVelocity, angularVelocity) {

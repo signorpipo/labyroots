@@ -1463,6 +1463,21 @@
                     "human-tree": {
                         "_myType": 90
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.25,
+                                1.0,
+                                0.125
+                            ]
+                        },
+                        "kinematic": true,
+                        "gravity": false
+                    }
                 }
             ],
             "translation": [
@@ -7056,6 +7071,21 @@
                 },
                 {
                     "type": "human-tree"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.25,
+                                1.0,
+                                0.125
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true
+                    }
                 }
             ],
             "translation": [
@@ -7097,6 +7127,21 @@
                     "human-tree": {
                         "_myType": 70
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.25,
+                                1.0,
+                                0.125
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true
+                    }
                 }
             ],
             "translation": [
@@ -7137,6 +7182,21 @@
                     "type": "human-tree",
                     "human-tree": {
                         "_myType": 80
+                    }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.25,
+                                1.0,
+                                0.125
+                            ]
+                        },
+                        "kinematic": true,
+                        "gravity": false
                     }
                 }
             ],
@@ -7673,7 +7733,7 @@
             "translation": [
                 0.0099999,
                 0.09,
-                -3.5762786865234375e-7
+                -3.576278686523438e-7
             ],
             "scale": [
                 0.05,
@@ -8610,574 +8670,6 @@
                 0.4193325,
                 0.613629,
                 0.1125373
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "b38c594c-273b-43ff-88ab-50f31ae42dc0": {
-            "name": "Physx",
-            "parent": "feadefc9-b0c3-41fc-a041-f292a7edfa88",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.25,
-                                1.0,
-                                0.125
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "1f395765-f328-47ef-9778-877f2f22f333": {
-            "name": "Physx",
-            "parent": "af8d8686-fa82-40a4-8632-01d91c2030aa",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.25,
-                                1.0,
-                                0.125
-                            ]
-                        },
-                        "kinematic": true,
-                        "gravity": false
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "7aeca31d-596f-4412-9d1a-0ed676a833d2": {
-            "name": "Physx",
-            "parent": "c5d3d710-4867-4281-ae3d-ad1c854e401e",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.25,
-                                1.0,
-                                0.125
-                            ]
-                        },
-                        "kinematic": true,
-                        "gravity": false
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "2ac3ff93-7dd0-448f-a3de-b27fac7d4f3a": {
-            "name": "Physx",
-            "parent": "9e72d912-9cb4-4054-af51-9d5f30aeb20a",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.25,
-                                1.0,
-                                0.125
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
             ],
             "rotation": [
                 0.0,

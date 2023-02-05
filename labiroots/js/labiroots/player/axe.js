@@ -62,7 +62,6 @@ WL.registerComponent('axe', {
         if (!Global.myReady) {
             return;
         }
-        console.error(this._mySpeed);
 
         if (this._myGrabbable.isGrabbed() && this._mySpeed >= Global.mySetup.myPlayerSetup.myAxeSpeedToHit) {
             if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
@@ -70,7 +69,7 @@ WL.registerComponent('axe', {
                 if (root) {
                     if (root._myHit > 0) {
                         if (root.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
                     }
                 }
@@ -79,7 +78,7 @@ WL.registerComponent('axe', {
                 if (rootWall) {
                     if (rootWall._myHit > 0) {
                         if (rootWall.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
                         if (rootWall._myHit == 0) {
                             //rootWall.object.pp_setActive(false);
@@ -93,7 +92,7 @@ WL.registerComponent('axe', {
                 if (bigTree) {
                     if (bigTree._myHit > 0) {
                         if (bigTree.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
 
                         if (bigTree._myHit == 0) {
@@ -110,7 +109,7 @@ WL.registerComponent('axe', {
                 if (humanTree) {
                     if (humanTree._myHit > 0) {
                         if (humanTree.hit()) {
-                            this._myGrabbable._myGrabber._myGamepad.pulse(0.5, 0.25);
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                         }
 
                         if (humanTree._myHit == 0) {
@@ -120,8 +119,16 @@ WL.registerComponent('axe', {
                             let fruits = humanTree._myFruits;
                             for (let fruit of fruits) {
                                 if (!fruit._myGathered) {
+                                    let fruitFall = true;
+
+                                    if (!fruitFall) {
+                                        this._myToDestroy.push(fruit);
+                                    } else {
+                                        fruit.pp_setParent(null);
+                                        fruit.pp_getComponent("physx").kinematic = false;
+                                    }
                                     //fruit.pp_setActive(false);
-                                    this._myToDestroy.push(fruit);
+
                                 }
                             }
 
