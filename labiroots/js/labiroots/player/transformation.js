@@ -15,6 +15,8 @@ WL.registerComponent('transformation', {
         this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
         this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
         this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+
+        this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -55,7 +57,7 @@ WL.registerComponent('transformation', {
         Global.myStage = 0;
         this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
     },
-    _nextStage() {
+    _nextStage(noSound = false) {
         Global.myStage++;
         if (Global.myStage >= this._myTransformationTimersSetup.length) {
             this._death();
@@ -66,9 +68,11 @@ WL.registerComponent('transformation', {
             PP.myRightGamepad.pulse(0.5, 0.5);
         }
 
-        let player = Math.pp_randomPick(this._myLamenti);
-        player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-        player.play();
+        if (!noSound) {
+            let player = Math.pp_randomPick(this._myLamenti);
+            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            player.play();
+        }
     },
     _death() {
         this._spawnTree();
@@ -129,11 +133,15 @@ WL.registerComponent('transformation', {
         if (Global.myStage >= 0) {
             if (full) {
                 Global.myStage = -1;
-                this._nextStage();
+                this._nextStage(true);
             } else {
                 Global.myStage = Math.max(-1, Global.myStage - 2);
                 this._nextStage();
             }
+
+            let player = this._myAudioMangia;
+            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            player.play();
         }
     }
 });

@@ -282,6 +282,11 @@
                 {
                     "type": "pp-set-hand-local-transform"
                 }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
             ]
         },
         "102": {
@@ -337,13 +342,15 @@
                     "type": "pp-console-vr",
                     "pp-console-vr": {
                         "_myHandedness": "left"
-                    }
+                    },
+                    "active": false
                 },
                 {
                     "type": "pp-easy-tune",
                     "pp-easy-tune": {
                         "_myHandedness": "left"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -422,6 +429,11 @@
                         "_myHandedness": "right"
                     }
                 }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
             ]
         },
         "108": {
@@ -458,7 +470,8 @@
                     "type": "pp-tool-cursor",
                     "pp-tool-cursor": {
                         "_myHandedness": "right"
-                    }
+                    },
+                    "active": false
                 }
             ]
         },
@@ -1991,214 +2004,10 @@
                         "_myStage0": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
                         "_myStage1": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
                         "_myStage2": "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf",
-                        "_myStage4": "df85ce43-0200-4d79-93a1-c37c7b5b641d",
-                        "_myStage3": "60f02c32-6141-499e-b8e2-0c276be29ce1",
-                        "_myStage5": "d35fd685-3193-40a3-b932-a27e518bc3b6"
-                    }
-                }
-            ]
-        },
-        "4973aa54-05b3-488b-9ea6-1e908bdd2eac": {
-            "name": "Stage 1",
-            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
-        },
-        "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf": {
-            "name": "Stage 2",
-            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
-        },
-        "38852629-6d45-4b5a-beea-629b4e1b0a0e": {
-            "name": "Empty",
-            "parent": "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "ca9f7080-051b-4906-b63e-252dd4d6c887"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "60f02c32-6141-499e-b8e2-0c276be29ce1": {
-            "name": "Stage 3",
-            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
-        },
-        "95da354c-628c-4c9a-bbae-79930f839b6a": {
-            "name": "Empty",
-            "parent": "60f02c32-6141-499e-b8e2-0c276be29ce1",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "df85ce43-0200-4d79-93a1-c37c7b5b641d": {
-            "name": "Stage 4",
-            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
-        },
-        "6d2327a4-8515-4efa-a3d7-635f6bcdfa4c": {
-            "name": "Empty",
-            "parent": "df85ce43-0200-4d79-93a1-c37c7b5b641d",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "d35fd685-3193-40a3-b932-a27e518bc3b6": {
-            "name": "Stage 5",
-            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
-        },
-        "e2100cc3-0a9e-4644-9211-55cfc381e8bf": {
-            "name": "Empty",
-            "parent": "d35fd685-3193-40a3-b932-a27e518bc3b6",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "eda81209-f334-4b33-a08e-5640069eef56"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "65b5a60d-bf9a-455d-8c3c-4b324ac2f528": {
-            "name": "Stage",
-            "parent": "107",
-            "components": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                {
-                    "type": "stage-switch",
-                    "stage-switch": {
-                        "_myOnlyVR": true,
-                        "_myStage1": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
-                        "_myStage2": "cb3baadb-6fe2-4e13-868a-449e420701d9",
-                        "_myStage3": "f4e40d97-d911-4cdf-8606-b3e49eec1a7e",
-                        "_myStage4": "97f3124d-d433-4175-9d32-094e26afdd44",
-                        "_myStage5": "4c834083-5d29-4121-adb7-bb2c01d630ec"
+                        "_myStage4": "29a686ba-e0e0-4a6a-a29f-d8b56887b0f1",
+                        "_myStage3": "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf",
+                        "_myStage5": "29a686ba-e0e0-4a6a-a29f-d8b56887b0f1",
+                        "_myStage6": "29a686ba-e0e0-4a6a-a29f-d8b56887b0f1"
                     }
                 }
             ],
@@ -2219,96 +2028,37 @@
                 1.0
             ]
         },
-        "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2": {
+        "4973aa54-05b3-488b-9ea6-1e908bdd2eac": {
             "name": "Stage 1",
-            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36"
         },
-        "cb3baadb-6fe2-4e13-868a-449e420701d9": {
+        "15ee6cc6-64ed-4f59-897c-d1ac3d9921bf": {
             "name": "Stage 2",
-            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
-        },
-        "248fc46b-337f-4026-b1c7-8d799668b48e": {
-            "name": "Empty",
-            "parent": "cb3baadb-6fe2-4e13-868a-449e420701d9",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36",
             "components": [
                 {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p2",
-                        "material": "ca9f7080-051b-4906-b63e-252dd4d6c887"
+                        "material": "58d7b9be-9005-4b6b-8222-b1ee3c7af872"
                     }
                 }
             ],
             "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "f4e40d97-d911-4cdf-8606-b3e49eec1a7e": {
-            "name": "Stage 3",
-            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
-        },
-        "cb0c595c-e3e7-405c-be6c-5a19e4f7e06d": {
-            "name": "Empty",
-            "parent": "f4e40d97-d911-4cdf-8606-b3e49eec1a7e",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
-                    }
-                }
+                0.1,
+                0.1,
+                0.1
             ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "97f3124d-d433-4175-9d32-094e26afdd44": {
-            "name": "Stage 4",
-            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
-        },
-        "436de1c2-ab72-4706-98bb-fdd14cb5e929": {
-            "name": "Empty",
-            "parent": "97f3124d-d433-4175-9d32-094e26afdd44",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "547cfd4e-9716-4c45-b3c5-4de88b332cb7"
-                    }
-                }
+            "translation": [
+                0.0,
+                0.0,
+                -0.033766
             ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
-            ]
-        },
-        "4c834083-5d29-4121-adb7-bb2c01d630ec": {
-            "name": "Stage 5",
-            "parent": "65b5a60d-bf9a-455d-8c3c-4b324ac2f528"
-        },
-        "f88d4a8e-1dcf-450c-830e-dd4507020d54": {
-            "name": "Empty",
-            "parent": "4c834083-5d29-4121-adb7-bb2c01d630ec",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p2",
-                        "material": "eda81209-f334-4b33-a08e-5640069eef56"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.075,
-                0.075
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
             ]
         },
         "51b394fc-9fe0-4d79-b359-987a007a047e": {
@@ -2746,26 +2496,6 @@
                 1.25
             ]
         },
-        "812ca42d-9e8d-4378-a43c-1a9acf99c76a": {
-            "name": "2",
-            "parent": "28e6ccaa-d4cf-4430-bdd6-aaab19d1d6c3",
-            "translation": [
-                12.0484561,
-                0.0,
-                -1.2364349
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
         "55d82511-6649-4c2c-9705-1a93fb7828a0": {
             "name": "3",
             "parent": "28e6ccaa-d4cf-4430-bdd6-aaab19d1d6c3",
@@ -2784,65 +2514,6 @@
                 1.0,
                 1.0,
                 1.0
-            ]
-        },
-        "2e5d9abc-ecd0-4be3-b42a-31769dca13ef": {
-            "name": "Pivot",
-            "parent": "812ca42d-9e8d-4378-a43c-1a9acf99c76a",
-            "rotation": [
-                -4.3711388286737935e-8,
-                1.0,
-                -4.3711388286737935e-8,
-                0.0
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0000001,
-                1.0,
-                1.0000001
-            ]
-        },
-        "08e85a98-954b-41df-ae1d-a01050634194": {
-            "name": "Physx",
-            "parent": "2e5d9abc-ecd0-4be3-b42a-31769dca13ef",
-            "components": [
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.5,
-                                1.25,
-                                1.0
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true,
-                        "groups": 1,
-                        "block": 14
-                    }
-                }
-            ],
-            "translation": [
-                -9.5367431640625e-7,
-                1.25,
-                -0.0000075
-            ],
-            "rotation": [
-                -4.3711388286737935e-8,
-                1.0,
-                -4.3711388286737935e-8,
-                0.0
-            ],
-            "scale": [
-                1.0000001,
-                1.0,
-                1.0000001
             ]
         },
         "478a5dc2-eb55-4668-866e-08a999ed9cef": {
@@ -3077,69 +2748,6 @@
                 }
             ]
         },
-        "c084d78c-f0bf-4ca8-aa50-f6386d9a6153": {
-            "name": "2",
-            "parent": "310ea05e-b85a-45e4-88c4-738e1a5b2678"
-        },
-        "47447985-12eb-46b0-8da2-8cfb7f12cb53": {
-            "name": "Pivot",
-            "parent": "c084d78c-f0bf-4ca8-aa50-f6386d9a6153",
-            "rotation": [
-                0.0,
-                0.7071068,
-                0.0,
-                0.7071067
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "scale": [
-                1.0000001,
-                1.0,
-                1.0000001
-            ]
-        },
-        "174e2640-b10d-44c7-aead-158175a0ac59": {
-            "name": "Physx",
-            "parent": "47447985-12eb-46b0-8da2-8cfb7f12cb53",
-            "components": [
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.5,
-                                1.25,
-                                1.0
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true,
-                        "groups": 1,
-                        "block": 14
-                    }
-                }
-            ],
-            "translation": [
-                -9.5367431640625e-7,
-                1.25,
-                -0.0000075
-            ],
-            "rotation": [
-                -4.3711388286737935e-8,
-                1.0,
-                -4.3711388286737935e-8,
-                0.0
-            ],
-            "scale": [
-                1.0000001,
-                1.0,
-                1.0000001
-            ]
-        },
         "fe79340f-fa77-46f4-872c-a45e5c8536d5": {
             "name": "1",
             "parent": "310ea05e-b85a-45e4-88c4-738e1a5b2678",
@@ -3217,100 +2825,6 @@
                 1.0000001,
                 1.0,
                 1.0000001
-            ]
-        },
-        "f2e14651-db06-4027-b90c-285afa03261c": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "47447985-12eb-46b0-8da2-8cfb7f12cb53",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        "4c07dbad-dfd3-49f6-ab90-758f170e16a2": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "f2e14651-db06-4027-b90c-285afa03261c"
-        },
-        "839aa39c-8d1d-4f0e-9643-671ddf80b1cf": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "4c07dbad-dfd3-49f6-ab90-758f170e16a2"
-        },
-        "73fcfd03-4a47-40bf-88b1-e9ba3f8fc7a5": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_ScalingPivotInverse<polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "839aa39c-8d1d-4f0e-9643-671ddf80b1cf"
-        },
-        "d8f149b6-06f9-4575-8965-b3102f9c0c59": {
-            "link": {
-                "name": "polySurface12<polySurface12_$AssimpFbx$_ScalingPivotInverse<polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "73fcfd03-4a47-40bf-88b1-e9ba3f8fc7a5",
-            "components": [
-                {
-                    "mesh": {
-                        "material": "211cda39-354c-4c56-8542-ab4028adf7be"
-                    }
-                }
-            ]
-        },
-        "319dc4c3-7bce-4aab-b276-5d148f18c7b8": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "2e5d9abc-ecd0-4be3-b42a-31769dca13ef",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        "d5600fa4-6494-42b9-a3f9-4b69ea0e5b12": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "319dc4c3-7bce-4aab-b276-5d148f18c7b8"
-        },
-        "1a1623d6-1038-48b6-8c9b-f296607ccc86": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "d5600fa4-6494-42b9-a3f9-4b69ea0e5b12"
-        },
-        "b98fc2bd-3a43-498b-906e-1bf9fa164a3e": {
-            "link": {
-                "name": "polySurface12_$AssimpFbx$_ScalingPivotInverse<polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "1a1623d6-1038-48b6-8c9b-f296607ccc86"
-        },
-        "796e9773-4ed8-457b-8211-7de16c595e82": {
-            "link": {
-                "name": "polySurface12<polySurface12_$AssimpFbx$_ScalingPivotInverse<polySurface12_$AssimpFbx$_ScalingPivot<polySurface12_$AssimpFbx$_RotationPivotInverse<polySurface12_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            },
-            "parent": "b98fc2bd-3a43-498b-906e-1bf9fa164a3e",
-            "components": [
-                {
-                    "mesh": {
-                        "material": "211cda39-354c-4c56-8542-ab4028adf7be"
-                    }
-                }
             ]
         },
         "3a6a729e-dd31-456a-beac-cc53da62aae8": {
@@ -6334,7 +5848,7 @@
         },
         "9f5806db-c077-426c-9f79-d7825fce8af4": {
             "name": "mano",
-            "parent": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+            "parent": "853600a1-bad2-4a87-b064-de648b56ecbf",
             "components": [
                 {
                     "type": "swap-grab-hand",
@@ -6343,6 +5857,22 @@
                         "_myGrabHand": "f724dc3c-1439-463f-a26b-119570470897"
                     }
                 }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
             ]
         },
         "f724dc3c-1439-463f-a26b-119570470897": {
@@ -6561,7 +6091,7 @@
         },
         "85c60095-e941-4e21-ad59-e6eed85a73c3": {
             "name": "mano",
-            "parent": "6f3b9f68-33b7-4225-b1e4-a3d85175c8b2",
+            "parent": "4854efd7-214d-4a1e-abf4-c130f44a42a9",
             "components": [
                 {
                     "type": "swap-grab-hand",
@@ -6571,6 +6101,22 @@
                         "_myGrabHand": "3d07ce01-7617-4f58-a180-b1e6a048e4d1"
                     }
                 }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
             ]
         },
         "a91f3701-e295-4138-9a8f-5d4d4fadfffd": {
@@ -14152,6 +13698,443 @@
                     }
                 }
             ]
+        },
+        "29a686ba-e0e0-4a6a-a29f-d8b56887b0f1": {
+            "name": "Stage 3",
+            "parent": "d22d2c89-cc68-4a13-8f1d-ce0367d93b36",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "669c131b-ca21-4ce8-afb1-34838b80093a"
+                    }
+                }
+            ],
+            "scale": [
+                0.1,
+                0.1,
+                0.1
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                -0.033766
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "c1435b8e-b1fd-4061-b6ea-a4e437394180": {
+            "name": "Stage",
+            "parent": "107",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "stage-switch",
+                    "stage-switch": {
+                        "_myOnlyVR": true,
+                        "_myStage0": "4973aa54-05b3-488b-9ea6-1e908bdd2eac",
+                        "_myStage1": "65f49799-48ba-4bba-b17d-2802c9367fd1",
+                        "_myStage2": "fd24dd31-2c78-45de-b387-2077b4ea513b",
+                        "_myStage4": "1a14a7df-f16e-4980-b7c9-f855a901f62f",
+                        "_myStage3": "fd24dd31-2c78-45de-b387-2077b4ea513b",
+                        "_myStage5": "1a14a7df-f16e-4980-b7c9-f855a901f62f",
+                        "_myStage6": "1a14a7df-f16e-4980-b7c9-f855a901f62f"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "65f49799-48ba-4bba-b17d-2802c9367fd1": {
+            "name": "Stage 1",
+            "parent": "c1435b8e-b1fd-4061-b6ea-a4e437394180"
+        },
+        "fd24dd31-2c78-45de-b387-2077b4ea513b": {
+            "name": "Stage 2",
+            "parent": "c1435b8e-b1fd-4061-b6ea-a4e437394180",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "58d7b9be-9005-4b6b-8222-b1ee3c7af872"
+                    }
+                }
+            ],
+            "scale": [
+                0.1,
+                0.1,
+                0.1
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                -0.033766
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "1a14a7df-f16e-4980-b7c9-f855a901f62f": {
+            "name": "Stage 3",
+            "parent": "c1435b8e-b1fd-4061-b6ea-a4e437394180",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p2",
+                        "material": "669c131b-ca21-4ce8-afb1-34838b80093a"
+                    }
+                }
+            ],
+            "scale": [
+                0.1,
+                0.1,
+                0.1
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                -0.033766
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "69c623e6-c0cd-43a2-95a1-4c4148deb415": {
+            "name": "Head Stage",
+            "parent": "74",
+            "components": [
+                {
+                    "type": "stage-switch",
+                    "stage-switch": {
+                        "_myStage1": "11da67a8-2932-41de-bec7-425b6a0a10f8",
+                        "_myStage2": "11da67a8-2932-41de-bec7-425b6a0a10f8",
+                        "_myStage3": "22b22747-e4c3-481f-bbda-9bfd38712481",
+                        "_myStage4": "22b22747-e4c3-481f-bbda-9bfd38712481",
+                        "_myStage5": "d74144f3-f004-43fa-978b-2a34d56a2c95",
+                        "_myStage6": "23d6f2b3-78b9-48fd-a6e2-742c27ceb27a"
+                    }
+                }
+            ],
+            "translation": [
+                -7.412626246150467e-8,
+                0.0,
+                1.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "11da67a8-2932-41de-bec7-425b6a0a10f8": {
+            "name": "Stage 1",
+            "parent": "69c623e6-c0cd-43a2-95a1-4c4148deb415"
+        },
+        "22b22747-e4c3-481f-bbda-9bfd38712481": {
+            "name": "Stage 2",
+            "parent": "69c623e6-c0cd-43a2-95a1-4c4148deb415",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "d6200692-e881-494f-81ce-71d04fad0c04"
+                    }
+                }
+            ]
+        },
+        "4854efd7-214d-4a1e-abf4-c130f44a42a9": {
+            "name": "Empty",
+            "parent": "107",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "vr-mode-active-switch"
+                }
+            ]
+        },
+        "853600a1-bad2-4a87-b064-de648b56ecbf": {
+            "name": "Empty.001",
+            "parent": "99",
+            "components": [
+                {
+                    "type": "vr-mode-active-switch"
+                }
+            ]
+        },
+        "d74144f3-f004-43fa-978b-2a34d56a2c95": {
+            "name": "Stage 3",
+            "parent": "69c623e6-c0cd-43a2-95a1-4c4148deb415",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "a54dbc73-9651-475a-857f-500633aff8b4"
+                    }
+                }
+            ]
+        },
+        "23d6f2b3-78b9-48fd-a6e2-742c27ceb27a": {
+            "name": "Stage 4",
+            "parent": "69c623e6-c0cd-43a2-95a1-4c4148deb415",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
+                    }
+                }
+            ]
         }
     },
     "meshes": {
@@ -14660,6 +14643,42 @@
                 "name": "muro_AA_lambert2_Normal.png",
                 "file": "assets\\textures\\Walls\\muro_AA_lambert2_Normal.png"
             }
+        },
+        "3dd17426-946d-4db7-9bad-ad72a70a16f1": {
+            "link": {
+                "name": "Mano_Sinistra_lambert1_BaseMap.png",
+                "file": "assets\\textures\\player\\Mano_Sinistra_lambert1_BaseMap.png"
+            }
+        },
+        "45b48b68-bf7e-4788-b623-a9c743305c61": {
+            "link": {
+                "name": "texture mani1.2.png",
+                "file": "assets\\textures\\concept foglie albero\\texture mani1.2.png"
+            }
+        },
+        "f3c2c269-9594-4945-bceb-aa32124275e7": {
+            "link": {
+                "name": "texture mani1.1.png",
+                "file": "assets\\textures\\concept foglie albero\\texture mani1.1.png"
+            }
+        },
+        "84168c61-f4b0-46ef-8771-0c3d7fabadc9": {
+            "link": {
+                "name": "fase 1.png",
+                "file": "assets\\textures\\concept foglie albero\\fase 1.png"
+            }
+        },
+        "c3d63647-b0c6-46ea-8a49-2718174ee4cd": {
+            "link": {
+                "name": "fase 2.png",
+                "file": "assets\\textures\\concept foglie albero\\fase 2.png"
+            }
+        },
+        "ec486ac4-73bb-4f9b-8653-693f21cb2e80": {
+            "link": {
+                "name": "fase3.png",
+                "file": "assets\\textures\\concept foglie albero\\fase3.png"
+            }
         }
     },
     "images": {
@@ -14848,61 +14867,113 @@
             "link": {
                 "name": "Muro_B_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Muro_B_lambert1_BaseMap.png"
-            }
+            },
+            "compress": false
         },
         "0aa5cef5-65b2-46bf-93c3-a5723a133b81": {
             "link": {
                 "name": "Muro_B_lambert1_Normal.png",
                 "file": "assets\\textures\\Walls\\Muro_B_lambert1_Normal.png"
-            }
+            },
+            "compress": false
         },
         "d304f0e3-b06d-4089-a4c6-8328ea646225": {
             "link": {
                 "name": "Muro_C_lambert1_Normal.png",
                 "file": "assets\\textures\\Walls\\Muro_C_lambert1_Normal.png"
-            }
+            },
+            "compress": false
         },
         "6393fb5c-ce43-48a6-a7a3-9b8878343ebe": {
             "link": {
                 "name": "Muro_C_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
-            }
+            },
+            "compress": false
         },
         "9314b999-8eb1-47f3-b59c-b5362c78ef29": {
             "link": {
                 "name": "Angolo_B_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Angolo_B_lambert1_BaseMap.png"
-            }
+            },
+            "compress": false
         },
         "14c06302-9626-4896-a342-2d1be59fff18": {
             "link": {
                 "name": "Angolo_B_lambert1_Normal.png",
                 "file": "assets\\textures\\Walls\\Angolo_B_lambert1_Normal.png"
-            }
+            },
+            "compress": false
         },
         "6a315f98-dd96-4246-9ac1-681d21b8d41f": {
             "link": {
                 "name": "Angolo_A_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Angolo_A_lambert1_BaseMap.png"
-            }
+            },
+            "compress": false
         },
         "25a173ad-4799-4f56-806d-237b5763b58d": {
             "link": {
                 "name": "Angolo_A_lambert1_Normal.png",
                 "file": "assets\\textures\\Walls\\Angolo_A_lambert1_Normal.png"
-            }
+            },
+            "compress": false
         },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
             "link": {
                 "name": "muro_AA_lambert2_BaseMap.png",
                 "file": "assets\\textures\\Walls\\muro_AA_lambert2_BaseMap.png"
-            }
+            },
+            "compress": false
         },
         "201f06bd-6acc-41b7-a74a-cad45c230855": {
             "link": {
                 "name": "muro_AA_lambert2_Normal.png",
                 "file": "assets\\textures\\Walls\\muro_AA_lambert2_Normal.png"
-            }
+            },
+            "compress": false
+        },
+        "3a4b6111-7f99-413e-a55b-789c13cfbdd5": {
+            "link": {
+                "name": "Mano_Sinistra_lambert1_BaseMap.png",
+                "file": "assets\\textures\\player\\Mano_Sinistra_lambert1_BaseMap.png"
+            },
+            "compress": false
+        },
+        "8df391ae-b8c5-4cf8-9ca9-fc2a9d0c4f64": {
+            "link": {
+                "name": "texture mani1.2.png",
+                "file": "assets\\textures\\concept foglie albero\\texture mani1.2.png"
+            },
+            "compress": false
+        },
+        "ac0e78dd-b39b-4e8c-8848-7a4945793e80": {
+            "link": {
+                "name": "texture mani1.1.png",
+                "file": "assets\\textures\\concept foglie albero\\texture mani1.1.png"
+            },
+            "compress": false
+        },
+        "708253f0-da1b-4a79-8e2f-167448d0e2d5": {
+            "link": {
+                "name": "fase 1.png",
+                "file": "assets\\textures\\concept foglie albero\\fase 1.png"
+            },
+            "compress": false
+        },
+        "bfe74a14-e11e-4aac-ab4d-73e3772b2ca3": {
+            "link": {
+                "name": "fase 2.png",
+                "file": "assets\\textures\\concept foglie albero\\fase 2.png"
+            },
+            "compress": false
+        },
+        "7768feaf-9669-4cf9-9a73-c9ba7c0ffbde": {
+            "link": {
+                "name": "fase3.png",
+                "file": "assets\\textures\\concept foglie albero\\fase3.png"
+            },
+            "compress": false
         }
     },
     "materials": {
@@ -15480,7 +15551,23 @@
         },
         "12b8acea-811d-4a6e-aa3b-91170fa5843b": {
             "name": "Mano",
-            "pipeline": "13"
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "3dd17426-946d-4db7-9bad-ad72a70a16f1",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
         },
         "9d08436f-534a-4f72-b8e6-2405a0bf90a7": {
             "link": {
@@ -15674,6 +15761,69 @@
             "link": {
                 "name": "lambert2",
                 "file": "assets\\models\\Muri\\muro_AA.fbx"
+            }
+        },
+        "58d7b9be-9005-4b6b-8222-b1ee3c7af872": {
+            "name": "mano1",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "45b48b68-bf7e-4788-b623-a9c743305c61",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
+        },
+        "669c131b-ca21-4ce8-afb1-34838b80093a": {
+            "name": "mano2",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "f3c2c269-9594-4945-bceb-aa32124275e7"
+            }
+        },
+        "d6200692-e881-494f-81ce-71d04fad0c04": {
+            "name": "ui1",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "84168c61-f4b0-46ef-8771-0c3d7fabadc9",
+                "ambientFactor": 0.5,
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "a54dbc73-9651-475a-857f-500633aff8b4": {
+            "name": "ui2",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "c3d63647-b0c6-46ea-8a49-2718174ee4cd",
+                "ambientFactor": 0.5,
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "8f7661b3-7b2e-4295-bc8f-8de69a583f98": {
+            "name": "ui3",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseTexture": "ec486ac4-73bb-4f9b-8653-693f21cb2e80",
+                "ambientFactor": 0.5
             }
         }
     },
@@ -15909,6 +16059,28 @@
             },
             "name": "Phong Opaque Double",
             "doubleSided": true
+        },
+        "0e6a5664-5547-401a-bcc1-f8bbb94199b0": {
+            "link": {
+                "name": "Phong Opaque",
+                "file": "default"
+            },
+            "name": "Phong Opaque Double",
+            "doubleSided": true,
+            "features": {
+                "TEXTURED": true
+            }
+        },
+        "7a753214-907d-4260-92e1-0b67e30a7e28": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": true
+            },
+            "doubleSided": true,
+            "name": "Phong Opaque Textured Double"
         }
     },
     "settings": {
@@ -16079,7 +16251,13 @@
         "assets/textures/Walls/Angolo_A_lambert1_Normal.png",
         "assets/models/Muri/muro_AA.fbx",
         "assets/textures/Walls/muro_AA_lambert2_BaseMap.png",
-        "assets/textures/Walls/muro_AA_lambert2_Normal.png"
+        "assets/textures/Walls/muro_AA_lambert2_Normal.png",
+        "assets/textures/player/Mano_Sinistra_lambert1_BaseMap.png",
+        "assets/textures/concept foglie albero/texture mani1.2.png",
+        "assets/textures/concept foglie albero/texture mani1.1.png",
+        "assets/textures/concept foglie albero/fase 1.png",
+        "assets/textures/concept foglie albero/fase 2.png",
+        "assets/textures/concept foglie albero/fase3.png"
     ],
     "fonts": {
         "147": {
