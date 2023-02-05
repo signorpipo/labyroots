@@ -2943,7 +2943,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "f1ae36c4-bcf6-4d66-ad50-565e605c7e60"
                     }
                 }
             ]
@@ -3069,7 +3069,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "f1ae36c4-bcf6-4d66-ad50-565e605c7e60"
                     }
                 }
             ]
@@ -3295,7 +3295,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "211cda39-354c-4c56-8542-ab4028adf7be"
                     }
                 }
             ]
@@ -3342,7 +3342,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "211cda39-354c-4c56-8542-ab4028adf7be"
                     }
                 }
             ]
@@ -3389,7 +3389,7 @@
                     "pp-set-active": {
                         "_myActive": false
                     },
-                    "active": false
+                    "active": true
                 }
             ]
         },
@@ -3782,7 +3782,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -3829,7 +3829,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -3935,7 +3935,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4101,7 +4101,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4207,7 +4207,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -4313,7 +4313,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4419,7 +4419,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4575,7 +4575,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4681,7 +4681,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -4787,7 +4787,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -4893,7 +4893,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5049,7 +5049,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5155,7 +5155,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -5261,7 +5261,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5367,7 +5367,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5523,7 +5523,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -5629,7 +5629,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -5735,7 +5735,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5841,7 +5841,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -5997,7 +5997,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -6103,7 +6103,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -6209,7 +6209,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -6365,7 +6365,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -6471,7 +6471,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -6577,7 +6577,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -6737,7 +6737,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -6843,7 +6843,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
                     }
                 }
             ]
@@ -6949,7 +6949,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
+                        "material": "2d591662-2352-47bc-bf2c-0a40f7fb263c"
                     }
                 }
             ]
@@ -7630,7 +7630,7 @@
             "translation": [
                 0.1,
                 0.8999999,
-                -3.5762786865234375e-7
+                -3.576278686523438e-7
             ],
             "scale": [
                 0.05,
@@ -7730,6 +7730,70 @@
                     }
                 }
             ]
+        },
+        "57f0a7a6-200e-4220-b93e-9c18415b3304": {
+            "name": "MuroB",
+            "parent": "de312993-6b7d-4c65-a920-2acf3d133837"
+        },
+        "8f05da47-b7bc-486f-9db2-8473662b8e18": {
+            "name": "Pivot",
+            "parent": "57f0a7a6-200e-4220-b93e-9c18415b3304",
+            "translation": [
+                0.0,
+                7.5135726,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "17f6728e-bf34-41fd-8bb5-f71429cedff3": {
+            "link": {
+                "name": "polySurface19_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            },
+            "parent": "8f05da47-b7bc-486f-9db2-8473662b8e18",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "44e8d17a-628b-49b2-a1bc-e3271158cafa": {
+            "link": {
+                "name": "polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            },
+            "parent": "17f6728e-bf34-41fd-8bb5-f71429cedff3"
+        },
+        "c7ec0851-4eaa-4e6a-be72-e52335a6e13d": {
+            "link": {
+                "name": "polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            },
+            "parent": "44e8d17a-628b-49b2-a1bc-e3271158cafa"
+        },
+        "bdf9e801-95ba-4018-a12a-a0dbc42b7a52": {
+            "link": {
+                "name": "polySurface19_$AssimpFbx$_ScalingPivotInverse<polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            },
+            "parent": "c7ec0851-4eaa-4e6a-be72-e52335a6e13d"
+        },
+        "5d43f8d3-1582-48bc-9d47-fc90d821fc28": {
+            "link": {
+                "name": "polySurface19<polySurface19_$AssimpFbx$_ScalingPivotInverse<polySurface19_$AssimpFbx$_ScalingPivot<polySurface19_$AssimpFbx$_RotationPivotInverse<polySurface19_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            },
+            "parent": "bdf9e801-95ba-4018-a12a-a0dbc42b7a52"
         }
     },
     "meshes": {
@@ -7972,6 +8036,24 @@
                 "name": "polySurface11",
                 "file": "assets\\models\\Axes\\aXE_DEF.fbx"
             }
+        },
+        "150": {
+            "link": {
+                "name": "polySurface22",
+                "file": "assets\\models\\Angoli\\Angolo_B.fbx"
+            }
+        },
+        "af6e5b7c-ab3c-4883-bdf6-ef8c6135a0f6": {
+            "link": {
+                "name": "polySurface22",
+                "file": "assets\\models\\Muri\\Muro_B.fbx"
+            }
+        },
+        "06a85ac9-b424-42c3-90f5-90b51b932e08": {
+            "link": {
+                "name": "polySurface19",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
+            }
         }
     },
     "textures": {
@@ -8111,6 +8193,18 @@
             "link": {
                 "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
                 "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
+            }
+        },
+        "34d83e83-565c-4ad0-ae74-f2e0c80a0642": {
+            "link": {
+                "name": "Muro_A_lambert2_BaseMap.png",
+                "file": "assets\\textures\\Walls\\Muro_A_lambert2_BaseMap.png"
+            }
+        },
+        "696515e9-f4ed-48aa-a67f-02b2bbb1ffa7": {
+            "link": {
+                "name": "Muro_A_lambert2_Normal.png",
+                "file": "assets\\textures\\Walls\\Muro_A_lambert2_Normal.png"
             }
         }
     },
@@ -8258,6 +8352,20 @@
             "link": {
                 "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
                 "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
+            },
+            "compress": false
+        },
+        "6906fbb6-13c5-4ebf-b1c5-f56c0d3187d5": {
+            "link": {
+                "name": "Muro_A_lambert2_BaseMap.png",
+                "file": "assets\\textures\\Walls\\Muro_A_lambert2_BaseMap.png"
+            },
+            "compress": false
+        },
+        "030c4c5c-40ae-4f6e-9aa8-22bf8eedaacd": {
+            "link": {
+                "name": "Muro_A_lambert2_Normal.png",
+                "file": "assets\\textures\\Walls\\Muro_A_lambert2_Normal.png"
             },
             "compress": false
         }
@@ -8809,8 +8917,8 @@
             }
         },
         "3ab61b52-b9fd-472f-a3fc-5994e607693e": {
-            "name": "Muri",
-            "pipeline": "13",
+            "name": "Muro_A",
+            "pipeline": "145",
             "Phong": {
                 "ambientColor": [
                     0.0,
@@ -8818,7 +8926,9 @@
                     0.0,
                     1.0
                 ],
-                "ambientFactor": 0.5
+                "ambientFactor": 0.5,
+                "diffuseTexture": "34d83e83-565c-4ad0-ae74-f2e0c80a0642",
+                "normalTexture": "696515e9-f4ed-48aa-a67f-02b2bbb1ffa7"
             }
         },
         "6a1eca7f-6fee-48fd-b063-bded35ce84bd": {
@@ -8869,6 +8979,64 @@
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Axes\\aXE_DEF.fbx"
+            }
+        },
+        "211cda39-354c-4c56-8542-ab4028adf7be": {
+            "name": "Muro_B",
+            "pipeline": "145",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
+        },
+        "f1ae36c4-bcf6-4d66-ad50-565e605c7e60": {
+            "name": "Muro_C",
+            "pipeline": "145",
+            "Phong": {
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
+        },
+        "1bfc919b-6cb0-483b-9e84-c4290f355457": {
+            "name": "Angolo_A",
+            "pipeline": "145"
+        },
+        "2d591662-2352-47bc-bf2c-0a40f7fb263c": {
+            "name": "Anfolo_B",
+            "pipeline": "145"
+        },
+        "cdc86dbc-c7b2-4588-8104-8f19b8da4240": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\models\\Muri\\Muro_B.fbx"
+            }
+        },
+        "c3c30260-15fd-40fb-8a37-497e27228654": {
+            "link": {
+                "name": "lambert1",
+                "file": "assets\\models\\Muri\\Muro_B3.fbx"
             }
         }
     },
@@ -9254,7 +9422,11 @@
         "assets/textures/Axe/aXE_DEF_lambert1_AlbedoTransparency.png",
         "assets/textures/Axe/aXE_DEF_lambert1_Normal.png",
         "assets/textures/Axe/aXE_DEF_lambert1_MetallicSmoothness.png",
-        "assets/models/Axes/aXE_DEF.fbx"
+        "assets/models/Axes/aXE_DEF.fbx",
+        "assets/textures/Walls/Muro_A_lambert2_BaseMap.png",
+        "assets/textures/Walls/Muro_A_lambert2_Normal.png",
+        "assets/models/Muri/Muro_B.fbx",
+        "assets/models/Muri/Muro_B3.fbx"
     ],
     "fonts": {
         "147": {
