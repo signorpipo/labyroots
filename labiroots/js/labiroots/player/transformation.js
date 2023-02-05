@@ -57,6 +57,10 @@ WL.registerComponent('transformation', {
             Global.myPlayer.resetHeadToReal();
         }
 
+        if (Global.myAxe != null) {
+            Global.myAxe.resetTransformRespawn();
+        }
+
         this._resetTransformation();
     },
     addStage(full = false) {

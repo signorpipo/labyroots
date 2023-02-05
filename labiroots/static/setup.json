@@ -4,9 +4,17 @@
 		"mySpeed": 2,
 		"myTeleportDistance": 2
 	},
+"myTreeSetup":
+	{
+		"myRootHit": 3,
+		"myBigTreeHit": 3,
+		"myRootWallHit": 3,
+		"myBigTreeRoots": 4
+	},
 "myPlayerSetup":
 	{
-		"myTransformationTimers": [2000,2,2,2,1]
+		"myTransformationTimers": [20000,2,2,2,1],
+		"myAxeSpeedToHit": 1
 	},
 "myMazeSetup":
 	{
