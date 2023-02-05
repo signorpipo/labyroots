@@ -2697,53 +2697,6 @@
                 1.0
             ]
         },
-        "27d496a0-8088-43ea-b52f-40a436110bad": {
-            "link": {
-                "name": "polySurface8_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            },
-            "parent": "c8597921-c5d0-4757-894f-98e315cacb56",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ]
-        },
-        "82c073ae-8e4a-4f43-805e-3828b10ef631": {
-            "link": {
-                "name": "polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            },
-            "parent": "27d496a0-8088-43ea-b52f-40a436110bad"
-        },
-        "9885d131-ac01-4b1a-bdec-f9a5ab62e811": {
-            "link": {
-                "name": "polySurface8_$AssimpFbx$_ScalingPivot<polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            },
-            "parent": "82c073ae-8e4a-4f43-805e-3828b10ef631"
-        },
-        "0d70224d-6aa3-41c3-981a-ec790a03f70f": {
-            "link": {
-                "name": "polySurface8_$AssimpFbx$_ScalingPivotInverse<polySurface8_$AssimpFbx$_ScalingPivot<polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            },
-            "parent": "9885d131-ac01-4b1a-bdec-f9a5ab62e811"
-        },
-        "b6c3bd07-a1c0-4854-b480-3d1055d2b575": {
-            "link": {
-                "name": "polySurface8<polySurface8_$AssimpFbx$_ScalingPivotInverse<polySurface8_$AssimpFbx$_ScalingPivot<polySurface8_$AssimpFbx$_RotationPivotInverse<polySurface8_$AssimpFbx$_RotationPivot",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            },
-            "parent": "0d70224d-6aa3-41c3-981a-ec790a03f70f",
-            "components": [
-                {
-                    "mesh": {
-                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
-                    }
-                }
-            ]
-        },
         "94d90252-e67f-428a-ba48-23ef8356a8c6": {
             "name": "Pivot",
             "parent": "2a4a5671-d123-46c2-ae27-e60ece05d1f9",
@@ -3217,9 +3170,9 @@
                 0.7071067
             ],
             "translation": [
-                0.1774749,
                 0.0,
-                0.000061
+                0.0,
+                0.0
             ],
             "scale": [
                 0.9999899,
@@ -14133,6 +14086,69 @@
                 {
                     "mesh": {
                         "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                    }
+                }
+            ]
+        },
+        "c6f35a4d-bfc3-41c3-a5c4-eff798867a7c": {
+            "link": {
+                "name": "polySurface21_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\muro_AA.fbx"
+            },
+            "parent": "c8597921-c5d0-4757-894f-98e315cacb56",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "062915f6-8a55-4ada-911f-ddaedfbd4fb6": {
+            "link": {
+                "name": "polySurface21_$AssimpFbx$_RotationPivotInverse<polySurface21_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\muro_AA.fbx"
+            },
+            "parent": "c6f35a4d-bfc3-41c3-a5c4-eff798867a7c"
+        },
+        "0fed7d10-8280-46b2-b9c9-e67cac996a6c": {
+            "link": {
+                "name": "polySurface21_$AssimpFbx$_ScalingPivot<polySurface21_$AssimpFbx$_RotationPivotInverse<polySurface21_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\muro_AA.fbx"
+            },
+            "parent": "062915f6-8a55-4ada-911f-ddaedfbd4fb6"
+        },
+        "00d19226-f139-489e-b9d2-0256cfd09306": {
+            "link": {
+                "name": "polySurface21_$AssimpFbx$_ScalingPivotInverse<polySurface21_$AssimpFbx$_ScalingPivot<polySurface21_$AssimpFbx$_RotationPivotInverse<polySurface21_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\muro_AA.fbx"
+            },
+            "parent": "0fed7d10-8280-46b2-b9c9-e67cac996a6c"
+        },
+        "7839154b-ac83-4a4b-8dfa-2bd0def0d19a": {
+            "link": {
+                "name": "polySurface21<polySurface21_$AssimpFbx$_ScalingPivotInverse<polySurface21_$AssimpFbx$_ScalingPivot<polySurface21_$AssimpFbx$_RotationPivotInverse<polySurface21_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Muri\\muro_AA.fbx"
+            },
+            "parent": "00d19226-f139-489e-b9d2-0256cfd09306",
+            "translation": [
+                0.0,
+                2.9802322387695313e-8,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                -0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ],
+            "components": [
+                {
+                    "mesh": {
+                        "material": "3ab61b52-b9fd-472f-a3fc-5994e607693e"
                     }
                 }
             ]
