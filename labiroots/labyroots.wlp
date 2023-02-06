@@ -14178,7 +14178,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                        "material": "1abb89d1-f088-4a38-a4cf-b09ae762776b"
                     }
                 }
             ],
@@ -14568,6 +14568,12 @@
                 "name": "Muro_C_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
             }
+        },
+        "aafb4f80-fa08-4ad6-bc49-60944125c5a4": {
+            "link": {
+                "name": "credits_brutti.PNG",
+                "file": "assets\\textures\\altro\\credits_brutti.PNG"
+            }
         }
     },
     "images": {
@@ -14791,6 +14797,13 @@
             "link": {
                 "name": "Muro_C_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
+            },
+            "compress": false
+        },
+        "5b145eb5-8c8a-431e-8259-0bc141380205": {
+            "link": {
+                "name": "credits_brutti.PNG",
+                "file": "assets\\textures\\altro\\credits_brutti.PNG"
             },
             "compress": false
         }
@@ -15644,6 +15657,13 @@
                 "diffuseTexture": "ec486ac4-73bb-4f9b-8653-693f21cb2e80",
                 "ambientFactor": 0.5
             }
+        },
+        "1abb89d1-f088-4a38-a4cf-b09ae762776b": {
+            "name": "credit",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "aafb4f80-fa08-4ad6-bc49-60944125c5a4"
+            }
         }
     },
     "shaders": {
@@ -16060,7 +16080,8 @@
         "assets/textures/concept foglie albero/fase 1.png",
         "assets/textures/concept foglie albero/fase 2.png",
         "assets/textures/concept foglie albero/fase3.png",
-        "assets/textures/Walls/Muro_C_lambert1_BaseMap.png"
+        "assets/textures/Walls/Muro_C_lambert1_BaseMap.png",
+        "assets/textures/altro/credits_brutti.PNG"
     ],
     "fonts": {
         "147": {
