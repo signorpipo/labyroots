@@ -20,6 +20,7 @@ WL.registerComponent('axe', {
         this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
         this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
 
+        this._myLamentoPitch = 1.4;
         this._myColpoFinalePitch = 1.25;
     },
 
@@ -112,7 +113,7 @@ WL.registerComponent('axe', {
                             if (root._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
                                 player.setPosition(root.object.pp_getPosition().vec3_add([0, 1.5, 0]));
-                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
                         }
@@ -144,7 +145,7 @@ WL.registerComponent('axe', {
                             if (rootWall._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
                                 player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 1.5, 0]));
-                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
                         }
@@ -181,7 +182,7 @@ WL.registerComponent('axe', {
                             if (bigTree._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
                                 player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
-                                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                                player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
                         }
@@ -223,7 +224,7 @@ WL.registerComponent('axe', {
 
                             let player = Math.pp_randomPick(this._myLamenti);
                             player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
-                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                             player.play();
 
                             //humanTree.object.pp_setActive(false);

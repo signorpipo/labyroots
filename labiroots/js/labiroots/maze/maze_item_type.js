@@ -1,6 +1,7 @@
 LR.MazeItemType = {
     NONE: 0,
     NO_HUMAN_TREE: 1,
+    CREDITS: 2,
     PLAYER_START: 10,
     PLAYER_RESPAWN: 11,
     BIG_TREE: 20,
