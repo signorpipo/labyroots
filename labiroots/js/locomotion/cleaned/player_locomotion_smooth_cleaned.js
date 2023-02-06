@@ -39,13 +39,13 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
-        this._myStepDelay = 0.5;
+        this._myStepDelay = 0.7;
         this._myStepTimer = new PP.Timer(this._myStepDelay);
 
         this._mySteps = [];
+        this.stepCounter = 0;
         this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
-        this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_2);
-        this._mySteps[2] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
+        //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
     }
 
     update(dt) {
@@ -139,11 +139,14 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.01) {
                 if (this._myStepTimer.isDone()) {
                     let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, speedUsed / 2);
-                    this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.1));
+                    this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
 
-                    let player = Math.pp_randomPick(this._mySteps);
+                    this.stepCounter = this.stepCounter + 1;
+                    this.stepCounter = this.stepCounter % this._mySteps.length;
+                    let player = this._mySteps[this.stepCounter];
+                    player = Math.pp_randomPick(this._mySteps);
                     player.setPosition(this._myParams.myPlayerTransformManager.getPosition());
-                    player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                    player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
                     player.play();
                 }
             }

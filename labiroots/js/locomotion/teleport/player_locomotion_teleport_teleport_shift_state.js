@@ -32,6 +32,11 @@ PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTelep
         PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Shift Movement Seconds", this._myTeleportParams.myTeleportParams.myShiftMovementSeconds, 0.5, 3, 0));
         PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Shift Rotate Seconds", this._myTeleportParams.myTeleportParams.myShiftRotateSeconds, 0.5, 3, 0));
         PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Shift Rotate Start Percentage", this._myTeleportParams.myTeleportParams.myShiftRotateStartAfterMovementPercentage, 0.5, 3, 0, 1));
+
+        this._mySteps = [];
+        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+        //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_2);
+        //this._mySteps[2] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
     }
 
     start(fsm) {
@@ -53,6 +58,11 @@ PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTelep
     }
 
     _startShifting() {
+        let player = Math.pp_randomPick(this._mySteps);
+        player.setPosition(this._myTeleportRuntimeParams.myTeleportPosition);
+        player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
+        player.play();
+
         this._myTeleportParams.myPlayerTransformManager.getParams().mySyncPositionDisabled = true;
 
         this._myLocomotionRuntimeParams.myIsTeleporting = true;

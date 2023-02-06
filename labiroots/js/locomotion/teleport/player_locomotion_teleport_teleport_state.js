@@ -63,11 +63,6 @@ PlayerLocomotionTeleportTeleportState = class PlayerLocomotionTeleportTeleportSt
 
         this._myFSM.init("init");
         this._myFSM.perform("start");
-
-        this._mySteps = [];
-        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
-        this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_2);
-        this._mySteps[2] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
     }
 
     start(fsm) {
@@ -115,10 +110,6 @@ PlayerLocomotionTeleportTeleportState = class PlayerLocomotionTeleportTeleportSt
     }
 
     _teleportDone() {
-        let player = Math.pp_randomPick(this._mySteps);
-        player.setPosition(this._myTeleportRuntimeParams.myTeleportPosition);
-        player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-        player.play();
 
         this._myParentFSM.performDelayed("done");
     }

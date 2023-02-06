@@ -131,9 +131,17 @@ WL.registerComponent('audio-load', {
         }
 
         {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 2;
+            audioSetup.myReferenceDistance = 2;
+            manager.addAudioSetup(AudioID.TREE_UMANO_SPAWN, audioSetup);
+        }
+
+        {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 3;
+            audioSetup.myVolume = 0.95;
             audioSetup.myReferenceDistance = 1.5;
             manager.addAudioSetup(AudioID.PASSO_1, audioSetup);
         }
@@ -141,7 +149,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 3;
+            audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
             manager.addAudioSetup(AudioID.PASSO_2, audioSetup);
         }
@@ -149,7 +157,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 3;
+            audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
             manager.addAudioSetup(AudioID.PASSO_3, audioSetup);
         }
@@ -157,7 +165,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1;
+            audioSetup.myVolume = 0.45;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.HEAL, audioSetup);
         }
@@ -165,7 +173,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1;
+            audioSetup.myVolume = 0.45;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.HEAL2, audioSetup);
         }
@@ -198,4 +206,5 @@ AudioID = {
     LAMENTO_UMANO_1_MORTE: 18,
     LAMENTO_UMANO_2_MORTE: 19,
     LAMENTO_UMANO_3_MORTE: 20,
+    TREE_UMANO_SPAWN: 21,
 };

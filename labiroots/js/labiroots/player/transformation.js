@@ -21,6 +21,8 @@ WL.registerComponent('transformation', {
         this._myLamentiMorte[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2_MORTE);
         this._myLamentiMorte[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3_MORTE);
 
+        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.TREE_UMANO_SPAWN);
+
         this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
         this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
 
@@ -67,6 +69,10 @@ WL.registerComponent('transformation', {
             this._myLastFreeCell = Math.pp_randomPick(Global.myMaze.getCellNextToPositionEmpty(Global.myPlayer.getPosition()));
             if (this._myLastFreeCell != null) {
                 this._spawnTree();
+
+                this._myAudioPrendi.setPosition(this._myLastFreeCell.myCellPosition.vec3_add([0, 1, 0]));
+                this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+                this._myAudioPrendi.play();
             }
             this._myLastFreeCell = oldLast;
         }
