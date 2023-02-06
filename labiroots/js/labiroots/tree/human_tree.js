@@ -14,7 +14,11 @@ WL.registerComponent('human-tree', {
         if (!this._myStarted) {
             if (Global.myReady) {
                 this._myStarted = true;
-                this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit;
+                if (this._myType == 90) {
+                    this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit * 100;
+                } else {
+                    this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit;
+                }
             }
         } else {
 
