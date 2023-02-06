@@ -126,6 +126,12 @@ WL.registerComponent('transformation', {
         this._myLastFreeCell = null;
 
         this._resetTransformation();
+
+        let grabbers = WL.scene.pp_getComponents("pp-grabber-hand");
+        for (let grabber of grabbers) {
+            grabber.throw();
+        }
+
     },
     _spawnTree() {
         if (this._myLastFreeCell != null) {
