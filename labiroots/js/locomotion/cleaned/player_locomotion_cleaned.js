@@ -60,7 +60,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
             params.myCollisionRuntimeParams = this._myCollisionRuntimeParams;
 
-            params.myHeadRadius = 0.15;
+            params.myHeadRadius = 0.075;
 
             params.myIsMaxDistanceFromRealToSyncEnabled = true;
             params.myMaxDistanceFromRealToSync = 100;
@@ -120,19 +120,19 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             params.myObscureMaterial = null;
             params.myObscureRadius = 0.1;
 
-            params.myObscureFadeOutSeconds = 0.25;
-            params.myObscureFadeInSeconds = 0.25;
+            params.myObscureFadeOutSeconds = 0.15;
+            params.myObscureFadeInSeconds = 0.15;
 
             params.myObscureFadeEasingFunction = PP.EasingFunction.linear;
             params.myObscureLevelRelativeDistanceEasingFunction = PP.EasingFunction.linear;
 
-            params.myDistanceToStartObscureWhenBodyColliding = 0.35;
+            params.myDistanceToStartObscureWhenBodyColliding = 2220.35;
             params.myDistanceToStartObscureWhenHeadColliding = 0;
-            params.myDistanceToStartObscureWhenFloating = 0.35;
-            params.myDistanceToStartObscureWhenFar = 0.5;
+            params.myDistanceToStartObscureWhenFloating = 2220.35;
+            params.myDistanceToStartObscureWhenFar = 2220.5;
 
             params.myRelativeDistanceToMaxObscureWhenBodyColliding = 0.5;
-            params.myRelativeDistanceToMaxObscureWhenHeadColliding = 0.1;
+            params.myRelativeDistanceToMaxObscureWhenHeadColliding = 0;
             params.myRelativeDistanceToMaxObscureWhenFloating = 0.5;
             params.myRelativeDistanceToMaxObscureWhenFar = 0.5;
 
@@ -296,7 +296,17 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             }
         }
 
-        //this._myPlayerObscureManager.update(dt);
+        this._myPlayerObscureManager.update(dt);
+
+        if (!this._myParams.myFlyEnabled) {
+            let maxHeight = 0;
+            let position = Global.myPlayer.getPosition();
+            if (position[1] > maxHeight) {
+                let fixedPosition = position.vec3_clone();
+                fixedPosition[1] = maxHeight;
+                Global.myPlayer.teleportPosition(fixedPosition, null, true);
+            }
+        }
     }
 
     setIdle(idle) {

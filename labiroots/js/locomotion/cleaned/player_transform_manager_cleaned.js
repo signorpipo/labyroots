@@ -296,7 +296,7 @@ CleanedPlayerTransformManager = class CleanedPlayerTransformManager {
         params.myHorizontalPositionCheckVerticalDirectionType = 0;
 
         params.myHeight = params.myRadius; // on purpose the height "radius" is half, to avoid hitting before with head than body collision (through height)
-        params.myPositionOffsetLocal.vec3_set(0, -params.myRadius / 2, 0)
+        params.myPositionOffsetLocal.vec3_set(0, 0.05, 0)
 
         params.myCheckHeight = true;
         params.myCheckHeightVerticalMovement = true;
@@ -497,7 +497,7 @@ CleanedPlayerTransformManager.prototype.update = function () {
 
         this._updateReal(dt);
 
-        if (this._myParams.myUpdatePositionValid) {
+        if (false && this._myParams.myUpdatePositionValid) {
             transformQuat = this.getTransformQuat(transformQuat);
             transformUp = transformQuat.quat2_getUp(transformUp);
             rotationQuat = transformQuat.quat2_getRotationQuat(rotationQuat);
@@ -556,7 +556,7 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             }
 
             // Far
-            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FAR)) {
+            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FAR)) {
                 if (this._myParams.myIsMaxDistanceFromRealToSyncEnabled && movementToCheck.vec3_length() > this._myParams.myMaxDistanceFromRealToSync) {
                     this._myIsFar = true;
                 } else if (this._myParams.myIsFarExtraCheckCallback != null && this._myParams.myIsFarExtraCheckCallback(this)) {
@@ -569,7 +569,7 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             collisionRuntimeParams.myIsOnGround = true; //#TODO temp as long as surface infos are not actually updated
             transformQuat = this.getTransformQuat(transformQuat);
             newPosition.vec3_copy(this._myValidPosition);
-            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
+            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
                 CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myRealMovementCollisionCheckParams, collisionRuntimeParams);
 
                 if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {
@@ -590,7 +590,7 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             }
 
             // Floating 
-            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FLOATING)) {
+            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FLOATING)) {
 
                 if (!this._myIsBodyColliding) {
                     movementToCheck = newPosition.vec3_sub(position, movementToCheck);
@@ -716,12 +716,12 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             // Head Colliding
             movementToCheck = this.getPositionHeadReal(positionReal).vec3_sub(this.getPositionHead(position), movementToCheck);
             collisionRuntimeParams.reset();
-            transformQuat = this.getTransformHeadQuat(transformQuat); // get eyes transform
+            transformQuat = this.getTransformHeadRealQuat(transformQuat); // get eyes transform
             newPositionHead.vec3_copy(this._myValidPositionHead);
             if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.HEAD_COLLIDING)) {
-                CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
-
-                if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {
+                //CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
+                CollisionCheckGlobal.positionCheck(true, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
+                if (collisionRuntimeParams.myIsPositionOk) {
                     this._myIsHeadColliding = false;
                     newPositionHead.vec3_copy(collisionRuntimeParams.myNewPosition);
                 } else {
@@ -747,7 +747,7 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
                 this._updateCollisionHeight();
             }
 
-            if (this._myParams.myUpdateRealPositionValid) {
+            if (false && this._myParams.myUpdateRealPositionValid) {
                 transformQuat = this.getTransformRealQuat(transformQuat);
                 transformUp = transformQuat.quat2_getUp(transformUp);
                 rotationQuat = transformQuat.quat2_getRotationQuat(rotationQuat);

@@ -30,7 +30,7 @@
                         "_myFlatOpaque": "31",
                         "_myPhongOpaque": "32",
                         "_myText": "110",
-                        "_myFlatTransparentNoDepth": "90"
+                        "_myFlatTransparentNoDepth": "9565871d-59c2-461a-828f-2f9f8932dc77"
                     }
                 },
                 {
@@ -877,7 +877,7 @@
             ],
             "translation": [
                 0.0,
-                -0.2599999,
+                -0.5,
                 0.0
             ]
         },
@@ -15664,6 +15664,10 @@
             "Phong": {
                 "diffuseTexture": "aafb4f80-fa08-4ad6-bc49-60944125c5a4"
             }
+        },
+        "9565871d-59c2-461a-828f-2f9f8932dc77": {
+            "name": "Flat Transparent No Depth 2",
+            "pipeline": "f15f2a6b-4275-45a3-b613-fca76a9b7e7f"
         }
     },
     "shaders": {
@@ -15911,6 +15915,35 @@
             }
         },
         "7a753214-907d-4260-92e1-0b67e30a7e28": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": true
+            },
+            "doubleSided": true,
+            "name": "Phong Opaque Textured Double"
+        },
+        "f15f2a6b-4275-45a3-b613-fca76a9b7e7f": {
+            "link": {
+                "name": "Flat Opaque",
+                "file": "default"
+            },
+            "name": "Flat Transparent No Depth 2",
+            "features": {
+                "ALPHA_MASKED": true
+            },
+            "depthTest": false,
+            "depthFunction": "always",
+            "blending": true,
+            "blendSrcRgb": "source alpha",
+            "blendSrcAlpha": "source alpha",
+            "blendDestRgb": "one minus source alpha",
+            "blendDestAlpha": "one minus source alpha",
+            "blendEqAlpha": "max"
+        },
+        "f1c49d36-d61e-4cbf-8da6-ab2888168337": {
             "link": {
                 "name": "Phong Opaque Textured",
                 "file": "default"
