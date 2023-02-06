@@ -41,7 +41,23 @@ WL.registerComponent('axe', {
             if (this._myTimerDestroy.isDone()) {
                 for (let object of this._myToDestroy) {
                     //object.pp_destroy();
-                    object.pp_setActive(false);
+                    if (object[1]) {
+                        let fruits = object[0].pp_getComponent("human-tree")._myFruits;
+                        for (let fruit of fruits) {
+                            if (!fruit._myGathered) {
+                                let fruitFall = true;
+
+                                if (!fruitFall) {
+                                    //this._myToDestroy.push([fruit, false]);
+                                } else {
+                                    fruit.pp_setParent(null);
+                                    fruit.pp_getComponent("physx").kinematic = false;
+                                }
+                                //fruit.pp_setActive(false);
+                            }
+                        }
+                    }
+                    object[0].pp_setActive(false);
                 }
 
                 this._myToDestroy = [];
@@ -151,7 +167,7 @@ WL.registerComponent('axe', {
                         }
                         if (rootWall._myHit == 0) {
                             //rootWall.object.pp_setActive(false);
-                            this._myToDestroy.push(rootWall.object);
+                            this._myToDestroy.push([rootWall.object, false]);
                             this._myTimerDestroy.start();
                         }
                     }
@@ -228,20 +244,22 @@ WL.registerComponent('axe', {
                             player.play();
 
                             //humanTree.object.pp_setActive(false);
-                            this._myToDestroy.push(humanTree.object);
+                            this._myToDestroy.push([humanTree.object, true]);
 
-                            let fruits = humanTree._myFruits;
-                            for (let fruit of fruits) {
-                                if (!fruit._myGathered) {
-                                    let fruitFall = true;
+                            if (false) {
+                                let fruits = humanTree._myFruits;
+                                for (let fruit of fruits) {
+                                    if (!fruit._myGathered) {
+                                        let fruitFall = true;
 
-                                    if (!fruitFall) {
-                                        this._myToDestroy.push(fruit);
-                                    } else {
-                                        fruit.pp_setParent(null);
-                                        fruit.pp_getComponent("physx").kinematic = false;
+                                        if (!fruitFall) {
+                                            this._myToDestroy.push(fruit);
+                                        } else {
+                                            fruit.pp_setParent(null);
+                                            fruit.pp_getComponent("physx").kinematic = false;
+                                        }
+                                        //fruit.pp_setActive(false);
                                     }
-                                    //fruit.pp_setActive(false);
                                 }
                             }
 

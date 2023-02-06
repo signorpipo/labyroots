@@ -39,7 +39,11 @@ WL.registerComponent('transformation', {
             let playerPosition = Global.myPlayer.getPosition();
             let currentCell = Global.myMaze.getCellByPosition(playerPosition);
             if (currentCell) {
-                if (currentCell.myStaticMazeItemType == LR.MazeItemType.NONE) {
+                if (currentCell.myStaticMazeItemType == LR.MazeItemType.NONE ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_0 ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_1 ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_2 ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_3) {
                     this._myLastFreeCell = currentCell;
                 }
             }
@@ -203,7 +207,7 @@ WL.registerComponent('transformation', {
                 this._nextStage(true, true);
 
                 let player = this._myAudioHeal2;
-                player.setPitch(Math.pp_random(1.5 - 0.15, 1.5 + 0.05));
+                player.setPitch(Math.pp_random(1.35 - 0.15, 1.35 + 0.05));
                 player.play();
 
                 PP.myLeftGamepad.pulse(0.35, 0.25);
@@ -213,7 +217,7 @@ WL.registerComponent('transformation', {
                 this._nextStage(true, true);
 
                 let player = this._myAudioHeal;
-                player.setPitch(Math.pp_random(1.15 - 0.15, 1.15 + 0.05));
+                player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
                 player.play();
 
                 PP.myLeftGamepad.pulse(0.35, 0.25);
