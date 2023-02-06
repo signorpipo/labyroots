@@ -1,7 +1,7 @@
 {
-  "name": "labiroots",
+  "name": "LabyRoots",
   "version": "1.0.0",
-  "author": "GGJ2023",
+  "author": "I Polaretti",
   "description": "GGJ 2023 Entry - Theme: Roots",
   "license": "ISC",
   "dependencies": {
@@ -14,6 +14,6 @@
     "esbuild": "^0.14.54"
   },
   "scripts": {
-    "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/labiroots-bundle.js\""
+    "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/LabyRoots-bundle.js\""
   }
 }

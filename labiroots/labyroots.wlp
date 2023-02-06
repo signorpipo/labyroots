@@ -48,7 +48,7 @@
                 {
                     "type": "story",
                     "story": {
-                        "_myOnlyVR": true
+                        "_myOnlyVR": false
                     }
                 },
                 {
@@ -343,14 +343,14 @@
                     "pp-console-vr": {
                         "_myHandedness": "left"
                     },
-                    "active": false
+                    "active": true
                 },
                 {
                     "type": "pp-easy-tune",
                     "pp-easy-tune": {
                         "_myHandedness": "left"
                     },
-                    "active": false
+                    "active": true
                 }
             ]
         },
@@ -471,7 +471,7 @@
                     "pp-tool-cursor": {
                         "_myHandedness": "right"
                     },
-                    "active": false
+                    "active": true
                 }
             ]
         },
@@ -14158,6 +14158,40 @@
                     }
                 }
             ]
+        },
+        "d195d9df-89a8-4768-b8a7-e6cc1a7e5bcd": {
+            "name": "2",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "8e2b540b-9333-45f5-aec0-57ee9981966b": {
+            "name": "1",
+            "parent": "d195d9df-89a8-4768-b8a7-e6cc1a7e5bcd"
+        },
+        "f562c140-d8ec-47e4-891e-380a07a8b770": {
+            "name": "Credits",
+            "parent": "8e2b540b-9333-45f5-aec0-57ee9981966b",
+            "components": [
+                {
+                    "type": "billboard-player"
+                },
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "49467962-d10c-47ce-8e04-661f82f883ee"
+                    }
+                }
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "translation": [
+                0.0,
+                1.5499999,
+                0.0
+            ]
         }
     },
     "meshes": {
@@ -15870,7 +15904,7 @@
     },
     "settings": {
         "project": {
-            "name": "labiroots",
+            "name": "LabyRoots",
             "version": [
                 0,
                 9,
