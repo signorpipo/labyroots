@@ -112,7 +112,7 @@ WL.registerComponent('axe', {
 
                             if (root._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(root.object.pp_getPosition().vec3_add([0, 1.5, 0]));
+                                player.setPosition(root.object.pp_getPosition().vec3_add([0, 2, 0]));
                                 player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
@@ -144,7 +144,7 @@ WL.registerComponent('axe', {
 
                             if (rootWall._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 1.5, 0]));
+                                player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 2, 0]));
                                 player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
@@ -181,7 +181,7 @@ WL.registerComponent('axe', {
 
                             if (bigTree._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
+                                player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 2, 0]));
                                 player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 player.play();
                             }
@@ -223,7 +223,7 @@ WL.registerComponent('axe', {
                         if (humanTree._myHit == 0) {
 
                             let player = Math.pp_randomPick(this._myLamenti);
-                            player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
+                            player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 2, 0]));
                             player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                             player.play();
 

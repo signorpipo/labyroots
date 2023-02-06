@@ -21,24 +21,48 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.5;
+            audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_1, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_2, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_3, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 2.5;
+            audioSetup.myReferenceDistance = 2;
             manager.addAudioSetup(AudioID.LAMENTO_1, audioSetup);
         }
 
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.5;
-            audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myVolume = 2.5;
+            audioSetup.myReferenceDistance = 2;
             manager.addAudioSetup(AudioID.LAMENTO_2, audioSetup);
         }
 
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.5;
-            audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myVolume = 2.5;
+            audioSetup.myReferenceDistance = 2;
             manager.addAudioSetup(AudioID.LAMENTO_3, audioSetup);
         }
 
@@ -144,4 +168,7 @@ AudioID = {
     PASSO_3: 12,
     HEAL: 13,
     HEAL2: 14,
+    LAMENTO_UMANO_1: 15,
+    LAMENTO_UMANO_2: 16,
+    LAMENTO_UMANO_3: 17,
 };

@@ -12,9 +12,9 @@ WL.registerComponent('transformation', {
         this._myLastFreeCell = null;
 
         this._myLamenti = [];
-        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
-        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
-        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1);
+        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2);
+        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3);
 
         this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
         this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
@@ -58,15 +58,22 @@ WL.registerComponent('transformation', {
         Global.myStage = 0;
         this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
     },
-    _nextStage(noSound = false) {
-        Global.myStage++;
+    _nextStage(noSound = false, eat = false) {
+        Global.myStage = Math.max(Global.myStage + 1, 0);
         if (Global.myStage >= this._myTransformationTimersSetup.length) {
             this._death();
         } else {
             this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
 
-            PP.myLeftGamepad.pulse(0.5, 0.5);
-            PP.myRightGamepad.pulse(0.5, 0.5);
+            if (!noSound && eat) {
+                PP.myLeftGamepad.pulse(0.35, 0.25);
+                PP.myRightGamepad.pulse(0.35, 0.25);
+            }
+
+            if (!noSound && !eat) {
+                PP.myLeftGamepad.pulse(0.5, 0.5);
+                PP.myRightGamepad.pulse(0.5, 0.5);
+            }
         }
 
         if (!noSound) {
@@ -124,9 +131,9 @@ WL.registerComponent('transformation', {
         if (Global.myStage < this._myTransformationTimersSetup.length - 1) {
             if (full) {
                 Global.myStage = Math.max(0, this._myTransformationTimersSetup.length - 2);
-                this._nextStage();
+                this._nextStage(false, true);
             } else {
-                this._nextStage();
+                this._nextStage(false, true);
             }
         }
     },
@@ -134,18 +141,24 @@ WL.registerComponent('transformation', {
         if (Global.myStage >= 0) {
             if (full) {
                 Global.myStage = -1;
-                this._nextStage(true);
+                this._nextStage(true, true);
 
                 let player = this._myAudioHeal2;
                 player.setPitch(Math.pp_random(1.5 - 0.15, 1.5 + 0.05));
                 player.play();
+
+                PP.myLeftGamepad.pulse(0.35, 0.25);
+                PP.myRightGamepad.pulse(0.35, 0.25);
             } else {
                 Global.myStage = Math.max(-1, Global.myStage - 2);
-                this._nextStage(true);
+                this._nextStage(true, true);
 
                 let player = this._myAudioHeal;
                 player.setPitch(Math.pp_random(1.15 - 0.15, 1.15 + 0.05));
                 player.play();
+
+                PP.myLeftGamepad.pulse(0.35, 0.25);
+                PP.myRightGamepad.pulse(0.35, 0.25);
             }
         }
     }
