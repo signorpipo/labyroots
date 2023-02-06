@@ -136,9 +136,9 @@ PlayerLocomotionTeleportDetectionVisualizer.prototype._setupVisuals = function (
     let innerTorusPosition = PP.vec3_create();
     return function _setupVisuals() {
         this._myTeleportParableValidMaterial = PP.myDefaultResources.myMaterials.myFlatOpaque.clone();
-        this._myTeleportParableValidMaterial.color = PP.vec4_create(0, 0.5, 1, 1);
+        this._myTeleportParableValidMaterial.color = PP.vec4_create(190 / 255, 20 / 255, 60 / 255, 1);
         this._myTeleportParableInvalidMaterial = PP.myDefaultResources.myMaterials.myFlatOpaque.clone();
-        this._myTeleportParableInvalidMaterial.color = PP.vec4_create(0.75, 0.05, 0, 1);
+        this._myTeleportParableInvalidMaterial.color = PP.vec4_create(225 / 255, 175 / 255, 55 / 255, 1);
 
         this._myValidVisualLines = [];
         this._myInvalidVisualLines = [];
