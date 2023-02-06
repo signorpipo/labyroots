@@ -19,6 +19,8 @@ WL.registerComponent('axe', {
         this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
         this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
         this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+
+        this._myColpoFinalePitch = 1.25;
     },
 
     update: function (dt) {
@@ -92,17 +94,24 @@ WL.registerComponent('axe', {
                         if (root.hit()) {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                             let player = this._myAudioColpoFinale;
+                            let pitch = 1;
                             if (root._myHit > 0) {
-                                player = Math.pp_randomPick(this._myAudioColpi);
+                                if (root._myHit > 1) {
+                                    player = this._myAudioColpi[1];
+                                } else {
+                                    player = this._myAudioColpi[0];
+                                }
+                            } else {
+                                pitch = this._myColpoFinalePitch;
                             }
 
                             player.setPosition(this.object.pp_getPosition());
-                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.setPitch(Math.pp_random(pitch - 0.15, pitch + 0.05));
                             player.play();
 
                             if (root._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(root.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPosition(root.object.pp_getPosition().vec3_add([0, 1.5, 0]));
                                 player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
                                 player.play();
                             }
@@ -117,17 +126,24 @@ WL.registerComponent('axe', {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
 
                             let player = this._myAudioColpoFinale;
+                            let pitch = 1;
                             if (rootWall._myHit > 0) {
-                                player = Math.pp_randomPick(this._myAudioColpi);
+                                if (rootWall._myHit > 1) {
+                                    player = this._myAudioColpi[1];
+                                } else {
+                                    player = this._myAudioColpi[0];
+                                }
+                            } else {
+                                pitch = this._myColpoFinalePitch;
                             }
 
                             player.setPosition(this.object.pp_getPosition());
-                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.setPitch(Math.pp_random(pitch - 0.15, pitch + 0.05));
                             player.play();
 
                             if (rootWall._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPosition(rootWall.object.pp_getPosition().vec3_add([0, 1.5, 0]));
                                 player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
                                 player.play();
                             }
@@ -147,17 +163,24 @@ WL.registerComponent('axe', {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
 
                             let player = this._myAudioColpoFinale;
+                            let pitch = 1;
                             if (bigTree._myHit > 0) {
-                                player = Math.pp_randomPick(this._myAudioColpi);
+                                if (bigTree._myHit > 1) {
+                                    player = this._myAudioColpi[1];
+                                } else {
+                                    player = this._myAudioColpi[0];
+                                }
+                            } else {
+                                pitch = this._myColpoFinalePitch;
                             }
 
                             player.setPosition(this.object.pp_getPosition());
-                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.setPitch(Math.pp_random(pitch - 0.15, pitch + 0.05));
                             player.play();
 
                             if (bigTree._myHit == 0) {
                                 let player = Math.pp_randomPick(this._myLamenti);
-                                player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 1, 0]));
+                                player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
                                 player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
                                 player.play();
                             }
@@ -180,19 +203,26 @@ WL.registerComponent('axe', {
                             this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
 
                             let player = this._myAudioColpoFinale;
+                            let pitch = 1;
                             if (humanTree._myHit > 0) {
-                                player = Math.pp_randomPick(this._myAudioColpi);
+                                if (humanTree._myHit > 1) {
+                                    player = this._myAudioColpi[1];
+                                } else {
+                                    player = this._myAudioColpi[0];
+                                }
+                            } else {
+                                pitch = this._myColpoFinalePitch;
                             }
 
                             player.setPosition(this.object.pp_getPosition());
-                            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+                            player.setPitch(Math.pp_random(pitch - 0.15, pitch + 0.05));
                             player.play();
                         }
 
                         if (humanTree._myHit == 0) {
 
                             let player = Math.pp_randomPick(this._myLamenti);
-                            player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 1, 0]));
+                            player.setPosition(humanTree.object.pp_getPosition().vec3_add([0, 1.5, 0]));
                             player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
                             player.play();
 
