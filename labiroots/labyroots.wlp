@@ -883,16 +883,7 @@
         },
         "3040ad15-c83e-430d-aed3-f397e6602c36": {
             "name": "UI",
-            "parent": "19",
-            "components": [
-                {
-                    "type": "pp-show-fps",
-                    "pp-show-fps": {
-                        "_myTextMaterial": "110"
-                    },
-                    "active": false
-                }
-            ]
+            "parent": "19"
         },
         "7cbd9105-a8fe-4425-badd-d877732475d1": {
             "name": "Maze Items",
@@ -14192,6 +14183,181 @@
                 1.5499999,
                 0.0
             ]
+        },
+        "96cf9d83-1492-4827-a243-24c695dc704f": {
+            "name": "Loading",
+            "parent": "74",
+            "components": [
+                {
+                    "type": "deactivate-on-story"
+                }
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c549cb61-c15d-46c8-8e40-a8a81b713a18": {
+            "name": "Text",
+            "parent": "96cf9d83-1492-4827-a243-24c695dc704f",
+            "translation": [
+                0.0,
+                0.0,
+                0.75
+            ],
+            "rotation": [
+                0.0,
+                1.0,
+                0.0,
+                -4.371138828673793e-8
+            ],
+            "scale": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "LOADING\n",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "effect": "outline"
+                    }
+                }
+            ]
+        },
+        "a42d8c88-5032-4e90-aad5-7e6b03b5b9bb": {
+            "name": "FPS",
+            "parent": "3040ad15-c83e-430d-aed3-f397e6602c36",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "pp-show-fps",
+                    "pp-show-fps": {
+                        "_myTextMaterial": "110"
+                    },
+                    "active": true
+                }
+            ]
         }
     },
     "meshes": {
@@ -14581,231 +14747,264 @@
             "link": {
                 "name": "DefaultImage",
                 "file": "default"
-            }
+            },
+            "stream": false
         },
         "871c20fd-fee3-45d3-912b-bfb4d5824efb": {
             "link": {
                 "name": "60.webp",
                 "file": "assets\\textures\\webp\\Trees\\60.webp"
             },
-            "compress": false
+            "compress": true,
+            "stream": false
         },
         "ae52868a-d640-474a-bf27-098700df42bd": {
             "link": {
                 "name": "Frutto_Blu.webp",
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Blu.webp"
             },
-            "compress": false
+            "compress": true,
+            "stream": false
         },
         "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
             "link": {
                 "name": "Frutto_Rosso.webp",
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Rosso.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "00b6ab52-a892-4c6f-a4d8-f0f0960c876b": {
             "link": {
                 "name": "RadiciAlbero_fase3Fixed.webp",
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase3Fixed.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "256c9c93-aaeb-414c-aa81-78de15a2e445": {
             "link": {
                 "name": "RadiciAlbero_fase1Fixed.webp",
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase1Fixed.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "b2ddbfee-7e65-493f-946f-959c49f1f652": {
             "link": {
                 "name": "RadiciAlbero_fase2Fixed.webp",
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase2Fixed.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "93a39555-5abb-44da-9f17-f22570276e8f": {
             "link": {
                 "name": "AlberoGrosso_fase1.webp",
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase1.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "7f648475-da4e-40ed-974a-6c01da5ed296": {
             "link": {
                 "name": "AlberoGrosso_fase2.webp",
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase2.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "5d76c448-4b4e-469b-9afd-39cd373d4284": {
             "link": {
                 "name": "AlberoGrosso_fase3.webp",
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase3.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "8c9704c3-5f62-4e05-ae92-15acf4e2f982": {
             "link": {
                 "name": "AlberoGrosso_fase4.webp",
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase4.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "981534ae-abe1-4192-a781-3ec615a49c87": {
             "link": {
                 "name": "AlberoGrosso_fase5.webp",
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase5.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "510548d5-a317-4206-805e-f14e87364c4e": {
             "link": {
                 "name": "radici_muro.webp",
                 "file": "assets\\textures\\webp\\Trees\\radici_muro.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "7f7327bb-de83-4205-9d6f-bfc722bb2f76": {
             "link": {
                 "name": "Albero_Blu.webp",
                 "file": "assets\\textures\\webp\\Trees\\Albero_Blu.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "19038d66-4612-403a-8dd2-2eb13b1dc196": {
             "link": {
                 "name": "Albero_Rosso.webp",
                 "file": "assets\\textures\\webp\\Trees\\Albero_Rosso.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "a01a037e-3c11-4b09-974b-54b3c1fec2aa": {
             "link": {
                 "name": "Albero_Giallo.webp",
                 "file": "assets\\textures\\webp\\Trees\\Albero_Giallo.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "d1343922-519e-449f-931b-4207d62acec9": {
             "link": {
                 "name": "Frutto_Giallo.webp",
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Giallo.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "eff7edfc-888b-4815-9d8c-a080d5dd56b4": {
             "link": {
                 "name": "aXE_DEF_lambert1_AlbedoTransparency.webp",
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "deb95d87-2eff-45f9-ad78-d79824fbfcf6": {
             "link": {
                 "name": "aXE_DEF_lambert1_Normal.webp",
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_Normal.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "fb52aa1b-3917-40ee-a6c8-7fee007b6cba": {
             "link": {
                 "name": "aXE_DEF_lambert1_MetallicSmoothness.webp",
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "6906fbb6-13c5-4ebf-b1c5-f56c0d3187d5": {
             "link": {
                 "name": "Muro_A_lambert2_BaseMap.webp",
                 "file": "assets\\textures\\webp\\Walls\\Muro_A_lambert2_BaseMap.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "eada4133-13e6-40ab-88c2-eb7e799e1528": {
             "link": {
                 "name": "sky_laby.webp",
                 "file": "assets\\textures\\webp\\Environment\\sky_laby.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "e49b3dfe-981f-4d39-abf7-76e1a36155d6": {
             "link": {
                 "name": "terreno_laby2.webp",
                 "file": "assets\\textures\\webp\\Environment\\terreno_laby2.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "6a315f98-dd96-4246-9ac1-681d21b8d41f": {
             "link": {
                 "name": "Angolo_A_lambert1_BaseMap.webp",
                 "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
             "link": {
                 "name": "muro_AA_lambert2_BaseMap.webp",
                 "file": "assets\\textures\\webp\\Walls\\muro_AA_lambert2_BaseMap.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "3a4b6111-7f99-413e-a55b-789c13cfbdd5": {
             "link": {
                 "name": "Mano_Sinistra_lambert1_BaseMap.webp",
                 "file": "assets\\textures\\webp\\player\\Mano_Sinistra_lambert1_BaseMap.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "8df391ae-b8c5-4cf8-9ca9-fc2a9d0c4f64": {
             "link": {
                 "name": "texture mani1.2.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "ac0e78dd-b39b-4e8c-8848-7a4945793e80": {
             "link": {
                 "name": "texture mani1.1.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "708253f0-da1b-4a79-8e2f-167448d0e2d5": {
             "link": {
                 "name": "fase 1.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase 1.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "bfe74a14-e11e-4aac-ab4d-73e3772b2ca3": {
             "link": {
                 "name": "fase 2.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase 2.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "7768feaf-9669-4cf9-9a73-c9ba7c0ffbde": {
             "link": {
                 "name": "fase3.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase3.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "a3ae8de9-94a0-4d9c-aa00-5d9c137fae58": {
             "link": {
                 "name": "Muro_C_lambert1_BaseMap.webp",
                 "file": "assets\\textures\\webp\\Walls\\Muro_C_lambert1_BaseMap.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         },
         "5b145eb5-8c8a-431e-8259-0bc141380205": {
             "link": {
                 "name": "credits_brutti.webp",
                 "file": "assets\\textures\\webp\\altro\\credits_brutti.webp"
             },
-            "compress": false
+            "compress": false,
+            "stream": false
         }
     },
     "materials": {
@@ -15668,6 +15867,39 @@
         "9565871d-59c2-461a-828f-2f9f8932dc77": {
             "name": "Flat Transparent No Depth 2",
             "pipeline": "f15f2a6b-4275-45a3-b613-fca76a9b7e7f"
+        },
+        "bcd8a041-6bbf-4910-93a9-87fd61a65c98": {
+            "name": "Loading",
+            "pipeline": "82",
+            "Text": {
+                "font": "147",
+                "effectColor": [
+                    0.3490195,
+                    0.0246366,
+                    0.1064629,
+                    1.0
+                ],
+                "color": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ]
+            }
+        },
+        "360d6f01-5602-4bd4-97e3-b19c818ff93a": {
+            "link": {
+                "name": "DefaultFontMaterial",
+                "file": "default"
+            },
+            "Text": {
+                "font": "147"
+            },
+            "name": "Old Loading",
+            "pipeline": "82",
+            "DistanceFieldVector": {
+                "vectorTexture": "t0"
+            }
         }
     },
     "shaders": {
@@ -15966,9 +16198,9 @@
         },
         "rendering": {
             "clearColor": [
-                0.1675478,
-                0.105098,
-                0.3999999,
+                0.3490196,
+                0.0235294,
+                0.1058823,
                 1.0
             ],
             "textureAtlasSize": [
@@ -16121,7 +16353,9 @@
             "link": {
                 "name": "DejaVuSans.ttf",
                 "file": "default"
-            }
+            },
+            "outline": true,
+            "outlineSize": 0.025
         }
     }
 }
