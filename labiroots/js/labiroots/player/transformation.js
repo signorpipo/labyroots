@@ -108,6 +108,10 @@ WL.registerComponent('transformation', {
 
         if (cell != null) {
             Global.myPlayer.teleportPosition(cell[0].myCellPosition, null, true);
+
+            let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
+            Global.myPlayer.setRotationQuat(rotationQuat);
+
             Global.myPlayer.resetReal(true, false, false, true);
             Global.myPlayer.resetHeadToReal();
         }
