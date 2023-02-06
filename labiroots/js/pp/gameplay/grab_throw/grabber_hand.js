@@ -48,6 +48,8 @@ WL.registerComponent('pp-grabber-hand', {
 
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myCollisionsCollector = new PP.PhysicsCollisionCollector(this._myPhysX, true);
+
+        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
     },
     update: function (dt) {
         this._myCollisionsCollector.update(dt);
@@ -169,6 +171,9 @@ WL.registerComponent('pp-grabber-hand', {
                 if (pulseInfo.myIntensity <= intensity) {
                     this._myGamepad.pulse(intensity, 0.1);
                 }
+                this._myAudioPrendi.setPosition(this.object.pp_getPosition());
+                this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+                this._myAudioPrendi.play();
             }
         }
     },

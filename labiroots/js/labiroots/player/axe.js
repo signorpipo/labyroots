@@ -10,7 +10,6 @@ WL.registerComponent('axe', {
     },
     start: function () {
         this._myIsGrabbed = false;
-        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
         this._myAudioColpi = [];
         this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);
         this._myAudioColpi[1] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_2);
@@ -49,9 +48,6 @@ WL.registerComponent('axe', {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
                 if (!this._myIsGrabbed) {
-                    this._myAudioPrendi.setPosition(this.object.pp_getPosition());
-                    this._myAudioPrendi.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-                    this._myAudioPrendi.play();
                 }
                 this._myIsGrabbed = true;
             } else {
