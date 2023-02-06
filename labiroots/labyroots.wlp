@@ -14373,98 +14373,98 @@
         },
         "ab4b7097-f68f-4d2f-8894-f082c2155c8b": {
             "link": {
-                "name": "60.png",
-                "file": "assets\\textures\\Trees\\60.png"
+                "name": "60.webp",
+                "file": "assets\\textures\\webp\\Trees\\60.webp"
             }
         },
         "988a539e-261a-4ff9-b16e-088f14e69690": {
             "link": {
-                "name": "Frutto_Blu.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Blu.png"
+                "name": "Frutto_Blu.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Blu.webp"
             }
         },
         "9ccf1cf5-0688-4f66-afa3-cf43aefbb342": {
             "link": {
-                "name": "Frutto_Rosso.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
+                "name": "Frutto_Rosso.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Rosso.webp"
             }
         },
         "62aa74c7-b7ee-40e2-99f4-4e2e55a71992": {
             "link": {
-                "name": "RadiciAlbero_fase3Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase3Fixed.png"
+                "name": "RadiciAlbero_fase3Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase3Fixed.webp"
             }
         },
         "f963e74c-1b88-41ce-a83e-1c79217533c8": {
             "link": {
-                "name": "RadiciAlbero_fase1Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase1Fixed.png"
+                "name": "RadiciAlbero_fase1Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase1Fixed.webp"
             }
         },
         "aebcc738-5acf-4a1c-9fbc-686e7b968dd7": {
             "link": {
-                "name": "RadiciAlbero_fase2Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase2Fixed.png"
+                "name": "RadiciAlbero_fase2Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase2Fixed.webp"
             }
         },
         "f5ae09e5-c8c5-4a87-a156-6e1f53918cd6": {
             "link": {
-                "name": "AlberoGrosso_fase1.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase1.png"
+                "name": "AlberoGrosso_fase1.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase1.webp"
             }
         },
         "de51f0e4-5a51-4348-9c24-783c4d25d49b": {
             "link": {
-                "name": "AlberoGrosso_fase2.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase2.png"
+                "name": "AlberoGrosso_fase2.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase2.webp"
             }
         },
         "785b78f6-2b2f-4396-9ac2-50efc0b940a8": {
             "link": {
-                "name": "AlberoGrosso_fase3.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
+                "name": "AlberoGrosso_fase3.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase3.webp"
             }
         },
         "57960eda-0402-4838-a70c-2b2e9615bc72": {
             "link": {
-                "name": "AlberoGrosso_fase4.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase4.png"
+                "name": "AlberoGrosso_fase4.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase4.webp"
             }
         },
         "eef348b6-5eb3-4e81-b240-8ea80b2716f9": {
             "link": {
-                "name": "AlberoGrosso_fase5.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase5.png"
+                "name": "AlberoGrosso_fase5.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase5.webp"
             }
         },
         "df70b8f2-30c9-4bcc-bfbf-8170636b3b16": {
             "link": {
-                "name": "radici_muro.png",
-                "file": "assets\\textures\\Trees\\radici_muro.png"
+                "name": "radici_muro.webp",
+                "file": "assets\\textures\\webp\\Trees\\radici_muro.webp"
             }
         },
         "c309d079-8193-42a6-8105-02c05470331a": {
             "link": {
-                "name": "Albero_Blu.png",
-                "file": "assets\\textures\\Trees\\Albero_Blu.png"
+                "name": "Albero_Blu.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Blu.webp"
             }
         },
         "34073829-de02-4617-8acf-ad6822de9d24": {
             "link": {
-                "name": "Albero_Rosso.png",
-                "file": "assets\\textures\\Trees\\Albero_Rosso.png"
+                "name": "Albero_Rosso.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Rosso.webp"
             }
         },
         "551c1ef7-11c1-47c5-afce-e2e9166a2a6c": {
             "link": {
-                "name": "Albero_Giallo.png",
-                "file": "assets\\textures\\Trees\\Albero_Giallo.png"
+                "name": "Albero_Giallo.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Giallo.webp"
             }
         },
         "7a4f7fc6-d98f-42ac-b19a-a1545a96159f": {
             "link": {
-                "name": "Frutto_Giallo.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
+                "name": "Frutto_Giallo.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Giallo.webp"
             }
         },
         "14400bc1-6b6e-4d9f-a971-031c824d303f": {
@@ -14481,98 +14481,98 @@
         },
         "79706952-f8a8-48d5-a71c-8799f1cbd4d1": {
             "link": {
-                "name": "aXE_DEF_lambert1_AlbedoTransparency.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.png"
+                "name": "aXE_DEF_lambert1_AlbedoTransparency.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.webp"
             }
         },
         "dc9c23ee-d4c7-4446-84f5-9d34bddf9429": {
             "link": {
-                "name": "aXE_DEF_lambert1_Normal.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_Normal.png"
+                "name": "aXE_DEF_lambert1_Normal.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_Normal.webp"
             }
         },
         "262922d7-28a2-4967-882d-df172bf88247": {
             "link": {
-                "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
+                "name": "aXE_DEF_lambert1_MetallicSmoothness.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.webp"
             }
         },
         "34d83e83-565c-4ad0-ae74-f2e0c80a0642": {
             "link": {
-                "name": "Muro_A_lambert2_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_A_lambert2_BaseMap.png"
+                "name": "Muro_A_lambert2_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Muro_A_lambert2_BaseMap.webp"
             }
         },
         "1e08b6a0-2d91-42a9-b3ec-5e9c24153031": {
             "link": {
-                "name": "sky_laby.png",
-                "file": "assets\\textures\\Environment\\sky_laby.png"
+                "name": "sky_laby.webp",
+                "file": "assets\\textures\\webp\\Environment\\sky_laby.webp"
             }
         },
         "ddd20f92-7a55-434f-bc0e-efd1f4583e26": {
             "link": {
-                "name": "terreno_laby2.png",
-                "file": "assets\\textures\\Environment\\terreno_laby2.png"
+                "name": "terreno_laby2.webp",
+                "file": "assets\\textures\\webp\\Environment\\terreno_laby2.webp"
             }
         },
         "51b1b5e0-8f72-4c4a-951a-34c7489b54ea": {
             "link": {
-                "name": "Angolo_A_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Angolo_A_lambert1_BaseMap.png"
+                "name": "Angolo_A_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap.webp"
             }
         },
         "508239b8-64e0-44bf-b2cf-79470fa13899": {
             "link": {
-                "name": "muro_AA_lambert2_BaseMap.png",
-                "file": "assets\\textures\\Walls\\muro_AA_lambert2_BaseMap.png"
+                "name": "muro_AA_lambert2_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\muro_AA_lambert2_BaseMap.webp"
             }
         },
         "3dd17426-946d-4db7-9bad-ad72a70a16f1": {
             "link": {
-                "name": "Mano_Sinistra_lambert1_BaseMap.png",
-                "file": "assets\\textures\\player\\Mano_Sinistra_lambert1_BaseMap.png"
+                "name": "Mano_Sinistra_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\player\\Mano_Sinistra_lambert1_BaseMap.webp"
             }
         },
         "45b48b68-bf7e-4788-b623-a9c743305c61": {
             "link": {
-                "name": "texture mani1.2.png",
-                "file": "assets\\textures\\concept foglie albero\\texture mani1.2.png"
+                "name": "texture mani1.2.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2.webp"
             }
         },
         "f3c2c269-9594-4945-bceb-aa32124275e7": {
             "link": {
-                "name": "texture mani1.1.png",
-                "file": "assets\\textures\\concept foglie albero\\texture mani1.1.png"
+                "name": "texture mani1.1.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1.webp"
             }
         },
         "84168c61-f4b0-46ef-8771-0c3d7fabadc9": {
             "link": {
-                "name": "fase 1.png",
-                "file": "assets\\textures\\concept foglie albero\\fase 1.png"
+                "name": "fase 1.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase 1.webp"
             }
         },
         "c3d63647-b0c6-46ea-8a49-2718174ee4cd": {
             "link": {
-                "name": "fase 2.png",
-                "file": "assets\\textures\\concept foglie albero\\fase 2.png"
+                "name": "fase 2.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase 2.webp"
             }
         },
         "ec486ac4-73bb-4f9b-8653-693f21cb2e80": {
             "link": {
-                "name": "fase3.png",
-                "file": "assets\\textures\\concept foglie albero\\fase3.png"
+                "name": "fase3.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase3.webp"
             }
         },
         "628c2ad9-07b1-4fa7-b919-773f92329010": {
             "link": {
-                "name": "Muro_C_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
+                "name": "Muro_C_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Muro_C_lambert1_BaseMap.webp"
             }
         },
         "aafb4f80-fa08-4ad6-bc49-60944125c5a4": {
             "link": {
-                "name": "credits_brutti.PNG",
-                "file": "assets\\textures\\altro\\credits_brutti.PNG"
+                "name": "credits_brutti.webp",
+                "file": "assets\\textures\\webp\\altro\\credits_brutti.webp"
             }
         }
     },
@@ -14585,225 +14585,225 @@
         },
         "871c20fd-fee3-45d3-912b-bfb4d5824efb": {
             "link": {
-                "name": "60.png",
-                "file": "assets\\textures\\Trees\\60.png"
+                "name": "60.webp",
+                "file": "assets\\textures\\webp\\Trees\\60.webp"
             },
             "compress": false
         },
         "ae52868a-d640-474a-bf27-098700df42bd": {
             "link": {
-                "name": "Frutto_Blu.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Blu.png"
+                "name": "Frutto_Blu.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Blu.webp"
             },
             "compress": false
         },
         "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
             "link": {
-                "name": "Frutto_Rosso.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Rosso.png"
+                "name": "Frutto_Rosso.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Rosso.webp"
             },
             "compress": false
         },
         "00b6ab52-a892-4c6f-a4d8-f0f0960c876b": {
             "link": {
-                "name": "RadiciAlbero_fase3Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase3Fixed.png"
+                "name": "RadiciAlbero_fase3Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase3Fixed.webp"
             },
             "compress": false
         },
         "256c9c93-aaeb-414c-aa81-78de15a2e445": {
             "link": {
-                "name": "RadiciAlbero_fase1Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase1Fixed.png"
+                "name": "RadiciAlbero_fase1Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase1Fixed.webp"
             },
             "compress": false
         },
         "b2ddbfee-7e65-493f-946f-959c49f1f652": {
             "link": {
-                "name": "RadiciAlbero_fase2Fixed.png",
-                "file": "assets\\textures\\Trees\\RadiciAlbero_fase2Fixed.png"
+                "name": "RadiciAlbero_fase2Fixed.webp",
+                "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase2Fixed.webp"
             },
             "compress": false
         },
         "93a39555-5abb-44da-9f17-f22570276e8f": {
             "link": {
-                "name": "AlberoGrosso_fase1.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase1.png"
+                "name": "AlberoGrosso_fase1.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase1.webp"
             },
             "compress": false
         },
         "7f648475-da4e-40ed-974a-6c01da5ed296": {
             "link": {
-                "name": "AlberoGrosso_fase2.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase2.png"
+                "name": "AlberoGrosso_fase2.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase2.webp"
             },
             "compress": false
         },
         "5d76c448-4b4e-469b-9afd-39cd373d4284": {
             "link": {
-                "name": "AlberoGrosso_fase3.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase3.png"
+                "name": "AlberoGrosso_fase3.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase3.webp"
             },
             "compress": false
         },
         "8c9704c3-5f62-4e05-ae92-15acf4e2f982": {
             "link": {
-                "name": "AlberoGrosso_fase4.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase4.png"
+                "name": "AlberoGrosso_fase4.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase4.webp"
             },
             "compress": false
         },
         "981534ae-abe1-4192-a781-3ec615a49c87": {
             "link": {
-                "name": "AlberoGrosso_fase5.png",
-                "file": "assets\\textures\\Trees\\AlberoGrosso_fase5.png"
+                "name": "AlberoGrosso_fase5.webp",
+                "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase5.webp"
             },
             "compress": false
         },
         "510548d5-a317-4206-805e-f14e87364c4e": {
             "link": {
-                "name": "radici_muro.png",
-                "file": "assets\\textures\\Trees\\radici_muro.png"
+                "name": "radici_muro.webp",
+                "file": "assets\\textures\\webp\\Trees\\radici_muro.webp"
             },
             "compress": false
         },
         "7f7327bb-de83-4205-9d6f-bfc722bb2f76": {
             "link": {
-                "name": "Albero_Blu.png",
-                "file": "assets\\textures\\Trees\\Albero_Blu.png"
+                "name": "Albero_Blu.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Blu.webp"
             },
             "compress": false
         },
         "19038d66-4612-403a-8dd2-2eb13b1dc196": {
             "link": {
-                "name": "Albero_Rosso.png",
-                "file": "assets\\textures\\Trees\\Albero_Rosso.png"
+                "name": "Albero_Rosso.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Rosso.webp"
             },
             "compress": false
         },
         "a01a037e-3c11-4b09-974b-54b3c1fec2aa": {
             "link": {
-                "name": "Albero_Giallo.png",
-                "file": "assets\\textures\\Trees\\Albero_Giallo.png"
+                "name": "Albero_Giallo.webp",
+                "file": "assets\\textures\\webp\\Trees\\Albero_Giallo.webp"
             },
             "compress": false
         },
         "d1343922-519e-449f-931b-4207d62acec9": {
             "link": {
-                "name": "Frutto_Giallo.png",
-                "file": "assets\\textures\\Fruits\\Frutto_Giallo.png"
+                "name": "Frutto_Giallo.webp",
+                "file": "assets\\textures\\webp\\Fruits\\Frutto_Giallo.webp"
             },
             "compress": false
         },
         "eff7edfc-888b-4815-9d8c-a080d5dd56b4": {
             "link": {
-                "name": "aXE_DEF_lambert1_AlbedoTransparency.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.png"
+                "name": "aXE_DEF_lambert1_AlbedoTransparency.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.webp"
             },
             "compress": false
         },
         "deb95d87-2eff-45f9-ad78-d79824fbfcf6": {
             "link": {
-                "name": "aXE_DEF_lambert1_Normal.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_Normal.png"
+                "name": "aXE_DEF_lambert1_Normal.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_Normal.webp"
             },
             "compress": false
         },
         "fb52aa1b-3917-40ee-a6c8-7fee007b6cba": {
             "link": {
-                "name": "aXE_DEF_lambert1_MetallicSmoothness.png",
-                "file": "assets\\textures\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.png"
+                "name": "aXE_DEF_lambert1_MetallicSmoothness.webp",
+                "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.webp"
             },
             "compress": false
         },
         "6906fbb6-13c5-4ebf-b1c5-f56c0d3187d5": {
             "link": {
-                "name": "Muro_A_lambert2_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_A_lambert2_BaseMap.png"
+                "name": "Muro_A_lambert2_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Muro_A_lambert2_BaseMap.webp"
             },
             "compress": false
         },
         "eada4133-13e6-40ab-88c2-eb7e799e1528": {
             "link": {
-                "name": "sky_laby.png",
-                "file": "assets\\textures\\Environment\\sky_laby.png"
+                "name": "sky_laby.webp",
+                "file": "assets\\textures\\webp\\Environment\\sky_laby.webp"
             },
             "compress": false
         },
         "e49b3dfe-981f-4d39-abf7-76e1a36155d6": {
             "link": {
-                "name": "terreno_laby2.png",
-                "file": "assets\\textures\\Environment\\terreno_laby2.png"
+                "name": "terreno_laby2.webp",
+                "file": "assets\\textures\\webp\\Environment\\terreno_laby2.webp"
             },
             "compress": false
         },
         "6a315f98-dd96-4246-9ac1-681d21b8d41f": {
             "link": {
-                "name": "Angolo_A_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Angolo_A_lambert1_BaseMap.png"
+                "name": "Angolo_A_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap.webp"
             },
             "compress": false
         },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
             "link": {
-                "name": "muro_AA_lambert2_BaseMap.png",
-                "file": "assets\\textures\\Walls\\muro_AA_lambert2_BaseMap.png"
+                "name": "muro_AA_lambert2_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\muro_AA_lambert2_BaseMap.webp"
             },
             "compress": false
         },
         "3a4b6111-7f99-413e-a55b-789c13cfbdd5": {
             "link": {
-                "name": "Mano_Sinistra_lambert1_BaseMap.png",
-                "file": "assets\\textures\\player\\Mano_Sinistra_lambert1_BaseMap.png"
+                "name": "Mano_Sinistra_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\player\\Mano_Sinistra_lambert1_BaseMap.webp"
             },
             "compress": false
         },
         "8df391ae-b8c5-4cf8-9ca9-fc2a9d0c4f64": {
             "link": {
-                "name": "texture mani1.2.png",
-                "file": "assets\\textures\\concept foglie albero\\texture mani1.2.png"
+                "name": "texture mani1.2.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2.webp"
             },
             "compress": false
         },
         "ac0e78dd-b39b-4e8c-8848-7a4945793e80": {
             "link": {
-                "name": "texture mani1.1.png",
-                "file": "assets\\textures\\concept foglie albero\\texture mani1.1.png"
+                "name": "texture mani1.1.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1.webp"
             },
             "compress": false
         },
         "708253f0-da1b-4a79-8e2f-167448d0e2d5": {
             "link": {
-                "name": "fase 1.png",
-                "file": "assets\\textures\\concept foglie albero\\fase 1.png"
+                "name": "fase 1.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase 1.webp"
             },
             "compress": false
         },
         "bfe74a14-e11e-4aac-ab4d-73e3772b2ca3": {
             "link": {
-                "name": "fase 2.png",
-                "file": "assets\\textures\\concept foglie albero\\fase 2.png"
+                "name": "fase 2.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase 2.webp"
             },
             "compress": false
         },
         "7768feaf-9669-4cf9-9a73-c9ba7c0ffbde": {
             "link": {
-                "name": "fase3.png",
-                "file": "assets\\textures\\concept foglie albero\\fase3.png"
+                "name": "fase3.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\fase3.webp"
             },
             "compress": false
         },
         "a3ae8de9-94a0-4d9c-aa00-5d9c137fae58": {
             "link": {
-                "name": "Muro_C_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
+                "name": "Muro_C_lambert1_BaseMap.webp",
+                "file": "assets\\textures\\webp\\Walls\\Muro_C_lambert1_BaseMap.webp"
             },
             "compress": false
         },
         "5b145eb5-8c8a-431e-8259-0bc141380205": {
             "link": {
-                "name": "credits_brutti.PNG",
-                "file": "assets\\textures\\altro\\credits_brutti.PNG"
+                "name": "credits_brutti.webp",
+                "file": "assets\\textures\\webp\\altro\\credits_brutti.webp"
             },
             "compress": false
         }
@@ -14965,7 +14965,7 @@
         "547cfd4e-9716-4c45-b3c5-4de88b332cb7": {
             "link": {
                 "name": "lambert1",
-                "file": "assets\\textures\\Walls\\test_texture.fbx"
+                "file": "assets\\textures\\webp\\Walls\\test_texture.fbx"
             },
             "pipeline": "14",
             "name": "FruttoBlu",
@@ -14989,7 +14989,7 @@
         "d3677709-03ae-49e6-86ac-95753a1d654e": {
             "link": {
                 "name": "lambert1",
-                "file": "assets\\textures\\Walls\\test_texture.fbx"
+                "file": "assets\\textures\\webp\\Walls\\test_texture.fbx"
             },
             "pipeline": "14",
             "name": "FruttoRosso",
@@ -16042,46 +16042,46 @@
     },
     "files": [
         "assets/models/meta_quest_1_gamepads_credits_Jezza3D.fbx",
-        "assets/textures/Trees/60.png",
-        "assets/textures/Fruits/Frutto_Blu.png",
-        "assets/textures/Fruits/Frutto_Rosso.png",
-        "assets/textures/Trees/RadiciAlbero_fase3Fixed.png",
-        "assets/textures/Trees/RadiciAlbero_fase1Fixed.png",
-        "assets/textures/Trees/RadiciAlbero_fase2Fixed.png",
-        "assets/textures/Trees/AlberoGrosso_fase1.png",
-        "assets/textures/Trees/AlberoGrosso_fase2.png",
-        "assets/textures/Trees/AlberoGrosso_fase3.png",
-        "assets/textures/Trees/AlberoGrosso_fase4.png",
-        "assets/textures/Trees/AlberoGrosso_fase5.png",
-        "assets/textures/Trees/radici_muro.png",
+        "assets/textures/webp/Trees/60.webp",
+        "assets/textures/webp/Fruits/Frutto_Blu.webp",
+        "assets/textures/webp/Fruits/Frutto_Rosso.webp",
+        "assets/textures/webp/Trees/RadiciAlbero_fase3Fixed.webp",
+        "assets/textures/webp/Trees/RadiciAlbero_fase1Fixed.webp",
+        "assets/textures/webp/Trees/RadiciAlbero_fase2Fixed.webp",
+        "assets/textures/webp/Trees/AlberoGrosso_fase1.webp",
+        "assets/textures/webp/Trees/AlberoGrosso_fase2.webp",
+        "assets/textures/webp/Trees/AlberoGrosso_fase3.webp",
+        "assets/textures/webp/Trees/AlberoGrosso_fase4.webp",
+        "assets/textures/webp/Trees/AlberoGrosso_fase5.webp",
+        "assets/textures/webp/Trees/radici_muro.webp",
         "assets/models/Muri/Muro_3.fbx",
         "assets/models/Mani/Mano_Sinistra.fbx",
         "assets/models/Angoli/Angolo_1.fbx",
-        "assets/textures/Trees/Albero_Blu.png",
-        "assets/textures/Trees/Albero_Rosso.png",
-        "assets/textures/Trees/Albero_Giallo.png",
-        "assets/textures/Fruits/Frutto_Giallo.png",
+        "assets/textures/webp/Trees/Albero_Blu.webp",
+        "assets/textures/webp/Trees/Albero_Rosso.webp",
+        "assets/textures/webp/Trees/Albero_Giallo.webp",
+        "assets/textures/webp/Fruits/Frutto_Giallo.webp",
         "assets/models/Mani/Mano_Destra.fbx",
         "assets/models/Mani/Hand_Lx_close.fbx",
         "assets/models/Mani/Hand_Dx_close.fbx",
-        "assets/textures/Axe/aXE_DEF_lambert1_AlbedoTransparency.png",
-        "assets/textures/Axe/aXE_DEF_lambert1_Normal.png",
-        "assets/textures/Axe/aXE_DEF_lambert1_MetallicSmoothness.png",
+        "assets/textures/webp/Axe/aXE_DEF_lambert1_AlbedoTransparency.webp",
+        "assets/textures/webp/Axe/aXE_DEF_lambert1_Normal.webp",
+        "assets/textures/webp/Axe/aXE_DEF_lambert1_MetallicSmoothness.webp",
         "assets/models/Axes/aXE_DEF.fbx",
-        "assets/textures/Walls/Muro_A_lambert2_BaseMap.png",
-        "assets/textures/Environment/sky_laby.png",
-        "assets/textures/Environment/terreno_laby2.png",
-        "assets/textures/Walls/Angolo_A_lambert1_BaseMap.png",
+        "assets/textures/webp/Walls/Muro_A_lambert2_BaseMap.webp",
+        "assets/textures/webp/Environment/sky_laby.webp",
+        "assets/textures/webp/Environment/terreno_laby2.webp",
+        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap.webp",
         "assets/models/Muri/muro_AA.fbx",
-        "assets/textures/Walls/muro_AA_lambert2_BaseMap.png",
-        "assets/textures/player/Mano_Sinistra_lambert1_BaseMap.png",
-        "assets/textures/concept foglie albero/texture mani1.2.png",
-        "assets/textures/concept foglie albero/texture mani1.1.png",
-        "assets/textures/concept foglie albero/fase 1.png",
-        "assets/textures/concept foglie albero/fase 2.png",
-        "assets/textures/concept foglie albero/fase3.png",
-        "assets/textures/Walls/Muro_C_lambert1_BaseMap.png",
-        "assets/textures/altro/credits_brutti.PNG"
+        "assets/textures/webp/Walls/muro_AA_lambert2_BaseMap.webp",
+        "assets/textures/webp/player/Mano_Sinistra_lambert1_BaseMap.webp",
+        "assets/textures/webp/concept foglie albero/texture mani1.2.webp",
+        "assets/textures/webp/concept foglie albero/texture mani1.1.webp",
+        "assets/textures/webp/concept foglie albero/fase 1.webp",
+        "assets/textures/webp/concept foglie albero/fase 2.webp",
+        "assets/textures/webp/concept foglie albero/fase3.webp",
+        "assets/textures/webp/Walls/Muro_C_lambert1_BaseMap.webp",
+        "assets/textures/webp/altro/credits_brutti.webp"
     ],
     "fonts": {
         "147": {
