@@ -1217,7 +1217,7 @@
             "name": "60",
             "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
             "translation": [
-                0.9937732,
+                0.5423345,
                 0.0,
                 0.0
             ],
@@ -5822,7 +5822,23 @@
         },
         "aa179823-35a9-4ca9-a89e-c03c8b1f5af3": {
             "name": "90",
-            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab"
+            "parent": "405d3b76-555d-4aee-a644-60e49ab8a3ab",
+            "translation": [
+                -0.4301539,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "09b04841-231c-4bee-b74e-1b9bc4edef21": {
             "link": {
@@ -13945,7 +13961,7 @@
                 }
             ],
             "translation": [
-                -7.412626246150468e-8,
+                -7.412626246150469e-8,
                 0.0,
                 1.0
             ],
@@ -14265,58 +14281,10 @@
                 "file": "assets\\models\\meta_quest_1_gamepads_credits_Jezza3D.fbx"
             }
         },
-        "f0a1399e-bb34-400c-900c-9ded4e5a5a2d": {
-            "link": {
-                "name": "ANgolo_2",
-                "file": "assets\\models\\Muri\\Angolo_A.fbx"
-            }
-        },
-        "d6c8c52e-af34-40a9-b808-e0f998ff6730": {
-            "link": {
-                "name": "Angolo_1",
-                "file": "assets\\models\\Muri\\Angolo_B.fbx"
-            }
-        },
-        "0aa88e48-e821-4ac9-a622-5a47a0f58f98": {
-            "link": {
-                "name": "Wall_1",
-                "file": "assets\\models\\Muri\\Muro_A.fbx"
-            }
-        },
-        "17b27867-63b9-429e-a0c7-6449c19098ec": {
-            "link": {
-                "name": "polySurface2",
-                "file": "assets\\textures\\Walls\\test_texture.fbx"
-            }
-        },
-        "5e3b2e8b-f475-4a71-9e50-60d65463a9bc": {
-            "link": {
-                "name": "polySurface8",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            }
-        },
-        "0c993560-e728-46c5-9e1f-99959f1dd2e9": {
-            "link": {
-                "name": "polySurface10",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            }
-        },
         "14f04142-2ea6-4aa6-9b40-a370309b02e5": {
             "link": {
                 "name": "polySurface11",
                 "file": "assets\\models\\Muri\\Muro_3.fbx"
-            }
-        },
-        "148": {
-            "link": {
-                "name": "polySurface12",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            }
-        },
-        "9b16eda6-bd60-4748-a1cf-d93b63c56afc": {
-            "link": {
-                "name": "polySurface5",
-                "file": "assets\\models\\ASCIA.fbx"
             }
         },
         "d708ecbe-f0c2-4d4a-9ae9-814335c04ae3": {
@@ -14325,28 +14293,10 @@
                 "file": "assets\\models\\Mani\\Mano_Sinistra.fbx"
             }
         },
-        "ad7710b5-4898-44dc-86b7-226bf736fbd6": {
-            "link": {
-                "name": "Angolo_A",
-                "file": "assets\\models\\Angoli\\Angolo_A.fbx"
-            }
-        },
-        "71f6a86d-c6d4-455e-8395-2317959b0953": {
-            "link": {
-                "name": "Angolo_1",
-                "file": "assets\\models\\Angoli\\Angolo_B.fbx"
-            }
-        },
         "d9734200-c317-4171-89c4-76f05d88400e": {
             "link": {
                 "name": "Angolo_A",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
-            }
-        },
-        "86a0ac70-dba6-445e-8979-24e9f54a87bb": {
-            "link": {
-                "name": "ANgolo_5",
-                "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             }
         },
         "b8ed6f8c-6d48-48d3-8e9e-abb3487055a9": {
@@ -14361,58 +14311,16 @@
                 "file": "assets\\models\\Mani\\Hand_Lx_close.fbx"
             }
         },
-        "9a9040c2-6aaa-44e3-acff-6677ace4939e": {
-            "link": {
-                "name": "Hand_Dx_close3",
-                "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
-            }
-        },
         "149": {
             "link": {
                 "name": "Hand_Lx_close",
                 "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
             }
         },
-        "ac821f90-d8b3-428d-bb2b-19a6c38724c7": {
-            "link": {
-                "name": "polySurface11",
-                "file": "assets\\models\\aXE_DEF.fbx"
-            }
-        },
         "5886c0a2-623b-4a24-9068-35dbe87c3608": {
             "link": {
                 "name": "polySurface11",
                 "file": "assets\\models\\Axes\\aXE_DEF.fbx"
-            }
-        },
-        "150": {
-            "link": {
-                "name": "polySurface22",
-                "file": "assets\\models\\Angoli\\Angolo_B.fbx"
-            }
-        },
-        "af6e5b7c-ab3c-4883-bdf6-ef8c6135a0f6": {
-            "link": {
-                "name": "polySurface22",
-                "file": "assets\\models\\Muri\\Muro_B.fbx"
-            }
-        },
-        "06a85ac9-b424-42c3-90f5-90b51b932e08": {
-            "link": {
-                "name": "polySurface19",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            }
-        },
-        "517578dc-3a20-4409-9414-1f6eeaa27aa0": {
-            "link": {
-                "name": "polySurface34",
-                "file": "assets\\models\\Muri\\MURO_a (3).fbx"
-            }
-        },
-        "df1f14f6-d0cb-4232-ba43-385647f659bc": {
-            "link": {
-                "name": "polySurface21",
-                "file": "assets\\models\\Muri\\Muro_test (1).fbx"
             }
         },
         "b03fb888-edc4-4f9a-9cfe-8d9c53cd8d10": {
@@ -14433,12 +14341,6 @@
             "link": {
                 "name": "60.png",
                 "file": "assets\\textures\\Trees\\60.png"
-            }
-        },
-        "10a9a95b-7bad-4621-ae7c-b20fa6ca0802": {
-            "link": {
-                "name": "AngoloTexture.png",
-                "file": "assets\\textures\\Walls\\AngoloTexture.png"
             }
         },
         "988a539e-261a-4ff9-b16e-088f14e69690": {
@@ -14567,12 +14469,6 @@
                 "file": "assets\\textures\\Walls\\Muro_A_lambert2_BaseMap.png"
             }
         },
-        "696515e9-f4ed-48aa-a67f-02b2bbb1ffa7": {
-            "link": {
-                "name": "Muro_A_lambert2_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_A_lambert2_Normal.png"
-            }
-        },
         "1e08b6a0-2d91-42a9-b3ec-5e9c24153031": {
             "link": {
                 "name": "sky_laby.png",
@@ -14591,64 +14487,16 @@
                 "file": "assets\\textures\\Environment\\terreno_laby2.png"
             }
         },
-        "9764c028-6a21-4a8b-9811-a9652b130cf0": {
-            "link": {
-                "name": "Muro_B_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_B_lambert1_BaseMap.png"
-            }
-        },
-        "41f7ec8c-4458-40f0-908e-91985b415ab1": {
-            "link": {
-                "name": "Muro_B_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_B_lambert1_Normal.png"
-            }
-        },
-        "2f279ddd-10a0-4c8a-8671-07ee28a3f455": {
-            "link": {
-                "name": "Muro_C_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_Normal.png"
-            }
-        },
-        "0245612a-3034-4641-a6d4-4cc42b113e4b": {
-            "link": {
-                "name": "Muro_C_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
-            }
-        },
-        "4db37753-59e5-4daf-b778-6ef4b47dd0f7": {
-            "link": {
-                "name": "Angolo_B_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Angolo_B_lambert1_BaseMap.png"
-            }
-        },
-        "2514981c-fc5c-4ac9-9f52-7bb1c402fe40": {
-            "link": {
-                "name": "Angolo_B_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Angolo_B_lambert1_Normal.png"
-            }
-        },
         "51b1b5e0-8f72-4c4a-951a-34c7489b54ea": {
             "link": {
                 "name": "Angolo_A_lambert1_BaseMap.png",
                 "file": "assets\\textures\\Walls\\Angolo_A_lambert1_BaseMap.png"
             }
         },
-        "99e349c3-04c0-4454-9678-54425e5ae67e": {
-            "link": {
-                "name": "Angolo_A_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Angolo_A_lambert1_Normal.png"
-            }
-        },
         "508239b8-64e0-44bf-b2cf-79470fa13899": {
             "link": {
                 "name": "muro_AA_lambert2_BaseMap.png",
                 "file": "assets\\textures\\Walls\\muro_AA_lambert2_BaseMap.png"
-            }
-        },
-        "3141f34e-3a22-4e11-8fa9-6eb51f6f6320": {
-            "link": {
-                "name": "muro_AA_lambert2_Normal.png",
-                "file": "assets\\textures\\Walls\\muro_AA_lambert2_Normal.png"
             }
         },
         "3dd17426-946d-4db7-9bad-ad72a70a16f1": {
@@ -14686,6 +14534,12 @@
                 "name": "fase3.png",
                 "file": "assets\\textures\\concept foglie albero\\fase3.png"
             }
+        },
+        "628c2ad9-07b1-4fa7-b919-773f92329010": {
+            "link": {
+                "name": "Muro_C_lambert1_BaseMap.png",
+                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
+            }
         }
     },
     "images": {
@@ -14699,13 +14553,6 @@
             "link": {
                 "name": "60.png",
                 "file": "assets\\textures\\Trees\\60.png"
-            },
-            "compress": false
-        },
-        "1995af1e-5c20-463e-a369-b0e04d51cfce": {
-            "link": {
-                "name": "AngoloTexture.png",
-                "file": "assets\\textures\\Walls\\AngoloTexture.png"
             },
             "compress": false
         },
@@ -14842,13 +14689,6 @@
             },
             "compress": false
         },
-        "030c4c5c-40ae-4f6e-9aa8-22bf8eedaacd": {
-            "link": {
-                "name": "Muro_A_lambert2_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_A_lambert2_Normal.png"
-            },
-            "compress": false
-        },
         "eada4133-13e6-40ab-88c2-eb7e799e1528": {
             "link": {
                 "name": "sky_laby.png",
@@ -14870,48 +14710,6 @@
             },
             "compress": false
         },
-        "9a2dd9f6-eec6-462c-a9f4-fb90524eae83": {
-            "link": {
-                "name": "Muro_B_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_B_lambert1_BaseMap.png"
-            },
-            "compress": false
-        },
-        "0aa5cef5-65b2-46bf-93c3-a5723a133b81": {
-            "link": {
-                "name": "Muro_B_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_B_lambert1_Normal.png"
-            },
-            "compress": false
-        },
-        "d304f0e3-b06d-4089-a4c6-8328ea646225": {
-            "link": {
-                "name": "Muro_C_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_Normal.png"
-            },
-            "compress": false
-        },
-        "6393fb5c-ce43-48a6-a7a3-9b8878343ebe": {
-            "link": {
-                "name": "Muro_C_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
-            },
-            "compress": false
-        },
-        "9314b999-8eb1-47f3-b59c-b5362c78ef29": {
-            "link": {
-                "name": "Angolo_B_lambert1_BaseMap.png",
-                "file": "assets\\textures\\Walls\\Angolo_B_lambert1_BaseMap.png"
-            },
-            "compress": false
-        },
-        "14c06302-9626-4896-a342-2d1be59fff18": {
-            "link": {
-                "name": "Angolo_B_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Angolo_B_lambert1_Normal.png"
-            },
-            "compress": false
-        },
         "6a315f98-dd96-4246-9ac1-681d21b8d41f": {
             "link": {
                 "name": "Angolo_A_lambert1_BaseMap.png",
@@ -14919,24 +14717,10 @@
             },
             "compress": false
         },
-        "25a173ad-4799-4f56-806d-237b5763b58d": {
-            "link": {
-                "name": "Angolo_A_lambert1_Normal.png",
-                "file": "assets\\textures\\Walls\\Angolo_A_lambert1_Normal.png"
-            },
-            "compress": false
-        },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
             "link": {
                 "name": "muro_AA_lambert2_BaseMap.png",
                 "file": "assets\\textures\\Walls\\muro_AA_lambert2_BaseMap.png"
-            },
-            "compress": false
-        },
-        "201f06bd-6acc-41b7-a74a-cad45c230855": {
-            "link": {
-                "name": "muro_AA_lambert2_Normal.png",
-                "file": "assets\\textures\\Walls\\muro_AA_lambert2_Normal.png"
             },
             "compress": false
         },
@@ -14979,6 +14763,13 @@
             "link": {
                 "name": "fase3.png",
                 "file": "assets\\textures\\concept foglie albero\\fase3.png"
+            },
+            "compress": false
+        },
+        "a3ae8de9-94a0-4d9c-aa00-5d9c137fae58": {
+            "link": {
+                "name": "Muro_C_lambert1_BaseMap.png",
+                "file": "assets\\textures\\Walls\\Muro_C_lambert1_BaseMap.png"
             },
             "compress": false
         }
@@ -15541,7 +15332,7 @@
                 ],
                 "ambientFactor": 0.5,
                 "diffuseTexture": "508239b8-64e0-44bf-b2cf-79470fa13899",
-                "normalTexture": "3141f34e-3a22-4e11-8fa9-6eb51f6f6320",
+                "normalTexture": null,
                 "diffuseColor": [
                     0.0,
                     0.0,
@@ -15654,8 +15445,8 @@
                     1.0
                 ],
                 "ambientFactor": 0.5,
-                "normalTexture": "2f279ddd-10a0-4c8a-8671-07ee28a3f455",
-                "diffuseTexture": "0245612a-3034-4641-a6d4-4cc42b113e4b"
+                "normalTexture": null,
+                "diffuseTexture": "628c2ad9-07b1-4fa7-b919-773f92329010"
             }
         },
         "1bfc919b-6cb0-483b-9e84-c4290f355457": {
@@ -15663,7 +15454,7 @@
             "pipeline": "145",
             "Phong": {
                 "diffuseTexture": "51b1b5e0-8f72-4c4a-951a-34c7489b54ea",
-                "normalTexture": "99e349c3-04c0-4454-9678-54425e5ae67e",
+                "normalTexture": null,
                 "ambientColor": [
                     0.0,
                     0.0,
@@ -16206,7 +15997,6 @@
     "files": [
         "assets/models/meta_quest_1_gamepads_credits_Jezza3D.fbx",
         "assets/textures/Trees/60.png",
-        "assets/textures/Walls/AngoloTexture.png",
         "assets/textures/Fruits/Frutto_Blu.png",
         "assets/textures/Fruits/Frutto_Rosso.png",
         "assets/textures/Trees/RadiciAlbero_fase3Fixed.png",
@@ -16218,15 +16008,9 @@
         "assets/textures/Trees/AlberoGrosso_fase4.png",
         "assets/textures/Trees/AlberoGrosso_fase5.png",
         "assets/textures/Trees/radici_muro.png",
-        "assets/models/Muri/Muro_1.fbx",
-        "assets/models/Muri/Muro_2.fbx",
         "assets/models/Muri/Muro_3.fbx",
-        "assets/models/ASCIA.fbx",
         "assets/models/Mani/Mano_Sinistra.fbx",
-        "assets/models/Angoli/Angolo_A.fbx",
-        "assets/models/Angoli/Angolo_B.fbx",
         "assets/models/Angoli/Angolo_1.fbx",
-        "assets/models/Angoli/Angolo_2.fbx",
         "assets/textures/Trees/Albero_Blu.png",
         "assets/textures/Trees/Albero_Rosso.png",
         "assets/textures/Trees/Albero_Giallo.png",
@@ -16234,37 +16018,24 @@
         "assets/models/Mani/Mano_Destra.fbx",
         "assets/models/Mani/Hand_Lx_close.fbx",
         "assets/models/Mani/Hand_Dx_close.fbx",
-        "assets/models/aXE_DEF.fbx",
         "assets/textures/Axe/aXE_DEF_lambert1_AlbedoTransparency.png",
         "assets/textures/Axe/aXE_DEF_lambert1_Normal.png",
         "assets/textures/Axe/aXE_DEF_lambert1_MetallicSmoothness.png",
         "assets/models/Axes/aXE_DEF.fbx",
         "assets/textures/Walls/Muro_A_lambert2_BaseMap.png",
-        "assets/textures/Walls/Muro_A_lambert2_Normal.png",
-        "assets/models/Muri/Muro_B.fbx",
-        "assets/models/Muri/Muro_B3.fbx",
         "assets/textures/Environment/sky_laby.png",
         "assets/textures/Environment/terreno_laby.png",
         "assets/textures/Environment/terreno_laby2.png",
-        "assets/textures/Walls/Muro_B_lambert1_BaseMap.png",
-        "assets/textures/Walls/Muro_B_lambert1_Normal.png",
-        "assets/textures/Walls/Muro_C_lambert1_Normal.png",
-        "assets/textures/Walls/Muro_C_lambert1_BaseMap.png",
-        "assets/models/Muri/MURO_a (3).fbx",
-        "assets/models/Muri/Muro_test (1).fbx",
-        "assets/textures/Walls/Angolo_B_lambert1_BaseMap.png",
-        "assets/textures/Walls/Angolo_B_lambert1_Normal.png",
         "assets/textures/Walls/Angolo_A_lambert1_BaseMap.png",
-        "assets/textures/Walls/Angolo_A_lambert1_Normal.png",
         "assets/models/Muri/muro_AA.fbx",
         "assets/textures/Walls/muro_AA_lambert2_BaseMap.png",
-        "assets/textures/Walls/muro_AA_lambert2_Normal.png",
         "assets/textures/player/Mano_Sinistra_lambert1_BaseMap.png",
         "assets/textures/concept foglie albero/texture mani1.2.png",
         "assets/textures/concept foglie albero/texture mani1.1.png",
         "assets/textures/concept foglie albero/fase 1.png",
         "assets/textures/concept foglie albero/fase 2.png",
-        "assets/textures/concept foglie albero/fase3.png"
+        "assets/textures/concept foglie albero/fase3.png",
+        "assets/textures/Walls/Muro_C_lambert1_BaseMap.png"
     ],
     "fonts": {
         "147": {
