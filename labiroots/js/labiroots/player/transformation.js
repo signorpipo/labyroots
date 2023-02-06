@@ -18,6 +18,8 @@ WL.registerComponent('transformation', {
 
         this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
         this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
+
+        this._myObjectToIgnore = [];
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -53,6 +55,15 @@ WL.registerComponent('transformation', {
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
         this._resetTransformation();
+
+        this._myObjectToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
+
+        let physXComponents = Global.myAxe.pp_getComponentsHierarchy("physx");
+        for (let physXComponent of physXComponents) {
+            Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore.pp_pushUnique(physXComponent.object, (first, second) => first.pp_equals(second));
+        }
+        Global.myPlayer.getMovementCollisionCheckParams().myVerticalObjectsToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
+
     },
     _resetTransformation() {
         Global.myStage = 0;
@@ -103,6 +114,13 @@ WL.registerComponent('transformation', {
             Global.myAxe = newAxe;
             Global.myAxe.pp_getComponent("axe").setStartTransforms(Global.myAxeCell.myCellPosition);
             Global.myAxe.pp_setActive(true);
+
+            let physXComponents = Global.myAxe.pp_getComponentsHierarchy("physx");
+            Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore.pp_copy(this._myObjectToIgnore);
+            for (let physXComponent of physXComponents) {
+                Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore.pp_pushUnique(physXComponent.object, (first, second) => first.pp_equals(second));
+            }
+            Global.myPlayer.getMovementCollisionCheckParams().myVerticalObjectsToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
         }
 
         this._myLastFreeCell = null;
