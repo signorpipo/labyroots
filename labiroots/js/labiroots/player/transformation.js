@@ -22,6 +22,7 @@ WL.registerComponent('transformation', {
         this._myObjectToIgnore = [];
     },
     update: function (dt) {
+        Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
         if (!this._myStarted) {
             if (Global.myReady) {
                 this._start();
@@ -38,10 +39,15 @@ WL.registerComponent('transformation', {
 
             this._myTransformationTimer.update(dt);
             if (this._myTransformationTimer.isDone()) {
-                if (Global.myPlayerLocomotion.canStop()) {
-                    Global.myPlayerLocomotion.setIdle(true);
+                if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
+                    Global.myCancelTeleport = 5;
+                    if (Global.myPlayerLocomotion.canStop()) {
+                        Global.myPlayerLocomotion.setIdle(true);
+                        this._nextStage();
+                        Global.myPlayerLocomotion.setIdle(false);
+                    }
+                } else {
                     this._nextStage();
-                    Global.myPlayerLocomotion.setIdle(false);
                 }
             }
         }

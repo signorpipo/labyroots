@@ -25,7 +25,7 @@ PlayerLocomotionTeleportDetectionParams = class PlayerLocomotionTeleportDetectio
         this.myTeleportParableStepLength = 0.25;
 
         this.myRotationOnUpMinStickIntensity = 0.5;
-        this.myRotationOnUpActive = true;
+        this.myRotationOnUpActive = false;
 
         this.myTeleportFeetPositionMustBeVisible = false;
         this.myTeleportHeadPositionMustBeVisible = false;
@@ -124,6 +124,11 @@ PlayerLocomotionTeleportDetectionState = class PlayerLocomotionTeleportDetection
             cancelTeleport = PP.myMouse.isButtonPressEnd(PP.MouseButtonID.RIGHT) || !PP.myMouse.isInsideView();
         } else {
             cancelTeleport = PP.myGamepads[this._myTeleportParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed();
+        }
+
+        if (Global.myCancelTeleport > 0) {
+            Global.myCancelTeleport = 0;
+            cancelTeleport = true;
         }
 
         return cancelTeleport;
