@@ -117,6 +117,28 @@ LR.Maze = class Maze {
         return this._myCells[cellCoordinates[0]][cellCoordinates[1]];
     }
 
+    getCellNextToPositionEmpty(position) {
+        let cellCoordinates = this.convertCellPositionToCellCoordinates(position);
+        let close = [];
+        for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (!(i == 1 && j == 1)) {
+                    let row = cellCoordinates[0] - 1 + i;
+                    let column = cellCoordinates[1] - 1 + j;
+                    if (row >= 0 && row < this._myCells.length) {
+                        if (column >= 0 && column < this._myCells[row].length) {
+                            let cell = this._myCells[row][column];
+                            if (cell.myStaticMazeItemType == LR.MazeItemType.NONE) {
+                                close.push(cell);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return close;
+    }
+
     convertCellPositionToCellCoordinates(position) {
         let cellCoordinates = [0, 0];
         let positionTopLeft = position.vec3_sub(this._myTopLeftPosition);

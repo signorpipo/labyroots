@@ -61,8 +61,14 @@ WL.registerComponent('transformation', {
             //PP.myDebugVisualManager.drawPoint(0, this._myLastFreeCell.myCellPosition, [0, 0, 0, 1], 0.05);
         }
 
-        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressEnd(3)) {
-            this._death();
+        if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressEnd()
+            && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).myMultiplePressEndCount >= 3) {
+            let oldLast = this._myLastFreeCell;
+            this._myLastFreeCell = Math.pp_randomPick(Global.myMaze.getCellNextToPositionEmpty(Global.myPlayer.getPosition()));
+            if (this._myLastFreeCell != null) {
+                this._spawnTree();
+            }
+            this._myLastFreeCell = oldLast;
         }
 
     },
