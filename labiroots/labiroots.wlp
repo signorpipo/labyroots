@@ -1475,7 +1475,7 @@
                             "extents": [
                                 0.25,
                                 1.0,
-                                0.125
+                                0.05
                             ]
                         },
                         "kinematic": true,
@@ -1713,7 +1713,7 @@
                             "extents": [
                                 1.0,
                                 2.5,
-                                0.25
+                                0.05
                             ]
                         },
                         "gravity": false,
@@ -1862,7 +1862,7 @@
                         "shape": "box",
                         "box": {
                             "extents": [
-                                0.25,
+                                0.05,
                                 2.5,
                                 1.0
                             ]
@@ -5587,7 +5587,7 @@
                             "extents": [
                                 0.25,
                                 1.0,
-                                0.125
+                                0.05
                             ]
                         },
                         "gravity": false,
@@ -5643,7 +5643,7 @@
                             "extents": [
                                 0.25,
                                 1.0,
-                                0.125
+                                0.05
                             ]
                         },
                         "gravity": false,
@@ -5699,7 +5699,7 @@
                             "extents": [
                                 0.25,
                                 1.0,
-                                0.125
+                                0.05
                             ]
                         },
                         "kinematic": true,
@@ -5709,7 +5709,7 @@
             ],
             "translation": [
                 0.0,
-                0.8799999,
+                0.8799998,
                 0.0
             ],
             "rotation": [
@@ -7011,7 +7011,7 @@
                             "extents": [
                                 1.25,
                                 4.0,
-                                0.75
+                                0.125
                             ]
                         }
                     }
@@ -7223,7 +7223,7 @@
                             "extents": [
                                 0.5,
                                 2.0,
-                                0.125
+                                0.05
                             ]
                         }
                     }
@@ -7270,7 +7270,7 @@
                             "extents": [
                                 0.5,
                                 2.0,
-                                0.125
+                                0.05
                             ]
                         }
                     }
@@ -14475,12 +14475,6 @@
                 "file": "assets\\textures\\Environment\\sky_laby.png"
             }
         },
-        "614a7411-91b1-4f55-b007-8c47c170221d": {
-            "link": {
-                "name": "terreno_laby.png",
-                "file": "assets\\textures\\Environment\\terreno_laby.png"
-            }
-        },
         "ddd20f92-7a55-434f-bc0e-efd1f4583e26": {
             "link": {
                 "name": "terreno_laby2.png",
@@ -14693,13 +14687,6 @@
             "link": {
                 "name": "sky_laby.png",
                 "file": "assets\\textures\\Environment\\sky_laby.png"
-            },
-            "compress": false
-        },
-        "c973da1d-b588-4154-8f2d-a540ddaa9c6d": {
-            "link": {
-                "name": "terreno_laby.png",
-                "file": "assets\\textures\\Environment\\terreno_laby.png"
             },
             "compress": false
         },
@@ -15965,7 +15952,12 @@
                 "js/labiroots",
                 "js/labiroots/maze",
                 "js/labiroots/json",
-                "static"
+                "static",
+                "js/labiroots/player",
+                "js/labiroots/tree",
+                "js/labiroots/test",
+                "js/labiroots/fruit",
+                "js/labiroots/cauldron"
             ],
             "useInternalBundler": false
         },
@@ -16024,7 +16016,6 @@
         "assets/models/Axes/aXE_DEF.fbx",
         "assets/textures/Walls/Muro_A_lambert2_BaseMap.png",
         "assets/textures/Environment/sky_laby.png",
-        "assets/textures/Environment/terreno_laby.png",
         "assets/textures/Environment/terreno_laby2.png",
         "assets/textures/Walls/Angolo_A_lambert1_BaseMap.png",
         "assets/models/Muri/muro_AA.fbx",
