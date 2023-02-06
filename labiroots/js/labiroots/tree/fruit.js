@@ -29,6 +29,8 @@ WL.registerComponent('fruit', {
                 firstIndex += 10;
             }
         }
+
+        Global.myFruitRandomPowers[LR.MazeItemType.HUMAN_TREE_4] = Global.myFruitPowers[0];
     },
     start: function () {
         this._myGathered = false;
@@ -36,16 +38,12 @@ WL.registerComponent('fruit', {
         this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
         this._myIsGrabbed = false;
 
-        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
         this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
     },
     update: function (dt) {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
                 if (!this._myIsGrabbed) {
-                    this._myAudioPrendi.setPosition(this.object.pp_getPosition());
-                    this._myAudioPrendi.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-                    this._myAudioPrendi.play();
                 }
                 this._myGathered = true;
                 this._myIsGrabbed = true;
@@ -71,8 +69,8 @@ WL.registerComponent('fruit', {
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
 
-            this._myAudioMangia.setPosition(this.object.pp_getPosition());
-            this._myAudioMangia.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            //this._myAudioMangia.setPosition(this.object.pp_getPosition());
+            this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
             this._myAudioMangia.play();
         }
     }
@@ -80,19 +78,19 @@ WL.registerComponent('fruit', {
 
 Global.myFruitRandomPowers = [];
 
-decreaseStage = function (full = false) {
+decreaseStage = function (full) {
     Global.myTransformation.removeStage(full);
-}
+};
 
-increaseStage = function (full = false) {
+increaseStage = function (full) {
     Global.myTransformation.addStage(full);
-}
+};
 
 Global.myFruitPowers = [];
-Global.myFruitPowers[0] = decreaseStage;
-Global.myFruitPowers[1] = increaseStage;
-Global.myFruitPowers[2] = decreaseStage.bind(true);
-Global.myFruitPowers[3] = increaseStage.bind(true);
+Global.myFruitPowers[0] = decreaseStage.bind(null, false);
+Global.myFruitPowers[1] = increaseStage.bind(null, false);
+Global.myFruitPowers[2] = decreaseStage.bind(null, true);
+Global.myFruitPowers[3] = increaseStage.bind(null, true);
 
 Global.myGoodFruit = null;
 Global.myBadFruit = null;

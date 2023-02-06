@@ -16,7 +16,8 @@ WL.registerComponent('transformation', {
         this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
         this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
 
-        this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
+        this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
+        this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -134,14 +135,18 @@ WL.registerComponent('transformation', {
             if (full) {
                 Global.myStage = -1;
                 this._nextStage(true);
+
+                let player = this._myAudioHeal2;
+                player.setPitch(Math.pp_random(1.5 - 0.15, 1.5 + 0.05));
+                player.play();
             } else {
                 Global.myStage = Math.max(-1, Global.myStage - 2);
-                this._nextStage();
-            }
+                this._nextStage(true);
 
-            let player = this._myAudioMangia;
-            player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
-            player.play();
+                let player = this._myAudioHeal;
+                player.setPitch(Math.pp_random(1.15 - 0.15, 1.15 + 0.05));
+                player.play();
+            }
         }
     }
 });

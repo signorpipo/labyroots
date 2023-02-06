@@ -14,7 +14,7 @@ WL.registerComponent('audio-load', {
             let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.wav");
             audioSetup.myLoop = true;
             audioSetup.mySpatial = false;
-            audioSetup.myVolume = 0.5;
+            audioSetup.myVolume = 0.1;
             manager.addAudioSetup(AudioID.MUSIC, audioSetup);
         }
 
@@ -69,15 +69,15 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.5;
+            audioSetup.myVolume = 3;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Raccolta frutto.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.5;
+            audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.PRENDI_FRUTTO, audioSetup);
         }
@@ -106,8 +106,24 @@ WL.registerComponent('audio-load', {
             manager.addAudioSetup(AudioID.PASSO_3, audioSetup);
         }
 
-        manager.createAudioPlayer(AudioID.AXE_HIT);
-        for (let i = 0; i <= AudioID.VICTORY; i++) {
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.HEAL, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.HEAL2, audioSetup);
+        }
+
+        manager.createAudioPlayer(AudioID.LAMENTO_1);
+        for (let i = 0; i <= AudioID.HEAL; i++) {
             manager.createAudioPlayer(i);
         }
     }
@@ -125,5 +141,7 @@ AudioID = {
     PRENDI_FRUTTO: 8,
     PASSO_1: 10,
     PASSO_2: 11,
-    PASSO_3: 12
+    PASSO_3: 12,
+    HEAL: 13,
+    HEAL2: 14,
 };
