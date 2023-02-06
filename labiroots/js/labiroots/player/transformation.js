@@ -16,6 +16,11 @@ WL.registerComponent('transformation', {
         this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2);
         this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3);
 
+        this._myLamentiMorte = [];
+        this._myLamentiMorte[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1_MORTE);
+        this._myLamentiMorte[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2_MORTE);
+        this._myLamentiMorte[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3_MORTE);
+
         this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
         this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
 
@@ -56,6 +61,10 @@ WL.registerComponent('transformation', {
             //PP.myDebugVisualManager.drawPoint(0, this._myLastFreeCell.myCellPosition, [0, 0, 0, 1], 0.05);
         }
 
+        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressEnd(3)) {
+            this._death();
+        }
+
     },
     _start() {
         this._myStarted = true;
@@ -75,7 +84,7 @@ WL.registerComponent('transformation', {
         Global.myStage = 0;
         this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
     },
-    _nextStage(noSound = false, eat = false) {
+    _nextStage(noSound = false, eat = false, full = false) {
         Global.myStage = Math.max(Global.myStage + 1, 0);
         if (Global.myStage >= this._myTransformationTimersSetup.length) {
             this._death();
@@ -96,6 +105,10 @@ WL.registerComponent('transformation', {
         if (!noSound) {
             let player = Math.pp_randomPick(this._myLamenti);
             player.setPitch(Math.pp_random(1 - 0.15, 1 + 0.05));
+            if (full) {
+                player = Math.pp_randomPick(this._myLamentiMorte);
+                player.setPitch(Math.pp_random(0.6 - 0.15, 0.6 + 0.05));
+            }
             player.play();
         }
     },
@@ -165,7 +178,7 @@ WL.registerComponent('transformation', {
         if (Global.myStage < this._myTransformationTimersSetup.length - 1) {
             if (full) {
                 Global.myStage = Math.max(0, this._myTransformationTimersSetup.length - 2);
-                this._nextStage(false, true);
+                this._nextStage(false, true, true);
             } else {
                 this._nextStage(false, true);
             }

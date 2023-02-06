@@ -45,6 +45,30 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
             audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_1_MORTE, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_2_MORTE, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 1.5;
+            audioSetup.myReferenceDistance = 0.3;
+            manager.addAudioSetup(AudioID.LAMENTO_UMANO_3_MORTE, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
             manager.addAudioSetup(AudioID.LAMENTO_1, audioSetup);
@@ -147,7 +171,7 @@ WL.registerComponent('audio-load', {
         }
 
         manager.createAudioPlayer(AudioID.LAMENTO_1);
-        for (let i = 0; i <= AudioID.HEAL; i++) {
+        for (let i = 0; i <= AudioID.LAMENTO_UMANO_3_MORTE; i++) {
             manager.createAudioPlayer(i);
         }
     }
@@ -171,4 +195,7 @@ AudioID = {
     LAMENTO_UMANO_1: 15,
     LAMENTO_UMANO_2: 16,
     LAMENTO_UMANO_3: 17,
+    LAMENTO_UMANO_1_MORTE: 18,
+    LAMENTO_UMANO_2_MORTE: 19,
+    LAMENTO_UMANO_3_MORTE: 20,
 };

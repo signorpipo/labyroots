@@ -30,7 +30,7 @@ WL.registerComponent('fruit', {
             }
         }
 
-        Global.myFruitRandomPowers[LR.MazeItemType.HUMAN_TREE_4] = Global.myFruitPowers[0];
+        Global.myFruitRandomPowers[LR.MazeItemType.HUMAN_TREE_4] = Global.myFruitPowers[3];
     },
     start: function () {
         this._myGathered = false;
