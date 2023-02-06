@@ -48,7 +48,7 @@
                 {
                     "type": "story",
                     "story": {
-                        "_myOnlyVR": true
+                        "_myOnlyVR": false
                     }
                 },
                 {
@@ -5771,7 +5771,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "d3677709-03ae-49e6-86ac-95753a1d654e"
+                        "material": "e5925a6f-d345-4eb3-a928-f6ec5ef39902"
                     }
                 },
                 {
@@ -7059,12 +7059,6 @@
                         "mesh": "p0",
                         "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
                     }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
                 }
             ],
             "translation": [
@@ -7113,12 +7107,6 @@
                     "mesh": {
                         "mesh": "p0",
                         "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
                     }
                 }
             ],
@@ -7169,12 +7157,6 @@
                         "mesh": "p0",
                         "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
                     }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
                 }
             ],
             "translation": [
@@ -7216,7 +7198,15 @@
                                 2.0,
                                 0.05
                             ]
-                        }
+                        },
+                        "kinematic": true,
+                        "gravity": false
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
                     }
                 }
             ]
@@ -7228,214 +7218,6 @@
                 -13.7708797,
                 0.0,
                 6.5062255
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68": {
-            "name": "1",
-            "parent": "32138cac-1f03-4c44-b0ea-e0e8a2f67731",
-            "components": [
-                {
-                    "type": "root",
-                    "root": {
-                        "_myNormal": "890edc89-b1d7-475a-9ff6-84260e09e3a3",
-                        "_myHurt": "acc48be9-89b4-4679-a5e8-0cc70c613aa0",
-                        "_myDead": "2754cc8a-72cb-49b7-aedd-5bed4884ffd0"
-                    }
-                },
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.5,
-                                2.0,
-                                0.05
-                            ]
-                        }
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "e48772eb-7cb2-4ca4-aa1f-1b70402b5b50": {
-            "name": "2",
-            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.8999999,
-                1.8999999,
-                1.0
-            ]
-        },
-        "b1e016ea-5779-4740-82a3-41b1a1e61d8e": {
-            "name": "BigTreeRoots_Fase2",
-            "parent": "e48772eb-7cb2-4ca4-aa1f-1b70402b5b50",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.925,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "8b1c85c3-990d-4d8c-9ac6-6e1fd1857a5a": {
-            "name": "1",
-            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.8999999,
-                1.8999999,
-                1.0
-            ]
-        },
-        "78a8d41f-70a1-4dec-b14f-b6920c7d9e52": {
-            "name": "BigTreeRoots_Fase1",
-            "parent": "8b1c85c3-990d-4d8c-9ac6-6e1fd1857a5a",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.925,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.0,
-                1.0,
-                1.0
-            ]
-        },
-        "b2813f6c-fd71-48f0-83e6-81997d224af5": {
-            "name": "3",
-            "parent": "ed6c24f8-249f-485b-b9bf-fefcfbcdaf68",
-            "translation": [
-                0.0,
-                0.0,
-                0.0
-            ],
-            "rotation": [
-                0.0,
-                0.0,
-                0.0,
-                1.0
-            ],
-            "scale": [
-                1.8999999,
-                1.8999999,
-                1.0
-            ]
-        },
-        "b26ce7a1-5176-4bdd-9db7-4e65d022e8f7": {
-            "name": "BigTreeRoots_Fase3",
-            "parent": "b2813f6c-fd71-48f0-83e6-81997d224af5",
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
-                    }
-                },
-                {
-                    "type": "billboard-player",
-                    "billboard-player": {
-                        "_myKeepUp": true
-                    }
-                }
-            ],
-            "translation": [
-                0.0,
-                0.925,
-                0.0
             ],
             "rotation": [
                 0.0,
@@ -14358,6 +14140,204 @@
                     "active": true
                 }
             ]
+        },
+        "424a982b-c5f0-4603-b18e-beca7be42edb": {
+            "name": "1",
+            "parent": "32138cac-1f03-4c44-b0ea-e0e8a2f67731",
+            "components": [
+                {
+                    "type": "root",
+                    "root": {
+                        "_myNormal": "c418dd0e-823a-43d3-ba1c-aa9dc00f1912",
+                        "_myHurt": "c9275299-6962-4be4-8e73-5735979be670",
+                        "_myDead": "6ff12dba-1072-4e83-9625-efd837176776"
+                    }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                2.0,
+                                0.05
+                            ]
+                        },
+                        "kinematic": true,
+                        "gravity": false
+                    }
+                },
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                }
+            ],
+            "translation": [
+                -3.8575973,
+                0.0,
+                0.2464599
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c9275299-6962-4be4-8e73-5735979be670": {
+            "name": "2",
+            "parent": "424a982b-c5f0-4603-b18e-beca7be42edb",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.8999999,
+                1.8999999,
+                1.0
+            ]
+        },
+        "99f81ff0-25b4-4a6d-856b-2d72fb509861": {
+            "name": "BigTreeRoots_Fase2",
+            "parent": "c9275299-6962-4be4-8e73-5735979be670",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "cfca64cf-9d5a-4f73-b459-4c4d3f2dbf98"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "c418dd0e-823a-43d3-ba1c-aa9dc00f1912": {
+            "name": "1",
+            "parent": "424a982b-c5f0-4603-b18e-beca7be42edb",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.8999999,
+                1.8999999,
+                1.0
+            ]
+        },
+        "cffa885d-0e2b-472d-a565-40bd678afe60": {
+            "name": "BigTreeRoots_Fase1",
+            "parent": "c418dd0e-823a-43d3-ba1c-aa9dc00f1912",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1ab69e95-66e2-4be8-85c8-31bc5e37a085"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "6ff12dba-1072-4e83-9625-efd837176776": {
+            "name": "3",
+            "parent": "424a982b-c5f0-4603-b18e-beca7be42edb",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.8999999,
+                1.8999999,
+                1.0
+            ]
+        },
+        "7714c6c6-8e06-454b-a65e-42e945650855": {
+            "name": "BigTreeRoots_Fase3",
+            "parent": "6ff12dba-1072-4e83-9625-efd837176776",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "ef680a8a-a6df-4809-a77a-acd3f6325c3d"
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                0.925,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         }
     },
     "meshes": {
@@ -15874,9 +15854,9 @@
             "Text": {
                 "font": "147",
                 "effectColor": [
-                    0.3490195,
-                    0.0246366,
-                    0.1064629,
+                    0.4666666,
+                    0.0713725,
+                    0.1710863,
                     1.0
                 ],
                 "color": [
