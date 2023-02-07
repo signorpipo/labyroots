@@ -16198,6 +16198,74 @@
                     }
                 }
             ]
+        },
+        "0f7a6d85-11ce-4605-9079-2ca1c42b69ba": {
+            "name": "3",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "f223b9f0-05e1-44d4-993c-5cc62f52c704": {
+            "name": "1",
+            "parent": "0f7a6d85-11ce-4605-9079-2ca1c42b69ba"
+        },
+        "18c06f1e-397e-423c-88a4-896de790e7f7": {
+            "name": "Codes",
+            "parent": "f223b9f0-05e1-44d4-993c-5cc62f52c704",
+            "components": [
+                {
+                    "type": "billboard-player"
+                },
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "1c312186-b311-4c64-866d-bc2f0b78eeb1"
+                    }
+                }
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ]
+        },
+        "62383ac7-e44c-4f25-beeb-c6c254137922": {
+            "name": "4",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "a58ea1a1-adf8-475a-a4ef-43450427a39b": {
+            "name": "1",
+            "parent": "62383ac7-e44c-4f25-beeb-c6c254137922"
+        },
+        "0a60005f-698d-4426-b3e6-79a8ba0b5514": {
+            "name": "Zesty",
+            "parent": "a58ea1a1-adf8-475a-a4ef-43450427a39b",
+            "components": [
+                {
+                    "type": "billboard-player"
+                },
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "04c39fa4-0ebc-4735-893f-05a959229905"
+                    }
+                }
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ]
         }
     },
     "meshes": {
@@ -17739,6 +17807,20 @@
             "pipeline": "82",
             "DistanceFieldVector": {
                 "vectorTexture": "t0"
+            }
+        },
+        "1c312186-b311-4c64-866d-bc2f0b78eeb1": {
+            "name": "codes",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "aafb4f80-fa08-4ad6-bc49-60944125c5a4"
+            }
+        },
+        "04c39fa4-0ebc-4735-893f-05a959229905": {
+            "name": "zesty",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "aafb4f80-fa08-4ad6-bc49-60944125c5a4"
             }
         }
     },
