@@ -145,7 +145,8 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                     this.stepCounter = this.stepCounter % this._mySteps.length;
                     let player = this._mySteps[this.stepCounter];
                     player = Math.pp_randomPick(this._mySteps);
-                    player.setPosition(this._myParams.myPlayerTransformManager.getPosition());
+                    let horizontalDirection = this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_removeComponentAlongAxis([0, 1, 0]).vec3_normalize();
+                    player.setPosition(this._myParams.myPlayerTransformManager.getPosition().vec3_add(horizontalDirection.vec3_scale(0.2)));
                     player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
                     player.play();
                 }

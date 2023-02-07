@@ -476,6 +476,9 @@ CleanedPlayerTransformManager.prototype.update = function () {
     return function update(dt) {
         //#TODO this should update ground and ceiling info but not sliding info        
 
+        this._myHeadCollisionCheckParams.myHorizontalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore);
+        this._myHeadCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myVerticalObjectsToIgnore);
+
         if (this._myResetRealOnSynced) {
             if (this.getPlayerHeadManager().isSynced()) {
                 this._myResetRealOnSynced = false;
