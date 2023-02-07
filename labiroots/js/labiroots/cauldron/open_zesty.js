@@ -9,7 +9,7 @@ WL.registerComponent('open-zesty', {
         if (this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                let zesty = this.object.pp_getComponent("zesty");
+                let zesty = WL.scene.pp_getComponent("zesty-banner");
                 if (zesty != null) {
                     zesty.onClick();
                 }

@@ -16281,7 +16281,7 @@
         },
         "0a60005f-698d-4426-b3e6-79a8ba0b5514": {
             "name": "Zesty",
-            "parent": "a58ea1a1-adf8-475a-a4ef-43450427a39b",
+            "parent": "3042ee58-5be5-4ae5-a87a-4d4f2b2c3077",
             "components": [
                 {
                     "type": "billboard-player"
@@ -16322,6 +16322,12 @@
                 0.0,
                 1.25,
                 0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
             ]
         },
         "bc2871a5-4ec8-40e6-a577-bb34ae56e698": {
@@ -16331,6 +16337,36 @@
                 0.0,
                 -5.0,
                 0.0
+            ],
+            "components": [
+                {
+                    "type": "zesty-banner",
+                    "zesty-banner": {
+                        "createAutomaticCollision": false,
+                        "format": "tall"
+                    }
+                },
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "04c39fa4-0ebc-4735-893f-05a959229905"
+                    }
+                }
+            ],
+            "scale": [
+                0.075,
+                0.1,
+                0.1
+            ]
+        },
+        "3042ee58-5be5-4ae5-a87a-4d4f2b2c3077": {
+            "name": "Zesty Pivot",
+            "parent": "a58ea1a1-adf8-475a-a4ef-43450427a39b",
+            "scale": [
+                0.75,
+                1.0,
+                1.0
             ]
         }
     },
@@ -16714,6 +16750,12 @@
                 "name": "credits_brutti.webp",
                 "file": "assets\\textures\\webp\\altro\\credits_brutti.webp"
             }
+        },
+        "e8885204-f8b1-4ca8-b92c-4855af1c2930": {
+            "link": {
+                "name": "zesty.webp",
+                "file": "assets\\textures\\webp\\altro\\zesty.webp"
+            }
         }
     },
     "images": {
@@ -16979,6 +17021,12 @@
             },
             "compress": false,
             "stream": false
+        },
+        "3e925291-702c-4390-ab16-223d3592c886": {
+            "link": {
+                "name": "zesty.webp",
+                "file": "assets\\textures\\webp\\altro\\zesty.webp"
+            }
         }
     },
     "materials": {
@@ -17886,7 +17934,7 @@
             "name": "zesty",
             "pipeline": "14",
             "Phong": {
-                "diffuseTexture": "aafb4f80-fa08-4ad6-bc49-60944125c5a4"
+                "ambientFactor": 0.5
             }
         }
     },
@@ -18334,7 +18382,8 @@
         "assets/textures/webp/concept foglie albero/fase 2.webp",
         "assets/textures/webp/concept foglie albero/fase3.webp",
         "assets/textures/webp/Walls/Muro_C_lambert1_BaseMap.webp",
-        "assets/textures/webp/altro/credits_brutti.webp"
+        "assets/textures/webp/altro/credits_brutti.webp",
+        "assets/textures/webp/altro/zesty.webp"
     ],
     "fonts": {
         "147": {

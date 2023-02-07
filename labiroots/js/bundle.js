@@ -309,6 +309,7 @@ require('./labiroots/cauldron/deactivate_on_story');
 require('./labiroots/cauldron/open_ggj');
 require('./labiroots/cauldron/open_github');
 require('./labiroots/cauldron/open_zesty');
+require('./labiroots/cauldron/zesty');
 
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');
