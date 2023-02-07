@@ -18317,7 +18317,7 @@
     },
     "settings": {
         "project": {
-            "name": "LabyRoots",
+            "name": "labyroots",
             "version": [
                 0,
                 9,
@@ -18356,7 +18356,8 @@
             "pwa": {
                 "appIcon": "673a3df2-17bf-4476-afab-ecc48fbbba69",
                 "enable": true,
-                "customManifest": true
+                "customManifest": true,
+                "customServiceWorker": true
             }
         },
         "scripting": {

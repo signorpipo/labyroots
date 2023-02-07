@@ -14,6 +14,6 @@
     "esbuild": "^0.14.54"
   },
   "scripts": {
-    "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/LabyRoots-bundle.js\""
+    "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/labyroots-bundle.js\""
   }
 }
