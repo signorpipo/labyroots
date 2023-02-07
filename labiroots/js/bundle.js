@@ -310,6 +310,7 @@ require('./labiroots/cauldron/open_ggj');
 require('./labiroots/cauldron/open_github');
 require('./labiroots/cauldron/open_zesty');
 require('./labiroots/cauldron/zesty');
+require('./labiroots/cauldron/set_texture_after_delay');
 
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');
