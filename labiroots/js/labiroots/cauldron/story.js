@@ -12,8 +12,8 @@ WL.registerComponent('story', {
         this._mySkip = false;
     },
     update: function (dt) {
-        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2) ||
-            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2)
+        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(3) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(3) ||
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(3) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(3)
         ) {
             this._mySkip = true;
         }
