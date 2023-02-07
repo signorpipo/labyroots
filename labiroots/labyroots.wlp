@@ -14156,7 +14156,7 @@
                     "pp-show-fps": {
                         "_myTextMaterial": "110"
                     },
-                    "active": true
+                    "active": false
                 }
             ]
         },
