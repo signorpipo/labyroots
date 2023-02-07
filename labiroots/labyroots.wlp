@@ -13946,7 +13946,23 @@
         },
         "d195d9df-89a8-4768-b8a7-e6cc1a7e5bcd": {
             "name": "2",
-            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
+            "translation": [
+                -0.7523144,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "8e2b540b-9333-45f5-aec0-57ee9981966b": {
             "name": "1",
@@ -13960,13 +13976,6 @@
                     "type": "billboard-player"
                 },
                 {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1abb89d1-f088-4a38-a4cf-b09ae762776b"
-                    }
-                },
-                {
                     "type": "physx",
                     "physx": {
                         "kinematic": true,
@@ -13974,8 +13983,8 @@
                         "shape": "box",
                         "box": {
                             "extents": [
-                                0.15,
-                                0.15,
+                                0.125,
+                                0.1749999,
                                 0.05
                             ]
                         },
@@ -14045,7 +14054,7 @@
                 {
                     "type": "text",
                     "text": {
-                        "text": "The mother of all trees...\n\nAfter landing on earth,\nher spores have begun to spread,\nwhile the roots protected her heart.\n\nMany tried to defeat her,\nbut in the end they all turned into...\n\nIt's time for you to venture into her maze,\nand put this to an end.\n\nThe mother of all trees must succumb.\n",
+                        "text": "The mother of all trees...\n\nAfter landing on earth,\nher spores have begun to spread,\nwhile the roots protected her heart.\n\nMany tried to defeat her,\nbut they all turned into...\n\nIt's time for you to venture into her maze,\nand put this madness to an end.\n\nThe mother of all trees must succumb.\n",
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
                         "effect": "outline"
                     }
@@ -16236,51 +16245,22 @@
         },
         "f223b9f0-05e1-44d4-993c-5cc62f52c704": {
             "name": "1",
-            "parent": "0f7a6d85-11ce-4605-9079-2ca1c42b69ba"
-        },
-        "18c06f1e-397e-423c-88a4-896de790e7f7": {
-            "name": "Codes",
-            "parent": "f223b9f0-05e1-44d4-993c-5cc62f52c704",
-            "components": [
-                {
-                    "type": "billboard-player"
-                },
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "1c312186-b311-4c64-866d-bc2f0b78eeb1"
-                    }
-                },
-                {
-                    "type": "physx",
-                    "physx": {
-                        "kinematic": true,
-                        "gravity": false,
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.15,
-                                0.15,
-                                0.05
-                            ]
-                        },
-                        "groups": 16
-                    }
-                },
-                {
-                    "type": "open-github"
-                }
+            "parent": "0f7a6d85-11ce-4605-9079-2ca1c42b69ba",
+            "translation": [
+                0.7386866,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
             ],
             "scale": [
-                0.2,
-                0.2,
-                0.2
-            ],
-            "translation": [
-                0.0,
-                1.25,
-                0.0
+                1.0,
+                1.0,
+                1.0
             ]
         },
         "62383ac7-e44c-4f25-beeb-c6c254137922": {
@@ -16422,6 +16402,156 @@
                         "material": "c55d5a3a-0291-4593-9359-9b48c324ce80"
                     }
                 }
+            ]
+        },
+        "a3be6b5b-06c2-4e52-a5ef-b3b0df3c133d": {
+            "name": "Text",
+            "parent": "f562c140-d8ec-47e4-891e-380a07a8b770",
+            "translation": [
+                0.0,
+                0.0,
+                0.05
+            ],
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "I Polaretti\n\n\nAlessandro Telesca - Narrative Designer\n\nAurelia Papini - 2D Artist\n\nArianna Lupi - 2D Artist\n\nChenco - Supporter\n\nElia Ducceschi - Programmer\n\nFrancesco Baiano - Game Designer\n\nMatteo Ledda - 3D Artist\n\nMichael Bellotti - Programmer\n\n\nGGJ2023 - Theme: Roots\n\n",
+                        "effect": "outline"
+                    }
+                }
+            ],
+            "scale": [
+                0.6499999,
+                0.6499999,
+                0.6499999
+            ]
+        },
+        "ce348ecb-4688-41e5-8d14-b79c2f83a296": {
+            "name": "Back",
+            "parent": "f562c140-d8ec-47e4-891e-380a07a8b770",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "0d2720a2-e263-43fe-b27f-82c4926e2711"
+                    }
+                }
+            ],
+            "scale": [
+                0.75,
+                1.0,
+                1.0
+            ],
+            "translation": [
+                -1.1920928955078125e-7,
+                0.0,
+                -0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "4d2aed0d-920c-4c9a-9d06-d8eb0f1fa1f5": {
+            "name": "Codes",
+            "parent": "f223b9f0-05e1-44d4-993c-5cc62f52c704",
+            "components": [
+                {
+                    "type": "billboard-player"
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "kinematic": true,
+                        "gravity": false,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.125,
+                                0.1749999,
+                                0.05
+                            ]
+                        },
+                        "groups": 16
+                    }
+                },
+                {
+                    "type": "open-ggj"
+                }
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "14367d66-96c5-4a92-a63b-e62f060cf04a": {
+            "name": "Text",
+            "parent": "4d2aed0d-920c-4c9a-9d06-d8eb0f1fa1f5",
+            "translation": [
+                0.0,
+                0.0,
+                0.05
+            ],
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "Cheat Codes\n\n\n\nTriple click index button to...\n...skip the intro\n\n\nDouble click left thumbstick to...\n...switch between smooth and teleport\n\n\nTriple click right thumbstick to...\n...plant joy everywhere\n\n\nHold both thumbsticks for 3 seconds to...\n...join your true love\n\n\n",
+                        "effect": "outline"
+                    }
+                }
+            ],
+            "scale": [
+                0.6499999,
+                0.6499999,
+                0.6499999
+            ]
+        },
+        "f1689c05-640c-4185-90e1-9f6f3448b832": {
+            "name": "Back",
+            "parent": "4d2aed0d-920c-4c9a-9d06-d8eb0f1fa1f5",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "0d2720a2-e263-43fe-b27f-82c4926e2711"
+                    }
+                }
+            ],
+            "scale": [
+                0.75,
+                1.0,
+                1.0
+            ],
+            "translation": [
+                -1.1920928955078125e-7,
+                0.0,
+                -0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
             ]
         }
     },
@@ -18021,6 +18151,44 @@
             "pipeline": "14",
             "Phong": {
                 "diffuseTexture": "2d5e4efb-346c-4267-86e8-e0e2ab6f930b"
+            }
+        },
+        "0d2720a2-e263-43fe-b27f-82c4926e2711": {
+            "name": "paper",
+            "pipeline": "7a753214-907d-4260-92e1-0b67e30a7e28",
+            "Phong": {
+                "ambientFactor": 0.5,
+                "diffuseColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "ambientColor": [
+                    0.8078431,
+                    0.5353941,
+                    0.6041199,
+                    1.0
+                ]
+            }
+        },
+        "2ab2daab-8ad8-4842-9d97-c50a7f20a5fc": {
+            "name": "paper text",
+            "pipeline": "82",
+            "Text": {
+                "font": "147",
+                "effectColor": [
+                    0.5254901,
+                    0.0927335,
+                    0.2018973,
+                    1.0
+                ],
+                "color": [
+                    0.5254901,
+                    0.0927335,
+                    0.2018973,
+                    1.0
+                ]
             }
         }
     },
