@@ -27,6 +27,11 @@ WL.registerComponent('transformation', {
         this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
 
         this._myObjectToIgnore = [];
+
+        this._myWeddingDelay = 3;
+        this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
+
+        this._myChange = 0;
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -35,6 +40,22 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+            if (this._myChange > 0) {
+                this._myChange--;
+                if (this._myChange == 0) {
+                    let url = document.location.origin;
+
+                    if (window.location != window.parent.location) {
+                        url = "https://signor-pipo.itch.io/labyroots";
+                    }
+
+                    if (Global.myIsWeddingTime) {
+                        window.open(url, "_blank");
+                    } else {
+                        window.open(url + "/?wedding=1", "_blank");
+                    }
+                }
+            }
 
             let playerPosition = Global.myPlayer.getPosition();
             let currentCell = Global.myMaze.getCellByPosition(playerPosition);
@@ -81,6 +102,20 @@ WL.registerComponent('transformation', {
             this._myLastFreeCell = oldLast;
         }
 
+        if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+            if (this._myWeddingTimer.isRunning()) {
+                this._myWeddingTimer.update(dt);
+                if (this._myWeddingTimer.isDone()) {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
+
+                    this._myChange = 10;
+                }
+            }
+        } else {
+            this._myWeddingTimer.start();
+        }
     },
     _start() {
         this._myStarted = true;

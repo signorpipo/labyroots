@@ -1,4 +1,5 @@
 Global.mySecretWall = null;
+Global.myIsWeddingTime = false;
 
 LR.Maze = class Maze {
     constructor(mazeSetup, parent) {
@@ -13,15 +14,18 @@ LR.Maze = class Maze {
     }
 
     createCells(mazeSetup) {
+
+        let urlSearchParams = new URL(document.location).searchParams;
         this._myGridToUse = mazeSetup.myGrid;
+        Global.myIsWeddingTime = false;
+        if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+            this._myGridToUse = mazeSetup.mySecretGrid;
+            Global.myIsWeddingTime = true;
+        }
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
         let grid = this._myGridToUse;
-        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed() &&
-            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed() && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
-
-        }
 
         for (let i = 0; i < grid.length; i++) {
             let row = grid[i];
