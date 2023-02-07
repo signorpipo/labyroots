@@ -11,9 +11,15 @@ LR.Maze = class Maze {
     }
 
     createCells(mazeSetup) {
+        this._myGridToUse = mazeSetup.myGrid;
+
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
-        let grid = mazeSetup.myGrid;
+        let grid = this._myGridToUse;
+        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed() &&
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed() && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
+
+        }
 
         for (let i = 0; i < grid.length; i++) {
             let row = grid[i];
@@ -43,8 +49,8 @@ LR.Maze = class Maze {
     }
 
     computeTopLeftPosition(mazeSetup) {
-        let row = mazeSetup.myGrid.length;
-        let column = mazeSetup.myGrid[0].length;
+        let row = this._myGridToUse.length;
+        let column = this._myGridToUse[0].length;
 
         let width = column * this._myCellSize;
         let depth = row * this._myCellSize;
@@ -114,7 +120,11 @@ LR.Maze = class Maze {
 
     getCellByPosition(position) {
         let cellCoordinates = this.convertCellPositionToCellCoordinates(position);
-        return this._myCells[cellCoordinates[0]][cellCoordinates[1]];
+        let cell = null;
+        if (this._myCells[cellCoordinates[0]] != null) {
+            cell = this._myCells[cellCoordinates[0]][cellCoordinates[1]];
+        }
+        return cell;
     }
 
     getCellNextToPositionEmpty(position) {
