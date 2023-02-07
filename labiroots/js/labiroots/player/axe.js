@@ -196,7 +196,7 @@ WL.registerComponent('axe', {
                             let player = this._myAudioColpoFinale;
                             let pitch = 1;
                             if (bigTree._myHit > 0) {
-                                if (bigTree._myHit > 1) {
+                                if (bigTree._myHit % 2 == 0) {
                                     player = this._myAudioColpi[1];
                                 } else {
                                     player = this._myAudioColpi[0];

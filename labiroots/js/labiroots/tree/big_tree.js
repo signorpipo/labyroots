@@ -76,8 +76,13 @@ WL.registerComponent('big-tree', {
                     phase.pp_setActive(false);
                 }
 
-                this._myCurrentPhase++;
-                this._myPhases[Math.floor(this._myCurrentPhase / 2)].pp_setActive(true);
+                if (this._myHit > 4) {
+                    this._myPhases[2].pp_setActive(true);
+                } else if (this._myHit > 0) {
+                    this._myPhases[3].pp_setActive(true);
+                } else {
+                    this._myPhases[4].pp_setActive(true);
+                }
                 this.avoidIncrement = true;
             }
         }
