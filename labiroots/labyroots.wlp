@@ -16409,6 +16409,19 @@
                 0.1,
                 0.1
             ]
+        },
+        "e1287b99-5e80-46d8-8259-ddb50443b66e": {
+            "name": "Icon",
+            "parent": "de312993-6b7d-4c65-a920-2acf3d133837",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "c55d5a3a-0291-4593-9359-9b48c324ce80"
+                    }
+                }
+            ]
         }
     },
     "meshes": {
@@ -16797,6 +16810,12 @@
                 "name": "zesty.webp",
                 "file": "assets\\textures\\webp\\altro\\zesty.webp"
             }
+        },
+        "2d5e4efb-346c-4267-86e8-e0e2ab6f930b": {
+            "link": {
+                "name": "icon.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon.webp"
+            }
         }
     },
     "images": {
@@ -16812,7 +16831,7 @@
                 "name": "60.webp",
                 "file": "assets\\textures\\webp\\Trees\\60.webp"
             },
-            "compress": true,
+            "compress": false,
             "stream": false
         },
         "ae52868a-d640-474a-bf27-098700df42bd": {
@@ -16820,7 +16839,7 @@
                 "name": "Frutto_Blu.webp",
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Blu.webp"
             },
-            "compress": true,
+            "compress": false,
             "stream": false
         },
         "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
@@ -17067,7 +17086,17 @@
             "link": {
                 "name": "zesty.webp",
                 "file": "assets\\textures\\webp\\altro\\zesty.webp"
-            }
+            },
+            "compress": false,
+            "stream": false
+        },
+        "673a3df2-17bf-4476-afab-ecc48fbbba69": {
+            "link": {
+                "name": "icon.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon.webp"
+            },
+            "compress": false,
+            "stream": false
         }
     },
     "materials": {
@@ -17985,6 +18014,13 @@
                 "ambientFactor": 0.5,
                 "diffuseTexture": "e8885204-f8b1-4ca8-b92c-4855af1c2930"
             }
+        },
+        "c55d5a3a-0291-4593-9359-9b48c324ce80": {
+            "name": "icon",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "2d5e4efb-346c-4267-86e8-e0e2ab6f930b"
+            }
         }
     },
     "shaders": {
@@ -18316,7 +18352,10 @@
                 }
             },
             "viewObject": "21",
-            "visualizePhysX": false
+            "visualizePhysX": false,
+            "pwa": {
+                "appIcon": "673a3df2-17bf-4476-afab-ecc48fbbba69"
+            }
         },
         "scripting": {
             "sourcePaths": [
@@ -18439,7 +18478,8 @@
         "assets/textures/webp/concept foglie albero/fase3.webp",
         "assets/textures/webp/Walls/Muro_C_lambert1_BaseMap.webp",
         "assets/textures/webp/altro/credits_brutti.webp",
-        "assets/textures/webp/altro/zesty.webp"
+        "assets/textures/webp/altro/zesty.webp",
+        "assets/textures/webp/Icon/icon.webp"
     ],
     "fonts": {
         "147": {
