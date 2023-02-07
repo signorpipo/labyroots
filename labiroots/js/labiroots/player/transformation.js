@@ -32,6 +32,9 @@ WL.registerComponent('transformation', {
         this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
 
         this._myChange = 0;
+        this._myEnd = 0;
+
+        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -40,6 +43,15 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+            if (this._myEnd > 0) {
+                this._myEnd--;
+                if (this._myEnd == 0) {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
+                }
+            }
+
             if (this._myChange > 0) {
                 this._myChange--;
                 if (this._myChange == 0) {
@@ -49,10 +61,15 @@ WL.registerComponent('transformation', {
                         url = "https://signor-pipo.itch.io/labyroots";
                     }
 
+                    let result = false;
                     if (Global.myIsWeddingTime) {
-                        window.open(url);
+                        result = Global.windowOpen(url);
                     } else {
-                        window.open(url + "/?wedding=1");
+                        result = Global.windowOpen(url + "/?wedding=1");
+                    }
+
+                    if (!result) {
+                        this._myChange = 10;
                     }
                 }
             }
@@ -106,11 +123,9 @@ WL.registerComponent('transformation', {
             if (this._myWeddingTimer.isRunning()) {
                 this._myWeddingTimer.update(dt);
                 if (this._myWeddingTimer.isDone()) {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
 
-                    this._myChange = 10;
+                    this._myEnd = 30;
+                    this._myChange = 180;
                 }
             }
         } else {
@@ -259,7 +274,43 @@ WL.registerComponent('transformation', {
                 PP.myRightGamepad.pulse(0.35, 0.25);
             }
         }
+    },
+    _onXRSessionEnd() {
+        if (this._myChange > 0) {
+            this._myChange = 0;
+            let url = document.location.origin;
+
+            if (window.location != window.parent.location) {
+                url = "https://signor-pipo.itch.io/labyroots";
+            }
+
+            let result = false;
+            if (Global.myIsWeddingTime) {
+                result = Global.windowOpen(url);
+            } else {
+                result = Global.windowOpen(url + "/?wedding=1");
+            }
+
+            if (!result) {
+                this._myChange = 10;
+            }
+        }
     }
 });
 
-Global.myTransformation = null;
+Global.myWindowOpenResult = false;
+Global.windowOpen = function (url, callback) {
+    let result = null;
+    let maxAttempt = 1;
+    while (result == null && maxAttempt > 0) {
+        maxAttempt--;
+        result = window.open(url, "_blank");
+    }
+
+    Global.myWindowOpenResult = result != null;
+
+    if (callback != null) {
+        callback(result != null);
+    }
+    return result;
+}
