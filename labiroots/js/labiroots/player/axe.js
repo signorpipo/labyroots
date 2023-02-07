@@ -109,7 +109,13 @@ WL.registerComponent('axe', {
                 if (root) {
                     if (root._myHit > 0) {
                         if (root.hit()) {
-                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            if (root._myHit == 0) {
+                                PP.myLeftGamepad.pulse(0.5, 0.5);
+                                PP.myRightGamepad.pulse(0.5, 0.5);
+                            } else {
+                                this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            }
                             let player = this._myAudioColpoFinale;
                             let pitch = 1;
                             if (root._myHit > 0) {
@@ -140,7 +146,13 @@ WL.registerComponent('axe', {
                 if (rootWall) {
                     if (rootWall._myHit > 0) {
                         if (rootWall.hit()) {
-                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            if (rootWall._myHit == 0) {
+                                PP.myLeftGamepad.pulse(0.5, 0.5);
+                                PP.myRightGamepad.pulse(0.5, 0.5);
+                            } else {
+                                this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            }
 
                             let player = this._myAudioColpoFinale;
                             let pitch = 1;
@@ -177,7 +189,9 @@ WL.registerComponent('axe', {
                 if (bigTree) {
                     if (bigTree._myHit > 0) {
                         if (bigTree.hit()) {
-                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            if (bigTree._myHit != 0) {
+                                this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            }
 
                             let player = this._myAudioColpoFinale;
                             let pitch = 1;
@@ -199,7 +213,7 @@ WL.registerComponent('axe', {
                                 let player = Math.pp_randomPick(this._myLamenti);
                                 player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 2, 0]));
                                 player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
-                                player.play();
+                                //player.play();
                             }
                         }
 
@@ -217,8 +231,13 @@ WL.registerComponent('axe', {
                 if (humanTree) {
                     if (humanTree._myHit > 0) {
                         if (humanTree.hit()) {
-                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
 
+                            if (humanTree._myHit == 0) {
+                                PP.myLeftGamepad.pulse(0.5, 0.5);
+                                PP.myRightGamepad.pulse(0.5, 0.5);
+                            } else {
+                                this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            }
                             let player = this._myAudioColpoFinale;
                             let pitch = 1;
                             if (humanTree._myHit > 0) {

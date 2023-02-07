@@ -1,3 +1,5 @@
+Global.mySecretWall = null;
+
 LR.Maze = class Maze {
     constructor(mazeSetup, parent) {
         this._myDefaultCellSize = 2;
@@ -106,6 +108,10 @@ LR.Maze = class Maze {
                             if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
                                 Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
                                 Global.myAxeCell = cell;
+                            }
+
+                            if (cellType == LR.MazeItemType.SECRET_WALL) {
+                                Global.mySecretWall = objectToSpawn;
                             }
                         }
                     }

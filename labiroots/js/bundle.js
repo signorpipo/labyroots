@@ -318,5 +318,6 @@ require('./labiroots/tree/root');
 require('./labiroots/tree/root_wall');
 require('./labiroots/tree/big_tree');
 require('./labiroots/tree/human_tree');
+require('./labiroots/tree/big_tree_die');
 
 require('./labiroots/test/test');

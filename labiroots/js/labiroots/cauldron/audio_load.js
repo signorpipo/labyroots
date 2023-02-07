@@ -178,8 +178,24 @@ WL.registerComponent('audio-load', {
             manager.addAudioSetup(AudioID.HEAL2, audioSetup);
         }
 
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            audioSetup.myRate = 0.25;
+            audioSetup.myVolume = 1;
+            audioSetup.myReferenceDistance = 2;
+            manager.addAudioSetup(AudioID.SECRET_WALL_OPEN, audioSetup);
+        }
+
+        {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 0.5;
+            audioSetup.myReferenceDistance = 1;
+            manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
+        }
+
         manager.createAudioPlayer(AudioID.LAMENTO_1);
-        for (let i = 0; i <= AudioID.LAMENTO_UMANO_3_MORTE; i++) {
+        for (let i = 0; i <= AudioID.BIG_TREE_DIE_HIT; i++) {
             manager.createAudioPlayer(i);
         }
     }
@@ -207,4 +223,6 @@ AudioID = {
     LAMENTO_UMANO_2_MORTE: 19,
     LAMENTO_UMANO_3_MORTE: 20,
     TREE_UMANO_SPAWN: 21,
+    SECRET_WALL_OPEN: 22,
+    BIG_TREE_DIE_HIT: 23,
 };

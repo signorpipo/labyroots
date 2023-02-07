@@ -1,3 +1,5 @@
+Global.myBigTree = null;
+
 WL.registerComponent('big-tree', {
     _myPhase1: { type: WL.Type.Object },
     _myPhase2: { type: WL.Type.Object },
@@ -16,6 +18,10 @@ WL.registerComponent('big-tree', {
 
         this._myCurrentPhase = 0;
         this.avoidIncrement = false;
+
+        Global.myBigTree = this;
+
+        this._myBigTreeDie = new LR.BigTreeDie();
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -35,8 +41,8 @@ WL.registerComponent('big-tree', {
 
                 this._myPhases[0].pp_setActive(true);
             }
-        } else {
-
+        } else if (this._myHit == 0) {
+            this._myBigTreeDie.update(dt);
         }
     },
     rootDie() {
