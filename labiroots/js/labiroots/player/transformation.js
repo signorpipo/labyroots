@@ -33,8 +33,15 @@ WL.registerComponent('transformation', {
 
         this._myChange = 0;
         this._myEnd = 0;
+        this._myCloseSession = 0;
 
+        if (WL.xrSession) {
+            this._onXRSessionStart(WL.xrSession);
+        }
+        WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
+
+        Global.myTimerStopExit = new PP.Timer(1, false);
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -43,6 +50,23 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+
+            if (Global.myTimerStopExit.isRunning()) {
+                Global.myTimerStopExit.update(dt);
+                if (Global.myTimerStopExit.isDone()) {
+                    this._myCloseSession = 0;
+                    Global.myExitSession = false;
+                }
+            }
+            if (this._myCloseSession > 0) {
+                this._myCloseSession--;
+                if (this._myCloseSession == 0) {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
+                }
+            }
+
             if (this._myEnd > 0) {
                 this._myEnd--;
                 if (this._myEnd == 0) {
@@ -275,6 +299,12 @@ WL.registerComponent('transformation', {
             }
         }
     },
+    _onXRSessionStart(session) {
+        if (Global.myExitSession) {
+            Global.myExitSession = false;
+            this._myCloseSession = 2;
+        }
+    },
     _onXRSessionEnd() {
         if (this._myChange > 0) {
             this._myChange = 0;
@@ -298,6 +328,8 @@ WL.registerComponent('transformation', {
     }
 });
 
+Global.myExitSession = false;
+
 Global.myWindowOpenResult = false;
 Global.windowOpen = function (url, callback) {
     let result = null;
@@ -312,5 +344,11 @@ Global.windowOpen = function (url, callback) {
     if (callback != null) {
         callback(result != null);
     }
+
+    if (result != null) {
+        Global.myTimerStopExit = new PP.Timer(3);
+        Global.myExitSession = true;
+    }
+
     return result;
 }
