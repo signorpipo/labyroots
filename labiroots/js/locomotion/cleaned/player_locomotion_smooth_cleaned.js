@@ -39,8 +39,9 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
-        this._myStepDelay = 0.7;
+        this._myStepDelay = 0.8;
         this._myStepTimer = new PP.Timer(this._myStepDelay);
+        this._StepRemove = false;
 
         this._mySteps = [];
         this.stepCounter = 0;
@@ -63,8 +64,6 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
     let directionReferenceTransformQuat = PP.quat2_create();
     return function update(dt) {
-        this._myStepTimer.update(dt);
-
         this._myParams.myMaxSpeed = Global.mySetup.myLocomotionSetup.mySpeed;
 
         playerUp = this._myParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
@@ -136,9 +135,12 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 this._myParams.myPlayerTransformManager.resetReal(true, false, false);
             }
 
-            if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.01) {
+            if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.00001) {
+                this._myStepTimer.update(dt);
+
                 if (this._myStepTimer.isDone()) {
-                    let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, speedUsed / 2);
+                    this._StepRemove = true;
+                    let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, speedUsed / this._myParams.myMaxSpeed);
                     this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
 
                     this.stepCounter = this.stepCounter + 1;
@@ -149,6 +151,15 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                     player.setPosition(this._myParams.myPlayerTransformManager.getPosition().vec3_add(horizontalDirection.vec3_scale(0.2)));
                     player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
                     player.play();
+                }
+            } else {
+                if (this._StepRemove) {
+                    this._myStepTimer.update(dt);
+                    if (this._myStepTimer.isDone()) {
+                        this._StepRemove = false;
+                        let delay = this._myStepDelay / 5;
+                        this._myStepTimer.start(Math.max(0, Math.pp_random(delay - 0.1, delay + 0.05)));
+                    }
                 }
             }
 

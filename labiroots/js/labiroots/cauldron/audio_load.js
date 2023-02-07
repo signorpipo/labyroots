@@ -141,7 +141,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 1.35;
+            audioSetup.myVolume = 1.15;
             audioSetup.myReferenceDistance = 1.5;
             manager.addAudioSetup(AudioID.PASSO_1, audioSetup);
         }
