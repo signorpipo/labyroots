@@ -16355,7 +16355,8 @@
                     "type": "zesty-banner",
                     "zesty-banner": {
                         "createAutomaticCollision": false,
-                        "format": "tall"
+                        "format": "tall",
+                        "space": 223
                     }
                 },
                 {
