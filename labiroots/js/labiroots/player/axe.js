@@ -286,6 +286,48 @@ WL.registerComponent('axe', {
                         }
                     }
                 }
+
+                let openComponents = ["open-ggj", "open-zesty", "open-github"];
+                for (let component of openComponents) {
+                    let openComponent = physXComponent.object.pp_getComponent(component);
+                    if (openComponent) {
+                        if (openComponent.hit()) {
+
+                            if (openComponent._myHit == 0) {
+                                PP.myLeftGamepad.pulse(0.5, 0.5);
+                                PP.myRightGamepad.pulse(0.5, 0.5);
+                            } else {
+                                this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+                            }
+
+                            let player = this._myAudioColpoFinale;
+                            let pitch = 1;
+                            if (openComponent._myHit > 0) {
+                                if (openComponent._myHit > 1) {
+                                    player = this._myAudioColpi[1];
+                                } else {
+                                    player = this._myAudioColpi[0];
+                                }
+                            } else {
+                                pitch = this._myColpoFinalePitch;
+                            }
+
+                            player.setPosition(this.object.pp_getPosition());
+                            player.setPitch(Math.pp_random(pitch - 0.15, pitch + 0.05));
+                            player.play();
+
+                            if (openComponent._myHit == 0) {
+                                let player = Math.pp_randomPick(this._myLamenti);
+                                player.setPosition(openComponent.object.pp_getPosition().vec3_add([0, 2, 0]));
+                                player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
+                                player.play();
+
+                                openComponent.open();
+                            }
+                        }
+                    }
+                }
+
             }
         }
     },

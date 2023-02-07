@@ -50,9 +50,9 @@ WL.registerComponent('transformation', {
                     }
 
                     if (Global.myIsWeddingTime) {
-                        window.open(url, "_blank");
+                        window.open(url);
                     } else {
-                        window.open(url + "/?wedding=1", "_blank");
+                        window.open(url + "/?wedding=1");
                     }
                 }
             }

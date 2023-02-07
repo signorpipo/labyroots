@@ -13953,6 +13953,25 @@
                         "mesh": "p0",
                         "material": "1abb89d1-f088-4a38-a4cf-b09ae762776b"
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "kinematic": true,
+                        "gravity": false,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.15,
+                                0.15,
+                                0.05
+                            ]
+                        },
+                        "groups": 16
+                    }
+                },
+                {
+                    "type": "open-ggj"
                 }
             ],
             "scale": [
@@ -16220,6 +16239,25 @@
                         "mesh": "p0",
                         "material": "1c312186-b311-4c64-866d-bc2f0b78eeb1"
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "kinematic": true,
+                        "gravity": false,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.15,
+                                0.15,
+                                0.05
+                            ]
+                        },
+                        "groups": 16
+                    }
+                },
+                {
+                    "type": "open-github"
                 }
             ],
             "scale": [
@@ -16254,6 +16292,25 @@
                         "mesh": "p0",
                         "material": "04c39fa4-0ebc-4735-893f-05a959229905"
                     }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "kinematic": true,
+                        "gravity": false,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.15,
+                                0.15,
+                                0.05
+                            ]
+                        },
+                        "groups": 16
+                    }
+                },
+                {
+                    "type": "open-zesty"
                 }
             ],
             "scale": [
@@ -16264,6 +16321,15 @@
             "translation": [
                 0.0,
                 1.25,
+                0.0
+            ]
+        },
+        "bc2871a5-4ec8-40e6-a577-bb34ae56e698": {
+            "name": "Zesty",
+            "parent": "88e46c45-8c38-4df4-b0e2-85a3c8a77f9e",
+            "translation": [
+                0.0,
+                -5.0,
                 0.0
             ]
         }

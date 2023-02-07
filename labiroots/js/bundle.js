@@ -306,6 +306,9 @@ require('./labiroots/cauldron/billboard_player');
 require('./labiroots/cauldron/story');
 require('./labiroots/cauldron/audio_load');
 require('./labiroots/cauldron/deactivate_on_story');
+require('./labiroots/cauldron/open_ggj');
+require('./labiroots/cauldron/open_github');
+require('./labiroots/cauldron/open_zesty');
 
 require('./labiroots/player/transformation');
 require('./labiroots/player/stage_switch');
