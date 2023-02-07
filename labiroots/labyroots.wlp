@@ -60,6 +60,9 @@
                 {
                     "type": "pp-mute-everything",
                     "active": false
+                },
+                {
+                    "type": "fixed-foveation"
                 }
             ]
         },
