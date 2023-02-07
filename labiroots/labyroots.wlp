@@ -18354,7 +18354,9 @@
             "viewObject": "21",
             "visualizePhysX": false,
             "pwa": {
-                "appIcon": "673a3df2-17bf-4476-afab-ecc48fbbba69"
+                "appIcon": "673a3df2-17bf-4476-afab-ecc48fbbba69",
+                "enable": true,
+                "customManifest": true
             }
         },
         "scripting": {
