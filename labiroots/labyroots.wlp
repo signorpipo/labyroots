@@ -18731,7 +18731,8 @@
                 "enable": true,
                 "customManifest": true,
                 "customServiceWorker": true
-            }
+            },
+            "googleAnalytics": "G-MMJPQVRVQD"
         },
         "scripting": {
             "sourcePaths": [
