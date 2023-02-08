@@ -64,15 +64,15 @@ WL.registerComponent('player-locomotion', {
         PP.myEasyTuneVariables.add(new PP.EasyTuneBool("Bool 1", false));
 
         this._myStartCounter = 1;
+
+        this._myPlayerLocomotion.start();
+        Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
     },
     update(dt) {
         if (Global.myReady) {
             if (this._myStartCounter > 0) {
                 this._myStartCounter--;
                 if (this._myStartCounter == 0) {
-                    this._myPlayerLocomotion.start();
-
-                    Global.myPlayer = this._myPlayerLocomotion._myPlayerTransformManager;
                     Global.myPlayerLocomotion = this._myPlayerLocomotion;
                     Global.myPlayer.resetReal(true, false, false, true);
 

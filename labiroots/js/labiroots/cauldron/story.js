@@ -9,6 +9,13 @@ WL.registerComponent('story', {
         this._myTimer2 = new PP.Timer(4);
         this._myTimer = new PP.Timer(18);
 
+        this._mySteps = [];
+        this._myStepDelay = 0.8;
+        this._myStepTimer = new PP.Timer(0.1);
+        let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
+        this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
+        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+
         this._mySkip = false;
     },
     update: function (dt) {
@@ -51,6 +58,18 @@ WL.registerComponent('story', {
                 }
             }
             if (this._myTimer.isRunning()) {
+
+                this._myStepTimer.update(dt);
+                if (this._myStepTimer.isDone()) {
+                    let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
+                    this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
+
+                    let player = this._mySteps[0];
+                    player.setPosition(Global.myPlayer.getPositionReal());
+                    player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
+                    player.play();
+                }
+
                 this._myTimer.update(dt);
                 this._myTimer2.update(dt);
                 if (this._myTimer.isDone() || (this._myTimer2.isDone() && this._mySkip)) {

@@ -1,5 +1,4 @@
 CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends PlayerLocomotionMovement {
-    totype
     constructor(params, locomotionRuntimeParams) {
         super(locomotionRuntimeParams);
 

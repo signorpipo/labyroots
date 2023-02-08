@@ -169,6 +169,8 @@ WL.registerComponent('transformation', {
         }
         Global.myPlayer.getMovementCollisionCheckParams().myVerticalObjectsToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
 
+        let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
+        Global.myPlayer.setRotationQuat(rotationQuat);
     },
     _resetTransformation() {
         Global.myStage = 0;
