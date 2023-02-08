@@ -29,6 +29,9 @@ WL.registerComponent('story', {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
+                    let currentVersion = 1;
+                    console.log("Game Version:", currentVersion);
+
                     this._myStarted = true;
 
                     Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
