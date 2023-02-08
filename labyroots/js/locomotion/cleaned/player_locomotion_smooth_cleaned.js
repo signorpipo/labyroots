@@ -45,7 +45,9 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         this._mySteps = [];
         this.stepCounter = 0;
         this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
-        //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
+        //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);        
+
+        this._myNonVRPlayingTimer = new PP.Timer(15);
     }
 
     update(dt) {
@@ -135,6 +137,18 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             }
 
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.00001) {
+
+                if (this._myNonVRPlayingTimer.isRunning()) {
+                    this._myNonVRPlayingTimer.update(dt);
+                    if (this._myNonVRPlayingTimer.isDone()) {
+                        if (!Global.mySessionStarted) {
+                            gtag("event", "playing_non_vr", {
+                                "value": 1
+                            });
+                        }
+                    }
+                }
+
                 this._myStepTimer.update(dt);
 
                 if (this._myStepTimer.isDone()) {

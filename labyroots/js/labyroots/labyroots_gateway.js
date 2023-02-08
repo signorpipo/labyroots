@@ -76,6 +76,8 @@ WL.registerComponent("labyroots-gateway", {
                 "value": 1
             });
         }
+
+        Global.mySessionStarted = true;
     }
 });
 
@@ -91,5 +93,7 @@ Global = {
     myTrees: [],
     myFruits: [],
 };
+
+Global.mySessionStarted = false;
 
 LR = {};
