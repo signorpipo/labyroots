@@ -84,7 +84,7 @@
                     "player-locomotion": {
                         "_myUseCleanedVersion": true,
                         "_myVRDirectionReferenceType": "head",
-                        "_myFlyEnabled": true,
+                        "_myFlyEnabled": false,
                         "_myMinAngleToFlyUpNonVR": 90.0,
                         "_myMinAngleToFlyDownNonVR": 90.0,
                         "_myMinAngleToFlyUpVR": 90.0,
@@ -355,14 +355,14 @@
                     "pp-console-vr": {
                         "_myHandedness": "left"
                     },
-                    "active": true
+                    "active": false
                 },
                 {
                     "type": "pp-easy-tune",
                     "pp-easy-tune": {
                         "_myHandedness": "left"
                     },
-                    "active": true
+                    "active": false
                 }
             ]
         },
@@ -483,7 +483,7 @@
                     "pp-tool-cursor": {
                         "_myHandedness": "right"
                     },
-                    "active": true
+                    "active": false
                 }
             ]
         },
@@ -18728,7 +18728,7 @@
             "visualizePhysX": false,
             "pwa": {
                 "appIcon": "4453731a-9407-4bfe-8c79-535f542dccd3",
-                "enable": false,
+                "enable": true,
                 "customManifest": true,
                 "customServiceWorker": true
             },
