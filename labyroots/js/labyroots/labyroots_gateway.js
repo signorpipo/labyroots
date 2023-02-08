@@ -1,4 +1,4 @@
-WL.registerComponent("labiroots-gateway", {
+WL.registerComponent("labyroots-gateway", {
 }, {
     init: function () {
         Global.myGoogleAnalytics = window.gtag != null;

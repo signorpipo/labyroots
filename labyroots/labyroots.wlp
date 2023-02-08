@@ -43,7 +43,7 @@
                     "type": "pp-debug-manager"
                 },
                 {
-                    "type": "labiroots-gateway"
+                    "type": "labyroots-gateway"
                 },
                 {
                     "type": "story",
@@ -18776,15 +18776,15 @@
                 "js/pp/cauldron/visual/components",
                 "js/pp/cauldron/visual",
                 "js/locomotion/teleport",
-                "js/labiroots",
-                "js/labiroots/maze",
-                "js/labiroots/json",
+                "js/labyroots",
+                "js/labyroots/maze",
+                "js/labyroots/json",
                 "static",
-                "js/labiroots/player",
-                "js/labiroots/tree",
-                "js/labiroots/test",
-                "js/labiroots/fruit",
-                "js/labiroots/cauldron"
+                "js/labyroots/player",
+                "js/labyroots/tree",
+                "js/labyroots/test",
+                "js/labyroots/fruit",
+                "js/labyroots/cauldron"
             ],
             "useInternalBundler": false
         },

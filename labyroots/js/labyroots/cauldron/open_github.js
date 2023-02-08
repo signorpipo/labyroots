@@ -50,7 +50,7 @@ WL.registerComponent('open-github', {
     _onXRSessionEnd() {
         if (this._myChange > 0) {
             this._myChange = 0;
-            let result = Global.windowOpen("https://github.com/SignorPipo/labiroots");
+            let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
 
             if (!result) {
                 this._myChange = 10;

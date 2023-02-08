@@ -293,36 +293,36 @@ require('./locomotion/cleaned/player_locomotion_cleaned');
 require('./locomotion/cleaned/player_locomotion_smooth_cleaned');
 require('./locomotion/cleaned/player_transform_manager_cleaned');
 
-//LABIROOTS
+//LABYROOTS
 
-require('./labiroots/labiroots_gateway');
+require('./labyroots/labyroots_gateway');
 
-require('./labiroots/json/file_manager');
+require('./labyroots/json/file_manager');
 
-require('./labiroots/maze/maze');
-require('./labiroots/maze/maze_item_type');
+require('./labyroots/maze/maze');
+require('./labyroots/maze/maze_item_type');
 
-require('./labiroots/cauldron/billboard_player');
-require('./labiroots/cauldron/story');
-require('./labiroots/cauldron/audio_load');
-require('./labiroots/cauldron/deactivate_on_story');
-require('./labiroots/cauldron/open_ggj');
-require('./labiroots/cauldron/open_github');
-require('./labiroots/cauldron/open_zesty');
-require('./labiroots/cauldron/zesty');
-require('./labiroots/cauldron/set_texture_after_delay');
+require('./labyroots/cauldron/billboard_player');
+require('./labyroots/cauldron/story');
+require('./labyroots/cauldron/audio_load');
+require('./labyroots/cauldron/deactivate_on_story');
+require('./labyroots/cauldron/open_ggj');
+require('./labyroots/cauldron/open_github');
+require('./labyroots/cauldron/open_zesty');
+require('./labyroots/cauldron/zesty');
+require('./labyroots/cauldron/set_texture_after_delay');
 
-require('./labiroots/player/transformation');
-require('./labiroots/player/stage_switch');
-require('./labiroots/player/mouth');
-require('./labiroots/player/swap_grab_hand');
-require('./labiroots/player/axe');
+require('./labyroots/player/transformation');
+require('./labyroots/player/stage_switch');
+require('./labyroots/player/mouth');
+require('./labyroots/player/swap_grab_hand');
+require('./labyroots/player/axe');
 
-require('./labiroots/tree/fruit');
-require('./labiroots/tree/root');
-require('./labiroots/tree/root_wall');
-require('./labiroots/tree/big_tree');
-require('./labiroots/tree/human_tree');
-require('./labiroots/tree/big_tree_die');
+require('./labyroots/tree/fruit');
+require('./labyroots/tree/root');
+require('./labyroots/tree/root_wall');
+require('./labyroots/tree/big_tree');
+require('./labyroots/tree/human_tree');
+require('./labyroots/tree/big_tree_die');
 
-require('./labiroots/test/test');
+require('./labyroots/test/test');

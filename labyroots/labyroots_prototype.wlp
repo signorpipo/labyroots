@@ -4709,7 +4709,7 @@
                 "js/pp/cauldron/visual/components",
                 "js/pp/cauldron/visual",
                 "js/locomotion/teleport",
-                "js/labiroots/test"
+                "js/labyroots/test"
             ],
             "useInternalBundler": false
         },
