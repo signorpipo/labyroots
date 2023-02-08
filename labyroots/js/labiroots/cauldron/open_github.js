@@ -22,7 +22,7 @@ WL.registerComponent('open-github', {
         if (this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                let result = Global.windowOpen("https://github.com/SignorPipo/labiroots");
+                let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
 
                 if (!result) {
                     this._myChange = 10;

@@ -1,6 +1,7 @@
 WL.registerComponent("labiroots-gateway", {
 }, {
     init: function () {
+        Global.myGoogleAnalytics = window.gtag != null;
     },
     start: function () {
         this._myLoadSetupDone = false;
@@ -8,6 +9,11 @@ WL.registerComponent("labiroots-gateway", {
 
         this._myFirstUpdate = true;
         this._myReadyCounter = 10;
+
+        if (WL.xrSession) {
+            this._onXRSessionStart(WL.xrSession);
+        }
+        WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
     },
     update: function (dt) {
         if (!this._myLoadSetupDone) {
@@ -63,6 +69,13 @@ WL.registerComponent("labiroots-gateway", {
     },
     _loadMaze() {
         Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup, this.object);
+    },
+    _onXRSessionStart() {
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "enter_vr", {
+                "value": 1
+            });
+        }
     }
 });
 
