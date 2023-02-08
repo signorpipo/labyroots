@@ -13984,7 +13984,7 @@
                         "box": {
                             "extents": [
                                 0.125,
-                                0.1749999,
+                                0.2,
                                 0.05
                             ]
                         },
@@ -16269,50 +16269,44 @@
         },
         "a58ea1a1-adf8-475a-a4ef-43450427a39b": {
             "name": "1",
-            "parent": "62383ac7-e44c-4f25-beeb-c6c254137922"
+            "parent": "62383ac7-e44c-4f25-beeb-c6c254137922",
+            "translation": [
+                2.9770936,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
         },
         "0a60005f-698d-4426-b3e6-79a8ba0b5514": {
             "name": "Zesty",
             "parent": "3042ee58-5be5-4ae5-a87a-4d4f2b2c3077",
             "components": [
                 {
-                    "type": "billboard-player"
-                },
-                {
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
                         "material": "04c39fa4-0ebc-4735-893f-05a959229905"
                     }
-                },
-                {
-                    "type": "physx",
-                    "physx": {
-                        "kinematic": true,
-                        "gravity": false,
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.15,
-                                0.15,
-                                0.05
-                            ]
-                        },
-                        "groups": 16
-                    }
-                },
-                {
-                    "type": "open-zesty"
                 }
             ],
             "scale": [
-                0.2,
-                0.2,
-                0.2
+                0.85,
+                0.85,
+                0.85
             ],
             "translation": [
                 0.0,
-                1.25,
+                0.0,
                 0.0
             ],
             "rotation": [
@@ -16355,10 +16349,21 @@
         },
         "3042ee58-5be5-4ae5-a87a-4d4f2b2c3077": {
             "name": "Zesty Pivot",
-            "parent": "a58ea1a1-adf8-475a-a4ef-43450427a39b",
+            "parent": "6f8901d6-4c65-4068-b8e1-65ea05e50cdb",
             "scale": [
                 0.75,
                 1.0,
+                1.0
+            ],
+            "translation": [
+                0.0,
+                0.0,
+                0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
                 1.0
             ]
         },
@@ -16441,13 +16446,13 @@
                 }
             ],
             "scale": [
-                0.75,
-                1.0,
-                1.0
+                1.5,
+                1.5,
+                1.5
             ],
             "translation": [
-                -1.1920928955078125e-7,
-                0.0,
+                -0.035,
+                -0.07,
                 -0.05
             ],
             "rotation": [
@@ -16473,7 +16478,7 @@
                         "box": {
                             "extents": [
                                 0.125,
-                                0.1749999,
+                                0.2,
                                 0.05
                             ]
                         },
@@ -16514,7 +16519,7 @@
                     "type": "text",
                     "text": {
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
-                        "text": "Cheat Codes\n\n\n\nTriple click index button to...\n...skip the intro\n\n\nDouble click left thumbstick to...\n...switch between smooth and teleport\n\n\nTriple click right thumbstick to...\n...plant joy everywhere\n\n\nHold both thumbsticks for 3 seconds to...\n...join your true love\n\n\n",
+                        "text": "Secret Codes\n\n\n\nTriple press the index finger button to...\n...skip the intro\n\n\nDouble press the left thumbstick to...\n...switch between smooth and teleport\n\n\nTriple press the right thumbstick to...\n...plant joy everywhere\n\n\nHold both thumbsticks for 3 seconds to...\n...join your true love\n\n\n",
                         "effect": "outline"
                     }
                 }
@@ -16538,13 +16543,13 @@
                 }
             ],
             "scale": [
-                0.75,
-                1.0,
-                1.0
+                1.5,
+                1.5,
+                1.5
             ],
             "translation": [
-                -1.1920928955078125e-7,
-                0.0,
+                -0.035,
+                -0.07,
                 -0.05
             ],
             "rotation": [
@@ -16552,6 +16557,190 @@
                 0.0,
                 0.0,
                 1.0
+            ]
+        },
+        "bb8e0345-6c0a-407f-a3a1-6a4ea800fa7b": {
+            "name": "Back",
+            "parent": "6f8901d6-4c65-4068-b8e1-65ea05e50cdb",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "0d2720a2-e263-43fe-b27f-82c4926e2711"
+                    }
+                }
+            ],
+            "scale": [
+                1.5,
+                1.5,
+                1.5
+            ],
+            "translation": [
+                -0.035,
+                -0.07,
+                -0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "6f8901d6-4c65-4068-b8e1-65ea05e50cdb": {
+            "name": "Pivot",
+            "parent": "a58ea1a1-adf8-475a-a4ef-43450427a39b",
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ],
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "physx",
+                    "physx": {
+                        "kinematic": true,
+                        "gravity": false,
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.125,
+                                0.2,
+                                0.05
+                            ]
+                        },
+                        "groups": 16
+                    }
+                },
+                {
+                    "type": "billboard-player"
+                },
+                {
+                    "type": "open-zesty"
+                }
             ]
         }
     },
@@ -16942,10 +17131,16 @@
                 "file": "assets\\textures\\webp\\altro\\zesty.webp"
             }
         },
-        "2d5e4efb-346c-4267-86e8-e0e2ab6f930b": {
+        "2a423281-e408-4232-aa71-d7c8dbb89d30": {
             "link": {
-                "name": "icon.webp",
-                "file": "assets\\textures\\webp\\Icon\\icon.webp"
+                "name": "paper.webp",
+                "file": "assets\\textures\\webp\\altro\\paper.webp"
+            }
+        },
+        "d7791df6-de63-4235-991f-0d12a311e9b4": {
+            "link": {
+                "name": "icon3.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon3.webp"
             }
         }
     },
@@ -17221,10 +17416,18 @@
             "compress": false,
             "stream": false
         },
-        "673a3df2-17bf-4476-afab-ecc48fbbba69": {
+        "1a12637b-0f5b-48ce-90d8-35460859d122": {
             "link": {
-                "name": "icon.webp",
-                "file": "assets\\textures\\webp\\Icon\\icon.webp"
+                "name": "paper.webp",
+                "file": "assets\\textures\\webp\\altro\\paper.webp"
+            },
+            "compress": false,
+            "stream": false
+        },
+        "4453731a-9407-4bfe-8c79-535f542dccd3": {
+            "link": {
+                "name": "icon3.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon3.webp"
             },
             "compress": false,
             "stream": false
@@ -18150,7 +18353,7 @@
             "name": "icon",
             "pipeline": "14",
             "Phong": {
-                "diffuseTexture": "2d5e4efb-346c-4267-86e8-e0e2ab6f930b"
+                "diffuseTexture": "d7791df6-de63-4235-991f-0d12a311e9b4"
             }
         },
         "0d2720a2-e263-43fe-b27f-82c4926e2711": {
@@ -18159,17 +18362,18 @@
             "Phong": {
                 "ambientFactor": 0.5,
                 "diffuseColor": [
-                    1.0,
-                    1.0,
-                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
                     1.0
                 ],
                 "ambientColor": [
-                    0.8078431,
-                    0.5353941,
-                    0.6041199,
+                    0.117647,
+                    0.117647,
+                    0.117647,
                     1.0
-                ]
+                ],
+                "diffuseTexture": "2a423281-e408-4232-aa71-d7c8dbb89d30"
             }
         },
         "2ab2daab-8ad8-4842-9d97-c50a7f20a5fc": {
@@ -18523,7 +18727,7 @@
             "viewObject": "21",
             "visualizePhysX": false,
             "pwa": {
-                "appIcon": "673a3df2-17bf-4476-afab-ecc48fbbba69",
+                "appIcon": "db9cfdb0-0cb7-4e9a-b346-b2b4e2546c23",
                 "enable": true,
                 "customManifest": true,
                 "customServiceWorker": true
@@ -18651,7 +18855,8 @@
         "assets/textures/webp/Walls/Muro_C_lambert1_BaseMap.webp",
         "assets/textures/webp/altro/credits_brutti.webp",
         "assets/textures/webp/altro/zesty.webp",
-        "assets/textures/webp/Icon/icon.webp"
+        "assets/textures/webp/altro/paper.webp",
+        "assets/textures/webp/Icon/icon3.webp"
     ],
     "fonts": {
         "147": {
