@@ -16742,6 +16742,23 @@
                     "type": "open-zesty"
                 }
             ]
+        },
+        "f3fdc04e-a309-48b7-8674-1f8f198081b1": {
+            "name": "6",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "60efaa42-7955-4c26-83d2-76756301ef61": {
+            "name": "1",
+            "parent": "f3fdc04e-a309-48b7-8674-1f8f198081b1"
+        },
+        "9a55d504-0129-4fa6-82d2-7d20e6cf2fdc": {
+            "name": "Secret Zone Check",
+            "parent": "60efaa42-7955-4c26-83d2-76756301ef61",
+            "components": [
+                {
+                    "type": "secret-zone-check"
+                }
+            ]
         }
     },
     "meshes": {

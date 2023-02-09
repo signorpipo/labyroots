@@ -14,7 +14,6 @@ LR.Maze = class Maze {
     }
 
     createCells(mazeSetup) {
-
         let urlSearchParams = new URL(document.location).searchParams;
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;

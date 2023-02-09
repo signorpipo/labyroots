@@ -5,6 +5,7 @@ LR.MazeItemType = {
     SECRET_CODES: 3,
     ZESTY: 4,
     SECRET_WALL: 5,
+    SECRET_ZONE_CHECK: 6,
     PLAYER_START: 10,
     PLAYER_RESPAWN: 11,
     BIG_TREE: 20,

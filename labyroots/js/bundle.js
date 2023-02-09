@@ -311,6 +311,7 @@ require('./labyroots/cauldron/open_github');
 require('./labyroots/cauldron/open_zesty');
 require('./labyroots/cauldron/zesty');
 require('./labyroots/cauldron/set_texture_after_delay');
+require('./labyroots/cauldron/secret_zone_check');
 
 require('./labyroots/player/transformation');
 require('./labyroots/player/stage_switch');
