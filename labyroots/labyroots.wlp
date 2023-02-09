@@ -22154,7 +22154,7 @@
                 "WITH_FOG": false,
                 "WITH_EMISSIVE": true
             },
-            "doubleSided": true
+            "doubleSided": false
         },
         "146": {
             "link": {
