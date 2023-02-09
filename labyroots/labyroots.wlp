@@ -21566,7 +21566,7 @@
         },
         "3ab61b52-b9fd-472f-a3fc-5994e607693e": {
             "name": "Muro_A",
-            "pipeline": "145",
+            "pipeline": "146",
             "Phong": {
                 "ambientColor": [
                     0.0,
@@ -21674,7 +21674,7 @@
         },
         "f1ae36c4-bcf6-4d66-ad50-565e605c7e60": {
             "name": "Muro_C",
-            "pipeline": "145",
+            "pipeline": "146",
             "Phong": {
                 "ambientColor": [
                     0.0,
@@ -21695,7 +21695,7 @@
         },
         "1bfc919b-6cb0-483b-9e84-c4290f355457": {
             "name": "Angolo_A",
-            "pipeline": "145",
+            "pipeline": "146",
             "Phong": {
                 "diffuseTexture": "51b1b5e0-8f72-4c4a-951a-34c7489b54ea",
                 "normalTexture": null,
@@ -22199,12 +22199,22 @@
             "link": {
                 "name": "Phong Normalmapped",
                 "file": "default"
+            },
+            "features": {
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": true
             }
         },
         "146": {
             "link": {
                 "name": "Phong Lightmapped",
                 "file": "default"
+            },
+            "name": "Phong Opaque Textured One Side",
+            "features": {
+                "LIGHTMAP": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
             }
         },
         "1a9f8525-447a-4c63-bd65-bf9215462df7": {
