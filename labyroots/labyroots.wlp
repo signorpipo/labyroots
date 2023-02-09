@@ -14032,7 +14032,7 @@
             ]
         },
         "c549cb61-c15d-46c8-8e40-a8a81b713a18": {
-            "name": "Text",
+            "name": "Normal",
             "parent": "96cf9d83-1492-4827-a243-24c695dc704f",
             "translation": [
                 0.0,
@@ -14058,6 +14058,9 @@
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
                         "effect": "outline"
                     }
+                },
+                {
+                    "type": "activate-if-wedding"
                 }
             ]
         },
@@ -20249,6 +20252,42 @@
                     "mesh": {
                         "mesh": "p0",
                         "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "d6fc387f-b100-421c-922e-50c869e58030": {
+            "name": "Wedding",
+            "parent": "96cf9d83-1492-4827-a243-24c695dc704f",
+            "translation": [
+                0.0,
+                0.0,
+                0.75
+            ],
+            "rotation": [
+                0.0,
+                1.0,
+                0.0,
+                -4.3711388286737935e-8
+            ],
+            "scale": [
+                0.275,
+                0.275,
+                0.275
+            ],
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "text": "Go get her.",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "effect": "outline"
+                    }
+                },
+                {
+                    "type": "activate-if-wedding",
+                    "activate-if-wedding": {
+                        "_myIsWedding": true
                     }
                 }
             ]

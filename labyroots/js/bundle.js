@@ -314,6 +314,7 @@ require('./labyroots/cauldron/set_texture_after_delay');
 require('./labyroots/cauldron/secret_zone_check');
 require('./labyroots/cauldron/display_leaderboard');
 require('./labyroots/cauldron/lr_ca_dummy_server');
+require('./labyroots/cauldron/activate_if_wedding');
 
 require('./labyroots/player/transformation');
 require('./labyroots/player/stage_switch');
