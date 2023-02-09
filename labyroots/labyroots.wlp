@@ -14782,7 +14782,7 @@
             "translation": [
                 0.0,
                 0.0,
-                40.0
+                45.0
             ],
             "rotation": [
                 0.0,
@@ -15576,7 +15576,7 @@
             "translation": [
                 0.0,
                 0.0,
-                -40.0
+                -45.0
             ],
             "rotation": [
                 0.0,
@@ -16757,6 +16757,3499 @@
             "components": [
                 {
                     "type": "secret-zone-check"
+                }
+            ]
+        },
+        "7f7755ca-f836-406a-b177-b063763678ba": {
+            "name": "7",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "35588dc0-9fc8-4a9f-b293-8b2567bc3ff9": {
+            "name": "1",
+            "parent": "7f7755ca-f836-406a-b177-b063763678ba",
+            "translation": [
+                6.233241,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "3f6a3f79-f233-4284-a62f-560e6787e7ab": {
+            "name": "Pivot",
+            "parent": "35588dc0-9fc8-4a9f-b293-8b2567bc3ff9",
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ]
+        },
+        "8916d1e1-08d2-49fe-add3-ef004d40dfd0": {
+            "name": "Leaderboard Top 10",
+            "parent": "3f6a3f79-f233-4284-a62f-560e6787e7ab",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                },
+                {
+                    "type": "display-leaderboard",
+                    "display-leaderboard": {
+                        "_myName": "labyroots"
+                    }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.75,
+                                1.0,
+                                0.05
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14
+                    }
+                }
+            ]
+        },
+        "d7cddfed-bfb8-462b-9205-6c1717a98e88": {
+            "name": "Back",
+            "parent": "8916d1e1-08d2-49fe-add3-ef004d40dfd0",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "0d2720a2-e263-43fe-b27f-82c4926e2711"
+                    }
+                }
+            ],
+            "scale": [
+                5.0,
+                5.0,
+                5.0
+            ],
+            "translation": [
+                -0.035,
+                -0.07,
+                -0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "0e77e592-dce5-4803-8096-8cc509c5560b": {
+            "name": "Names",
+            "parent": "8ff29798-e4ed-44b4-b6af-ae87bd4493f7",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "01 - Alessandro Telesca \n\n02 - Aurelia Papini\n\n03 - Arianna Lupi\n\n04 - Chenco\n\n05 - Elia Ducceschi\n\n06 - Francesco Baiano\n\n07 - Matteo Ledda\n\n08 - Michael Bellotti\n\n09 - Sunglasses Guy\n\n10 - Dmitry Taras",
+                        "alignment": "left",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "scale": [
+                2.25,
+                2.25,
+                2.25
+            ],
+            "translation": [
+                -2.1499977,
+                2.5,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "51a85acb-455e-4556-b4ee-ccd78c12b1c0": {
+            "name": "Scores",
+            "parent": "8ff29798-e4ed-44b4-b6af-ae87bd4493f7",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "alignment": "right",
+                        "text": "00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "scale": [
+                2.25,
+                2.25,
+                2.25
+            ],
+            "translation": [
+                2.1499996,
+                2.5,
+                -0.000122
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "136b6ecf-5e9a-40b6-9c85-104d02e1c507": {
+            "name": "Title",
+            "parent": "8ff29798-e4ed-44b4-b6af-ae87bd4493f7",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "Top 10",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "translation": [
+                0.0000057,
+                3.3500003,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                3.5,
+                3.5,
+                3.5
+            ]
+        },
+        "8ff29798-e4ed-44b4-b6af-ae87bd4493f7": {
+            "name": "Pivot",
+            "parent": "8916d1e1-08d2-49fe-add3-ef004d40dfd0",
+            "translation": [
+                0.0000057,
+                -0.05,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "bcf84a01-5a43-4de3-ad67-ddff61e279f6": {
+            "name": "8",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "fa03c0a2-a152-4236-9f05-d51feb2ce05c": {
+            "name": "1",
+            "parent": "bcf84a01-5a43-4de3-ad67-ddff61e279f6",
+            "translation": [
+                4.365489,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "bfa3ca5c-39d5-48ff-b389-99e8eccaecb4": {
+            "name": "Pivot",
+            "parent": "fa03c0a2-a152-4236-9f05-d51feb2ce05c",
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "scale": [
+                0.2,
+                0.2,
+                0.2
+            ]
+        },
+        "11db4f13-efc1-4c31-8731-ad79308a754e": {
+            "name": "Leaderboard Around You",
+            "parent": "bfa3ca5c-39d5-48ff-b389-99e8eccaecb4",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "billboard-player",
+                    "billboard-player": {
+                        "_myKeepUp": true
+                    }
+                },
+                {
+                    "type": "display-leaderboard",
+                    "display-leaderboard": {
+                        "_myName": "labyroots",
+                        "_myIsLocal": true
+                    }
+                },
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.75,
+                                1.0,
+                                0.05
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14
+                    }
+                }
+            ]
+        },
+        "4b26ceab-bb20-4f6c-a805-e425a6e27840": {
+            "name": "Back",
+            "parent": "11db4f13-efc1-4c31-8731-ad79308a754e",
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "0d2720a2-e263-43fe-b27f-82c4926e2711"
+                    }
+                }
+            ],
+            "scale": [
+                5.0,
+                5.0,
+                5.0
+            ],
+            "translation": [
+                -0.035,
+                -0.07,
+                -0.05
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "85ffe433-ef69-472b-a040-e3ddec207213": {
+            "name": "Pivot",
+            "parent": "11db4f13-efc1-4c31-8731-ad79308a754e",
+            "translation": [
+                0.0000057,
+                -0.05,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "cc2b258f-bd1c-4e70-a3fc-9d56ad13a7c7": {
+            "name": "Names",
+            "parent": "85ffe433-ef69-472b-a040-e3ddec207213",
+            "components": [
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "01 - Alessandro Telesca \n\n02 - Aurelia Papini\n\n03 - Arianna Lupi\n\n04 - Chenco\n\n05 - Elia Ducceschi\n\n06 - Francesco Baiano\n\n07 - Matteo Ledda\n\n08 - Michael Bellotti\n\n09 - Sunglasses Guy\n\n10 - Dmitry Taras",
+                        "alignment": "left",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "scale": [
+                2.25,
+                2.25,
+                2.25
+            ],
+            "translation": [
+                -2.1499977,
+                2.5,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "2c72882b-915e-4ba6-bc72-70afb8807b28": {
+            "name": "Scores",
+            "parent": "85ffe433-ef69-472b-a040-e3ddec207213",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "alignment": "right",
+                        "text": "00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00\n\n00:00:00",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "scale": [
+                2.25,
+                2.25,
+                2.25
+            ],
+            "translation": [
+                2.1499996,
+                2.5,
+                -0.000122
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ]
+        },
+        "3452f5ee-f1e3-4836-9c3b-bc06264da771": {
+            "name": "Title",
+            "parent": "85ffe433-ef69-472b-a040-e3ddec207213",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "text",
+                    "text": {
+                        "effect": "outline",
+                        "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
+                        "text": "Around You",
+                        "justification": "line"
+                    }
+                }
+            ],
+            "translation": [
+                0.0000057,
+                3.3500003,
+                -0.0001831
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                3.5,
+                3.5,
+                3.5
+            ]
+        },
+        "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                -40.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "cf50a513-9f23-4f2a-b810-24df7d90ca08": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "fd4c40be-2aef-4264-b9e6-a74623ea3c1a": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "c46114a5-765e-47fe-8a8e-4c24d765e6f1": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "1a5ab1c3-209a-4442-a347-50f18b96763d": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "badf2073-f02c-488a-a555-5747a6c556e3": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "79b53682-4246-4cbc-b802-a2708c8ca3c5": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "a415178c-3eb7-4fa3-8535-9070125a8ea2": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "eff28c49-9c51-4964-a5f9-c5f899cc5bb6": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "144ba69b-41ba-47d3-8e8a-b43bccbccb1d": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "fa6f546d-dd0b-4146-ba31-1d5b4dcd9bce": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "d2cd15e3-e74c-49cd-9ecd-fee3fe19ae6d": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2a269823-1edc-474c-b942-7d3f9fbb84a2": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ad12482e-6f09-416e-8fb8-ae8baa676955": {
+            "name": "Floor",
+            "parent": "9567b57c-ebcf-4b57-a6c3-7fa453eaa5c4",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "93609b07-0865-4af6-9482-8146363a0575": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                40.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "d140e160-ecb2-4402-a1b1-66c59725f3c4": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "eff54b35-3a36-4ee1-9149-44cc9c27c365": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "e82c1315-b571-4e80-8b66-1ec5feb07f73": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "19fefc9c-7430-4e0c-944f-119d92c4a72c": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "12c1633d-c2c9-4f56-8d52-d5f6cdba885c": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "a26ea7dd-d90d-4ccd-b62b-774795bdddee": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ee799b68-78bc-4475-a5c2-93c8fa2e156f": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2030ab26-3208-4867-888f-4a8debfaf12d": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "324524d0-f24e-4246-9b79-fdd2432ef9f4": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "835e15ce-b7ad-4621-8d13-8bd1c3a8cae8": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "962e7f8b-e341-4b27-87ee-21838f6fa962": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "0a365fad-9e25-4a1f-aebb-cd74b0a6ca75": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "fd35d79f-d1f0-4a1a-bc6c-5133ed08d14d": {
+            "name": "Floor",
+            "parent": "93609b07-0865-4af6-9482-8146363a0575",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                -50.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "1baad017-98c8-4a30-84bf-7e47d16c6518": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2654e44c-9723-48e8-bc3b-fab928e43fd7": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "93273591-e925-490f-9ba9-eb9190817e50": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "64ffce72-b099-48fa-8426-b6c1ed66d6b6": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "cafb9481-ac3d-4fb3-af1e-13ca7ede6874": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "3b858c37-9fd5-47ad-bd20-da80c9e2d31a": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "86d8118a-4f37-44f7-9a1e-72c01fa6a510": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "031ba17d-9d9d-458a-af45-8ab1198bfab1": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "f0bf635c-9af0-4fa9-b7be-b898958c44b9": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "7cad80c1-9e27-40b4-9281-ede519aaa848": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "7e118e0c-df4a-415d-a09c-d38c6dad9ee2": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "74ee4ccf-6091-43c8-bd09-e04e25efb3c5": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "46ac2e94-14ab-4321-80c7-9c55ec6a8308": {
+            "name": "Floor",
+            "parent": "dcea0d35-fb16-40c2-a9a1-59f0c4c3a5e2",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                50.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "6453f707-62bf-47dd-9a62-27c6d2a6674e": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "24487f37-344f-47b7-afd7-342466dca2ea": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "bbd0cbf5-fbe0-459c-adf3-53f781cff4f6": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "a3f48eaa-e8ca-420c-b375-c7421fe5edde": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ffd19962-0d1a-48cc-aefb-883cfb19c5f9": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "0da347ec-a480-4c6c-9dc2-4ca5cff21804": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "5e0cad50-95b1-4103-993b-6839bb7db943": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "89b9f1f9-1ea8-4e32-b65c-7de8bfcce5aa": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "96e42533-08fc-4072-9685-4af271ad8197": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2e5137c9-a3a0-4964-8023-1429ef1064f3": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2005865b-3e34-44d4-bd80-88bba9cbf9e1": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "37c920dc-af48-4174-8e37-c429d36bec19": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "78fe427a-b9be-4da8-a19c-c2a646aab691": {
+            "name": "Floor",
+            "parent": "4be2ac0d-4a6a-47f0-8211-97e9d54ac8f7",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "173bf40d-f14b-489e-b6aa-30006692e33f": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                55.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "93e62d54-15de-4507-8a9b-b4a405fd9848": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "eeceef37-5b04-4833-95de-14a3a7557285": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "a154df0d-9a99-48c5-a229-0eed4cbe86a6": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "2dd8f403-6ed6-4cb7-95af-d0d810842ee8": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "5412b695-4302-48db-939e-9931181bad53": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "5d2af7db-ac92-46c5-b0de-d5643d8e318e": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "1e336f07-671c-47ac-ac69-394f3ff78213": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "0b1d1f69-b8fa-42ab-9784-cf296c988440": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "e619cdbe-3698-4f43-8c27-b960020c0a93": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "90ec20a3-ce1b-4544-92ef-1f8870cee3c6": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ead7407a-e3d1-47d3-97fb-f89a680197fd": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "284c33b9-65d2-4bfa-9552-c57733d86dc2": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ae6f4619-d8c5-4ab1-b428-1ef8fb3f67c7": {
+            "name": "Floor",
+            "parent": "173bf40d-f14b-489e-b6aa-30006692e33f",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "66e6142c-1461-40dc-be38-ab0d96bd5567": {
+            "name": "FloorX",
+            "parent": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+            "translation": [
+                0.0,
+                0.0,
+                -55.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "baa48aa1-78a1-48bd-842a-5572eced94a9": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "493551bb-c27f-4218-8d67-cfffa842132b": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999878,
+                99.9996185
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "334f1e3a-adf9-41a9-bc22-2c0b1b119be2": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "db453208-1607-4701-a171-dda6c6d0ad82": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                5.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.4999997,
+                100.0
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "a5ac6f0b-8391-471a-9d72-94924ae72bf8": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                10.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "05c7e343-de1d-4988-a630-5da90354701a": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "9885d182-0676-48ed-9ca5-4095fef7b8a2": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "44bf36cd-f58f-4071-9801-551b6bddf5a3": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -15.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "acf4517c-694d-4734-8217-0277d0857506": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -20.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "ef28ab88-b58e-445a-813b-7c7334b25ab4": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "e23e27d5-9158-4953-8430-81955193eb5d": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                25.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "96c99245-0478-4d24-9a89-15fc731f2087": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
+                }
+            ]
+        },
+        "f3cec9d7-d243-49e1-af39-f0f4fdd471b4": {
+            "name": "Floor",
+            "parent": "66e6142c-1461-40dc-be38-ab0d96bd5567",
+            "translation": [
+                -30.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.7071068,
+                0.0,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                2.5,
+                2.5000002,
+                100.0000152
+            ],
+            "components": [
+                {
+                    "type": "mesh",
+                    "mesh": {
+                        "mesh": "p0",
+                        "material": "edb26709-b527-4e9a-8af5-4d7be70dc3e5"
+                    }
                 }
             ]
         }

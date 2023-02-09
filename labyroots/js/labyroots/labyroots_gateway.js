@@ -16,6 +16,10 @@ WL.registerComponent("labyroots-gateway", {
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
 
         this._myButtonPressed = false;
+
+        PP.CAUtils.setDummyServer(new LR.LRCADummyServer());
+        PP.CAUtils.setUseDummyServerOnSDKMissing(true);
+        PP.CAUtils.setUseDummyServerOnError(true);
     },
     update: function (dt) {
         if (!this._myLoadSetupDone) {

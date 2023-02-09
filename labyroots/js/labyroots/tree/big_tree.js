@@ -91,6 +91,11 @@ WL.registerComponent('big-tree', {
                             "value": 1
                         });
                     }
+
+                    let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
+                    for (let leaderboard of leaderboards) {
+                        leaderboard.updateLeaderboard();
+                    }
                 }
             }
         }
