@@ -90,7 +90,10 @@ function update(request) {
         caches.open(CACHE).then(
             (cache) => fetch(request.clone()).then(
                 (response) => cache.put(request, response).then(fulfill),
-                reject
+                function () {
+                    console.error("Fail to fetch:", request.url);
+                    reject(...arguments);
+                }
             ))
     )
 }
