@@ -14,6 +14,8 @@ WL.registerComponent("labyroots-gateway", {
             this._onXRSessionStart(WL.xrSession);
         }
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+
+        this._myButtonPressed = false;
     },
     update: function (dt) {
         if (!this._myLoadSetupDone) {
@@ -59,6 +61,20 @@ WL.registerComponent("labyroots-gateway", {
         }
         // ripulire i frutti e le asce 
         // aggiungere le radici
+
+        if (Global.mySessionStarted) {
+            if (!this._myButtonPressed) {
+                if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd() ||
+                    PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd()) {
+                    this._myButtonPressed = true;
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "button_pressed", {
+                            "value": 1
+                        });
+                    }
+                }
+            }
+        }
     },
     _loadSetup() {
         loadFileJSON("./setup.json", data => {
