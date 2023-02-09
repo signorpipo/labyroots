@@ -26,6 +26,12 @@ WL.registerComponent('open-github', {
 
                 if (!result) {
                     this._myChange = 10;
+                } else {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "open_github_success", {
+                            "value": 1
+                        });
+                    }
                 }
             }
         }
@@ -39,9 +45,14 @@ WL.registerComponent('open-github', {
         return true;
     },
     open() {
-
         this._myEnd = 30;
         this._myChange = 180;
+
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "open_github", {
+                "value": 1
+            });
+        }
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);

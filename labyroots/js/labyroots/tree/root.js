@@ -50,6 +50,12 @@ WL.registerComponent('root', {
                 if (tree) {
                     tree.rootDie();
                 }
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "defeat_root", {
+                        "value": 1
+                    });
+                }
             } else {
                 this._myPhases[1].pp_setActive(true);
             }

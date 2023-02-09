@@ -65,6 +65,14 @@ WL.registerComponent('human-tree', {
             this._myHit--;
             hitted = true;
             // suono
+
+            if (this._myHit == 0) {
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "defeat_human_tree", {
+                        "value": 1
+                    });
+                }
+            }
         }
 
         return hitted;

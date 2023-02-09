@@ -94,6 +94,12 @@ WL.registerComponent('transformation', {
 
                     if (!result) {
                         this._myChange = 10;
+                    } else {
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "secret_code_wedding_success", {
+                                "value": 1
+                            });
+                        }
                     }
                 }
             }
@@ -139,14 +145,31 @@ WL.registerComponent('transformation', {
                 this._myAudioPrendi.setPosition(this._myLastFreeCell.myCellPosition.vec3_add([0, 1, 0]));
                 this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
                 this._myAudioPrendi.play();
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "secret_code_human_tree_success", {
+                        "value": 1
+                    });
+                }
             }
             this._myLastFreeCell = oldLast;
+
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "secret_code_human_tree", {
+                    "value": 1
+                });
+            }
         }
 
         if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (this._myWeddingTimer.isRunning()) {
                 this._myWeddingTimer.update(dt);
                 if (this._myWeddingTimer.isDone()) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "secret_code_wedding", {
+                            "value": 1
+                        });
+                    }
 
                     this._myEnd = 30;
                     this._myChange = 180;
@@ -205,6 +228,14 @@ WL.registerComponent('transformation', {
         }
     },
     _death() {
+        Global.myDeadOnce = true;
+
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "death", {
+                "value": 1
+            });
+        }
+
         this._spawnTree();
         // crea albero nella cella corrente
         // dici alle radici che sei morto
@@ -331,6 +362,7 @@ WL.registerComponent('transformation', {
 });
 
 Global.myExitSession = false;
+Global.myDeadOnce = false;
 
 Global.myWindowOpenResult = false;
 Global.windowOpen = function (url, callback) {

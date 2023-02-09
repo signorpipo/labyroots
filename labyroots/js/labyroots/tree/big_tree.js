@@ -84,6 +84,14 @@ WL.registerComponent('big-tree', {
                     this._myPhases[4].pp_setActive(true);
                 }
                 this.avoidIncrement = true;
+
+                if (this._myHit == 0) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "defeat_mother_tree", {
+                            "value": 1
+                        });
+                    }
+                }
             }
         }
 

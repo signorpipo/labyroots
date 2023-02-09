@@ -22,6 +22,8 @@ WL.registerComponent('axe', {
 
         this._myLamentoPitch = 1.4;
         this._myColpoFinalePitch = 1.25;
+
+        this._myCollected = false;
     },
 
     update: function (dt) {
@@ -66,8 +68,20 @@ WL.registerComponent('axe', {
 
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
-                if (!this._myIsGrabbed) {
+                if (!this._myCollected) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "collect_axe", {
+                            "value": 1
+                        });
+
+                        if (Global.myDeadOnce) {
+                            gtag("event", "collect_axe_after_death", {
+                                "value": 1
+                            });
+                        }
+                    }
                 }
+                this._myCollected = true;
                 this._myIsGrabbed = true;
             } else {
                 this._myIsGrabbed = false;

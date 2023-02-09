@@ -23,7 +23,16 @@ WL.registerComponent('root-wall', {
             this._myHit--;
             hitted = true;
             // suono
+
+            if (this._myHit == 0) {
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "defeat_root_wall", {
+                        "value": 1
+                    });
+                }
+            }
         }
+
 
         return hitted;
     },

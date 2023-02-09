@@ -43,7 +43,12 @@ WL.registerComponent('fruit', {
     update: function (dt) {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
-                if (!this._myIsGrabbed) {
+                if (!this._myGathered) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "collect_fruit", {
+                            "value": 1
+                        });
+                    }
                 }
                 this._myGathered = true;
                 this._myIsGrabbed = true;
@@ -66,6 +71,13 @@ WL.registerComponent('fruit', {
     },
     activateEffect() {
         if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
+
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "eat_fruit", {
+                    "value": 1
+                });
+            }
+
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
 

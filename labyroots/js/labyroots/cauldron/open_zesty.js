@@ -45,6 +45,12 @@ WL.registerComponent('open-zesty', {
     open() {
         this._myEnd = 30;
         this._myChange = 180;
+
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "open_zesty", {
+                "value": 1
+            });
+        }
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -67,6 +73,12 @@ WL.registerComponent('open-zesty', {
     result(result) {
         if (!result) {
             this._myChange = 10;
+        } else {
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "open_zesty_success", {
+                    "value": 1
+                });
+            }
         }
     }
 });

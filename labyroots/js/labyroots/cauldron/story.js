@@ -76,6 +76,16 @@ WL.registerComponent('story', {
                 this._myTimer.update(dt);
                 this._myTimer2.update(dt);
                 if (this._myTimer.isDone() || (this._myTimer2.isDone() && this._mySkip)) {
+                    if (this._mySkip && this._myTimer2.isDone()) {
+                        gtag("event", "intro_skipped", {
+                            "value": 1
+                        });
+                    } else {
+                        gtag("event", "intro_watched", {
+                            "value": 1
+                        });
+                    }
+
                     this._myTimer.reset();
                     this._myTimer2.reset();
                     Global.myAxe.pp_setActive(true);

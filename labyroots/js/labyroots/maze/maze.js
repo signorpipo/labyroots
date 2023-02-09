@@ -21,6 +21,18 @@ LR.Maze = class Maze {
         if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
+
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "is_wedding_maze", {
+                    "value": 1
+                });
+            }
+        } else {
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "is_normal_maze", {
+                    "value": 1
+                });
+            }
         }
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);

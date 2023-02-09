@@ -280,9 +280,21 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
 
         if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressEnd(2)) {
             if (this._myLocomotionMovementFSM.isInState("smooth") && this._myPlayerLocomotionSmooth.canStop()) {
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "switch_teleport", {
+                        "value": 1
+                    });
+                }
                 this._myLocomotionMovementFSM.perform("next");
             } else if (this._myLocomotionMovementFSM.isInState("teleport") && this._myPlayerLocomotionTeleport.canStop()) {
                 this._myLocomotionMovementFSM.perform("next");
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "switch_smooth", {
+                        "value": 1
+                    });
+                }
             }
         }
 

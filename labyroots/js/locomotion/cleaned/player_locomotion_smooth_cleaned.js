@@ -47,7 +47,10 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
         //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);        
 
-        this._myNonVRPlayingTimer = new PP.Timer(15);
+        this._myNonVRPlayingTimer = new PP.Timer(30);
+        this._myTimeMoving = 0;
+        this._myTimeMovingStep = [1, 3, 5, 10, 20, 30, 60];
+        this._myTimeMovingStepIndex = 0;
     }
 
     update(dt) {
@@ -138,11 +141,21 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.00001) {
 
+                this._myTimeMoving += dt;
+                if (this._myTimeMovingStepIndex < this._myTimeMovingStep.length && this._myTimeMoving > this._myTimeMovingStep[this._myTimeMovingStepIndex] * 60) {
+                    if (!Global.mySessionStarted) {
+                        gtag("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
+                            "value": 1
+                        });
+                    }
+                    this._myTimeMovingStepIndex++;
+                }
+
                 if (this._myNonVRPlayingTimer.isRunning()) {
                     this._myNonVRPlayingTimer.update(dt);
                     if (this._myNonVRPlayingTimer.isDone()) {
                         if (!Global.mySessionStarted) {
-                            gtag("event", "playing_non_vr", {
+                            gtag("event", "moving_non_vr", {
                                 "value": 1
                             });
                         }

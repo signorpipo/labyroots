@@ -16,6 +16,12 @@ WL.registerComponent('set-texture-after-delay', {
                         let setMesh = this._myToSet.pp_getComponent("mesh");
                         if (setMesh && setMesh.material.diffuseTexture._id == 0 && WL.scene.pp_getComponent("zesty-banner").banner == null) {
                             setMesh.material.diffuseTexture = myMesh.material.diffuseTexture;
+
+                            if (Global.myGoogleAnalytics) {
+                                gtag("event", "zesty_load_fail", {
+                                    "value": 1
+                                });
+                            }
                         }
                     }
                 }
