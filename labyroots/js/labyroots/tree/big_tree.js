@@ -107,12 +107,12 @@ WL.registerComponent('big-tree', {
                     }
 
                     let score = Math.floor(this._myTimeToWin * 1000);
-                    PP.CAUtils.submitScore("labyroots", score);
-
-                    let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
-                    for (let leaderboard of leaderboards) {
-                        leaderboard.updateLeaderboard();
-                    }
+                    PP.CAUtils.submitScore("labyroots", score, function () {
+                        let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
+                        for (let leaderboard of leaderboards) {
+                            leaderboard.updateLeaderboard();
+                        }
+                    });
                 }
             }
         }
