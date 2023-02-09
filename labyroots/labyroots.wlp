@@ -21194,24 +21194,6 @@
                 "ambientFactor": 0.5
             }
         },
-        "9432b269-3e6b-4584-91c1-0cfe5b9747ac": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Angolo_A.fbx"
-            }
-        },
-        "5e7b5009-a412-4965-92bf-50c892753477": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Angolo_B.fbx"
-            }
-        },
-        "e6bf24fc-9f43-4052-82a0-6ad8bf7cd412": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Muro_A.fbx"
-            }
-        },
         "49467962-d10c-47ce-8e04-661f82f883ee": {
             "name": "60",
             "pipeline": "14",
@@ -21230,14 +21212,6 @@
                 ],
                 "ambientFactor": 0.5,
                 "diffuseTexture": "ab4b7097-f68f-4d2f-8894-f082c2155c8b"
-            }
-        },
-        "055feb5e-67fb-4f9d-9057-dbac9abbfa4c": {
-            "name": "AngoloLargo",
-            "pipeline": "14",
-            "Phong": {
-                "diffuseTexture": "10a9a95b-7bad-4621-ae7c-b20fa6ca0802",
-                "alphaMaskThreshold": 0.3
             }
         },
         "547cfd4e-9716-4c45-b3c5-4de88b332cb7": {
@@ -21492,28 +21466,10 @@
                 "diffuseTexture": "df70b8f2-30c9-4bcc-bfbf-8170636b3b16"
             }
         },
-        "ed35a498-98c0-4cfb-8b5f-1168bec1ce85": {
-            "link": {
-                "name": "lambert2",
-                "file": "assets\\models\\Muri\\Muro_1.fbx"
-            }
-        },
-        "5098de17-fea0-42e8-8ec5-f6d3d832b3c9": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Muro_2.fbx"
-            }
-        },
         "1ad59ce9-21e7-43e6-a4bd-4506841198d9": {
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Muri\\Muro_3.fbx"
-            }
-        },
-        "13f96300-0c3f-4ab3-bf25-d1ed053f8848": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\ASCIA.fbx"
             }
         },
         "0b15f47c-9e85-43af-a9b1-b6e11f288dd8": {
@@ -21522,28 +21478,10 @@
                 "file": "assets\\models\\Mani\\Mano_Sinistra.fbx"
             }
         },
-        "5b1ac179-1a72-4cbd-ae43-cf5c150ff321": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Angoli\\Angolo_A.fbx"
-            }
-        },
-        "31759928-90f6-4a2b-be17-566784136cde": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Angoli\\Angolo_B.fbx"
-            }
-        },
         "28593b18-b16a-4f63-9d8f-79df6e84fb8e": {
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Angoli\\Angolo_1.fbx"
-            }
-        },
-        "2f0968c6-5045-4692-b343-6f1801a7a8f1": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Angoli\\Angolo_2.fbx"
             }
         },
         "e241c7a0-d535-4a70-b1f2-91426a1d9964": {
@@ -21685,59 +21623,10 @@
                 "file": "assets\\models\\Mani\\Hand_Dx_close.fbx"
             }
         },
-        "45de3ed5-2933-430f-89a2-1146feec2588": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\aXE_DEF.fbx"
-            }
-        },
-        "fb0fd49f-f132-4450-8163-4b789b6d4671": {
-            "name": "Axe",
-            "pipeline": "145",
-            "Phong": {
-                "diffuseTexture": "79706952-f8a8-48d5-a71c-8799f1cbd4d1",
-                "normalTexture": "dc9c23ee-d4c7-4446-84f5-9d34bddf9429",
-                "ambientColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "diffuseColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "ambientFactor": 0.5,
-                "emissiveTexture": "262922d7-28a2-4967-882d-df172bf88247"
-            }
-        },
         "e0a9e88b-559e-45a8-9437-8bc35eed05e6": {
             "link": {
                 "name": "lambert1",
                 "file": "assets\\models\\Axes\\aXE_DEF.fbx"
-            }
-        },
-        "211cda39-354c-4c56-8542-ab4028adf7be": {
-            "name": "Muro_B",
-            "pipeline": "145",
-            "Phong": {
-                "ambientColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "diffuseColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "ambientFactor": 0.5,
-                "diffuseTexture": "9764c028-6a21-4a8b-9811-a9652b130cf0",
-                "normalTexture": "41f7ec8c-4458-40f0-908e-91985b415ab1"
             }
         },
         "f1ae36c4-bcf6-4d66-ad50-565e605c7e60": {
@@ -21782,39 +21671,6 @@
                 "ambientFactor": 0.375
             }
         },
-        "2d591662-2352-47bc-bf2c-0a40f7fb263c": {
-            "name": "Anfolo_B",
-            "pipeline": "145",
-            "Phong": {
-                "diffuseTexture": "4db37753-59e5-4daf-b778-6ef4b47dd0f7",
-                "normalTexture": "2514981c-fc5c-4ac9-9f52-7bb1c402fe40",
-                "ambientColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "diffuseColor": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0
-                ],
-                "ambientFactor": 0.5
-            }
-        },
-        "cdc86dbc-c7b2-4588-8104-8f19b8da4240": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Muro_B.fbx"
-            }
-        },
-        "c3c30260-15fd-40fb-8a37-497e27228654": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Muro_B3.fbx"
-            }
-        },
         "7e8bea98-e1fe-4c96-954b-8e3c85cf5544": {
             "name": "Sky",
             "pipeline": "14",
@@ -21854,18 +21710,6 @@
                 "diffuseTexture": "ddd20f92-7a55-434f-bc0e-efd1f4583e26"
             },
             "pipeline": "14"
-        },
-        "bd347bb0-4785-4792-99b2-68889806a10a": {
-            "link": {
-                "name": "lambert2",
-                "file": "assets\\models\\Muri\\MURO_a (3).fbx"
-            }
-        },
-        "9c630526-8f41-4121-821a-c041933383e4": {
-            "link": {
-                "name": "lambert1",
-                "file": "assets\\models\\Muri\\Muro_test (1).fbx"
-            }
         },
         "6b21d089-7152-4c9a-90d7-0e56b2bf3a0f": {
             "link": {
@@ -21991,7 +21835,8 @@
             "name": "zesty",
             "pipeline": "7a753214-907d-4260-92e1-0b67e30a7e28",
             "Phong": {
-                "ambientFactor": 0.5
+                "ambientFactor": 0.5,
+                "diffuseTexture": "e8885204-f8b1-4ca8-b92c-4855af1c2930"
             }
         },
         "56c684d4-54c6-4cdb-b60c-7f074013b177": {
@@ -22057,6 +21902,29 @@
             "Phong": {
                 "diffuseTexture": "3748f894-d25f-499c-b37e-486b01ff5656",
                 "ambientFactor": 0.5
+            },
+            "name": "Sky Fix"
+        },
+        "fb0fd49f-f132-4450-8163-4b789b6d4671": {
+            "name": "Axe",
+            "pipeline": "145",
+            "Phong": {
+                "diffuseTexture": "79706952-f8a8-48d5-a71c-8799f1cbd4d1",
+                "normalTexture": "dc9c23ee-d4c7-4446-84f5-9d34bddf9429",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5,
+                "emissiveTexture": "262922d7-28a2-4967-882d-df172bf88247"
             }
         }
     },
@@ -22212,10 +22080,13 @@
                 "file": "default"
             },
             "features": {
-                "ALPHA_MASKED": true
+                "ALPHA_MASKED": true,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
             },
             "doubleSided": true,
-            "castShadows": false
+            "castShadows": false,
+            "name": "Phong Opaque Textured Main"
         },
         "16": {
             "link": {
@@ -22282,7 +22153,8 @@
             "features": {
                 "WITH_FOG": false,
                 "WITH_EMISSIVE": true
-            }
+            },
+            "doubleSided": true
         },
         "146": {
             "link": {
@@ -22303,7 +22175,10 @@
             },
             "name": "Phong Opaque Double",
             "doubleSided": true,
-            "castShadows": false
+            "castShadows": false,
+            "features": {
+                "WITH_FOG": false
+            }
         },
         "0e6a5664-5547-401a-bcc1-f8bbb94199b0": {
             "link": {
@@ -22324,10 +22199,12 @@
                 "file": "default"
             },
             "features": {
-                "ALPHA_MASKED": true
+                "ALPHA_MASKED": true,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
             },
             "doubleSided": true,
-            "name": "Phong Opaque Textured",
+            "name": "Phong Opaque Textured Blend",
             "blending": true,
             "blendSrcRgb": "source alpha",
             "blendSrcAlpha": "source alpha",
@@ -22361,14 +22238,23 @@
                 "file": "default"
             },
             "features": {
-                "ALPHA_MASKED": true
+                "ALPHA_MASKED": false,
+                "WITH_EMISSIVE": false,
+                "WITH_FOG": false
             },
             "doubleSided": true,
-            "name": "Phong Opaque Textured Double"
+            "name": "Phong Opaque Textured Double",
+            "castShadows": false
         },
         "150": {
             "link": {
                 "name": "Phong Lightmapped",
+                "file": "default"
+            }
+        },
+        "151": {
+            "link": {
+                "name": "Phong Opaque Textured",
                 "file": "default"
             }
         }
