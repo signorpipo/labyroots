@@ -22,6 +22,8 @@ WL.registerComponent('big-tree', {
         Global.myBigTree = this;
 
         this._myBigTreeDie = new LR.BigTreeDie();
+
+        this._myTimeToWin = 0;
     },
     update: function (dt) {
         if (!this._myStarted) {
@@ -43,6 +45,12 @@ WL.registerComponent('big-tree', {
             }
         } else if (this._myHit == 0) {
             this._myBigTreeDie.update(dt);
+        }
+
+        if (this._myStarted && Global.myReady) {
+            if (this._myHit > 0) {
+                this._myTimeToWin += dt;
+            }
         }
     },
     rootDie() {
@@ -91,6 +99,15 @@ WL.registerComponent('big-tree', {
                             "value": 1
                         });
                     }
+
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "defeat_mother_tree_seconds", {
+                            "value": Math.round(this._myTimeToWin)
+                        });
+                    }
+
+                    let score = Math.floor(this._myTimeToWin * 1000);
+                    PP.CAUtils.submitScore("labyroots", score);
 
                     let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
                     for (let leaderboard of leaderboards) {

@@ -29,7 +29,7 @@ WL.registerComponent('story', {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                    let currentVersion = 1;
+                    let currentVersion = 2;
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
@@ -89,6 +89,14 @@ WL.registerComponent('story', {
                             });
                         }
                     }
+
+                    PP.CAUtils.getUser(function () {
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "playing_signed_in", {
+                                "value": 1
+                            });
+                        }
+                    }, null, false);
 
                     this._myTimer.reset();
                     this._myTimer2.reset();
