@@ -42,6 +42,9 @@ WL.registerComponent('transformation', {
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
         Global.myTimerStopExit = new PP.Timer(1, false);
+
+        this._myTimeAlive = 0;
+        this._myStageTotalTime = 0;
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -116,6 +119,7 @@ WL.registerComponent('transformation', {
                 }
             }
 
+            this._myTimeAlive += dt;
             this._myTransformationTimer.update(dt);
             if (this._myTransformationTimer.isDone()) {
                 if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
@@ -129,59 +133,63 @@ WL.registerComponent('transformation', {
                     this._nextStage();
                 }
             }
-        }
 
-        if (this._myLastFreeCell != null) {
-            //PP.myDebugVisualManager.drawPoint(0, this._myLastFreeCell.myCellPosition, [0, 0, 0, 1], 0.05);
-        }
-
-        if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressEnd()
-            && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).myMultiplePressEndCount >= 3) {
-            let oldLast = this._myLastFreeCell;
-            this._myLastFreeCell = Math.pp_randomPick(Global.myMaze.getCellNextToPositionEmpty(Global.myPlayer.getPosition()));
             if (this._myLastFreeCell != null) {
-                this._spawnTree();
+                //PP.myDebugVisualManager.drawPoint(0, this._myLastFreeCell.myCellPosition, [0, 0, 0, 1], 0.05);
+            }
 
-                this._myAudioPrendi.setPosition(this._myLastFreeCell.myCellPosition.vec3_add([0, 1, 0]));
-                this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-                this._myAudioPrendi.play();
+            if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressEnd()
+                && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).myMultiplePressEndCount >= 3) {
+                let oldLast = this._myLastFreeCell;
+                this._myLastFreeCell = Math.pp_randomPick(Global.myMaze.getCellNextToPositionEmpty(Global.myPlayer.getPosition()));
+                if (this._myLastFreeCell != null) {
+                    this._spawnTree();
+
+                    this._myAudioPrendi.setPosition(this._myLastFreeCell.myCellPosition.vec3_add([0, 1, 0]));
+                    this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+                    this._myAudioPrendi.play();
+
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "secret_code_human_tree_success", {
+                            "value": 1
+                        });
+                    }
+                }
+                this._myLastFreeCell = oldLast;
 
                 if (Global.myGoogleAnalytics) {
-                    gtag("event", "secret_code_human_tree_success", {
+                    gtag("event", "secret_code_human_tree", {
                         "value": 1
                     });
                 }
             }
-            this._myLastFreeCell = oldLast;
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "secret_code_human_tree", {
-                    "value": 1
-                });
-            }
-        }
+            if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+                if (this._myWeddingTimer.isRunning()) {
+                    this._myWeddingTimer.update(dt);
+                    if (this._myWeddingTimer.isDone()) {
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "secret_code_wedding", {
+                                "value": 1
+                            });
+                        }
 
-        if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-            if (this._myWeddingTimer.isRunning()) {
-                this._myWeddingTimer.update(dt);
-                if (this._myWeddingTimer.isDone()) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "secret_code_wedding", {
-                            "value": 1
-                        });
+                        this._myEnd = 30;
+                        this._myChange = 180;
                     }
-
-                    this._myEnd = 30;
-                    this._myChange = 180;
                 }
+            } else {
+                this._myWeddingTimer.start();
             }
-        } else {
-            this._myWeddingTimer.start();
         }
     },
     _start() {
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+        for (let timer of this._myTransformationTimersSetup) {
+            this._myStageTotalTime += timer;
+        }
+
         this._resetTransformation();
 
         this._myObjectToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
@@ -235,6 +243,27 @@ WL.registerComponent('transformation', {
                 "value": 1
             });
         }
+
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "survive_for_seconds", {
+                "value": Math.round(this._myTimeAlive)
+            });
+
+            if (this._myTimeAlive > this._myStageTotalTime * 3) {
+                gtag("event", "survive_bear_grills", {
+                    "value": 1
+                });
+            } else if (this._myTimeAlive > this._myStageTotalTime * 2) {
+                gtag("event", "survive_a_lot", {
+                    "value": 1
+                });
+            } else if (this._myTimeAlive > this._myStageTotalTime * 1.1) {
+                gtag("event", "survive_more", {
+                    "value": 1
+                });
+            }
+        }
+        this._myTimeAlive = 0;
 
         this._spawnTree();
         // crea albero nella cella corrente
