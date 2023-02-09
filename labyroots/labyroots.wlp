@@ -21943,7 +21943,7 @@
         },
         "0d2720a2-e263-43fe-b27f-82c4926e2711": {
             "name": "paper",
-            "pipeline": "7a753214-907d-4260-92e1-0b67e30a7e28",
+            "pipeline": "14",
             "Phong": {
                 "ambientFactor": 0.5,
                 "diffuseColor": [
@@ -22135,7 +22135,8 @@
             "features": {
                 "ALPHA_MASKED": true
             },
-            "doubleSided": true
+            "doubleSided": true,
+            "castShadows": false
         },
         "16": {
             "link": {
@@ -22212,7 +22213,8 @@
                 "file": "default"
             },
             "name": "Phong Opaque Double",
-            "doubleSided": true
+            "doubleSided": true,
+            "castShadows": false
         },
         "0e6a5664-5547-401a-bcc1-f8bbb94199b0": {
             "link": {
@@ -22241,7 +22243,8 @@
             "blendDestRgb": "one minus source alpha",
             "blendDestAlpha": "one minus source alpha",
             "blendEqAlpha": "max",
-            "sampleAlphaToCoverage": true
+            "sampleAlphaToCoverage": true,
+            "castShadows": false
         },
         "f15f2a6b-4275-45a3-b613-fca76a9b7e7f": {
             "link": {
