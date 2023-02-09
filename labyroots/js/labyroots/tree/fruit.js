@@ -91,10 +91,38 @@ WL.registerComponent('fruit', {
 Global.myFruitRandomPowers = [];
 
 decreaseStage = function (full) {
+    if (full) {
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "eat_fruit_perfect", {
+                "value": 1
+            });
+        }
+    } else {
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "eat_fruit_good", {
+                "value": 1
+            });
+        }
+    }
+
     Global.myTransformation.removeStage(full);
 };
 
 increaseStage = function (full) {
+    if (full) {
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "eat_fruit_evil", {
+                "value": 1
+            });
+        }
+    } else {
+        if (Global.myGoogleAnalytics) {
+            gtag("event", "eat_fruit_bad", {
+                "value": 1
+            });
+        }
+    }
+
     Global.myTransformation.addStage(full);
 };
 
