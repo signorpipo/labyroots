@@ -124,7 +124,7 @@
                 {
                     "type": "view",
                     "view": {
-                        "far": 200.0
+                        "far": 250.0
                     }
                 },
                 {
@@ -181,7 +181,7 @@
                 {
                     "type": "view",
                     "view": {
-                        "far": 200.0
+                        "far": 250.0
                     }
                 },
                 {
@@ -199,7 +199,7 @@
                 {
                     "type": "view",
                     "view": {
-                        "far": 200.0
+                        "far": 250.0
                     }
                 },
                 {
@@ -20327,6 +20327,54 @@
                     }
                 }
             ]
+        },
+        "872ebf21-4b21-4d2f-9a60-f3ca01dc328e": {
+            "name": "Sky Fix",
+            "parent": "4b333301-a097-4d35-bf99-c8f09d0c6074",
+            "scale": [
+                1.0000315,
+                1.0000253,
+                1.0000281
+            ],
+            "translation": [
+                -1.4305117090884778e-8,
+                0.0000012,
+                2.9404953139078316e-8
+            ],
+            "rotation": [
+                0.0,
+                -0.0,
+                -1.0,
+                6.715443419125222e-7
+            ]
+        },
+        "4fd4b72c-9fec-46fd-bbaf-410782844c76": {
+            "link": {
+                "name": "fix_sky",
+                "file": "assets\\models\\altro\\fix_sky.fbx"
+            },
+            "parent": "872ebf21-4b21-4d2f-9a60-f3ca01dc328e",
+            "scale": [
+                0.3499999,
+                0.9949764,
+                0.9949764
+            ],
+            "rotation": [
+                -0.7071066,
+                1.3767936479780474e-7,
+                3.09085521621455e-8,
+                0.7071068
+            ],
+            "translation": [
+                0.0049999,
+                -2.2351741790771484e-8,
+                1.9575118415104953e-8
+            ],
+            "components": [
+                {
+                    "active": true
+                }
+            ]
         }
     },
     "meshes": {
@@ -20496,6 +20544,12 @@
             "link": {
                 "name": "polySurface21",
                 "file": "assets\\models\\Muri\\muro_AA.fbx"
+            }
+        },
+        "f0302406-c0be-452c-8592-b3211835561b": {
+            "link": {
+                "name": "Icosphere",
+                "file": "assets\\models\\altro\\fix_sky.fbx"
             }
         }
     },
@@ -20726,6 +20780,12 @@
             "link": {
                 "name": "icon3.webp",
                 "file": "assets\\textures\\webp\\Icon\\icon3.webp"
+            }
+        },
+        "3748f894-d25f-499c-b37e-486b01ff5656": {
+            "link": {
+                "name": "fix_sky.webp",
+                "file": "assets\\textures\\webp\\Environment\\fix_sky.webp"
             }
         }
     },
@@ -21013,6 +21073,14 @@
             "link": {
                 "name": "icon3.webp",
                 "file": "assets\\textures\\webp\\Icon\\icon3.webp"
+            },
+            "compress": false,
+            "stream": false
+        },
+        "a2e331db-9f9e-48a7-97c4-077400ec5b2a": {
+            "link": {
+                "name": "fix_sky.webp",
+                "file": "assets\\textures\\webp\\Environment\\fix_sky.webp"
             },
             "compress": false,
             "stream": false
@@ -21979,6 +22047,17 @@
                     1.0
                 ]
             }
+        },
+        "450a2cf3-54d8-4b86-a088-5ef1bd008c31": {
+            "link": {
+                "name": "DefaultMaterial",
+                "file": "assets\\models\\altro\\fix_sky.fbx"
+            },
+            "pipeline": "0e6a5664-5547-401a-bcc1-f8bbb94199b0",
+            "Phong": {
+                "diffuseTexture": "3748f894-d25f-499c-b37e-486b01ff5656",
+                "ambientFactor": 0.5
+            }
         }
     },
     "shaders": {
@@ -22231,11 +22310,13 @@
                 "name": "Phong Opaque",
                 "file": "default"
             },
-            "name": "Phong Opaque Double",
+            "name": "Phong Opaque Double Textured",
             "doubleSided": true,
             "features": {
-                "TEXTURED": true
-            }
+                "TEXTURED": true,
+                "WITH_FOG": false
+            },
+            "castShadows": false
         },
         "7a753214-907d-4260-92e1-0b67e30a7e28": {
             "link": {
@@ -22284,6 +22365,12 @@
             },
             "doubleSided": true,
             "name": "Phong Opaque Textured Double"
+        },
+        "150": {
+            "link": {
+                "name": "Phong Lightmapped",
+                "file": "default"
+            }
         }
     },
     "settings": {
@@ -22455,7 +22542,9 @@
         "assets/textures/webp/altro/credits_brutti.webp",
         "assets/textures/webp/altro/zesty.webp",
         "assets/textures/webp/altro/paper.webp",
-        "assets/textures/webp/Icon/icon3.webp"
+        "assets/textures/webp/Icon/icon3.webp",
+        "assets/models/altro/fix_sky.fbx",
+        "assets/textures/webp/Environment/fix_sky.webp"
     ],
     "fonts": {
         "147": {
