@@ -39,6 +39,10 @@ WL.registerComponent('fruit', {
         this._myIsGrabbed = false;
 
         this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
+
+        this._myTimeGrabbed = 0;
+        this._myTimeGrabbedStep = [5, 10, 15, 30];
+        this._myTimeGrabbedStepIndex = 0;
     },
     update: function (dt) {
         if (this._myGrabbable != null) {
@@ -50,8 +54,19 @@ WL.registerComponent('fruit', {
                         });
                     }
                 }
+
                 this._myGathered = true;
                 this._myIsGrabbed = true;
+
+                this._myTimeGrabbed += dt;
+                if (this._myTimeGrabbedStepIndex < this._myTimeGrabbedStep.length && this._myTimeGrabbed > this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex]) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "fruit_grab_for_" + this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex] + "_seconds", {
+                            "value": 1
+                        });
+                    }
+                    this._myTimeGrabbedStepIndex++;
+                }
             } else {
                 this._myIsGrabbed = false;
             }

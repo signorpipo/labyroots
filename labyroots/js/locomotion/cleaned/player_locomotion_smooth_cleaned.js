@@ -143,7 +143,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
                 this._myTimeMoving += dt;
                 if (this._myTimeMovingStepIndex < this._myTimeMovingStep.length && this._myTimeMoving > this._myTimeMovingStep[this._myTimeMovingStepIndex] * 60) {
-                    if (!Global.mySessionStarted) {
+                    if (Global.myGoogleAnalytics) {
                         gtag("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
                             "value": 1
                         });
@@ -154,10 +154,12 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 if (this._myNonVRPlayingTimer.isRunning()) {
                     this._myNonVRPlayingTimer.update(dt);
                     if (this._myNonVRPlayingTimer.isDone()) {
-                        if (!Global.mySessionStarted) {
-                            gtag("event", "moving_non_vr", {
-                                "value": 1
-                            });
+                        if (Global.myGoogleAnalytics) {
+                            if (!Global.mySessionStarted) {
+                                gtag("event", "moving_non_vr", {
+                                    "value": 1
+                                });
+                            }
                         }
                     }
                 }
