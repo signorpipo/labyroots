@@ -2485,6 +2485,11 @@
                 1.0,
                 1.0,
                 1.0
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "94d90252-e67f-428a-ba48-23ef8356a8c6": {
@@ -2574,6 +2579,11 @@
                 1.0000001,
                 1.0,
                 1.0000001
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "3fce9759-4873-48da-8c49-f547b402314d": {
@@ -2700,6 +2710,11 @@
                 1.0000001,
                 1.0,
                 1.0000001
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "8146e36d-1faf-4e06-9a7f-19c3e6828887": {
@@ -2826,6 +2841,11 @@
                 0.9999899,
                 1.0,
                 0.9999899
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "4c9a598e-ebd0-4974-a05c-ae488023f065": {
@@ -3374,6 +3394,11 @@
                 0.7071068,
                 0.0,
                 0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "ad0f6027-e66c-4a92-966b-c02802194e58": {
@@ -3404,6 +3429,11 @@
                 1.0,
                 0.0,
                 -4.3711388286737935e-8
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "dd52e2d2-552c-4b4d-93ef-b3b61d49a118": {
@@ -3737,6 +3767,11 @@
                 0.7071068,
                 0.0,
                 0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "fb6e15a7-afe2-4259-a788-eca3be73d22d": {
@@ -4070,6 +4105,11 @@
                 -4.3711384734024257e-8,
                 4.3711391839451614e-8,
                 1.0
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "15374156-9f49-445e-b83b-2761d1ebf2b8": {
@@ -4403,6 +4443,11 @@
                 0.7071068,
                 -6.181724643283816e-8,
                 -0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "471bf9b7-1e72-4028-8d7f-667baf03bf98": {
@@ -4736,6 +4781,11 @@
                 0.7071068,
                 0.0,
                 0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "bfca776c-1ec0-420c-8f29-91f4af793da7": {
@@ -5010,6 +5060,11 @@
                 0.7071068,
                 0.0,
                 0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "92bc857a-75d4-4e46-9251-ec58e07c9cee": {
@@ -5288,6 +5343,11 @@
                 0.0,
                 8.742279078433057e-8,
                 1.0
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
             ]
         },
         "058805a6-3fba-41e2-811b-b7bbbe2570e7": {
@@ -14093,7 +14153,8 @@
                         "text": "The mother of all trees...\n\nAfter landing on earth,\nher spores have begun to spread,\nwhile the roots protected her heart.\n\nMany tried to defeat her,\nbut they all turned into...\n\nIt's time for you to venture into her maze,\nand put this madness to an end.\n\nThe mother of all trees must succumb.\n",
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
                         "effect": "outline"
-                    }
+                    },
+                    "active": false
                 },
                 {
                     "type": "activate-if-wedding"
@@ -20318,7 +20379,8 @@
                         "text": "Go get her.",
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
                         "effect": "outline"
-                    }
+                    },
+                    "active": false
                 },
                 {
                     "type": "activate-if-wedding",
