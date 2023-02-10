@@ -131,7 +131,7 @@ WL.registerComponent('transformation', {
 
             this._myTimeAlive += dt;
 
-            if (!Global.myBigTreeDead) {
+            if (!Global.myBigTreeDead || Global.myStage >= this._myTransformationTimersSetup.length - 1) {
                 this._myTransformationTimer.update(dt);
                 if (this._myTransformationTimer.isDone()) {
                     if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
@@ -226,6 +226,9 @@ WL.registerComponent('transformation', {
         Global.myStage = Math.max(Global.myStage + 1, 0);
         let dead = false;
         if (Global.myStage >= this._myTransformationTimersSetup.length) {
+            PP.myLeftGamepad.pulse(0.5, 0.5);
+            PP.myRightGamepad.pulse(0.5, 0.5);
+
             this._death();
             dead = true;
         } else {
