@@ -5907,7 +5907,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p0",
-                        "material": "e5925a6f-d345-4eb3-a928-f6ec5ef39902"
+                        "material": "e89ba224-9837-4aff-b2ad-a1dc952f62ea"
                     }
                 },
                 {
@@ -21314,7 +21314,7 @@
                     0.0,
                     1.0
                 ],
-                "ambientFactor": 0.5,
+                "ambientFactor": 0.6499999,
                 "diffuseTexture": "ab4b7097-f68f-4d2f-8894-f082c2155c8b"
             }
         },
@@ -22029,6 +22029,26 @@
                 ],
                 "ambientFactor": 0.5,
                 "emissiveTexture": "262922d7-28a2-4967-882d-df172bf88247"
+            }
+        },
+        "e89ba224-9837-4aff-b2ad-a1dc952f62ea": {
+            "name": "FruttoVerde",
+            "pipeline": "14",
+            "Phong": {
+                "ambientColor": [
+                    0.3094809,
+                    0.0,
+                    0.3372548,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.05,
+                "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f"
             }
         }
     },
