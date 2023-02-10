@@ -85,57 +85,33 @@ LR.Maze = class Maze {
     }
 
     buildMaze() {
-        let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
+        this._myMazeItems = WL.scene.pp_getObjectByName("Maze Items");
 
-        let totalWalls = 0;
+        let cellCoordinatesList = [];
+        for (let i = 0; i < this._myCells.length; i++) {
+            let row = this._myCells[i];
+            for (let j = 0; j < row.length; j++) {
+                cellCoordinatesList.push([i, j]);
+            }
+        }
+
+        while (cellCoordinatesList.length > 0) {
+            let randomIndex = Math.pp_randomInt(0, cellCoordinatesList.length - 1);
+            let cellCoordinates = cellCoordinatesList[randomIndex];
+            cellCoordinatesList.pp_removeIndex(randomIndex);
+
+            this.buildCell(this._myCells[cellCoordinates[0]][cellCoordinates[1]]);
+        }
+
+        /*
         for (let i = 0; i < this._myCells.length; i++) {
             let row = this._myCells[i];
             for (let j = 0; j < row.length; j++) {
                 let cell = row[j];
-
-                if (cell.myStaticMazeItemType != LR.MazeItemType.NONE) {
-
-                    let cellType = cell.myStaticMazeItemType;
-                    if (cellType == LR.MazeItemType.HUMAN_TREE_0) {
-                        let types = [];
-                        types.push(Global.myPerfectFruit);
-                        for (let i = 0; i < Global.mySetup.myTreeSetup.myPerfectTreeRatio; i++) {
-                            types.push(Global.myGoodFruit);
-                            types.push(Global.myBadFruit);
-                        }
-                        cellType = Math.pp_randomPick(types);
-                    }
-
-                    let cellItems = mazeItems.pp_getObjectByNameChildren("" + cellType);
-                    if (cellItems != null) {
-                        let randomChild = Math.pp_randomPick(cellItems.pp_getChildren());
-                        if (randomChild != null) {
-                            let objectToSpawn = randomChild.pp_clone();
-                            objectToSpawn.pp_setActive(true);
-                            objectToSpawn.pp_setParent(this._myMazeObjectsParent);
-                            objectToSpawn.pp_setPosition(cell.myCellPosition);
-                            totalWalls += 1;
-                            if (cell.myFruits > 0) {
-                                let tree = objectToSpawn.pp_getComponent("human-tree");
-                                if (tree != null) {
-                                    tree.spawnFruits(cell.myFruits);
-                                }
-                                // get tree component and set fruits
-                            }
-
-                            if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
-                                Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
-                                Global.myAxeCell = cell;
-                            }
-
-                            if (cellType == LR.MazeItemType.SECRET_WALL) {
-                                Global.mySecretWall = objectToSpawn;
-                            }
-                        }
-                    }
-                }
+                this.buildCell(cell);
             }
         }
+        */
 
         // a inizio partita va a creare tutte le mesh e le physx del gioco
         // questo non viene più ricaricato
@@ -201,6 +177,49 @@ LR.Maze = class Maze {
         }
 
         return cells;
+    }
+
+    buildCell(cell) {
+        if (cell.myStaticMazeItemType != LR.MazeItemType.NONE) {
+
+            let cellType = cell.myStaticMazeItemType;
+            if (cellType == LR.MazeItemType.HUMAN_TREE_0) {
+                let types = [];
+                types.push(Global.myPerfectFruit);
+                for (let i = 0; i < Global.mySetup.myTreeSetup.myPerfectTreeRatio; i++) {
+                    types.push(Global.myGoodFruit);
+                    types.push(Global.myBadFruit);
+                }
+                cellType = Math.pp_randomPick(types);
+            }
+
+            let cellItems = this._myMazeItems.pp_getObjectByNameChildren("" + cellType);
+            if (cellItems != null) {
+                let randomChild = Math.pp_randomPick(cellItems.pp_getChildren());
+                if (randomChild != null) {
+                    let objectToSpawn = randomChild.pp_clone();
+                    objectToSpawn.pp_setActive(true);
+                    objectToSpawn.pp_setParent(this._myMazeObjectsParent);
+                    objectToSpawn.pp_setPosition(cell.myCellPosition);
+                    if (cell.myFruits > 0) {
+                        let tree = objectToSpawn.pp_getComponent("human-tree");
+                        if (tree != null) {
+                            tree.spawnFruits(cell.myFruits);
+                        }
+                        // get tree component and set fruits
+                    }
+
+                    if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
+                        Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
+                        Global.myAxeCell = cell;
+                    }
+
+                    if (cellType == LR.MazeItemType.SECRET_WALL) {
+                        Global.mySecretWall = objectToSpawn;
+                    }
+                }
+            }
+        }
     }
 }
 
