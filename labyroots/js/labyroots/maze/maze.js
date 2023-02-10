@@ -14,10 +14,11 @@ LR.Maze = class Maze {
     }
 
     createCells(mazeSetup) {
-        let urlSearchParams = new URL(document.location).searchParams;
+        let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
-        if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+        if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
 
@@ -33,6 +34,8 @@ LR.Maze = class Maze {
                 });
             }
         }
+
+        Global.mySaveManager.save("is_wedding", false);
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 

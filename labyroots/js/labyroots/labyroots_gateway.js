@@ -20,11 +20,15 @@ WL.registerComponent("labyroots-gateway", {
         PP.CAUtils.setDummyServer(new LR.LRCADummyServer());
         PP.CAUtils.setUseDummyServerOnSDKMissing(true);
         PP.CAUtils.setUseDummyServerOnError(true);
+
+        Global.mySaveManager = new PP.SaveManager();
     },
     update: function (dt) {
         if (!this._myLoadSetupDone) {
             return;
         }
+
+        Global.mySaveManager.update(dt);
 
         if (this._myFirstUpdate) {
             this._myFirstUpdate = false;

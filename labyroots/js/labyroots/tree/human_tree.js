@@ -67,10 +67,21 @@ WL.registerComponent('human-tree', {
             // suono
 
             if (this._myHit == 0) {
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "defeat_human_tree", {
-                        "value": 1
-                    });
+                if (this._myType != 90) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "defeat_human_tree", {
+                            "value": 1
+                        });
+                    }
+                } else {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "defeat_bride_tree", {
+                            "value": 1
+                        });
+                    }
+
+                    Global.myBigTreeDead = true;
+                    Global.myStage = 0;
                 }
             }
         }

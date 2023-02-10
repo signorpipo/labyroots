@@ -95,11 +95,7 @@ WL.registerComponent('transformation', {
                     }
 
                     let result = false;
-                    if (Global.myIsWeddingTime) {
-                        result = Global.windowOpen(url);
-                    } else {
-                        result = Global.windowOpen(url + "/?wedding=1");
-                    }
+                    result = Global.windowOpen(url);
 
                     if (!result) {
                         this._myChange = 10;
@@ -182,6 +178,8 @@ WL.registerComponent('transformation', {
                                 "value": 1
                             });
                         }
+
+                        Global.mySaveManager.save("is_wedding", true, false);
 
                         this._myEnd = 30;
                         this._myChange = 180;
