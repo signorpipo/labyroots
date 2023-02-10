@@ -13821,7 +13821,7 @@
                 }
             ],
             "translation": [
-                -7.412626246150467e-8,
+                -7.412626246150468e-8,
                 0.0,
                 0.3
             ],
@@ -21814,7 +21814,7 @@
                     0.0,
                     1.0
                 ],
-                "ambientFactor": 0.6499999,
+                "ambientFactor": 0.75,
                 "diffuseTexture": "ab4b7097-f68f-4d2f-8894-f082c2155c8b"
             }
         },
@@ -22537,8 +22537,8 @@
             "Phong": {
                 "ambientColor": [
                     0.0,
-                    0.5294117,
-                    0.1868511,
+                    0.4078431,
+                    0.1439445,
                     1.0
                 ],
                 "diffuseColor": [
@@ -22547,7 +22547,7 @@
                     0.0,
                     1.0
                 ],
-                "ambientFactor": 0.05,
+                "ambientFactor": 0.5,
                 "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f"
             }
         }
