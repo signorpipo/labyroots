@@ -46,6 +46,7 @@ WL.registerComponent("labyroots-gateway", {
 
                 Global.myAxeProto = gameplayItems.pp_getObjectByName("Axe");
                 Global.myAxe = Global.myAxeProto;
+                Global.myFollowAxe = gameplayItems.pp_getObjectByName("Follow Axe");
             }
 
             let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
@@ -116,7 +117,8 @@ Global = {
     myAxe: null,
     myTrees: [],
     myFruits: [],
-    myAxeProto: null
+    myAxeProto: null,
+    myFollowAxe: null,
 };
 
 Global.mySessionStarted = false;

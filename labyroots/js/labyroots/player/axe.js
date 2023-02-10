@@ -30,7 +30,7 @@ WL.registerComponent('axe', {
         if (this._myFirstUpdate) {
             this._myFirstUpdate = false;
 
-            this._myPhysX = this.object.pp_getComponentChildren('physx');
+            this._myPhysX = Global.myFollowAxe.pp_getComponent('physx');
             if (this._myPhysX != null) {
                 this._myPhysX.onCollision(this._onCollision.bind(this));
             }

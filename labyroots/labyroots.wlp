@@ -6519,29 +6519,9 @@
         "1abca42b-8c05-4ed7-bb00-8ad937fe708b": {
             "name": "PhysX",
             "parent": "05081c1c-e89f-4070-b72e-7d5b06d79b4c",
-            "components": [
-                {
-                    "type": "physx",
-                    "physx": {
-                        "shape": "box",
-                        "box": {
-                            "extents": [
-                                0.05,
-                                0.125,
-                                0.035
-                            ]
-                        },
-                        "gravity": false,
-                        "kinematic": true,
-                        "trigger": true,
-                        "allowSimulation": false,
-                        "groups": 8
-                    }
-                }
-            ],
             "translation": [
-                0.130923,
-                0.1675595,
+                0.1299999,
+                0.17,
                 0.0
             ],
             "rotation": [
@@ -20463,6 +20443,149 @@
             "components": [
                 {
                     "active": true
+                }
+            ]
+        },
+        "3d9575d9-9f13-4c5c-88f8-bdc58c70ee72": {
+            "name": "Follow Axe",
+            "parent": "22456e8b-4475-4b73-87fb-a8a5e3a13598",
+            "components": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.05,
+                                0.125,
+                                0.035
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "trigger": true,
+                        "allowSimulation": false,
+                        "groups": 8
+                    }
+                },
+                {
+                    "type": "follow-axe"
                 }
             ]
         }

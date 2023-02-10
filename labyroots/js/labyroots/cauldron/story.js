@@ -101,6 +101,7 @@ WL.registerComponent('story', {
                     this._myTimer.reset();
                     this._myTimer2.reset();
                     Global.myAxe.pp_setActive(true);
+                    Global.myFollowAxe.pp_setActive(true);
                     Global.myReady = true;
                     Global.myMusicPlayer.play();
                 }
