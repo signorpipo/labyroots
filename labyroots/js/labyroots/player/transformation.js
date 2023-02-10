@@ -299,9 +299,7 @@ WL.registerComponent('transformation', {
 
         if (Global.myAxe != null) {
             Global.myAxe.pp_setActive(false);
-            let gameplayItems = WL.scene.pp_getObjectByName("Gameplay Items");
-            let axe = gameplayItems.pp_getObjectByName("Axe");
-            let newAxe = axe.pp_clone();
+            let newAxe = Global.myAxeProto.pp_clone();
             Global.myAxe = newAxe;
             Global.myAxe.pp_getComponent("axe").setStartTransforms(Global.myAxeCell.myCellPosition);
             Global.myAxe.pp_setActive(true);

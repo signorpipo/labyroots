@@ -104,17 +104,19 @@ WL.registerComponent('axe', {
         this._myPrevPosition.vec3_copy(currentPosition);
     },
     setStartTransforms(cellPosition) {
-        let axePosition = cellPosition.vec3_add([0, 1.4, -0.20]);
-        axeRotation = [45, -55, -15];
+        let axePosition = [0, 1.4, 0.20];
+        let axeRotation = [45, -55, -15];
+        //axeRotation.vec3_rotateAxis(180, [0, 1, 0], axeRotation);
         this._myStartTransform.quat2_setPositionRotationQuat(axePosition, axeRotation.vec3_degreesToQuat());
         this._myRespawnTransform = this._myStartTransform;
 
-        this.object.pp_setTransformQuat(this._myStartTransform);
+        this.object.pp_setTransformLocalQuat(this._myStartTransform);
+        this.object.pp_rotateAxis(180, [0, 1, 0]);
     },
     resetTransformRespawn() {
         this._myGrabbable.release();
         this._myResetPos = true;
-        this.object.pp_setTransformQuat(this._myRespawnTransform);
+        this.object.pp_setTransformLocalQuat(this._myRespawnTransform);
     },
     _onCollision(type, physXComponent) {
         if (!Global.myReady) {

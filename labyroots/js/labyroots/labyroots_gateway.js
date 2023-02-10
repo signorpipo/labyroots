@@ -44,8 +44,8 @@ WL.registerComponent("labyroots-gateway", {
                 Global.myFruits[LR.MazeItemType.HUMAN_TREE_3] = fruit3;
                 Global.myFruits[LR.MazeItemType.HUMAN_TREE_4] = fruit4;
 
-                let axe = gameplayItems.pp_getObjectByName("Axe");
-                Global.myAxe = axe.pp_clone();
+                Global.myAxeProto = gameplayItems.pp_getObjectByName("Axe");
+                Global.myAxe = Global.myAxeProto.pp_clone();
             }
 
             let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
@@ -116,6 +116,7 @@ Global = {
     myAxe: null,
     myTrees: [],
     myFruits: [],
+    myAxeProto: null
 };
 
 Global.mySessionStarted = false;
