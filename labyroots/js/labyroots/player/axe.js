@@ -78,6 +78,10 @@ WL.registerComponent('axe', {
                             gtag("event", "collect_axe_after_death", {
                                 "value": 1
                             });
+                        } else {
+                            gtag("event", "collect_axe_before_death", {
+                                "value": 1
+                            });
                         }
                     }
                 }
