@@ -7,16 +7,20 @@ WL.registerComponent('deactivate-physx-if-far-from-player', {
         this._myStartd = false;
         this._myPhysxList = [];
 
-        this._myMaxDistance = 6;
+        this._myMaxDistance = 4;
         this._myPosition = PP.vec3_create();
         this._myPlayerPosition = PP.vec3_create();
 
-        this._myActive = true;
+        this._myActive = false;
     },
     update(dt) {
         if (!this._myStartd) {
             this._myStartd = true;
             this._myPhysxList = this.object.pp_getComponents("physx");
+
+            for (let physx of this._myPhysxList) {
+                //physx.static = true;
+            }
         } else if (this._myActive) {
             let position = this.object.pp_getPosition(this._myPosition);
             let playerPosition = Global.myPlayer.getPosition(this._myPlayerPosition);

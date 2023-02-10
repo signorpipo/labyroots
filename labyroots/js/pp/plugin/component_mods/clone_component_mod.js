@@ -58,12 +58,12 @@ if (WL && WL.Object) {
     WL.PhysXComponent.prototype.pp_clone = function (targetObject, deepCloneParams = new PP.DeepCloneParams(), customParamsMap = null) {
         let clonedComponent = targetObject.pp_addComponent(this.type, {
             "angularDamping": this.angularDamping,
-            "angularVelocity": this.angularVelocity,
+            //"angularVelocity": this.angularVelocity,
             "dynamicFriction": this.dynamicFriction,
             "extents": this.extents,
             "kinematic": this.kinematic,
             "linearDamping": this.linearDamping,
-            "linearVelocity": this.linearVelocity,
+            //"linearVelocity": this.linearVelocity,
             "mass": this.mass,
             "restituition": this.restituition,
             "shape": this.shape,

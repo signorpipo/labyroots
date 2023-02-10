@@ -197,10 +197,15 @@ LR.Maze = class Maze {
             if (cellItems != null) {
                 let randomChild = Math.pp_randomPick(cellItems.pp_getChildren());
                 if (randomChild != null) {
+                    let oldChildPosition = randomChild.pp_getPosition();
+                    randomChild.pp_setPosition(cell.myCellPosition);
+
                     let objectToSpawn = randomChild.pp_clone();
                     objectToSpawn.pp_setActive(true);
                     objectToSpawn.pp_setParent(this._myMazeObjectsParent);
-                    objectToSpawn.pp_setPosition(cell.myCellPosition);
+                    //objectToSpawn.pp_setPosition(cell.myCellPosition);
+
+                    randomChild.pp_setPosition(oldChildPosition);
                     if (cell.myFruits > 0) {
                         let tree = objectToSpawn.pp_getComponent("human-tree");
                         if (tree != null) {
