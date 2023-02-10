@@ -21844,7 +21844,7 @@
         },
         "d6200692-e881-494f-81ce-71d04fad0c04": {
             "name": "ui1",
-            "pipeline": "14",
+            "pipeline": "faf05eae-b84b-42de-a29a-fb0939648e74",
             "Phong": {
                 "diffuseTexture": "84168c61-f4b0-46ef-8771-0c3d7fabadc9",
                 "ambientFactor": 0.5,
@@ -21858,7 +21858,7 @@
         },
         "a54dbc73-9651-475a-857f-500633aff8b4": {
             "name": "ui2",
-            "pipeline": "14",
+            "pipeline": "faf05eae-b84b-42de-a29a-fb0939648e74",
             "Phong": {
                 "diffuseTexture": "c3d63647-b0c6-46ea-8a49-2718174ee4cd",
                 "ambientFactor": 0.5,
@@ -21872,7 +21872,7 @@
         },
         "8f7661b3-7b2e-4295-bc8f-8de69a583f98": {
             "name": "ui3",
-            "pipeline": "14",
+            "pipeline": "faf05eae-b84b-42de-a29a-fb0939648e74",
             "Phong": {
                 "ambientColor": [
                     0.0,
@@ -22318,24 +22318,6 @@
             "sampleAlphaToCoverage": true,
             "castShadows": false
         },
-        "f15f2a6b-4275-45a3-b613-fca76a9b7e7f": {
-            "link": {
-                "name": "Flat Opaque",
-                "file": "default"
-            },
-            "name": "Flat Transparent No Depth 2",
-            "features": {
-                "ALPHA_MASKED": true
-            },
-            "depthTest": false,
-            "depthFunction": "always",
-            "blending": true,
-            "blendSrcRgb": "source alpha",
-            "blendSrcAlpha": "source alpha",
-            "blendDestRgb": "one minus source alpha",
-            "blendDestAlpha": "one minus source alpha",
-            "blendEqAlpha": "max"
-        },
         "f1c49d36-d61e-4cbf-8da6-ab2888168337": {
             "link": {
                 "name": "Phong Opaque Textured",
@@ -22361,6 +22343,39 @@
                 "name": "Phong Opaque Textured",
                 "file": "default"
             }
+        },
+        "faf05eae-b84b-42de-a29a-fb0939648e74": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": true,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
+            },
+            "doubleSided": true,
+            "castShadows": false,
+            "name": "Phong Opaque Textured UI",
+            "depthFunction": "always"
+        },
+        "f15f2a6b-4275-45a3-b613-fca76a9b7e7f": {
+            "link": {
+                "name": "Flat Opaque",
+                "file": "default"
+            },
+            "name": "Flat Transparent No Depth 2",
+            "features": {
+                "ALPHA_MASKED": true
+            },
+            "depthTest": false,
+            "depthFunction": "always",
+            "blending": true,
+            "blendSrcRgb": "source alpha",
+            "blendSrcAlpha": "source alpha",
+            "blendDestRgb": "one minus source alpha",
+            "blendDestAlpha": "one minus source alpha",
+            "blendEqAlpha": "max"
         }
     },
     "settings": {
