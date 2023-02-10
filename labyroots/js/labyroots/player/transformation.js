@@ -88,7 +88,7 @@ WL.registerComponent('transformation', {
             if (this._myChange > 0) {
                 this._myChange--;
                 if (this._myChange == 0) {
-                    let url = document.location.origin;
+                    let url = window.location.origin;
 
                     if (window.location != window.parent.location) {
                         url = "https://signor-pipo.itch.io/labyroots";
@@ -388,7 +388,7 @@ WL.registerComponent('transformation', {
     _onXRSessionEnd() {
         if (this._myChange > 0) {
             this._myChange = 0;
-            let url = document.location.origin;
+            let url = window.location.origin;
 
             if (window.location != window.parent.location) {
                 url = "https://signor-pipo.itch.io/labyroots";

@@ -20787,6 +20787,12 @@
                 "name": "fix_sky.webp",
                 "file": "assets\\textures\\webp\\Environment\\fix_sky.webp"
             }
+        },
+        "42a60bde-86ea-4651-8fd7-40f5f5d209cc": {
+            "link": {
+                "name": "icon4.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon4.webp"
+            }
         }
     },
     "images": {
@@ -21081,6 +21087,14 @@
             "link": {
                 "name": "fix_sky.webp",
                 "file": "assets\\textures\\webp\\Environment\\fix_sky.webp"
+            },
+            "compress": false,
+            "stream": false
+        },
+        "f72d2a43-8590-4974-84d8-909cec241927": {
+            "link": {
+                "name": "icon4.webp",
+                "file": "assets\\textures\\webp\\Icon\\icon4.webp"
             },
             "compress": false,
             "stream": false
@@ -21851,7 +21865,7 @@
             "name": "icon",
             "pipeline": "14",
             "Phong": {
-                "diffuseTexture": "d7791df6-de63-4235-991f-0d12a311e9b4"
+                "diffuseTexture": "42a60bde-86ea-4651-8fd7-40f5f5d209cc"
             }
         },
         "0d2720a2-e263-43fe-b27f-82c4926e2711": {
@@ -22298,7 +22312,7 @@
             "viewObject": "21",
             "visualizePhysX": false,
             "pwa": {
-                "appIcon": "4453731a-9407-4bfe-8c79-535f542dccd3",
+                "appIcon": "f72d2a43-8590-4974-84d8-909cec241927",
                 "enable": true,
                 "customManifest": true,
                 "customServiceWorker": true
@@ -22430,7 +22444,8 @@
         "assets/textures/webp/altro/paper.webp",
         "assets/textures/webp/Icon/icon3.webp",
         "assets/models/altro/fix_sky.fbx",
-        "assets/textures/webp/Environment/fix_sky.webp"
+        "assets/textures/webp/Environment/fix_sky.webp",
+        "assets/textures/webp/Icon/icon4.webp"
     ],
     "fonts": {
         "147": {

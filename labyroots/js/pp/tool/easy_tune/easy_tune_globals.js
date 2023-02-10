@@ -198,7 +198,7 @@ PP._importExportEasyTuneVariablesReplaceFileURLParams = function (fileURL) {
         params[i] = params[i].replace("}", "");
     }
 
-    let urlSearchParams = new URL(document.location).searchParams;
+    let urlSearchParams = new URL(window.location).searchParams;
 
     let replacedFileURL = fileURL;
 
