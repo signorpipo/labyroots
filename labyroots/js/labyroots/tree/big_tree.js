@@ -1,4 +1,5 @@
 Global.myBigTree = null;
+Global.myBigTreeDead = false;
 
 WL.registerComponent('big-tree', {
     _myPhase1: { type: WL.Type.Object },
@@ -94,6 +95,9 @@ WL.registerComponent('big-tree', {
                 this.avoidIncrement = true;
 
                 if (this._myHit == 0) {
+                    Global.myBigTreeDead = true;
+                    Global.myStage = 0;
+
                     if (Global.myGoogleAnalytics) {
                         gtag("event", "defeat_mother_tree", {
                             "value": 1

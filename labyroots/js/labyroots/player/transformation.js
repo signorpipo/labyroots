@@ -126,17 +126,20 @@ WL.registerComponent('transformation', {
             }
 
             this._myTimeAlive += dt;
-            this._myTransformationTimer.update(dt);
-            if (this._myTransformationTimer.isDone()) {
-                if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
-                    Global.myCancelTeleport = 5;
-                    if (Global.myPlayerLocomotion.canStop()) {
-                        Global.myPlayerLocomotion.setIdle(true);
+
+            if (!Global.myBigTreeDead) {
+                this._myTransformationTimer.update(dt);
+                if (this._myTransformationTimer.isDone()) {
+                    if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
+                        Global.myCancelTeleport = 5;
+                        if (Global.myPlayerLocomotion.canStop()) {
+                            Global.myPlayerLocomotion.setIdle(true);
+                            this._nextStage();
+                            Global.myPlayerLocomotion.setIdle(false);
+                        }
+                    } else {
                         this._nextStage();
-                        Global.myPlayerLocomotion.setIdle(false);
                     }
-                } else {
-                    this._nextStage();
                 }
             }
 
