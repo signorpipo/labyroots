@@ -215,11 +215,12 @@ LR.Maze = class Maze {
                     }
 
                     if (cell.myStaticMazeItemType == LR.MazeItemType.BIG_TREE_FIRST_ROOT) {
+                        Global.myAxeParent = objectToSpawn.pp_getComponent("billboard-player").object;
                         Global.myAxe.pp_setParent(objectToSpawn.pp_getComponent("billboard-player").object);
                         Global.myAxe.pp_getComponent("axe").setStartTransforms(cell.myCellPosition);
                         Global.myAxeCell = cell;
 
-                        Global.myAxeProto.pp_setParent(objectToSpawn.pp_getComponent("billboard-player").object);
+                        //Global.myAxeProto.pp_setParent(objectToSpawn.pp_getComponent("billboard-player").object);
                     }
 
                     if (cellType == LR.MazeItemType.SECRET_WALL) {
@@ -232,6 +233,7 @@ LR.Maze = class Maze {
 }
 
 Global.myAxeCell = null;
+Global.myAxeParent = null;
 
 LR.MazeCell = class MazeCell {
     constructor() {

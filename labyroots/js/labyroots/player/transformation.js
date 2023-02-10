@@ -51,6 +51,8 @@ WL.registerComponent('transformation', {
 
         this._myTimeAlive = 0;
         this._myStageTotalTime = 0;
+
+        this._myResetAxePosition = 0;
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -59,6 +61,12 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+
+            if (this._myResetAxePosition > 0) {
+                this._myResetAxePosition--;
+                Global.myAxe.pp_getComponent("axe").setStartTransforms(Global.myAxeCell.myCellPosition);
+
+            }
 
             if (Global.myTimerStopExit.isRunning()) {
                 Global.myTimerStopExit.update(dt);
@@ -298,11 +306,14 @@ WL.registerComponent('transformation', {
         }
 
         if (Global.myAxe != null) {
-            Global.myAxe.pp_setActive(false);
-            let newAxe = Global.myAxeProto.pp_clone();
-            Global.myAxe = newAxe;
-            Global.myAxe.pp_getComponent("axe").setStartTransforms(Global.myAxeCell.myCellPosition);
-            Global.myAxe.pp_setActive(true);
+            let physx = Global.myAxe.pp_getComponentSelf("physx");
+            let grabbable = Global.myAxe.pp_getComponentSelf("pp-grabbable");
+            grabbable.release();
+            physx.kinematic = true;
+
+            Global.myAxe.pp_setParent(Global.myAxeParent);
+
+            this._myResetAxePosition = 2;
 
             let physXComponents = Global.myAxe.pp_getComponentsHierarchy("physx");
             Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore.pp_copy(this._myObjectToIgnore);
