@@ -31,7 +31,9 @@ WL.registerComponent('axe', {
             this._myFirstUpdate = false;
 
             this._myPhysX = this.object.pp_getComponentChildren('physx');
-            this._myPhysX.onCollision(this._onCollision.bind(this));
+            if (this._myPhysX != null) {
+                this._myPhysX.onCollision(this._onCollision.bind(this));
+            }
             this._myToDestroy = [];
             this._myTimerDestroy = new PP.Timer(0, false);
 

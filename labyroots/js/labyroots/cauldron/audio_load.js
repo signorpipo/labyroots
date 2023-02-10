@@ -165,7 +165,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 0.5;
+            audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.HEAL, audioSetup);
         }
@@ -173,7 +173,7 @@ WL.registerComponent('audio-load', {
         {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
             audioSetup.myRate = 1;
-            audioSetup.myVolume = 0.5;
+            audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
             manager.addAudioSetup(AudioID.HEAL2, audioSetup);
         }
