@@ -230,6 +230,8 @@ PlayerLocomotionTeleportDetectionState.prototype._detectTeleportPositionParable 
     let flatParableDirectionNegate = PP.vec3_create();
 
     let teleportCollisionRuntimeParams = new CollisionRuntimeParams();
+
+    let objectsEqualCallback = (first, second) => first.pp_equals(second);
     return function _detectTeleportPositionParable(startPosition, direction, up) {
         this._myDetectionRuntimeParams.myParable.setStartPosition(startPosition);
         this._myDetectionRuntimeParams.myParable.setForward(direction);
@@ -240,9 +242,13 @@ PlayerLocomotionTeleportDetectionState.prototype._detectTeleportPositionParable 
         let positionParableDistance = 0;
         prevParablePosition = this._myDetectionRuntimeParams.myParable.getPosition(currentPositionIndex - 1, prevParablePosition);
 
-        raycastSetup.myObjectsToIgnore.pp_clear();
         raycastSetup.myIgnoreHitsInsideCollision = true;
         raycastSetup.myBlockLayerFlags.setMask(this._myTeleportParams.myDetectionParams.myTeleportBlockLayerFlags.getMask());
+
+        raycastSetup.myObjectsToIgnore.pp_copy(this._myTeleportParams.myCollisionCheckParams.myHorizontalObjectsToIgnore);
+        for (let objectToIgnore of this._myTeleportParams.myCollisionCheckParams.myVerticalObjectsToIgnore) {
+            raycastSetup.myObjectsToIgnore.pp_pushUnique(objectToIgnore, objectsEqualCallback);
+        }
 
         let maxParableDistance = this._myTeleportParams.myDetectionParams.myMaxDistance * 2;
 
@@ -560,7 +566,7 @@ PlayerLocomotionTeleportDetectionState.prototype._isTeleportHitValid = function 
             if (true || hit.myNormal.vec3_isConcordant(playerUp)) {
                 // #TODO when the flags on the physx will be available just check that the hit object physx has the floor flag
 
-                raycastSetup.myObjectsToIgnore.pp_clear();
+                raycastSetup.myObjectsToIgnore.pp_copy(this._myTeleportParams.myCollisionCheckParams.myHorizontalObjectsToIgnore);
                 raycastSetup.myIgnoreHitsInsideCollision = true;
                 raycastSetup.myBlockLayerFlags.setMask(this._myTeleportParams.myDetectionParams.myTeleportFloorLayerFlags.getMask());
 

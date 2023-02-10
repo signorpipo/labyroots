@@ -479,6 +479,12 @@ CleanedPlayerTransformManager.prototype.update = function () {
         this._myHeadCollisionCheckParams.myHorizontalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore);
         this._myHeadCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myVerticalObjectsToIgnore);
 
+        this._myRealMovementCollisionCheckParams.myHorizontalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore);
+        this._myRealMovementCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myVerticalObjectsToIgnore);
+
+        this._myParams.myTeleportCollisionCheckParams.myHorizontalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore);
+        this._myParams.myTeleportCollisionCheckParams.myVerticalObjectsToIgnore.pp_copy(this._myParams.myMovementCollisionCheckParams.myVerticalObjectsToIgnore);
+
         if (this._myResetRealOnSynced) {
             if (this.getPlayerHeadManager().isSynced()) {
                 this._myResetRealOnSynced = false;

@@ -319,6 +319,9 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
                 Global.myPlayer.teleportPosition(fixedPosition, null, true);
             }
         }
+
+        this._myCollisionCheckParamsTeleport.myHorizontalObjectsToIgnore.pp_copy(this._myPlayerTransformManager._myParams.myMovementCollisionCheckParams.myHorizontalObjectsToIgnore);
+        this._myCollisionCheckParamsTeleport.myVerticalObjectsToIgnore.pp_copy(this._myPlayerTransformManager._myParams.myMovementCollisionCheckParams.myVerticalObjectsToIgnore);
     }
 
     setIdle(idle) {
