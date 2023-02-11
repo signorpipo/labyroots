@@ -89,6 +89,8 @@ WL.registerComponent('player-locomotion', {
 
                 this._myPlayerLocomotion.update(dt);
             }
+        } else {
+            this._myPlayerLocomotion._myPlayerHeadManager.update(dt);
         }
 
         //_myTotalRaycastsMax = Math.max(_myTotalRaycasts, _myTotalRaycastsMax);
