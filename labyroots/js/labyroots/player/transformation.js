@@ -147,7 +147,14 @@ WL.registerComponent('transformation', {
                     currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_0 ||
                     currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_1 ||
                     currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_2 ||
-                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_3) {
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_3 ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.CREDITS ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.SECRET_CODES ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.ZESTY ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.SECRET_ZONE_CHECK ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.LEADERBOARD_TOP_10 ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.LEADERBOARD_AROUND_U ||
+                    currentCell.myStaticMazeItemType == LR.MazeItemType.BUILD_CELL) {
                     this._myLastFreeCell = currentCell;
                 }
             }
