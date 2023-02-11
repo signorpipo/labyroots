@@ -6,6 +6,9 @@ WL.registerComponent('secret-zone-check', {
         this._myReached = false;
         this._myStarted = false;
         this._myCell = null;
+
+        this._myUp = [0, 1, 0];
+        this._myPosition = [0, 1, 0];
     },
     update: function (dt) {
         if (Global.myReady) {
@@ -17,7 +20,7 @@ WL.registerComponent('secret-zone-check', {
 
             if (!this._myReached) {
                 if (this._myCell != null) {
-                    let distanceFromPlayer = Global.myPlayer.getPosition().vec3_removeComponentAlongAxis([0, 1, 0]).vec3_distance(this._myCell.myCellPosition.vec3_removeComponentAlongAxis([0, 1, 0]));
+                    let distanceFromPlayer = Global.myPlayer.getPosition(this._myPosition).vec3_removeComponentAlongAxis(this._myUp, this._myPosition).vec3_distance(this._myCell.myCellPosition.vec3_removeComponentAlongAxis(this._myUp));
                     if (distanceFromPlayer <= this._myCell.myCellSize) {
                         this._myReached = true;
 

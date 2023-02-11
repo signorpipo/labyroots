@@ -5,6 +5,7 @@ WL.registerComponent('axe', {
         this._myStartTransform = PP.quat2_create();
         this._myRespawnTransform = PP.quat2_create();
         this._myPrevPosition = [0, 0, 0];
+        this._myPosition = [0, 0, 0];
 
         this._mySpeed = 0;
     },
@@ -94,7 +95,7 @@ WL.registerComponent('axe', {
             }
         }
 
-        let currentPosition = this.object.pp_getPosition();
+        let currentPosition = this.object.pp_getPosition(this._myPosition);
 
         if (Global.myReady) {
             let distance = currentPosition.vec3_distance(this._myPrevPosition);

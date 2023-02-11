@@ -11,6 +11,8 @@ LR.Maze = class Maze {
         this._myMazeObjectsParent = parent.pp_addObject();
 
         this.createCells(mazeSetup);
+
+        this._myCellCoordinates = [0, 0];
     }
 
     createCells(mazeSetup) {
@@ -233,7 +235,7 @@ LR.Maze = class Maze {
     }
 
     convertCellPositionToCellCoordinates(position) {
-        let cellCoordinates = [0, 0];
+        let cellCoordinates = this._myCellCoordinates.vec3_zero();
         let positionTopLeft = position.vec3_sub(this._myTopLeftPosition);
 
         cellCoordinates[0] = Math.max(0, -(Math.floor(positionTopLeft[2] / this._myCellSize) + 1));
@@ -332,12 +334,14 @@ LR.MazeCell = class MazeCell {
 
         this.myStaticMazeItemType = LR.MazeItemType.NONE;
         this.myFruits = 0;
+
+        this._myVector = [0, 0, 0];
     }
 
     getRandomPositionOnCell() {
         let randomDistance = Math.pp_random(0, this.myCellSize / 2);
         let randomAngle = Math.pp_random(0, 360);
-        let randomDirection = this.myHorizontalDirection.vec3_rotateAxis(randomAngle, PP.vec3_create(0, 1, 0));
+        let randomDirection = this.myHorizontalDirection.vec3_rotateAxis(randomAngle, PP.vec3_create(0, 1, 0), this._myVector);
         randomDirection.vec3_scale(randomDistance, randomDirection);
         let randomPosition = this.myCellPosition.vec3_add(randomDirection, randomDirection);
 

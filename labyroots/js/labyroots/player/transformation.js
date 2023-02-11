@@ -56,6 +56,8 @@ WL.registerComponent('transformation', {
 
         this._myRepeatHealSound = 0;
         this._myRepeatHealSoundTimer = new PP.Timer(0.4);
+
+        this._myPosition = [0, 0, 0];
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -140,7 +142,7 @@ WL.registerComponent('transformation', {
                 }
             }
 
-            let playerPosition = Global.myPlayer.getPosition();
+            let playerPosition = Global.myPlayer.getPosition(this._myPosition);
             let currentCell = Global.myMaze.getCellByPosition(playerPosition);
             if (currentCell) {
                 if (currentCell.myStaticMazeItemType == LR.MazeItemType.NONE ||
