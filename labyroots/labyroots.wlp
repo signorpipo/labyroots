@@ -22272,9 +22272,9 @@
                 "diffuseTexture": "51b1b5e0-8f72-4c4a-951a-34c7489b54ea",
                 "normalTexture": null,
                 "ambientColor": [
-                    0.0,
-                    0.0,
-                    0.0,
+                    0.022575,
+                    0.0274509,
+                    0.0199154,
                     1.0
                 ],
                 "diffuseColor": [
@@ -22283,7 +22283,7 @@
                     0.0,
                     1.0
                 ],
-                "ambientFactor": 0.375
+                "ambientFactor": 0.3249999
             }
         },
         "7e8bea98-e1fe-4c96-954b-8e3c85cf5544": {
