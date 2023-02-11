@@ -231,6 +231,7 @@ require('./pp/tool/easy_tune/easy_object_tuners/easy_object_tuner');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_light_attenuation');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_light_color');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_mesh_color');
+require('./pp/tool/easy_tune/easy_object_tuners/easy_mesh_ambient_factor');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_scale');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_set_tune_target_child_number');
 require('./pp/tool/easy_tune/easy_object_tuners/easy_set_tune_target_grab');
