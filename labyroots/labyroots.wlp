@@ -21586,7 +21586,11 @@
                 "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
             "link": {
@@ -21594,7 +21598,11 @@
                 "file": "assets\\textures\\webp\\Walls\\muro_AA_lambert2_BaseMap.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "3a4b6111-7f99-413e-a55b-789c13cfbdd5": {
             "link": {
@@ -21650,7 +21658,11 @@
                 "file": "assets\\textures\\webp\\Walls\\Muro_C_lambert1_BaseMap.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "5b145eb5-8c8a-431e-8259-0bc141380205": {
             "link": {
