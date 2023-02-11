@@ -53,6 +53,9 @@ WL.registerComponent('transformation', {
         this._myStageTotalTime = 0;
 
         this._myResetAxePosition = 0;
+
+        this._myRepeatHealSound = 0;
+        this._myRepeatHealSoundTimer = new PP.Timer(0.4);
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -61,6 +64,22 @@ WL.registerComponent('transformation', {
                 this._start();
             }
         } else {
+
+            if (this._myRepeatHealSound > 0) {
+                this._myRepeatHealSoundTimer.update(dt);
+                if (this._myRepeatHealSoundTimer.isDone()) {
+                    this._myRepeatHealSoundTimer.start();
+
+                    this._myRepeatHealSound--;
+
+                    PP.myLeftGamepad.pulse(0.35, 0.25);
+                    PP.myRightGamepad.pulse(0.35, 0.25);
+
+                    let player = this._myAudioHeal2;
+                    player.setPitch(Math.pp_random(1.4 - 0.15, 1.4 + 0.05));
+                    player.play();
+                }
+            }
 
             if (this._myResetAxePosition > 0) {
                 this._myResetAxePosition--;
@@ -234,12 +253,12 @@ WL.registerComponent('transformation', {
         } else {
             this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
 
-            if (!noSound && eat) {
+            if (!noSound && (eat && !full)) {
                 PP.myLeftGamepad.pulse(0.35, 0.25);
                 PP.myRightGamepad.pulse(0.35, 0.25);
             }
 
-            if (!noSound && !eat) {
+            if (!noSound && (!eat || full)) {
                 PP.myLeftGamepad.pulse(0.5, 0.5);
                 PP.myRightGamepad.pulse(0.5, 0.5);
             }
@@ -371,11 +390,14 @@ WL.registerComponent('transformation', {
                 this._nextStage(true, true);
 
                 let player = this._myAudioHeal2;
-                player.setPitch(Math.pp_random(1.35 - 0.15, 1.35 + 0.05));
+                player.setPitch(Math.pp_random(1.4 - 0.15, 1.4 + 0.05));
                 player.play();
 
                 PP.myLeftGamepad.pulse(0.35, 0.25);
                 PP.myRightGamepad.pulse(0.35, 0.25);
+
+                this._myRepeatHealSound = 2;
+                this._myRepeatHealSoundTimer.start();
             } else {
                 Global.myStage = Math.max(-1, Global.myStage - 2);
                 this._nextStage(true, true);
