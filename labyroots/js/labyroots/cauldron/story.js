@@ -25,7 +25,6 @@ WL.registerComponent('story', {
             this._mySkip = true;
         }
 
-
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
@@ -33,6 +32,10 @@ WL.registerComponent('story', {
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
+
+                    if (Global.myIsWeddingTime) {
+                        this._myTimer.start(4);
+                    }
 
                     Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                 }

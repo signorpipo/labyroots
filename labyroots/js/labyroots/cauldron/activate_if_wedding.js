@@ -4,21 +4,25 @@ WL.registerComponent('activate-if-wedding', {
     init: function () {
     },
     start: function () {
+        this._myDone = false;
     },
     update: function (dt) {
-        let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+        if (!this._myDone) {
+            this._myDone = true;
+            let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
 
-        if (isWedding) {
-            if (!this._myIsWedding) {
-                this.object.pp_setActive(false);
+            if (isWedding) {
+                if (!this._myIsWedding) {
+                    this.object.pp_setActive(false);
+                } else {
+                    this.object.pp_setActive(true);
+                }
             } else {
-                this.object.pp_setActive(true);
-            }
-        } else {
-            if (this._myIsWedding) {
-                this.object.pp_setActive(false);
-            } else {
-                this.object.pp_setActive(true);
+                if (this._myIsWedding) {
+                    this.object.pp_setActive(false);
+                } else {
+                    this.object.pp_setActive(true);
+                }
             }
         }
     }
