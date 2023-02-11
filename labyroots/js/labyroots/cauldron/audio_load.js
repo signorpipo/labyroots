@@ -194,9 +194,8 @@ WL.registerComponent('audio-load', {
             manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
         }
 
-        manager.createAudioPlayer(AudioID.LAMENTO_1);
         for (let i = 0; i <= AudioID.BIG_TREE_DIE_HIT; i++) {
-            manager.createAudioPlayer(i);
+            //manager.createAudioPlayer(i);
         }
     }
 });

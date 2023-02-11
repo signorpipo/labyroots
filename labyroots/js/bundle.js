@@ -319,6 +319,7 @@ require('./labyroots/cauldron/deactivate_physx_if_far_from_player');
 require('./labyroots/cauldron/follow_axe');
 require('./labyroots/cauldron/fix_drifting');
 require('./labyroots/cauldron/show_drifting');
+require('./labyroots/cauldron/increase_floor_tile');
 
 require('./labyroots/player/transformation');
 require('./labyroots/player/stage_switch');

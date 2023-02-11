@@ -71,7 +71,7 @@
                 {
                     "type": "target-framerate",
                     "target-framerate": {
-                        "framerate": 60.0
+                        "framerate": 72.0
                     },
                     "active": true
                 }
@@ -21394,6 +21394,12 @@
                 "name": "icon4.webp",
                 "file": "assets\\textures\\webp\\Icon\\icon4.webp"
             }
+        },
+        "8caeb6e6-98b5-46d2-864e-926e7b98c006": {
+            "link": {
+                "name": "terreno_laby2.png",
+                "file": "assets\\textures\\png\\Environment\\terreno_laby2.png"
+            }
         }
     },
     "images": {
@@ -21708,6 +21714,14 @@
             "link": {
                 "name": "icon4.webp",
                 "file": "assets\\textures\\webp\\Icon\\icon4.webp"
+            },
+            "compress": false,
+            "stream": false
+        },
+        "36da58c3-e144-4179-8dab-4d4d1ace012a": {
+            "link": {
+                "name": "terreno_laby2.png",
+                "file": "assets\\textures\\png\\Environment\\terreno_laby2.png"
             },
             "compress": false,
             "stream": false
@@ -22334,9 +22348,9 @@
                     1.0
                 ],
                 "ambientFactor": 0.0,
-                "diffuseTexture": "ddd20f92-7a55-434f-bc0e-efd1f4583e26"
+                "diffuseTexture": "8caeb6e6-98b5-46d2-864e-926e7b98c006"
             },
-            "pipeline": "14"
+            "pipeline": "01bf3bc2-e189-4b3c-9de5-a4be52f27041"
         },
         "6b21d089-7152-4c9a-90d7-0e56b2bf3a0f": {
             "link": {
@@ -22875,6 +22889,20 @@
             "name": "Phong Opaque Textured Double",
             "castShadows": false
         },
+        "01bf3bc2-e189-4b3c-9de5-a4be52f27041": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
+            },
+            "doubleSided": false,
+            "castShadows": false,
+            "name": "Phong Opaque Textured Floor"
+        },
         "150": {
             "link": {
                 "name": "Phong Lightmapped",
@@ -23093,7 +23121,8 @@
         "assets/textures/webp/Icon/icon3.webp",
         "assets/models/altro/fix_sky.fbx",
         "assets/textures/webp/Environment/fix_sky.webp",
-        "assets/textures/webp/Icon/icon4.webp"
+        "assets/textures/webp/Icon/icon4.webp",
+        "assets/textures/png/Environment/terreno_laby2.png"
     ],
     "fonts": {
         "147": {
