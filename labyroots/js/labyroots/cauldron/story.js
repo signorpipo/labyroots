@@ -7,7 +7,7 @@ WL.registerComponent('story', {
         this._myStarted = false;
         this._myResetPhysx = true;
         this._myTimer2 = new PP.Timer(4);
-        this._myTimer = new PP.Timer(18);
+        this._myTimer = new PP.Timer(22);
 
         this._mySteps = [];
         this._myStepDelay = 0.8;

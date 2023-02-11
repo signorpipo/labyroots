@@ -14129,15 +14129,15 @@
                 -4.3711388286737935e-8
             ],
             "scale": [
-                0.275,
-                0.275,
-                0.275
+                0.25,
+                0.25,
+                0.25
             ],
             "components": [
                 {
                     "type": "text",
                     "text": {
-                        "text": "The mother of all trees...\n\nAfter landing on earth,\nher spores have begun to spread,\nwhile the roots protected her heart.\n\nMany tried to defeat her,\nbut they all turned into...\n\nIt's time for you to venture into her maze,\nand put this madness to an end.\n\nThe mother of all trees must succumb.\n",
+                        "text": "The mother of all trees...\n\nAfter landing on earth,\nher spores have begun to spread,\nwhile the roots protected her heart.\n\nMany fought to defeat her,\nand to save our land,\nbut they all turned into...\n\nIt's time for you to venture into her maze,\nand put this madness to an end.\n\nThe mother of all trees must succumb.\n",
                         "material": "bcd8a041-6bbf-4910-93a9-87fd61a65c98",
                         "effect": "outline"
                     },
@@ -20355,9 +20355,9 @@
                 -4.3711388286737935e-8
             ],
             "scale": [
-                0.275,
-                0.275,
-                0.275
+                0.5,
+                0.5,
+                0.5
             ],
             "components": [
                 {
