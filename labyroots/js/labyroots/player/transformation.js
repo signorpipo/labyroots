@@ -83,7 +83,11 @@ WL.registerComponent('transformation', {
 
             if (this._myResetAxePosition > 0) {
                 this._myResetAxePosition--;
-                Global.myAxe.pp_getComponent("axe").setStartTransforms(Global.myAxeCell.myCellPosition);
+
+                let axeComponent = Global.myAxe.pp_getComponent("axe");
+                if (axeComponent != null) {
+                    axeComponent.setStartTransforms(Global.myAxeCell.myCellPosition);
+                }
 
             }
 

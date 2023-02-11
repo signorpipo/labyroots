@@ -2887,7 +2887,7 @@
             "translation": [
                 0.0,
                 -0.05,
-                0.0
+                0.0099999
             ]
         },
         "de312993-6b7d-4c65-a920-2acf3d133837": {
@@ -13821,7 +13821,7 @@
                 }
             ],
             "translation": [
-                -7.412626246150468e-8,
+                -7.412626246150469e-8,
                 0.0,
                 0.3
             ],
@@ -20692,6 +20692,9 @@
                         "kinematic": true,
                         "groups": 128
                     }
+                },
+                {
+                    "type": "fix-drifting"
                 }
             ]
         },
@@ -20827,6 +20830,9 @@
                         "kinematic": true,
                         "groups": 128
                     }
+                },
+                {
+                    "type": "fix-drifting"
                 }
             ]
         },
@@ -20963,6 +20969,9 @@
                         "trigger": true,
                         "allowSimulation": false
                     }
+                },
+                {
+                    "type": "fix-drifting"
                 }
             ]
         }
