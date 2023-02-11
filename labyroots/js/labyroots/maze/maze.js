@@ -290,6 +290,8 @@ LR.Maze = class Maze {
                     objectToSpawn.pp_setParent(this._myMazeObjectsParent);
                     //objectToSpawn.pp_setPosition(cell.myCellPosition);
 
+                    cell.myObject = objectToSpawn;
+
                     randomChild.pp_setPosition(oldChildPosition);
                     if (cell.myFruits > 0) {
                         let tree = objectToSpawn.pp_getComponent("human-tree");
@@ -334,6 +336,8 @@ LR.MazeCell = class MazeCell {
 
         this.myStaticMazeItemType = LR.MazeItemType.NONE;
         this.myFruits = 0;
+
+        this.myObject = null;
 
         this._myVector = [0, 0, 0];
     }
