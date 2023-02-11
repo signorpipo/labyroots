@@ -64,7 +64,7 @@
                 {
                     "type": "fixed-foveation",
                     "fixed-foveation": {
-                        "fixedFoveation": 1.0
+                        "fixedFoveation": 0.5
                     },
                     "active": true
                 },
