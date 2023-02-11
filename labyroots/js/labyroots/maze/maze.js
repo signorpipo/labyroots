@@ -95,13 +95,85 @@ LR.Maze = class Maze {
             }
         }
 
+        let currentRow = Math.floor(this._myCells.length / 2);
+        let currentColumn = Math.floor(this._myCells[0].length / 2);
+
+        let found = false;
+        for (let i = 0; i < this._myCells.length && !found; i++) {
+            let row = this._myCells[i];
+            for (let j = 0; j < row.length; j++) {
+                let cell = row[j];
+                if (cell.myStaticMazeItemType == LR.MazeItemType.BUILD_CELL) {
+                    currentRow = cell.myCellCoordinates[0];
+                    currentColumn = cell.myCellCoordinates[1];
+                    break;
+                }
+            }
+        }
+
+        let rowToAdd = 1;
+        let currentRowToAdd = 1;
+        let columnToAdd = 1;
+        let currentColumnToAdd = 1;
+        let cellCoordinatesListSpiral = [];
+        let useRow = false;
+
+        while (cellCoordinatesListSpiral.length < cellCoordinatesList.length) {
+            cellCoordinatesListSpiral.pp_pushUnique([currentRow, currentColumn], (first, second) => first[0] == second[0] && first[1] == second[1]);
+
+            if (useRow) {
+                currentRow += Math.pp_sign(currentRowToAdd) * 1;
+                let clampedCurrentRow = Math.pp_clamp(currentRow, 0, this._myCells.length - 1);
+                if (clampedCurrentRow != currentRow) {
+                    currentRowToAdd -= Math.pp_sign(currentRowToAdd) * 1;
+                }
+                rowToAdd--;
+                if (rowToAdd == 0) {
+                    useRow = false;
+                    currentRowToAdd += Math.pp_sign(currentRowToAdd) * 1;
+                    currentRowToAdd *= -1;
+                    rowToAdd = Math.abs(currentRowToAdd);
+                }
+            } else {
+                currentColumn += Math.pp_sign(currentColumnToAdd) * 1;
+                let clampedCurrentColumn = Math.pp_clamp(currentColumn, 0, this._myCells[0].length - 1);
+                if (clampedCurrentColumn != currentColumn) {
+                    currentColumnToAdd -= Math.pp_sign(currentColumnToAdd) * 1;
+                }
+                columnToAdd--;
+                if (columnToAdd == 0) {
+                    useRow = true;
+                    currentColumnToAdd += Math.pp_sign(currentColumnToAdd) * 1;
+                    currentColumnToAdd *= -1;
+                    columnToAdd = Math.abs(currentColumnToAdd);
+                }
+            }
+
+            currentRow = Math.pp_clamp(currentRow, 0, this._myCells.length - 1);
+            currentColumn = Math.pp_clamp(currentColumn, 0, this._myCells[0].length - 1);
+        }
+
+        let cellCoordinatesToBuildLater = [];
+        for (let i = 0; i < cellCoordinatesListSpiral.length; i++) {
+            if (i % 2 == 0) {
+                this.buildCell(this._myCells[cellCoordinatesListSpiral[i][0]][cellCoordinatesListSpiral[i][1]]);
+            } else {
+                cellCoordinatesToBuildLater.unshift(cellCoordinatesListSpiral[i]);
+            }
+        }
+
+        for (let cellCoordinates of cellCoordinatesToBuildLater) {
+            this.buildCell(this._myCells[cellCoordinates[0]][cellCoordinates[1]]);
+        }
+
+        /*
         while (cellCoordinatesList.length > 0) {
             let randomIndex = Math.pp_randomInt(0, cellCoordinatesList.length - 1);
             let cellCoordinates = cellCoordinatesList[randomIndex];
             cellCoordinatesList.pp_removeIndex(randomIndex);
 
             this.buildCell(this._myCells[cellCoordinates[0]][cellCoordinates[1]]);
-        }
+        }*/
 
         /*
         for (let i = 0; i < this._myCells.length; i++) {
@@ -137,8 +209,8 @@ LR.Maze = class Maze {
                     let column = cellCoordinates[1] - 1 + j;
                     if (row >= 0 && row < this._myCells.length) {
                         if (column >= 0 && column < this._myCells[row].length) {
-                            let cell = this._myCells[row][column];
-                            if (cell.myStaticMazeItemType == LR.MazeItemType.NONE ||
+                            let currentCell = this._myCells[row][column];
+                            if (currentCell.myStaticMazeItemType == LR.MazeItemType.NONE ||
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_0 ||
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_1 ||
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.HUMAN_TREE_2 ||
@@ -150,7 +222,7 @@ LR.Maze = class Maze {
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.LEADERBOARD_TOP_10 ||
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.LEADERBOARD_AROUND_U ||
                                 currentCell.myStaticMazeItemType == LR.MazeItemType.BUILD_CELL) {
-                                close.push(cell);
+                                close.push(currentCell);
                             }
                         }
                     }

@@ -65,13 +65,15 @@
                     "type": "fixed-foveation",
                     "fixed-foveation": {
                         "fixedFoveation": 1.0
-                    }
+                    },
+                    "active": true
                 },
                 {
                     "type": "target-framerate",
                     "target-framerate": {
-                        "framerate": 72.0
-                    }
+                        "framerate": 90.0
+                    },
+                    "active": true
                 }
             ]
         },

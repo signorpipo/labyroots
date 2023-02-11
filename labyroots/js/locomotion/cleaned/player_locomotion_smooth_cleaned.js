@@ -93,6 +93,9 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
                 let movementIntensity = axes.vec2_length();
                 let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, movementIntensity);
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                    speed = 20;
+                }
 
                 headMovement = direction.vec3_scale(speed * dt, headMovement);
 
@@ -110,11 +113,19 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
         if (this._myParams.myFlyEnabled) {
             if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed()) {
-                verticalMovement = playerUp.vec3_scale(this._myParams.myMaxSpeed * dt, verticalMovement);
+                let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                    speed = 20;
+                }
+                verticalMovement = playerUp.vec3_scale(speed * dt, verticalMovement);
                 headMovement = headMovement.vec3_add(verticalMovement, headMovement);
                 this._myLocomotionRuntimeParams.myIsFlying = true;
             } else if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
-                verticalMovement = playerUp.vec3_scale(-this._myParams.myMaxSpeed * dt, verticalMovement);
+                let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                    speed = 20;
+                }
+                verticalMovement = playerUp.vec3_scale(-speed * dt, verticalMovement);
                 headMovement = headMovement.vec3_add(verticalMovement, headMovement);
                 this._myLocomotionRuntimeParams.myIsFlying = true;
             }
