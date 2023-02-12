@@ -21414,7 +21414,11 @@
                 "name": "DefaultImage",
                 "file": "default"
             },
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2,
+                2
+            ]
         },
         "871c20fd-fee3-45d3-912b-bfb4d5824efb": {
             "link": {
@@ -21422,7 +21426,11 @@
                 "file": "assets\\textures\\webp\\Trees\\60.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "ae52868a-d640-474a-bf27-098700df42bd": {
             "link": {
@@ -21430,7 +21438,11 @@
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Blu.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
             "link": {
@@ -21438,7 +21450,11 @@
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Rosso.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "00b6ab52-a892-4c6f-a4d8-f0f0960c876b": {
             "link": {
@@ -21446,7 +21462,11 @@
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase3Fixed.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "256c9c93-aaeb-414c-aa81-78de15a2e445": {
             "link": {
@@ -21454,7 +21474,11 @@
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase1Fixed.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "b2ddbfee-7e65-493f-946f-959c49f1f652": {
             "link": {
@@ -21462,7 +21486,11 @@
                 "file": "assets\\textures\\webp\\Trees\\RadiciAlbero_fase2Fixed.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "93a39555-5abb-44da-9f17-f22570276e8f": {
             "link": {
@@ -21470,7 +21498,11 @@
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase1.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "7f648475-da4e-40ed-974a-6c01da5ed296": {
             "link": {
@@ -21478,7 +21510,11 @@
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase2.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "5d76c448-4b4e-469b-9afd-39cd373d4284": {
             "link": {
@@ -21486,7 +21522,11 @@
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase3.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "8c9704c3-5f62-4e05-ae92-15acf4e2f982": {
             "link": {
@@ -21494,7 +21534,11 @@
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase4.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "981534ae-abe1-4192-a781-3ec615a49c87": {
             "link": {
@@ -21502,7 +21546,11 @@
                 "file": "assets\\textures\\webp\\Trees\\AlberoGrosso_fase5.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "510548d5-a317-4206-805e-f14e87364c4e": {
             "link": {
@@ -21510,7 +21558,11 @@
                 "file": "assets\\textures\\webp\\Trees\\radici_muro.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "7f7327bb-de83-4205-9d6f-bfc722bb2f76": {
             "link": {
@@ -21518,7 +21570,11 @@
                 "file": "assets\\textures\\webp\\Trees\\Albero_Blu.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "19038d66-4612-403a-8dd2-2eb13b1dc196": {
             "link": {
@@ -21526,7 +21582,11 @@
                 "file": "assets\\textures\\webp\\Trees\\Albero_Rosso.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "a01a037e-3c11-4b09-974b-54b3c1fec2aa": {
             "link": {
@@ -21534,7 +21594,11 @@
                 "file": "assets\\textures\\webp\\Trees\\Albero_Giallo.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "d1343922-519e-449f-931b-4207d62acec9": {
             "link": {
@@ -21542,7 +21606,11 @@
                 "file": "assets\\textures\\webp\\Fruits\\Frutto_Giallo.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "eff7edfc-888b-4815-9d8c-a080d5dd56b4": {
             "link": {
@@ -21550,7 +21618,11 @@
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_AlbedoTransparency.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "deb95d87-2eff-45f9-ad78-d79824fbfcf6": {
             "link": {
@@ -21558,7 +21630,11 @@
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_Normal.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "fb52aa1b-3917-40ee-a6c8-7fee007b6cba": {
             "link": {
@@ -21566,7 +21642,11 @@
                 "file": "assets\\textures\\webp\\Axe\\aXE_DEF_lambert1_MetallicSmoothness.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "6906fbb6-13c5-4ebf-b1c5-f56c0d3187d5": {
             "link": {
@@ -21574,7 +21654,11 @@
                 "file": "assets\\textures\\webp\\Walls\\Muro_A_lambert2_BaseMap.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "eada4133-13e6-40ab-88c2-eb7e799e1528": {
             "link": {
@@ -21582,7 +21666,11 @@
                 "file": "assets\\textures\\webp\\Environment\\sky_laby.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "e49b3dfe-981f-4d39-abf7-76e1a36155d6": {
             "link": {
@@ -21590,7 +21678,11 @@
                 "file": "assets\\textures\\webp\\Environment\\terreno_laby2.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "6a315f98-dd96-4246-9ac1-681d21b8d41f": {
             "link": {
@@ -21622,7 +21714,11 @@
                 "file": "assets\\textures\\webp\\player\\Mano_Sinistra_lambert1_BaseMap.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "8df391ae-b8c5-4cf8-9ca9-fc2a9d0c4f64": {
             "link": {
@@ -21630,7 +21726,11 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "ac0e78dd-b39b-4e8c-8848-7a4945793e80": {
             "link": {
@@ -21638,7 +21738,11 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "708253f0-da1b-4a79-8e2f-167448d0e2d5": {
             "link": {
@@ -21646,7 +21750,11 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase 1.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "bfe74a14-e11e-4aac-ab4d-73e3772b2ca3": {
             "link": {
@@ -21654,7 +21762,11 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase 2.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "7768feaf-9669-4cf9-9a73-c9ba7c0ffbde": {
             "link": {
@@ -21662,7 +21774,11 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\fase3.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "a3ae8de9-94a0-4d9c-aa00-5d9c137fae58": {
             "link": {
@@ -21682,7 +21798,11 @@
                 "file": "assets\\textures\\webp\\altro\\credits_brutti.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
+            ]
         },
         "3e925291-702c-4390-ab16-223d3592c886": {
             "link": {
@@ -21690,7 +21810,11 @@
                 "file": "assets\\textures\\webp\\altro\\zesty.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                768,
+                1024
+            ]
         },
         "1a12637b-0f5b-48ce-90d8-35460859d122": {
             "link": {
@@ -21698,7 +21822,11 @@
                 "file": "assets\\textures\\webp\\altro\\paper.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "4453731a-9407-4bfe-8c79-535f542dccd3": {
             "link": {
@@ -21706,7 +21834,11 @@
                 "file": "assets\\textures\\webp\\Icon\\icon3.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         },
         "a2e331db-9f9e-48a7-97c4-077400ec5b2a": {
             "link": {
@@ -21714,7 +21846,11 @@
                 "file": "assets\\textures\\webp\\Environment\\fix_sky.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "f72d2a43-8590-4974-84d8-909cec241927": {
             "link": {
@@ -21722,7 +21858,11 @@
                 "file": "assets\\textures\\webp\\Icon\\icon4.webp"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         },
         "36da58c3-e144-4179-8dab-4d4d1ace012a": {
             "link": {
@@ -21730,7 +21870,11 @@
                 "file": "assets\\textures\\png\\Environment\\terreno_laby2.png"
             },
             "compress": false,
-            "stream": false
+            "stream": false,
+            "maxSize": [
+                2048,
+                2048
+            ]
         }
     },
     "materials": {
@@ -22246,7 +22390,7 @@
         },
         "12b8acea-811d-4a6e-aa3b-91170fa5843b": {
             "name": "Mano",
-            "pipeline": "14",
+            "pipeline": "ab5a182a-267f-436d-927f-133148883cc3",
             "Phong": {
                 "diffuseTexture": "3dd17426-946d-4db7-9bad-ad72a70a16f1",
                 "ambientColor": [
@@ -22741,6 +22885,32 @@
             },
             "doubleSided": false
         },
+        "146": {
+            "link": {
+                "name": "Phong Lightmapped",
+                "file": "default"
+            },
+            "name": "Phong Opaque Textured One Side",
+            "features": {
+                "LIGHTMAP": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
+            }
+        },
+        "ab5a182a-267f-436d-927f-133148883cc3": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
+            },
+            "doubleSided": true,
+            "castShadows": false,
+            "name": "Phong Opaque Textured Mano"
+        },
         "14": {
             "link": {
                 "name": "Phong Opaque Textured",
@@ -22822,18 +22992,6 @@
                 "WITH_EMISSIVE": true
             },
             "doubleSided": false
-        },
-        "146": {
-            "link": {
-                "name": "Phong Lightmapped",
-                "file": "default"
-            },
-            "name": "Phong Opaque Textured One Side",
-            "features": {
-                "LIGHTMAP": false,
-                "WITH_FOG": false,
-                "WITH_EMISSIVE": false
-            }
         },
         "1a9f8525-447a-4c63-bd65-bf9215462df7": {
             "link": {
