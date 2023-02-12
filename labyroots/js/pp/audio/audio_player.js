@@ -1,3 +1,5 @@
+import { Howl } from 'howler';
+
 PP.AudioEvent = {
     END: "end",
     STOP: "stop",
@@ -36,7 +38,18 @@ PP.AudioPlayer = class AudioPlayer {
                 pool: this._myAudioSetup.myPool,
                 pos: (this._myAudioSetup.mySpatial) ? this._myAudioSetup.myPosition : null,
                 refDistance: this._myAudioSetup.myReferenceDistance,
-                preload: this._myAudioSetup.myPreload
+                preload: this._myAudioSetup.myPreload,
+                onloaderror: function () {
+                    console.error("Audio is fallbacking to html5 but it is not supported!");
+
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "html5_audio_error_reload", {
+                            "value": 1
+                        });
+                    }
+
+                    window.parent.location.reload();
+                }
             });
 
             this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
