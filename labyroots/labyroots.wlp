@@ -21696,8 +21696,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "b23a0af9-b124-497e-8aed-3665ec223ad7": {
