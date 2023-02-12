@@ -11,20 +11,13 @@ WL.registerComponent('axe', {
     },
     start: function () {
         this._myIsGrabbed = false;
-        this._myAudioColpi = [];
-        this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);
-        this._myAudioColpi[1] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_2);
-        this._myAudioColpoFinale = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_FINALE);
-
-        this._myLamenti = [];
-        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
-        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
-        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
 
         this._myLamentoPitch = 1.4;
         this._myColpoFinalePitch = 1.25;
 
         this._myCollected = false;
+
+        this._myStarted = false;
     },
 
     update: function (dt) {
@@ -39,6 +32,22 @@ WL.registerComponent('axe', {
             this._myTimerDestroy = new PP.Timer(0, false);
 
             this._myGrabbable = this.object.pp_getComponent('pp-grabbable');
+        }
+
+        if (!this._myStarted) {
+            if (Global.myStoryReady) {
+                this._myStarted = true;
+                this._myAudioColpi = [];
+                this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);
+                this._myAudioColpi[1] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_2);
+                this._myAudioColpoFinale = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_FINALE);
+
+                this._myLamenti = [];
+                this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
+                this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
+                this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+
+            }
         }
 
         if (this._myTimerDestroy.isRunning()) {

@@ -34,7 +34,6 @@ PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTelep
         PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Shift Rotate Start Percentage", this._myTeleportParams.myTeleportParams.myShiftRotateStartAfterMovementPercentage, 0.5, 3, 0, 1));
 
         this._mySteps = [];
-        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
         //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_2);
         //this._mySteps[2] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);
     }
@@ -58,6 +57,10 @@ PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTelep
     }
 
     _startShifting() {
+        if (this._mySteps.length == 0) {
+            this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+        }
+
         let player = Math.pp_randomPick(this._mySteps);
         player.setPosition(this._myTeleportRuntimeParams.myTeleportPosition);
         player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));

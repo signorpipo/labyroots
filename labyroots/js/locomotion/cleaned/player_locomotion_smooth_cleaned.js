@@ -44,7 +44,6 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
 
         this._mySteps = [];
         this.stepCounter = 0;
-        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
         //this._mySteps[1] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_3);        
 
         this._myNonVRPlayingTimer = new PP.Timer(30);
@@ -181,6 +180,10 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                     this._StepRemove = true;
                     let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, speedUsed / this._myParams.myMaxSpeed);
                     this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
+
+                    if (this._mySteps.length == 0) {
+                        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+                    }
 
                     this.stepCounter = this.stepCounter + 1;
                     this.stepCounter = this.stepCounter % this._mySteps.length;

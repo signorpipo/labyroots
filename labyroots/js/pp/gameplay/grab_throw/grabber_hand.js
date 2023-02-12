@@ -49,9 +49,15 @@ WL.registerComponent('pp-grabber-hand', {
         this._myPhysX = this.object.pp_getComponent('physx');
         this._myCollisionsCollector = new PP.PhysicsCollisionCollector(this._myPhysX, true);
 
-        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
+        this._myAudioPrendi = null;
     },
     update: function (dt) {
+        if (Global.myReady) {
+            if (this._myAudioPrendi == null) {
+                this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.PRENDI_FRUTTO);
+            }
+        }
+
         this._myCollisionsCollector.update(dt);
 
         if (this._myGrabbables.length > 0) {

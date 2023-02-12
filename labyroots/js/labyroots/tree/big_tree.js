@@ -22,13 +22,13 @@ WL.registerComponent('big-tree', {
 
         Global.myBigTree = this;
 
-        this._myBigTreeDie = new LR.BigTreeDie();
-
         this._myTimeToWin = 0;
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myReady) {
+                this._myBigTreeDie = new LR.BigTreeDie();
+
                 let children = this.object.pp_getChildren();
                 for (let i = 0; i < children.length; i++) {
                     this._myPhases[parseInt(children[i].pp_getName()) - 1] = children[i];

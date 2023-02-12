@@ -14,7 +14,6 @@ WL.registerComponent('story', {
         this._myStepTimer = new PP.Timer(0.1);
         let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
         this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
-        this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
 
         this._mySkip = false;
     },
@@ -36,11 +35,13 @@ WL.registerComponent('story', {
                     if (Global.myIsWeddingTime) {
                         this._myTimer.start(4);
                     }
-
-                    Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                 }
             }
         } else {
+            if (this._mySteps.length == 0) {
+                this._mySteps[0] = PP.myAudioManager.createAudioPlayer(AudioID.PASSO_1);
+            }
+
             if (this._myResetActive) {
                 this._myResetActive = false;
                 let physxs = WL.scene.pp_getComponents("physx");
@@ -106,6 +107,8 @@ WL.registerComponent('story', {
                     Global.myAxe.pp_setActive(true);
                     Global.myFollowAxe.pp_setActive(true);
                     Global.myReady = true;
+
+                    Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                     Global.myMusicPlayer.play();
                 }
             }

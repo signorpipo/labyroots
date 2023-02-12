@@ -12,25 +12,6 @@ WL.registerComponent('transformation', {
         this._myLastFreeCell = null;
 
         this._myLamentoFinalePitch = 1.4;
-        this._myLamentiFinale = [];
-        this._myLamentiFinale[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
-        this._myLamentiFinale[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
-        this._myLamentiFinale[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
-
-        this._myLamenti = [];
-        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1);
-        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2);
-        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3);
-
-        this._myLamentiMorte = [];
-        this._myLamentiMorte[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1_MORTE);
-        this._myLamentiMorte[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2_MORTE);
-        this._myLamentiMorte[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3_MORTE);
-
-        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.TREE_UMANO_SPAWN);
-
-        this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
-        this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
 
         this._myObjectToIgnore = [];
 
@@ -231,6 +212,26 @@ WL.registerComponent('transformation', {
         }
     },
     _start() {
+        this._myLamentiFinale = [];
+        this._myLamentiFinale[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
+        this._myLamentiFinale[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
+        this._myLamentiFinale[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+
+        this._myLamenti = [];
+        this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1);
+        this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2);
+        this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3);
+
+        this._myLamentiMorte = [];
+        this._myLamentiMorte[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_1_MORTE);
+        this._myLamentiMorte[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_2_MORTE);
+        this._myLamentiMorte[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_UMANO_3_MORTE);
+
+        this._myAudioPrendi = PP.myAudioManager.createAudioPlayer(AudioID.TREE_UMANO_SPAWN);
+
+        this._myAudioHeal = PP.myAudioManager.createAudioPlayer(AudioID.HEAL);
+        this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
+
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
         for (let timer of this._myTransformationTimersSetup) {

@@ -1,11 +1,17 @@
 WL.registerComponent('audio-load', {
 }, {
     init() {
-        this.prepareSFXSetups();
     },
     start() {
+        this._myStarted = false;
     },
     update(dt) {
+        if (!this._myStarted) {
+            if (Global.myStoryReady) {
+                this._myStarted = true;
+                this.prepareSFXSetups();
+            }
+        }
     },
     prepareSFXSetups() {
         let manager = PP.myAudioManager;

@@ -38,13 +38,21 @@ WL.registerComponent('fruit', {
         this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
         this._myIsGrabbed = false;
 
-        this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
-
         this._myTimeGrabbed = 0;
         this._myTimeGrabbedStep = [5, 10, 15, 30];
         this._myTimeGrabbedStepIndex = 0;
+
+        this._myStarted = false;
     },
     update: function (dt) {
+
+        if (!this._myStarted) {
+            if (Global.myStoryReady) {
+                this._myStarted = true;
+                this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
+            }
+        }
+
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
                 if (!this._myGathered) {
