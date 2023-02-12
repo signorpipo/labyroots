@@ -13754,7 +13754,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p2",
-                        "material": "58d7b9be-9005-4b6b-8222-b1ee3c7af872"
+                        "material": "bfdc35ce-6fbe-4992-94c9-92664c1c7df4"
                     }
                 }
             ],
@@ -13783,7 +13783,7 @@
                     "type": "mesh",
                     "mesh": {
                         "mesh": "p2",
-                        "material": "669c131b-ca21-4ce8-afb1-34838b80093a"
+                        "material": "01a2b911-24eb-46ba-8187-f09419e32d56"
                     }
                 }
             ],
@@ -21398,6 +21398,18 @@
                 "name": "terreno_laby2.png",
                 "file": "assets\\textures\\png\\Environment\\terreno_laby2.png"
             }
+        },
+        "cccdb087-ef6f-471c-bc2f-213af14736df": {
+            "link": {
+                "name": "texture mani1.2 destra.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2 destra.webp"
+            }
+        },
+        "6cd1b4fe-8429-4133-b477-f4ffd8453d5c": {
+            "link": {
+                "name": "texture mani1.1 destra.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1 destra.webp"
+            }
         }
     },
     "images": {
@@ -21867,6 +21879,30 @@
                 2048,
                 2048
             ]
+        },
+        "c7260ead-9c27-46e3-8fa5-ab84e3cc6eb7": {
+            "link": {
+                "name": "texture mani1.2 destra.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2 destra.webp"
+            },
+            "maxSize": [
+                512,
+                512
+            ],
+            "compress": false,
+            "stream": false
+        },
+        "e595da84-bfff-4a5c-bfda-035395bf58bf": {
+            "link": {
+                "name": "texture mani1.1 destra.webp",
+                "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1 destra.webp"
+            },
+            "maxSize": [
+                512,
+                512
+            ],
+            "compress": false,
+            "stream": false
         }
     },
     "materials": {
@@ -22736,6 +22772,34 @@
                 "ambientFactor": 0.5,
                 "diffuseTexture": "7a4f7fc6-d98f-42ac-b19a-a1545a96159f"
             }
+        },
+        "bfdc35ce-6fbe-4992-94c9-92664c1c7df4": {
+            "name": "mano1 destra",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "cccdb087-ef6f-471c-bc2f-213af14736df",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
+        },
+        "01a2b911-24eb-46ba-8187-f09419e32d56": {
+            "name": "mano2 destra",
+            "pipeline": "14",
+            "Phong": {
+                "diffuseTexture": "6cd1b4fe-8429-4133-b477-f4ffd8453d5c",
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.5
+            }
         }
     },
     "shaders": {
@@ -23285,7 +23349,9 @@
         "assets/models/altro/fix_sky.fbx",
         "assets/textures/webp/Environment/fix_sky.webp",
         "assets/textures/webp/Icon/icon4.webp",
-        "assets/textures/png/Environment/terreno_laby2.png"
+        "assets/textures/png/Environment/terreno_laby2.png",
+        "assets/textures/webp/concept foglie albero/texture mani1.2 destra.webp",
+        "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp"
     ],
     "fonts": {
         "147": {
