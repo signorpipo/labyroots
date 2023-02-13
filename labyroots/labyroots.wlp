@@ -21450,8 +21450,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "37a5e91d-11cd-41cb-9c33-e0e640dff6a4": {
@@ -21462,8 +21462,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "00b6ab52-a892-4c6f-a4d8-f0f0960c876b": {
@@ -21474,8 +21474,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                2048,
-                2048
+                1024,
+                1024
             ]
         },
         "256c9c93-aaeb-414c-aa81-78de15a2e445": {
@@ -21486,8 +21486,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                2048,
-                2048
+                1024,
+                1024
             ]
         },
         "b2ddbfee-7e65-493f-946f-959c49f1f652": {
@@ -21498,8 +21498,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                2048,
-                2048
+                1024,
+                1024
             ]
         },
         "93a39555-5abb-44da-9f17-f22570276e8f": {
@@ -21618,8 +21618,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "eff7edfc-888b-4815-9d8c-a080d5dd56b4": {
@@ -21738,8 +21738,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "ac0e78dd-b39b-4e8c-8848-7a4945793e80": {
@@ -21750,8 +21750,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ]
         },
         "708253f0-da1b-4a79-8e2f-167448d0e2d5": {
@@ -21762,8 +21762,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                1024,
-                1024
+                512,
+                512
             ]
         },
         "bfe74a14-e11e-4aac-ab4d-73e3772b2ca3": {
@@ -21774,8 +21774,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                1024,
-                1024
+                512,
+                512
             ]
         },
         "7768feaf-9669-4cf9-9a73-c9ba7c0ffbde": {
@@ -21786,8 +21786,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                1024,
-                1024
+                512,
+                512
             ]
         },
         "a3ae8de9-94a0-4d9c-aa00-5d9c137fae58": {
@@ -21834,8 +21834,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                2048,
-                2048
+                1024,
+                1024
             ]
         },
         "4453731a-9407-4bfe-8c79-535f542dccd3": {
@@ -21892,8 +21892,8 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.2 destra.webp"
             },
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ],
             "compress": false,
             "stream": false
@@ -21904,8 +21904,8 @@
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1 destra.webp"
             },
             "maxSize": [
-                512,
-                512
+                256,
+                256
             ],
             "compress": false,
             "stream": false
