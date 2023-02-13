@@ -1,3 +1,5 @@
+import { Howler } from 'howler';
+
 WL.registerComponent('audio-load', {
 }, {
     init() {
@@ -29,6 +31,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_1, audioSetup);
         }
 
@@ -37,6 +40,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_2, audioSetup);
         }
 
@@ -45,6 +49,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_3, audioSetup);
         }
 
@@ -53,6 +58,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_1_MORTE, audioSetup);
         }
 
@@ -61,6 +67,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_2_MORTE, audioSetup);
         }
 
@@ -69,6 +76,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_3_MORTE, audioSetup);
         }
 
@@ -77,6 +85,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_1, audioSetup);
         }
 
@@ -85,6 +94,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_2, audioSetup);
         }
 
@@ -93,6 +103,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.LAMENTO_3, audioSetup);
         }
 
@@ -101,6 +112,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.COLPO_FINALE, audioSetup);
         }
 
@@ -109,6 +121,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.COLPO_NORMALE_1, audioSetup);
         }
 
@@ -117,6 +130,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.COLPO_NORMALE_2, audioSetup);
         }
 
@@ -125,6 +139,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 3;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
         }
 
@@ -133,6 +148,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.PRENDI_FRUTTO, audioSetup);
         }
 
@@ -141,6 +157,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 2;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.TREE_UMANO_SPAWN, audioSetup);
         }
 
@@ -149,6 +166,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 1.25;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.PASSO_1, audioSetup);
         }
 
@@ -157,6 +175,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.PASSO_2, audioSetup);
         }
 
@@ -165,6 +184,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.PASSO_3, audioSetup);
         }
 
@@ -173,6 +193,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.HEAL, audioSetup);
         }
 
@@ -181,6 +202,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.HEAL2, audioSetup);
         }
 
@@ -189,6 +211,7 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 0.25;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 2;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.SECRET_WALL_OPEN, audioSetup);
         }
 
@@ -197,11 +220,12 @@ WL.registerComponent('audio-load', {
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.5;
             audioSetup.myReferenceDistance = 1;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
         }
 
         for (let i = 0; i <= AudioID.BIG_TREE_DIE_HIT; i++) {
-            //manager.createAudioPlayer(i);
+            manager.createAudioPlayer(i);
         }
     }
 });
