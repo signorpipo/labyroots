@@ -1,4 +1,4 @@
-const CACHE = 'labyroots-cache';
+const CACHE = "labyroots-cache";
 
 const files = [
     "/",
@@ -87,7 +87,7 @@ const files = [
 // This force using the cache first if the network is failing for cached resources
 var forceTryCacheFirst = false;
 
-self.addEventListener('install', evt => {
+self.addEventListener("install", evt => {
     evt.waitUntil(precache());
 });
 
@@ -164,7 +164,7 @@ async function getFromCache(requestURL) {
 
 async function putInCache(request, response) {
     // return if request is not GET
-    if (request.method !== 'GET') return;
+    if (request.method !== "GET") return;
 
     const cache = await caches.open(CACHE);
     await cache.put(request, response);
