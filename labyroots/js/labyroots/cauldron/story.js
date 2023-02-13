@@ -16,6 +16,7 @@ WL.registerComponent('story', {
         this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
 
         this._mySkip = false;
+        this._myCanSkip = false;
     },
     update: function (dt) {
         if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(3) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(3) ||
@@ -31,6 +32,7 @@ WL.registerComponent('story', {
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
+                    this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
                     if (Global.myIsWeddingTime) {
                         this._myTimer.start(8);
@@ -79,7 +81,7 @@ WL.registerComponent('story', {
 
                 this._myTimer.update(dt);
                 this._myTimer2.update(dt);
-                if (this._myTimer.isDone() || (this._myTimer2.isDone() && this._mySkip)) {
+                if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {
                     if (this._mySkip && this._myTimer2.isDone()) {
                         if (Global.myGoogleAnalytics) {
                             gtag("event", "intro_skipped", {
@@ -107,6 +109,8 @@ WL.registerComponent('story', {
                     Global.myAxe.pp_setActive(true);
                     Global.myFollowAxe.pp_setActive(true);
                     Global.myReady = true;
+
+                    Global.mySaveManager.save("can_skip", true);
 
                     Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                     Global.myMusicPlayer.play();
