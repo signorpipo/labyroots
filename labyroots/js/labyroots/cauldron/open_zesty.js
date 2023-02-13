@@ -14,6 +14,12 @@ WL.registerComponent('open-zesty', {
             this._myEnd--;
             if (this._myEnd == 0) {
                 if (WL.xrSession) {
+                    Global.myUnmute = true;
+                    Howler.mute(true);
+
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
                     WL.xrSession.end();
                 }
             }
@@ -74,6 +80,13 @@ WL.registerComponent('open-zesty', {
         if (!result) {
             this._myChange = 10;
         } else {
+            Global.myUnmute = true;
+            Howler.mute(true);
+
+            if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
+            }
+
             if (Global.myGoogleAnalytics) {
                 gtag("event", "open_zesty_success", {
                     "value": 1

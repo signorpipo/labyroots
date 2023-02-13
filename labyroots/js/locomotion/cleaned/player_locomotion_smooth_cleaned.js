@@ -194,6 +194,11 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                     player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
                     player.play();
                 }
+
+                if (Global.myUnmute) {
+                    Global.myUnmute = false;
+                    Howler.mute(false);
+                }
             } else {
                 if (this._StepRemove) {
                     this._myStepTimer.update(dt);

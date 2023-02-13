@@ -26,7 +26,6 @@ WL.registerComponent('transformation', {
             this._onXRSessionStart(WL.xrSession);
         }
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
-        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
         Global.myTimerStopExit = new PP.Timer(1, false);
 
@@ -71,7 +70,11 @@ WL.registerComponent('transformation', {
                 if (axeComponent != null) {
                     axeComponent.setStartTransforms(Global.myAxeCell.myCellPosition);
                 }
+            }
 
+            if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
+                Global.myUnmute = false;
+                Howler.mute(false);
             }
 
             if (Global.myTimerStopExit.isRunning()) {
@@ -81,10 +84,18 @@ WL.registerComponent('transformation', {
                     Global.myExitSession = false;
                 }
             }
+
             if (this._myCloseSession > 0) {
                 this._myCloseSession--;
                 if (this._myCloseSession == 0) {
                     if (WL.xrSession) {
+                        Global.myUnmute = true;
+                        Howler.mute(true);
+
+                        if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                            Global.myAxe._myGrabbable.release();
+                        }
+
                         WL.xrSession.end();
                     }
                 }
@@ -114,6 +125,12 @@ WL.registerComponent('transformation', {
                     if (!result) {
                         this._myChange = 10;
                     } else {
+                        Global.myUnmute = true;
+                        Howler.mute(true);
+                        if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                            Global.myAxe._myGrabbable.release();
+                        }
+
                         if (Global.myGoogleAnalytics) {
                             gtag("event", "secret_code_wedding_success", {
                                 "value": 1
@@ -430,29 +447,10 @@ WL.registerComponent('transformation', {
             Global.myExitSession = false;
             this._myCloseSession = 2;
         }
-    },
-    _onXRSessionEnd() {
-        if (this._myChange > 0) {
-            this._myChange = 0;
-            let url = window.location.origin;
-
-            if (window.location != window.parent.location) {
-                url = "https://signor-pipo.itch.io/labyroots";
-            }
-
-            let result = false;
-            if (Global.myIsWeddingTime) {
-                result = Global.windowOpen(url);
-            } else {
-                result = Global.windowOpen(url + "/?wedding=1");
-            }
-
-            if (!result) {
-                this._myChange = 10;
-            }
-        }
     }
 });
+
+Global.myUnmute = false;
 
 Global.myExitSession = false;
 Global.myDeadOnce = false;

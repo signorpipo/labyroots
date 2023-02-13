@@ -14,6 +14,13 @@ WL.registerComponent('open-github', {
             this._myEnd--;
             if (this._myEnd == 0) {
                 if (WL.xrSession) {
+                    Global.myUnmute = true;
+                    Howler.mute(true);
+
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
+
                     WL.xrSession.end();
                 }
             }
@@ -27,6 +34,13 @@ WL.registerComponent('open-github', {
                 if (!result) {
                     this._myChange = 10;
                 } else {
+                    Global.myUnmute = true;
+                    Howler.mute(true);
+
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
+
                     if (Global.myGoogleAnalytics) {
                         gtag("event", "open_github_success", {
                             "value": 1
