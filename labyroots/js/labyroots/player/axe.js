@@ -176,6 +176,8 @@ WL.registerComponent('axe', {
                                 player.play();
                             }
                         }
+                    } else {
+                        this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                     }
                 }
 
@@ -268,6 +270,8 @@ WL.registerComponent('axe', {
                             // suono vittoria
                             // vibrazione
                         }
+                    } else {
+                        this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
                     }
                 }
 
