@@ -43,6 +43,7 @@ require('./pp/audio/audio_manager_component');
 require('./pp/audio/audio_manager');
 require('./pp/audio/audio_player');
 require('./pp/audio/audio_setup');
+require('./pp/audio/audio_utils');
 require('./pp/audio/mute_everything');
 
 require('./pp/audio/howler/howler_audio_player');
