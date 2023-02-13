@@ -20413,7 +20413,7 @@
             ],
             "components": [
                 {
-                    "active": true
+                    "active": false
                 }
             ]
         },
@@ -21416,6 +21416,12 @@
                 "name": "Angolo_A_lambert1_BaseMap_Bigger.webp",
                 "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap_Bigger.webp"
             }
+        },
+        "47af39d3-0856-4bac-b444-585cc8721516": {
+            "link": {
+                "name": "radici_muro_2.webp",
+                "file": "assets\\textures\\webp\\Trees\\radici_muro_2.webp"
+            }
         }
     },
     "images": {
@@ -21570,8 +21576,8 @@
             "compress": false,
             "stream": false,
             "maxSize": [
-                1024,
-                1024
+                2048,
+                2048
             ]
         },
         "7f7327bb-de83-4205-9d6f-bfc722bb2f76": {
@@ -21920,6 +21926,18 @@
             "maxSize": [
                 512,
                 512
+            ]
+        },
+        "93cd84bb-cd04-45aa-b3aa-ca55a31df0f1": {
+            "link": {
+                "name": "radici_muro_2.webp",
+                "file": "assets\\textures\\webp\\Trees\\radici_muro_2.webp"
+            },
+            "compress": false,
+            "stream": false,
+            "maxSize": [
+                1024,
+                1024
             ]
         }
     },
@@ -22300,7 +22318,7 @@
                     1.0
                 ],
                 "ambientFactor": 0.5,
-                "diffuseTexture": "df70b8f2-30c9-4bcc-bfbf-8170636b3b16"
+                "diffuseTexture": "47af39d3-0856-4bac-b444-585cc8721516"
             }
         },
         "1ad59ce9-21e7-43e6-a4bd-4506841198d9": {
@@ -23232,12 +23250,12 @@
                 1.0
             ],
             "textureAtlasSize": [
-                16384,
-                16384
+                8192,
+                8192
             ],
             "compressedTextureAtlasSize": [
-                32768,
-                16384
+                2048,
+                2048
             ]
         },
         "runtime": {
@@ -23391,7 +23409,8 @@
         "assets/textures/png/Environment/terreno_laby2.png",
         "assets/textures/webp/concept foglie albero/texture mani1.2 destra.webp",
         "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp",
-        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp"
+        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp",
+        "assets/textures/webp/Trees/radici_muro_2.webp"
     ],
     "fonts": {
         "147": {
