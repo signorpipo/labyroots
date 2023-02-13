@@ -13,11 +13,14 @@ WL.registerComponent('axe', {
         this._myIsGrabbed = false;
 
         this._myLamentoPitch = 1.4;
+        this._myInvinciblePitch = 0.85;
         this._myColpoFinalePitch = 1.25;
 
         this._myCollected = false;
 
         this._myStarted = false;
+
+        PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Pitch", 1, 0.1, 3));
     },
 
     update: function (dt) {
@@ -46,6 +49,8 @@ WL.registerComponent('axe', {
                 this._myLamenti[0] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_1);
                 this._myLamenti[1] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_2);
                 this._myLamenti[2] = PP.myAudioManager.createAudioPlayer(AudioID.LAMENTO_3);
+
+                this._myInvincible = PP.myAudioManager.createAudioPlayer(AudioID.INVINCIBLE);
 
             }
         }
@@ -247,6 +252,13 @@ WL.registerComponent('axe', {
                                 player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                                 //player.play();
                             }
+                        } else {
+                            this._myGrabbable.getGrabber().pp_getComponent("pp-grabber-hand")._myGamepad.pulse(0.5, 0.25);
+
+                            let player = this._myInvincible;
+                            player.setPosition(bigTree.object.pp_getPosition().vec3_add([0, 2, 0]));
+                            player.setPitch(Math.pp_random(this._myInvinciblePitch - 0.15, this._myInvinciblePitch + 0.05));
+                            player.play();
                         }
 
                         if (bigTree._myHit == 0) {

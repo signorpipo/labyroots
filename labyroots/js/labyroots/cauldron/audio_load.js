@@ -216,6 +216,15 @@ WL.registerComponent('audio-load', {
         }
 
         {
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            audioSetup.myRate = 1;
+            audioSetup.myVolume = 2;
+            audioSetup.myReferenceDistance = 0.3;
+            audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
+            manager.addAudioSetup(AudioID.INVINCIBLE, audioSetup);
+        }
+
+        {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.5;
@@ -224,7 +233,7 @@ WL.registerComponent('audio-load', {
             manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
         }
 
-        for (let i = 0; i <= AudioID.BIG_TREE_DIE_HIT; i++) {
+        for (let i = 0; i <= AudioID.INVINCIBLE; i++) {
             manager.createAudioPlayer(i);
         }
     }
@@ -254,4 +263,5 @@ AudioID = {
     TREE_UMANO_SPAWN: 21,
     SECRET_WALL_OPEN: 22,
     BIG_TREE_DIE_HIT: 23,
+    INVINCIBLE: 24
 };
