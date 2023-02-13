@@ -12668,7 +12668,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -12715,7 +12715,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -12809,7 +12809,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -12903,7 +12903,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -12997,7 +12997,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -13138,7 +13138,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -13326,7 +13326,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -13467,7 +13467,7 @@
             "components": [
                 {
                     "mesh": {
-                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
                     }
                 }
             ]
@@ -21410,6 +21410,12 @@
                 "name": "texture mani1.1 destra.webp",
                 "file": "assets\\textures\\webp\\concept foglie albero\\texture mani1.1 destra.webp"
             }
+        },
+        "c0c81e51-f7f0-46b7-bed7-604468157d0c": {
+            "link": {
+                "name": "Angolo_A_lambert1_BaseMap_Bigger.webp",
+                "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap_Bigger.webp"
+            }
         }
     },
     "images": {
@@ -21903,6 +21909,18 @@
             ],
             "compress": false,
             "stream": false
+        },
+        "c973a9dd-ce1c-458b-9b02-97c129d9f321": {
+            "link": {
+                "name": "Angolo_A_lambert1_BaseMap_Bigger.webp",
+                "file": "assets\\textures\\webp\\Walls\\Angolo_A_lambert1_BaseMap_Bigger.webp"
+            },
+            "compress": false,
+            "stream": false,
+            "maxSize": [
+                512,
+                512
+            ]
         }
     },
     "materials": {
@@ -22800,6 +22818,27 @@
                 ],
                 "ambientFactor": 0.5
             }
+        },
+        "6d0e666d-c362-4e2a-a9a0-88283f263266": {
+            "name": "Angolo_A_Bigger",
+            "pipeline": "146",
+            "Phong": {
+                "diffuseTexture": "c0c81e51-f7f0-46b7-bed7-604468157d0c",
+                "normalTexture": null,
+                "ambientColor": [
+                    0.022575,
+                    0.0274509,
+                    0.0199154,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "ambientFactor": 0.3249999
+            }
         }
     },
     "shaders": {
@@ -23351,7 +23390,8 @@
         "assets/textures/webp/Icon/icon4.webp",
         "assets/textures/png/Environment/terreno_laby2.png",
         "assets/textures/webp/concept foglie albero/texture mani1.2 destra.webp",
-        "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp"
+        "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp",
+        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp"
     ],
     "fonts": {
         "147": {

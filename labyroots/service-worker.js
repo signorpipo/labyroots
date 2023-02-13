@@ -77,6 +77,7 @@ const files = [
     "3a4b6111-7f99-413e-a55b-789c13cfbdd5.png",
     "1a12637b-0f5b-48ce-90d8-35460859d122.png",
     "00b6ab52-a892-4c6f-a4d8-f0f0960c876b.png",
+    "c973a9dd-ce1c-458b-9b02-97c129d9f321.png",
     //"ipns/lib.zesty.market/zesty-formats.js",
     //"ipfs/QmRiTKTFNDbe8tq7xXdWcyXqRAWsKKgbGdiz6wofrCceua",
     //"subgraphs/name/zestymarket/zesty-market-graph-matic",
