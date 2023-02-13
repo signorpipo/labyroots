@@ -33,7 +33,7 @@ WL.registerComponent('story', {
                     this._myStarted = true;
 
                     if (Global.myIsWeddingTime) {
-                        this._myTimer.start(6);
+                        this._myTimer.start(8);
                     }
                 }
             }
