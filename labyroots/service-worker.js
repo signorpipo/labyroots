@@ -139,7 +139,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
         // response may be used only once
         // we need to save clone to put one copy in cache
         // and serve second one
-        await putInCache(request, responseFromNetwork.clone());
+        putInCache(request, responseFromNetwork.clone());
         return responseFromNetwork;
     } catch (error) {
         if (!tryCacheFirst) {
@@ -177,9 +177,13 @@ async function getFromCache(requestURL) {
 }
 
 async function putInCache(request, response) {
-    // return if request is not GET
-    if (request.method !== "GET") return;
+    try {
+        // return if request is not GET
+        if (request.method !== "GET") return;
 
-    const cache = await caches.open(CACHE);
-    await cache.put(request, response);
+        const cache = await caches.open(CACHE);
+        await cache.put(request, response);
+    } catch (error) {
+        // do nothing
+    }
 }
