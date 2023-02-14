@@ -109,11 +109,19 @@ async function precache() {
 
 // With tryCacheFirst you can specify if you want to first try the cache or always check the network for updates
 // If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned
-async function getResource(request, tryCacheFirst = true, disableForceTryCacheFirst = false) {
+async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBackground = false, disableForceTryCacheFirst = false) {
     if (tryCacheFirst || (forceTryCacheFirst && !disableForceTryCacheFirst)) {
         // Try to get the resource from the cache
         const responseFromCache = await getFromCache(request.url);
         if (responseFromCache) {
+            if (fetchFromNetworkInBackground) {
+                fetch(request).then(function (responseFromNetwork) {
+                    if (responseFromNetwork.status == 200) {
+                        putInCache(request, responseFromNetwork.clone());
+                    }
+                });
+            }
+
             return responseFromCache;
         }
     }
