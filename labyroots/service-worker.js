@@ -92,7 +92,7 @@ self.addEventListener("install", evt => {
 });
 
 self.addEventListener("fetch", (event) => {
-    event.respondWith(getResource(event.request, true));
+    event.respondWith(getResource(event.request, true, true));
 });
 
 async function precache() {
@@ -119,7 +119,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
                     if (responseFromNetwork.status == 200) {
                         putInCache(request, responseFromNetwork.clone());
                     }
-                });
+                }).catch(function () { /* do nothing, we tried to update cache, it's ok if fail*/ });
             }
 
             return responseFromCache;

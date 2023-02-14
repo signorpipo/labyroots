@@ -92,7 +92,7 @@ self.addEventListener("install", evt => {
 });
 
 self.addEventListener("fetch", (event) => {
-    event.respondWith(getResource(event.request, true));
+    event.respondWith(getResource(event.request, true, true));
 });
 
 async function precache() {
@@ -109,11 +109,19 @@ async function precache() {
 
 // With tryCacheFirst you can specify if you want to first try the cache or always check the network for updates
 // If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned
-async function getResource(request, tryCacheFirst = true, disableForceTryCacheFirst = false) {
+async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBackground = false, disableForceTryCacheFirst = false) {
     if (tryCacheFirst || (forceTryCacheFirst && !disableForceTryCacheFirst)) {
         // Try to get the resource from the cache
         const responseFromCache = await getFromCache(request.url);
         if (responseFromCache) {
+            if (fetchFromNetworkInBackground) {
+                fetch(request).then(function (responseFromNetwork) {
+                    if (responseFromNetwork.status == 200) {
+                        putInCache(request, responseFromNetwork.clone());
+                    }
+                }).catch(function () { /* do nothing, we tried to update cache, it's ok if fail*/ });
+            }
+
             return responseFromCache;
         }
     }
@@ -121,6 +129,12 @@ async function getResource(request, tryCacheFirst = true, disableForceTryCacheFi
     // Try to get the resource from the network
     try {
         const responseFromNetwork = await fetch(request);
+
+        if (responseFromNetwork == null) {
+            throw new Error("Can't fetch: " + request.url + " - Response is null");
+        } else if (responseFromNetwork.status != 200) {
+            throw new Error("Can't fetch: " + request.url + " - Error Code: " + responseFromNetwork.status);
+        }
 
         // response may be used only once
         // we need to save clone to put one copy in cache
