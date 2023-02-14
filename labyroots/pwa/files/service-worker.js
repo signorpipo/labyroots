@@ -1,4 +1,4 @@
-const CACHE = "labyroots-cache";
+const CACHE = "labyroots-cache-v1";
 
 const files = [
     "/",
@@ -116,7 +116,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
         if (responseFromCache) {
             if (fetchFromNetworkInBackground) {
                 fetch(request).then(function (responseFromNetwork) {
-                    if (responseFromNetwork.status == 200) {
+                    if (responseFromNetwork != null && responseFromNetwork.status == 200) {
                         putInCache(request, responseFromNetwork.clone());
                     }
                 }).catch(function () { /* do nothing, we tried to update cache, it's ok if fail*/ });
