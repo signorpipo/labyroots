@@ -56,7 +56,7 @@ PP.SaveManager = class SaveManager {
             sameValue = this._mySaveCache.get(id) === value;
         }
 
-        if (!sameValue) {
+        if (!sameValue || true) {
             this._mySaveCache.set(id, value);
             if ((this._myDelaySavesCommit && overrideDelaySavesCommit == null) || (overrideDelaySavesCommit != null && overrideDelaySavesCommit)) {
                 this._myIDsToCommit.pp_pushUnique(id);
