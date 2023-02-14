@@ -40,6 +40,8 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
 
         this._myStepDelay = 0.8;
         this._myStepTimer = new PP.Timer(this._myStepDelay);
+        let delay = this._myStepDelay / 5;
+        this._myStepTimer.start(Math.max(0, Math.pp_random(delay - 0.1, delay + 0.05)));
         this._StepRemove = false;
 
         this._mySteps = [];
