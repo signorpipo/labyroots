@@ -96,9 +96,9 @@ self.addEventListener("fetch", (event) => {
 });
 
 async function precache() {
-    let cache = await caches.open(CACHE);
+    const cache = await caches.open(CACHE);
 
-    for (let file of files) {
+    for (const file of files) {
         try {
             await cache.add(file);
         } catch (error) {
@@ -113,7 +113,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
     if (tryCacheFirst || (forceTryCacheFirst && !disableForceTryCacheFirst)) {
         // Try to get the resource from the cache
         const responseFromCache = await getFromCache(request.url);
-        if (responseFromCache) {
+        if (responseFromCache != null) {
             if (fetchFromNetworkInBackground) {
                 fetch(request).then(function (responseFromNetwork) {
                     if (responseFromNetwork != null && responseFromNetwork.status == 200) {
@@ -144,7 +144,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
     } catch (error) {
         if (!tryCacheFirst) {
             const responseFromCache = await getFromCache(request.url);
-            if (responseFromCache) {
+            if (responseFromCache != null) {
                 if (!forceTryCacheFirst) {
                     console.error("Forcing cache first because of possible network issues");
                     forceTryCacheFirst = true;
@@ -157,10 +157,10 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
         // WLE use ? url params to make it so the bundle is not cached
         // but if network fails we can still try to use the cached one
         if (request.url != null) {
-            let requestWithoutParamsURL = request.url.split("?")[0];
+            const requestWithoutParamsURL = request.url.split("?")[0];
 
             const responseFromCacheWithoutParams = await getFromCache(requestWithoutParamsURL);
-            if (responseFromCacheWithoutParams) {
+            if (responseFromCacheWithoutParams != null) {
                 return responseFromCacheWithoutParams;
             }
         }
@@ -173,7 +173,7 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
 }
 
 async function getFromCache(requestURL) {
-    return await caches.match(requestURL);
+    return caches.match(requestURL);
 }
 
 async function putInCache(request, response) {
@@ -182,7 +182,7 @@ async function putInCache(request, response) {
         if (request.method !== "GET") return;
 
         const cache = await caches.open(CACHE);
-        await cache.put(request, response);
+        cache.put(request, response);
     } catch (error) {
         // do nothing
     }
