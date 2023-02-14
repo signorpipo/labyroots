@@ -107,8 +107,21 @@ async function precache() {
     }
 }
 
-// With tryCacheFirst you can specify if you want to first try the cache or always check the network for updates
-// If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned
+/**
+ * @param {Request} request 
+ * 
+ * @param {boolean} tryCacheFirst With tryCacheFirst you can specify if you want to first try the cache or always check the network for updates.
+ *                                If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned.
+ * 
+ * @param {boolean} fetchFromNetworkInBackground If tryCacheFirst is true, you can enable this flag to also fetch from network.
+ *                                               This will update the cache for the next page load, not the current one.
+ * 
+ * @param {boolean} disableForceTryCacheFirst If tryCacheFirst is false and the network fails to get a resource that is already in the cache,
+ *                                            it will, by default, start using the cache as first option.
+ *                                            With this flag u can prevent that and keep using the network first.
+ * 
+ * @returns {Response}
+ */
 async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBackground = false, disableForceTryCacheFirst = false) {
     if (tryCacheFirst || (forceTryCacheFirst && !disableForceTryCacheFirst)) {
         // Try to get the resource from the cache
