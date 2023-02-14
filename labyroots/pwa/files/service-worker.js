@@ -87,15 +87,15 @@ const files = [
 // This force using the cache first if the network is failing for cached resources
 var forceTryCacheFirst = false;
 
-self.addEventListener("install", evt => {
-    evt.waitUntil(precache());
+self.addEventListener("install", function (event) {
+    event.waitUntil(precacheResources());
 });
 
-self.addEventListener("fetch", (event) => {
+self.addEventListener("fetch", function (event) {
     event.respondWith(getResource(event.request, true, true));
 });
 
-async function precache() {
+async function precacheResources() {
     const cache = await caches.open(CACHE);
 
     for (const file of files) {
