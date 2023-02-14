@@ -122,6 +122,12 @@ async function getResource(request, tryCacheFirst = true, disableForceTryCacheFi
     try {
         const responseFromNetwork = await fetch(request);
 
+        if (responseFromNetwork == null) {
+            throw new Error("Can't fetch: " + request.url + " - Response is null");
+        } else if (responseFromNetwork.status != 200) {
+            throw new Error("Can't fetch: " + request.url + " - Error Code: " + responseFromNetwork.status);
+        }
+
         // response may be used only once
         // we need to save clone to put one copy in cache
         // and serve second one
