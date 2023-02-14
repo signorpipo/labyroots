@@ -40,15 +40,11 @@ PP.AudioPlayer = class AudioPlayer {
                 refDistance: this._myAudioSetup.myReferenceDistance,
                 preload: this._myAudioSetup.myPreload,
                 onloaderror: function () {
-                    console.error("Audio is fallbacking to html5 but it is not supported!");
-
                     if (Global.myGoogleAnalytics) {
-                        gtag("event", "html5_audio_error_reload", {
+                        gtag("event", "audio_load_error", {
                             "value": 1
                         });
                     }
-
-                    window.parent.location.reload();
                 }
             });
 

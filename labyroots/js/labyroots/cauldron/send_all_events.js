@@ -136,7 +136,7 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "moving_non_vr", {
                         "value": 1
                     });
-                    gtag("event", "html5_audio_error_reload", {
+                    gtag("event", "audio_load_error", {
                         "value": 1
                     });
 

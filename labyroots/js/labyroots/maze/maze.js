@@ -37,7 +37,7 @@ LR.Maze = class Maze {
             }
         }
 
-        Global.mySaveManager.save("is_wedding", false);
+        Global.mySaveManager.save("is_wedding", false, false);
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
