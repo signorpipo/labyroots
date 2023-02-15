@@ -27,7 +27,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -36,7 +36,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -45,7 +45,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -54,7 +54,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -63,7 +63,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -72,7 +72,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -81,7 +81,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -90,7 +90,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -99,7 +99,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -108,7 +108,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Ascia su muro di radici.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Ascia su muro di radici.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -117,7 +117,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -126,7 +126,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -135,7 +135,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 3;
             audioSetup.myReferenceDistance = 0.3;
@@ -144,7 +144,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -153,7 +153,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 2;
@@ -162,7 +162,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 1.25;
@@ -171,7 +171,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
@@ -180,7 +180,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
@@ -189,7 +189,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
@@ -198,7 +198,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
@@ -207,7 +207,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.mp3");
             audioSetup.myRate = 0.25;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 2;
@@ -216,7 +216,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -225,7 +225,7 @@ WL.registerComponent('audio-load', {
         }
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.5;
             audioSetup.myReferenceDistance = 1;
