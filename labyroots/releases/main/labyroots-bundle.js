@@ -20167,6 +20167,9 @@
           this._myPrevCollisionRuntimeParams.copy(collisionRuntimeParams);
           collisionRuntimeParams.reset();
           surfaceAdjustedHorizontalMovement = this._adjustHorizontalMovementWithSurface(horizontalMovement, verticalMovement, transformUp, collisionCheckParams, collisionRuntimeParams, this._myPrevCollisionRuntimeParams, surfaceAdjustedHorizontalMovement);
+          if (surfaceAdjustedHorizontalMovement.vec3_isZero(1e-5)) {
+            surfaceAdjustedHorizontalMovement.vec3_zero();
+          }
           this._syncCollisionRuntimeParamsWithPrevious(surfaceAdjustedHorizontalMovement, verticalMovement, transformUp, collisionCheckParams, collisionRuntimeParams, this._myPrevCollisionRuntimeParams);
           {
             forwardForHorizontal.vec3_copy(collisionCheckParams.myCheckHorizontalFixedForward);
@@ -20193,7 +20196,7 @@
               }
             }
             fixedHorizontalMovement.vec3_zero();
-            if (!surfaceAdjustedHorizontalMovement.vec3_isZero(1e-5)) {
+            if (!surfaceAdjustedHorizontalMovement.vec3_isZero()) {
               fixedHorizontalMovement = this._horizontalCheck(surfaceAdjustedHorizontalMovement, feetPosition, height, transformUp, forwardForHorizontal, allowSurfaceSteepFix, collisionCheckParams, collisionRuntimeParams, this._myPrevCollisionRuntimeParams, false, fixedHorizontalMovement);
               if (collisionCheckParams.mySlidingEnabled && collisionRuntimeParams.myIsCollidingHorizontally && this._isSlidingNormalValid(surfaceAdjustedHorizontalMovement, transformUp, collisionRuntimeParams)) {
                 fixedHorizontalMovement = this._horizontalSlide(surfaceAdjustedHorizontalMovement, feetPosition, height, transformUp, forwardForHorizontal, allowSurfaceSteepFix, collisionCheckParams, collisionRuntimeParams, this._myPrevCollisionRuntimeParams, fixedHorizontalMovement);
@@ -38823,6 +38826,7 @@
               if (this._myStartCounter == 0) {
                 Global.myPlayerLocomotion = this._myPlayerLocomotion;
                 Global.myPlayer.resetReal(true, false, false, true);
+                Global.myPlayer.resetHeadToReal();
                 let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
                 if (cell != null) {
                   this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
@@ -39524,6 +39528,8 @@
           this._myDetectionRuntimeParams.myParable.setSpeed(this._myTeleportParams.myDetectionParams.myTeleportParableSpeed);
           this._myDetectionRuntimeParams.myParable.setGravity(this._myTeleportParams.myDetectionParams.myTeleportParableGravity);
           this._myDetectionRuntimeParams.myParable.setStepLength(this._myTeleportParams.myDetectionParams.myTeleportParableStepLength);
+          Global.myPlayer.resetReal(true, false, false);
+          Global.myPlayer.resetHeadToReal();
           this._myVisualizer.start();
         }
         end() {
@@ -40608,10 +40614,10 @@
             params2.myObscureFadeInSeconds = 0.15;
             params2.myObscureFadeEasingFunction = PP.EasingFunction.linear;
             params2.myObscureLevelRelativeDistanceEasingFunction = PP.EasingFunction.linear;
-            params2.myDistanceToStartObscureWhenBodyColliding = 2220.35;
+            params2.myDistanceToStartObscureWhenBodyColliding = 0.5;
             params2.myDistanceToStartObscureWhenHeadColliding = 0;
             params2.myDistanceToStartObscureWhenFloating = 2220.35;
-            params2.myDistanceToStartObscureWhenFar = 2220.5;
+            params2.myDistanceToStartObscureWhenFar = 0.5;
             params2.myRelativeDistanceToMaxObscureWhenBodyColliding = 0.5;
             params2.myRelativeDistanceToMaxObscureWhenHeadColliding = 0;
             params2.myRelativeDistanceToMaxObscureWhenFloating = 0.5;
@@ -40977,6 +40983,7 @@
             this._myParams.myPlayerTransformManager.move(headMovement, this._myLocomotionRuntimeParams.myCollisionRuntimeParams);
             if (horizontalMovement) {
               this._myParams.myPlayerTransformManager.resetReal(true, false, false);
+              Global.myPlayer.resetHeadToReal();
             }
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 1e-5) {
               this._myTimeMoving += dt;
@@ -41282,8 +41289,8 @@
           params.myCheckHeight = true;
           params.myCheckHeightVerticalMovement = true;
           params.myCheckHeightVerticalPosition = true;
-          params.myHeightCheckStepAmountMovement = 2;
-          params.myHeightCheckStepAmountPosition = 2;
+          params.myHeightCheckStepAmountMovement = 1;
+          params.myHeightCheckStepAmountPosition = 1;
           params.myCheckHeightTopMovement = true;
           params.myCheckHeightTopPosition = true;
           params.myCheckVerticalStraight = true;
@@ -41495,11 +41502,12 @@
             this._myIsLeaning = false;
             this._myIsHopping = false;
             this._myIsFar = false;
+            this._generateRealMovementParamsFromMovementParams();
             movementToCheck = this.getPositionReal(positionReal).vec3_sub(this.getPosition(position), movementToCheck);
             if (movementToCheck.vec3_length() > 1e-4) {
               this._myLastValidMovementDirection = movementToCheck.vec3_normalize(this._myLastValidMovementDirection);
             }
-            if (false) {
+            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FAR)) {
               if (this._myParams.myIsMaxDistanceFromRealToSyncEnabled && movementToCheck.vec3_length() > this._myParams.myMaxDistanceFromRealToSync) {
                 this._myIsFar = true;
               } else if (this._myParams.myIsFarExtraCheckCallback != null && this._myParams.myIsFarExtraCheckCallback(this)) {
@@ -41510,7 +41518,7 @@
             collisionRuntimeParams.myIsOnGround = true;
             transformQuat3 = this.getTransformQuat(transformQuat3);
             newPosition.vec3_copy(this._myValidPosition);
-            if (false) {
+            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
               CollisionCheckGlobal.move(movementToCheck, transformQuat3, this._myRealMovementCollisionCheckParams, collisionRuntimeParams);
               if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {
                 if (Math.pp_clamp(
@@ -41636,11 +41644,11 @@
             }
             movementToCheck = this.getPositionHeadReal(positionReal).vec3_sub(this.getPositionHead(position), movementToCheck);
             collisionRuntimeParams.reset();
-            transformQuat3 = this.getTransformHeadRealQuat(transformQuat3);
+            transformQuat3 = this.getTransformHeadQuat(transformQuat3);
             newPositionHead.vec3_copy(this._myValidPositionHead);
             if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.HEAD_COLLIDING)) {
-              CollisionCheckGlobal.positionCheck(true, transformQuat3, this._myHeadCollisionCheckParams, collisionRuntimeParams);
-              if (collisionRuntimeParams.myIsPositionOk) {
+              CollisionCheckGlobal.move(movementToCheck, transformQuat3, this._myHeadCollisionCheckParams, collisionRuntimeParams);
+              if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {
                 this._myIsHeadColliding = false;
                 newPositionHead.vec3_copy(collisionRuntimeParams.myNewPosition);
               } else {
@@ -41653,10 +41661,10 @@
             if (this.isSynced(this._myParams.mySyncPositionHeadFlagMap)) {
               this._myValidPositionHead = this.getPositionHeadReal(newPositionHead);
             }
-            if (this.isSynced(this._myParams.mySyncRotationFlagMap)) {
+            if (true) {
               this._myValidRotationQuat = this.getRotationRealQuat(this._myValidRotationQuat);
             }
-            if (this.isSynced(this._myParams.mySyncHeightFlagMap)) {
+            if (true) {
               this._myValidHeight = this._myRealMovementCollisionCheckParams.myHeight;
               this._updateCollisionHeight();
             }
@@ -42368,7 +42376,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 11;
+                let currentVersion = 13;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
