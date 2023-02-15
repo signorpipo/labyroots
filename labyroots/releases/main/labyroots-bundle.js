@@ -13906,13 +13906,11 @@
               refDistance: this._myAudioSetup.myReferenceDistance,
               preload: this._myAudioSetup.myPreload,
               onloaderror: function() {
-                console.error("Audio is fallbacking to html5 but it is not supported!");
                 if (Global.myGoogleAnalytics) {
-                  gtag("event", "html5_audio_error_reload", {
+                  gtag("event", "audio_load_error", {
                     "value": 1
                   });
                 }
-                window.parent.location.reload();
               }
             });
             this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
@@ -14968,7 +14966,7 @@
           if (this._mySaveCache.has(id)) {
             sameValue = this._mySaveCache.get(id) === value;
           }
-          if (!sameValue) {
+          if (!sameValue || true) {
             this._mySaveCache.set(id, value);
             if (this._myDelaySavesCommit && overrideDelaySavesCommit == null || overrideDelaySavesCommit != null && overrideDelaySavesCommit) {
               this._myIDsToCommit.pp_pushUnique(id);
@@ -42004,7 +42002,7 @@
           this._myCellCoordinates = [0, 0];
         }
         createCells(mazeSetup) {
-          let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+          let isWedding = Global.isWedding();
           this._myGridToUse = mazeSetup.myGrid;
           Global.myIsWeddingTime = false;
           if (isWedding) {
@@ -42022,7 +42020,7 @@
               });
             }
           }
-          Global.mySaveManager.save("is_wedding", false);
+          Global.mySaveManager.save("is_wedding", false, false);
           this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
           let grid = this._myGridToUse;
           for (let i = 0; i < grid.length; i++) {
@@ -42253,6 +42251,19 @@
           return randomPosition;
         }
       };
+      Global.isWedding = function() {
+        let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+        if (!isWedding) {
+          try {
+            let urlSearchParams = new URL(window.location).searchParams;
+            if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+              isWedding = true;
+            }
+          } catch (error) {
+          }
+        }
+        return isWedding;
+      };
     }
   });
 
@@ -42357,7 +42368,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 9;
+                let currentVersion = 11;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -42427,7 +42438,7 @@
                 Global.myAxe.pp_setActive(true);
                 Global.myFollowAxe.pp_setActive(true);
                 Global.myReady = true;
-                Global.mySaveManager.save("can_skip", true);
+                Global.mySaveManager.save("can_skip", true, false);
                 Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                 Global.myMusicPlayer.play();
               }
@@ -42462,14 +42473,14 @@
         prepareSFXSetups() {
           let manager = PP.myAudioManager;
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.mp3");
             audioSetup.myLoop = true;
             audioSetup.mySpatial = false;
             audioSetup.myVolume = 0.1;
             manager.addAudioSetup(AudioID.MUSIC, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -42477,7 +42488,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_1, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -42485,7 +42496,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_2, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 0.3;
@@ -42493,7 +42504,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_3, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -42501,7 +42512,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_1_MORTE, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -42509,7 +42520,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_2_MORTE, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -42517,7 +42528,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_UMANO_3_MORTE, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -42525,7 +42536,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_1, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -42533,7 +42544,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_2, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Lamento albero 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 2;
@@ -42541,7 +42552,7 @@
             manager.addAudioSetup(AudioID.LAMENTO_3, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Ascia su muro di radici.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Ascia su muro di radici.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2.5;
             audioSetup.myReferenceDistance = 0.3;
@@ -42549,7 +42560,7 @@
             manager.addAudioSetup(AudioID.COLPO_FINALE, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -42557,7 +42568,7 @@
             manager.addAudioSetup(AudioID.COLPO_NORMALE_1, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -42565,7 +42576,7 @@
             manager.addAudioSetup(AudioID.COLPO_NORMALE_2, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 3;
             audioSetup.myReferenceDistance = 0.3;
@@ -42573,7 +42584,7 @@
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -42581,7 +42592,7 @@
             manager.addAudioSetup(AudioID.PRENDI_FRUTTO, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 2;
@@ -42589,7 +42600,7 @@
             manager.addAudioSetup(AudioID.TREE_UMANO_SPAWN, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 1.5;
             audioSetup.myReferenceDistance = 1.25;
@@ -42597,7 +42608,7 @@
             manager.addAudioSetup(AudioID.PASSO_1, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
@@ -42605,7 +42616,7 @@
             manager.addAudioSetup(AudioID.PASSO_2, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Passi nel verde 3.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 1.5;
@@ -42613,7 +42624,7 @@
             manager.addAudioSetup(AudioID.PASSO_3, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
@@ -42621,7 +42632,7 @@
             manager.addAudioSetup(AudioID.HEAL, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.75;
             audioSetup.myReferenceDistance = 0.3;
@@ -42629,7 +42640,7 @@
             manager.addAudioSetup(AudioID.HEAL2, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.mp3");
             audioSetup.myRate = 0.25;
             audioSetup.myVolume = 1;
             audioSetup.myReferenceDistance = 2;
@@ -42637,7 +42648,7 @@
             manager.addAudioSetup(AudioID.SECRET_WALL_OPEN, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Colpo spada su pietra 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 2;
             audioSetup.myReferenceDistance = 0.3;
@@ -42645,7 +42656,7 @@
             manager.addAudioSetup(AudioID.INVINCIBLE, audioSetup);
           }
           {
-            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/sfx/Attacco ascia alberi 2.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 0.5;
             audioSetup.myReferenceDistance = 1;
@@ -44121,7 +44132,7 @@
         update: function(dt) {
           if (!this._myDone) {
             this._myDone = true;
-            let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+            let isWedding = Global.isWedding();
             if (isWedding) {
               if (!this._myIsWedding) {
                 this.object.pp_setActive(false);
@@ -44463,7 +44474,7 @@
                 gtag("event", "moving_non_vr", {
                   "value": 1
                 });
-                gtag("event", "html5_audio_error_reload", {
+                gtag("event", "audio_load_error", {
                   "value": 1
                 });
                 let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
@@ -44584,7 +44595,17 @@
               if (this._myChange == 0) {
                 let url = window.location.origin;
                 if (window.location != window.parent.location) {
-                  url = "https://signor-pipo.itch.io/labyroots";
+                  url = "https://heyvr.io/game/labyroots";
+                  if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
+                    let ancestorOrigin = window.location.ancestorOrigins[0];
+                    if (ancestorOrigin.includes("itch.io")) {
+                      url = "https://signor-pipo.itch.io/labyroots";
+                    } else if (ancestorOrigin.includes("heyvr.io")) {
+                      url = "https://heyvr.io/game/labyroots";
+                    }
+                  }
+                } else {
+                  url = url + "/?wedding=1";
                 }
                 let result2 = false;
                 result2 = Global.windowOpen(url);
