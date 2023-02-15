@@ -301,8 +301,8 @@ CleanedPlayerTransformManager = class CleanedPlayerTransformManager {
         params.myCheckHeight = true;
         params.myCheckHeightVerticalMovement = true;
         params.myCheckHeightVerticalPosition = true;
-        params.myHeightCheckStepAmountMovement = 2;
-        params.myHeightCheckStepAmountPosition = 2;
+        params.myHeightCheckStepAmountMovement = 1;
+        params.myHeightCheckStepAmountPosition = 1;
         params.myCheckHeightTopMovement = true;
         params.myCheckHeightTopPosition = true;
         params.myCheckVerticalStraight = true;
@@ -727,12 +727,12 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             // Head Colliding
             movementToCheck = this.getPositionHeadReal(positionReal).vec3_sub(this.getPositionHead(position), movementToCheck);
             collisionRuntimeParams.reset();
-            transformQuat = this.getTransformHeadRealQuat(transformQuat); // get eyes transform
+            transformQuat = this.getTransformHeadQuat(transformQuat); // get eyes transform
             newPositionHead.vec3_copy(this._myValidPositionHead);
             if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.HEAD_COLLIDING)) {
-                //CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
-                CollisionCheckGlobal.positionCheck(true, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
-                if (collisionRuntimeParams.myIsPositionOk) {
+                CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
+                //CollisionCheckGlobal.positionCheck(true, transformQuat, this._myHeadCollisionCheckParams, collisionRuntimeParams);
+                if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {
                     this._myIsHeadColliding = false;
                     newPositionHead.vec3_copy(collisionRuntimeParams.myNewPosition);
                 } else {
