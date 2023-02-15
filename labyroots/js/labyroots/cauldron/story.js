@@ -110,7 +110,7 @@ WL.registerComponent('story', {
                     Global.myFollowAxe.pp_setActive(true);
                     Global.myReady = true;
 
-                    Global.mySaveManager.save("can_skip", true);
+                    Global.mySaveManager.save("can_skip", true, false);
 
                     Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                     Global.myMusicPlayer.play();

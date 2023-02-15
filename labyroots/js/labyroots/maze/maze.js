@@ -16,7 +16,7 @@ LR.Maze = class Maze {
     }
 
     createCells(mazeSetup) {
-        let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+        let isWedding = Global.isWedding();
 
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
@@ -351,4 +351,21 @@ LR.MazeCell = class MazeCell {
 
         return randomPosition;
     }
+}
+
+Global.isWedding = function () {
+    let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+
+    if (!isWedding) {
+        try {
+            let urlSearchParams = new URL(window.location).searchParams;
+            if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+                isWedding = true;
+            }
+        } catch (error) {
+
+        }
+    }
+
+    return isWedding;
 }

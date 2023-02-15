@@ -9,7 +9,7 @@ WL.registerComponent('activate-if-wedding', {
     update: function (dt) {
         if (!this._myDone) {
             this._myDone = true;
-            let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+            let isWedding = Global.isWedding();
 
             if (isWedding) {
                 if (!this._myIsWedding) {

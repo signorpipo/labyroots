@@ -126,6 +126,8 @@ WL.registerComponent('transformation', {
                                 url = "https://heyvr.io/game/labyroots";
                             }
                         }
+                    } else {
+                        url = url + "/?wedding=1";
                     }
 
                     let result = false;
