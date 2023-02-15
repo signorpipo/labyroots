@@ -19,7 +19,7 @@ WL.registerComponent('audio-load', {
         let manager = PP.myAudioManager;
 
         {
-            let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.wav");
+            let audioSetup = new PP.AudioSetup("assets/audio/music/creepy_music.mp3");
             audioSetup.myLoop = true;
             audioSetup.mySpatial = false;
             audioSetup.myVolume = 0.1;

@@ -24,7 +24,7 @@ const files = [
     "WonderlandRuntime-physx-simd-threads.js",
     "WonderlandRuntime-physx-simd-threads.worker.js",
     "setup.json",
-    "assets/audio/music/creepy_music.wav",
+    "assets/audio/music/creepy_music.mp3",
     "assets/audio/sfx/Ascia su muro di radici.mp3",
     "assets/audio/sfx/Attacco ascia alberi 1.mp3",
     "assets/audio/sfx/Attacco ascia alberi 2.mp3",
