@@ -76,6 +76,8 @@ PlayerLocomotionTeleportDetectionState = class PlayerLocomotionTeleportDetection
         this._myDetectionRuntimeParams.myParable.setGravity(this._myTeleportParams.myDetectionParams.myTeleportParableGravity);
         this._myDetectionRuntimeParams.myParable.setStepLength(this._myTeleportParams.myDetectionParams.myTeleportParableStepLength);
 
+        Global.myPlayer.resetReal(true, false, false);
+
         this._myVisualizer.start();
     }
 
