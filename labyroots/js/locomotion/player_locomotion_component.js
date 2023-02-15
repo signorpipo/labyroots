@@ -75,6 +75,7 @@ WL.registerComponent('player-locomotion', {
                 if (this._myStartCounter == 0) {
                     Global.myPlayerLocomotion = this._myPlayerLocomotion;
                     Global.myPlayer.resetReal(true, false, false, true);
+                    Global.myPlayer.resetHeadToReal();
 
                     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 

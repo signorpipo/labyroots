@@ -126,15 +126,15 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             params.myObscureFadeEasingFunction = PP.EasingFunction.linear;
             params.myObscureLevelRelativeDistanceEasingFunction = PP.EasingFunction.linear;
 
-            params.myDistanceToStartObscureWhenBodyColliding = 2220.35;
+            params.myDistanceToStartObscureWhenBodyColliding = 0.3;
             params.myDistanceToStartObscureWhenHeadColliding = 0;
             params.myDistanceToStartObscureWhenFloating = 2220.35;
-            params.myDistanceToStartObscureWhenFar = 2220.5;
+            params.myDistanceToStartObscureWhenFar = 0.3;
 
-            params.myRelativeDistanceToMaxObscureWhenBodyColliding = 0.5;
+            params.myRelativeDistanceToMaxObscureWhenBodyColliding = 0.3;
             params.myRelativeDistanceToMaxObscureWhenHeadColliding = 0;
             params.myRelativeDistanceToMaxObscureWhenFloating = 0.5;
-            params.myRelativeDistanceToMaxObscureWhenFar = 0.5;
+            params.myRelativeDistanceToMaxObscureWhenFar = 0.3;
 
             this._myPlayerObscureManager = new PlayerObscureManager(params);
         }

@@ -559,13 +559,15 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             this._myIsHopping = false;
             this._myIsFar = false;
 
+            this._generateRealMovementParamsFromMovementParams();
+
             movementToCheck = this.getPositionReal(positionReal).vec3_sub(this.getPosition(position), movementToCheck);
             if (movementToCheck.vec3_length() > 0.0001) {
                 this._myLastValidMovementDirection = movementToCheck.vec3_normalize(this._myLastValidMovementDirection); //TEMP direction
             }
 
             // Far
-            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FAR)) {
+            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FAR)) {
                 if (this._myParams.myIsMaxDistanceFromRealToSyncEnabled && movementToCheck.vec3_length() > this._myParams.myMaxDistanceFromRealToSync) {
                     this._myIsFar = true;
                 } else if (this._myParams.myIsFarExtraCheckCallback != null && this._myParams.myIsFarExtraCheckCallback(this)) {
@@ -578,7 +580,7 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             collisionRuntimeParams.myIsOnGround = true; //#TODO temp as long as surface infos are not actually updated
             transformQuat = this.getTransformQuat(transformQuat);
             newPosition.vec3_copy(this._myValidPosition);
-            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
+            if (this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.BODY_COLLIDING)) {
                 CollisionCheckGlobal.move(movementToCheck, transformQuat, this._myRealMovementCollisionCheckParams, collisionRuntimeParams);
 
                 if (!collisionRuntimeParams.myHorizontalMovementCanceled && !collisionRuntimeParams.myVerticalMovementCanceled) {

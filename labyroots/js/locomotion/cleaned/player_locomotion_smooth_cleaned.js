@@ -149,6 +149,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             this._myParams.myPlayerTransformManager.move(headMovement, this._myLocomotionRuntimeParams.myCollisionRuntimeParams);
             if (horizontalMovement) {
                 this._myParams.myPlayerTransformManager.resetReal(true, false, false);
+                Global.myPlayer.resetHeadToReal();
             }
 
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 0.00001) {
