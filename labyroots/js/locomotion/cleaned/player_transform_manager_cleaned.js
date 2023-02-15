@@ -749,11 +749,11 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
                 this._myValidPositionHead = this.getPositionHeadReal(newPositionHead);
             }
 
-            if (this.isSynced(this._myParams.mySyncRotationFlagMap)) {
+            if (true || this.isSynced(this._myParams.mySyncRotationFlagMap)) {
                 this._myValidRotationQuat = this.getRotationRealQuat(this._myValidRotationQuat);
             }
 
-            if (this.isSynced(this._myParams.mySyncHeightFlagMap)) {
+            if (true || this.isSynced(this._myParams.mySyncHeightFlagMap)) {
                 this._myValidHeight = this._myRealMovementCollisionCheckParams.myHeight;
                 this._updateCollisionHeight();
             }
