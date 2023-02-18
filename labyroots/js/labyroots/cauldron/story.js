@@ -97,7 +97,7 @@ WL.registerComponent('story', {
                     }
 
                     PP.CAUtils.getUser(function (user) {
-                        if (user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
+                        if (user != null && user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
                             if (Global.myGoogleAnalytics) {
                                 gtag("event", "playing_signed_in", {
                                     "value": 1
