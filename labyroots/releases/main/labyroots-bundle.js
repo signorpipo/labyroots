@@ -42376,7 +42376,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 13;
+                let currentVersion = 14;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -42434,11 +42434,13 @@
                     });
                   }
                 }
-                PP.CAUtils.getUser(function() {
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "playing_signed_in", {
-                      "value": 1
-                    });
+                PP.CAUtils.getUser(function(user) {
+                  if (user != null && user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
+                    if (Global.myGoogleAnalytics) {
+                      gtag("event", "playing_signed_in", {
+                        "value": 1
+                      });
+                    }
                   }
                 }, null, false);
                 this._myTimer.reset();
@@ -44076,32 +44078,47 @@
         }
         getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError) {
           let leaderboard = null;
-          if (isAroundPlayer) {
+          if (PP.CAUtils.isSDKAvailable()) {
             leaderboard = [
-              { rank: 0, displayName: "Sign In", score: 0 },
-              { rank: 1, displayName: "And", score: 0 },
-              { rank: 2, displayName: "Play", score: 0 },
-              { rank: 3, displayName: "On", score: 0 },
-              { rank: 4, displayName: "HeyVR", score: 0 },
-              { rank: 5, displayName: "To", score: 0 },
-              { rank: 6, displayName: "Submit", score: 0 },
-              { rank: 7, displayName: "Your", score: 0 },
-              { rank: 8, displayName: "Own", score: 0 },
-              { rank: 9, displayName: "Score", score: 0 }
+              { rank: 0, displayName: "Error", score: 0 },
+              { rank: 1, displayName: "Error", score: 0 },
+              { rank: 2, displayName: "Error", score: 0 },
+              { rank: 3, displayName: "Error", score: 0 },
+              { rank: 4, displayName: "Error", score: 0 },
+              { rank: 5, displayName: "Error", score: 0 },
+              { rank: 6, displayName: "Error", score: 0 },
+              { rank: 7, displayName: "Error", score: 0 },
+              { rank: 8, displayName: "Error", score: 0 },
+              { rank: 9, displayName: "Error", score: 0 }
             ];
           } else {
-            leaderboard = [
-              { rank: 0, displayName: "The", score: 0 },
-              { rank: 1, displayName: "Top 10", score: 0 },
-              { rank: 2, displayName: "Leaderboard", score: 0 },
-              { rank: 3, displayName: "Is", score: 0 },
-              { rank: 4, displayName: "Available", score: 0 },
-              { rank: 5, displayName: "Only", score: 0 },
-              { rank: 5, displayName: "When", score: 0 },
-              { rank: 7, displayName: "Playing", score: 0 },
-              { rank: 8, displayName: "On", score: 0 },
-              { rank: 9, displayName: "HeyVR", score: 0 }
-            ];
+            if (isAroundPlayer) {
+              leaderboard = [
+                { rank: 0, displayName: "Sign In", score: 0 },
+                { rank: 1, displayName: "And", score: 0 },
+                { rank: 2, displayName: "Play", score: 0 },
+                { rank: 3, displayName: "On", score: 0 },
+                { rank: 4, displayName: "HeyVR", score: 0 },
+                { rank: 5, displayName: "To", score: 0 },
+                { rank: 6, displayName: "Submit", score: 0 },
+                { rank: 7, displayName: "Your", score: 0 },
+                { rank: 8, displayName: "Own", score: 0 },
+                { rank: 9, displayName: "Score", score: 0 }
+              ];
+            } else {
+              leaderboard = [
+                { rank: 0, displayName: "The", score: 0 },
+                { rank: 1, displayName: "Top 10", score: 0 },
+                { rank: 2, displayName: "Leaderboard", score: 0 },
+                { rank: 3, displayName: "Is", score: 0 },
+                { rank: 4, displayName: "Available", score: 0 },
+                { rank: 5, displayName: "Only", score: 0 },
+                { rank: 5, displayName: "When", score: 0 },
+                { rank: 7, displayName: "Playing", score: 0 },
+                { rank: 8, displayName: "On", score: 0 },
+                { rank: 9, displayName: "HeyVR", score: 0 }
+              ];
+            }
           }
           while (leaderboard.length > scoresAmount) {
             leaderboard.pop();
