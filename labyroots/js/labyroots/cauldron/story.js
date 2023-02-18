@@ -28,7 +28,7 @@ WL.registerComponent('story', {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                    let currentVersion = 13;
+                    let currentVersion = 14;
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
@@ -96,11 +96,13 @@ WL.registerComponent('story', {
                         }
                     }
 
-                    PP.CAUtils.getUser(function () {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "playing_signed_in", {
-                                "value": 1
-                            });
+                    PP.CAUtils.getUser(function (user) {
+                        if (user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
+                            if (Global.myGoogleAnalytics) {
+                                gtag("event", "playing_signed_in", {
+                                    "value": 1
+                                });
+                            }
                         }
                     }, null, false);
 
