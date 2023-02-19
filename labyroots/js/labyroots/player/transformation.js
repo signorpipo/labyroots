@@ -15,7 +15,7 @@ WL.registerComponent('transformation', {
 
         this._myObjectToIgnore = [];
 
-        this._myWeddingDelay = 3;
+        this._myWeddingDelay = 2;
         this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
 
         this._myChange = 0;
