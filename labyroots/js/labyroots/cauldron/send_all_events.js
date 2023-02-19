@@ -139,6 +139,12 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "audio_load_error", {
                         "value": 1
                     });
+                    gtag("event", "defeat_root_axe_spawn", {
+                        "value": 1
+                    });
+                    gtag("event", "defeat_root_normal", {
+                        "value": 1
+                    });
 
                     let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
                     for (let timeMovingStep of timeMovingSteps) {
