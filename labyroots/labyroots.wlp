@@ -14269,7 +14269,8 @@
                     "root": {
                         "_myNormal": "c418dd0e-823a-43d3-ba1c-aa9dc00f1912",
                         "_myHurt": "c9275299-6962-4be4-8e73-5735979be670",
-                        "_myDead": "6ff12dba-1072-4e83-9625-efd837176776"
+                        "_myDead": "6ff12dba-1072-4e83-9625-efd837176776",
+                        "_myAxeSpawnRoot": true
                     }
                 },
                 {

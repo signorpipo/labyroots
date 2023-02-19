@@ -1,7 +1,8 @@
 WL.registerComponent('root', {
     _myNormal: { type: WL.Type.Object },
     _myHurt: { type: WL.Type.Object },
-    _myDead: { type: WL.Type.Object }
+    _myDead: { type: WL.Type.Object },
+    _myAxeSpawnRoot: { type: WL.Type.Bool, default: false }
 }, {
     init: function () {
     },
@@ -55,6 +56,16 @@ WL.registerComponent('root', {
                     gtag("event", "defeat_root", {
                         "value": 1
                     });
+
+                    if (this._myAxeSpawnRoot) {
+                        gtag("event", "defeat_root_axe_spawn", {
+                            "value": 1
+                        });
+                    } else {
+                        gtag("event", "defeat_root_normal", {
+                            "value": 1
+                        });
+                    }
                 }
             } else {
                 this._myPhases[1].pp_setActive(true);
@@ -65,6 +76,8 @@ WL.registerComponent('root', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+
+        clonedComponent._myAxeSpawnRoot = this._myAxeSpawnRoot;
 
         return clonedComponent;
     },

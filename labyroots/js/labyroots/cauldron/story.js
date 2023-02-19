@@ -28,7 +28,7 @@ WL.registerComponent('story', {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                    let currentVersion = 14;
+                    let currentVersion = 15;
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
