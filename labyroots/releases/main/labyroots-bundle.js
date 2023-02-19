@@ -42376,7 +42376,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 14;
+                let currentVersion = 15;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -44502,6 +44502,12 @@
                 gtag("event", "audio_load_error", {
                   "value": 1
                 });
+                gtag("event", "defeat_root_axe_spawn", {
+                  "value": 1
+                });
+                gtag("event", "defeat_root_normal", {
+                  "value": 1
+                });
                 let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
                 for (let timeMovingStep of timeMovingSteps) {
                   gtag("event", "moving_for_" + timeMovingStep + "_minutes_vr", {
@@ -44540,7 +44546,7 @@
           this._myLastFreeCell = null;
           this._myLamentoFinalePitch = 1.4;
           this._myObjectToIgnore = [];
-          this._myWeddingDelay = 3;
+          this._myWeddingDelay = 2;
           this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
           this._myChange = 0;
           this._myEnd = 0;
@@ -45530,7 +45536,8 @@
       WL.registerComponent("root", {
         _myNormal: { type: WL.Type.Object },
         _myHurt: { type: WL.Type.Object },
-        _myDead: { type: WL.Type.Object }
+        _myDead: { type: WL.Type.Object },
+        _myAxeSpawnRoot: { type: WL.Type.Bool, default: false }
       }, {
         init: function() {
         },
@@ -45575,6 +45582,15 @@
                 gtag("event", "defeat_root", {
                   "value": 1
                 });
+                if (this._myAxeSpawnRoot) {
+                  gtag("event", "defeat_root_axe_spawn", {
+                    "value": 1
+                  });
+                } else {
+                  gtag("event", "defeat_root_normal", {
+                    "value": 1
+                  });
+                }
               }
             } else {
               this._myPhases[1].pp_setActive(true);
@@ -45584,6 +45600,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent._myAxeSpawnRoot = this._myAxeSpawnRoot;
           return clonedComponent;
         }
       });
