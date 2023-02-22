@@ -8,16 +8,16 @@ LR.LRCADummyServer = class LRCADummyServer {
 
         if (PP.CAUtils.isSDKAvailable()) {
             leaderboard = [
-                { rank: 0, displayName: "Error", score: 0 },
+                { rank: 0, displayName: "An", score: 0 },
                 { rank: 1, displayName: "Error", score: 0 },
-                { rank: 2, displayName: "Error", score: 0 },
-                { rank: 3, displayName: "Error", score: 0 },
-                { rank: 4, displayName: "Error", score: 0 },
-                { rank: 5, displayName: "Error", score: 0 },
-                { rank: 6, displayName: "Error", score: 0 },
-                { rank: 7, displayName: "Error", score: 0 },
-                { rank: 8, displayName: "Error", score: 0 },
-                { rank: 9, displayName: "Error", score: 0 }
+                { rank: 2, displayName: "Has", score: 0 },
+                { rank: 3, displayName: "Occurred", score: 0 },
+                { rank: 4, displayName: "While", score: 0 },
+                { rank: 5, displayName: "Trying", score: 0 },
+                { rank: 6, displayName: "To", score: 0 },
+                { rank: 7, displayName: "Retrieve", score: 0 },
+                { rank: 8, displayName: "The", score: 0 },
+                { rank: 9, displayName: "Leaderboard", score: 0 }
             ];
         } else {
             if (isAroundPlayer) {
