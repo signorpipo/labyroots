@@ -151,6 +151,15 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "mother_tree_hit", {
                         "value": 1
                     });
+                    gtag("event", "root_hit_normal", {
+                        "value": 1
+                    });
+                    gtag("event", "root_hit_axe_spawn", {
+                        "value": 1
+                    });
+                    gtag("event", "root_hit", {
+                        "value": 1
+                    });
 
                     let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
                     for (let timeMovingStep of timeMovingSteps) {
@@ -166,6 +175,30 @@ WL.registerComponent('send-all-events', {
                     let timeGrabbedSteps = [5, 10, 15, 30];
                     for (let timeGrabbedStep of timeGrabbedSteps) {
                         gtag("event", "fruit_grab_for_" + timeGrabbedStep + "_seconds", {
+                            "value": 1
+                        });
+                    }
+
+                    for (let i = 0; i <= 4; i++) {
+                        gtag("event", "root_hit_normal_" + i, {
+                            "value": 1
+                        });
+                        gtag("event", "root_hit_axe_spawn_" + i, {
+                            "value": 1
+                        });
+                        gtag("event", "root_hit_" + i, {
+                            "value": 1
+                        });
+
+                        gtag("event", "defeat_root_axe_spawn_" + i, {
+                            "value": 1
+                        });
+
+                        gtag("event", "defeat_root_normal_" + i, {
+                            "value": 1
+                        });
+
+                        gtag("event", "defeat_root_" + i, {
                             "value": 1
                         });
                     }
