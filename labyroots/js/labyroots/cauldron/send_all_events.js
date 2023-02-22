@@ -145,6 +145,12 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "defeat_root_normal", {
                         "value": 1
                     });
+                    gtag("event", "mother_tree_hit_invincible", {
+                        "value": 1
+                    });
+                    gtag("event", "mother_tree_hit", {
+                        "value": 1
+                    });
 
                     let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
                     for (let timeMovingStep of timeMovingSteps) {

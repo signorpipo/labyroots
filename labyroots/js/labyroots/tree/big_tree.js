@@ -117,7 +117,19 @@ WL.registerComponent('big-tree', {
                             leaderboard.updateLeaderboard();
                         }
                     });
+                } else {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "mother_tree_hit", {
+                            "value": 1
+                        });
+                    }
                 }
+            }
+        } else {
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "mother_tree_hit_invincible", {
+                    "value": 1
+                });
             }
         }
 
