@@ -25261,7 +25261,7 @@
                     callbackOnDone(result2.leaderboard);
                   }
                 } else {
-                  if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                     PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
                   } else if (callbackOnError) {
                     let error = {};
@@ -25269,6 +25269,15 @@
                     error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
                     callbackOnError(error, result2);
                   }
+                }
+              }).catch(function(result2) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                  PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                } else if (callbackOnError) {
+                  let error = {};
+                  error.reason = "Get leaderboard failed";
+                  error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                  callbackOnError(error, result2);
                 }
               });
             } else {
@@ -25289,7 +25298,7 @@
                           callbackOnDone(result2.leaderboard);
                         }
                       } else {
-                        if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                        if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                           PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
                         } else if (callbackOnError) {
                           let error = {};
@@ -25299,7 +25308,7 @@
                         }
                       }
                     } else {
-                      if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                      if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                         PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
                       } else if (callbackOnError) {
                         let error = {};
@@ -25308,10 +25317,19 @@
                         callbackOnError(error, result2);
                       }
                     }
+                  }).catch(function(result2) {
+                    if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                      PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                    } else if (callbackOnError) {
+                      let error = {};
+                      error.reason = "Get leaderboard failed";
+                      error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                      callbackOnError(error, result2);
+                    }
                   });
                 },
                 function() {
-                  if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                     PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
                   } else if (callbackOnError) {
                     let error = {};
@@ -25324,7 +25342,7 @@
               );
             }
           } else {
-            if (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
               PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
             } else if (callbackOnError) {
               let error = {};
@@ -25350,7 +25368,7 @@
           if (PP.CAUtils.isSDKAvailable()) {
             casdk.submitScore(leaderboardID, scoreToSubmit).then(function(result2) {
               if (result2.error) {
-                if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                   PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
                 } else if (callbackOnError) {
                   let error = {};
@@ -25361,9 +25379,18 @@
               } else {
                 callbackOnDone();
               }
+            }).catch(function(result2) {
+              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
+              } else if (callbackOnError) {
+                let error = {};
+                error.reason = "Submit score failed";
+                error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                callbackOnError(error, result2);
+              }
             });
           } else {
-            if (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
               PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
             } else if (callbackOnError) {
               let error = {};
@@ -25393,7 +25420,7 @@
                   callbackOnDone(result2.user);
                 }
               } else {
-                if (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                   PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
                 } else if (callbackOnError) {
                   let error = {};
@@ -25402,9 +25429,18 @@
                   callbackOnError(error, result2);
                 }
               }
+            }).catch(function(result2) {
+              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
+              } else if (callbackOnError) {
+                let error = {};
+                error.reason = "Get user failed";
+                error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                callbackOnError(error, result2);
+              }
             });
           } else {
-            if (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null || overrideUseDummyServer != null && overrideUseDummyServer) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
               PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
             } else if (callbackOnError) {
               let error = {};
@@ -25440,32 +25476,47 @@
         }
         getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError) {
           let leaderboard = null;
-          if (isAroundPlayer) {
+          if (PP.CAUtils.isSDKAvailable()) {
             leaderboard = [
-              { rank: 7, displayName: "Player 1", score: 1e6 },
-              { rank: 8, displayName: "Player 2", score: 1e6 },
-              { rank: 9, displayName: "Player 3", score: 9e5 },
-              { rank: 10, displayName: "Player 4", score: 8e5 },
-              { rank: 11111, displayName: "Player 5", score: 7e7 },
-              { rank: 22222, displayName: "VeryLongName_06", score: 6e5 },
-              { rank: 33333, displayName: "Player 7", score: 5e5 },
-              { rank: 44444, displayName: "Player 8", score: 4e5 },
-              { rank: 55555, displayName: "Player 9", score: 3e5 },
-              { rank: 66666, displayName: "Player 10", score: 2e5 }
+              { rank: 0, displayName: "An", score: 0 },
+              { rank: 1, displayName: "Error", score: 0 },
+              { rank: 2, displayName: "Has", score: 0 },
+              { rank: 3, displayName: "Occurred", score: 0 },
+              { rank: 4, displayName: "While", score: 0 },
+              { rank: 5, displayName: "Trying", score: 0 },
+              { rank: 6, displayName: "To", score: 0 },
+              { rank: 7, displayName: "Retrieve", score: 0 },
+              { rank: 8, displayName: "The", score: 0 },
+              { rank: 9, displayName: "Leaderboard", score: 0 }
             ];
           } else {
-            leaderboard = [
-              { rank: 0, displayName: "Player 1", score: 1e6 },
-              { rank: 1, displayName: "Player 2", score: 1e6 },
-              { rank: 2, displayName: "Player 3", score: 9e5 },
-              { rank: 3, displayName: "Player 4", score: 8e5 },
-              { rank: 4, displayName: "Player 5", score: 7e5 },
-              { rank: 5, displayName: "Player 6", score: 6e5 },
-              { rank: 6, displayName: "Player 7", score: 5e5 },
-              { rank: 7, displayName: "Player 8", score: 4e5 },
-              { rank: 8, displayName: "Player 9", score: 3e5 },
-              { rank: 9, displayName: "Player 10", score: 2e5 }
-            ];
+            if (isAroundPlayer) {
+              leaderboard = [
+                { rank: 0, displayName: "Sign In", score: 0 },
+                { rank: 1, displayName: "And", score: 0 },
+                { rank: 2, displayName: "Play", score: 0 },
+                { rank: 3, displayName: "On", score: 0 },
+                { rank: 4, displayName: "HeyVR", score: 0 },
+                { rank: 5, displayName: "To", score: 0 },
+                { rank: 6, displayName: "Submit", score: 0 },
+                { rank: 7, displayName: "Your", score: 0 },
+                { rank: 8, displayName: "Own", score: 0 },
+                { rank: 9, displayName: "Score", score: 0 }
+              ];
+            } else {
+              leaderboard = [
+                { rank: 0, displayName: "The", score: 0 },
+                { rank: 1, displayName: "Top 10", score: 0 },
+                { rank: 2, displayName: "Leaderboard", score: 0 },
+                { rank: 3, displayName: "Is", score: 0 },
+                { rank: 4, displayName: "Available", score: 0 },
+                { rank: 5, displayName: "Only", score: 0 },
+                { rank: 5, displayName: "When", score: 0 },
+                { rank: 7, displayName: "Playing", score: 0 },
+                { rank: 8, displayName: "On", score: 0 },
+                { rank: 9, displayName: "HeyVR", score: 0 }
+              ];
+            }
           }
           while (leaderboard.length > scoresAmount) {
             leaderboard.pop();
@@ -41838,6 +41889,9 @@
           PP.CAUtils.setUseDummyServerOnSDKMissing(true);
           PP.CAUtils.setUseDummyServerOnError(true);
           Global.mySaveManager = new PP.SaveManager();
+          this._myTimePlayingVR = 0;
+          this._myTimePlayingVRStep = [1, 3, 5, 10, 20, 30, 60];
+          this._myTimePlayingVRStepIndex = 0;
         },
         update: function(dt) {
           if (!this._myLoadSetupDone) {
@@ -41888,6 +41942,19 @@
                     "value": 1
                   });
                 }
+              }
+            }
+          }
+          if (Global.myReady) {
+            if (PP.XRUtils.isSessionActive()) {
+              this._myTimePlayingVR += dt;
+              if (this._myTimePlayingVRStepIndex < this._myTimePlayingVRStep.length && this._myTimePlayingVR > this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] * 60) {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
+                    "value": 1
+                  });
+                }
+                this._myTimePlayingVRStepIndex++;
               }
             }
           }
@@ -42376,7 +42443,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 15;
+                let currentVersion = 16;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -44080,16 +44147,16 @@
           let leaderboard = null;
           if (PP.CAUtils.isSDKAvailable()) {
             leaderboard = [
-              { rank: 0, displayName: "Error", score: 0 },
+              { rank: 0, displayName: "An", score: 0 },
               { rank: 1, displayName: "Error", score: 0 },
-              { rank: 2, displayName: "Error", score: 0 },
-              { rank: 3, displayName: "Error", score: 0 },
-              { rank: 4, displayName: "Error", score: 0 },
-              { rank: 5, displayName: "Error", score: 0 },
-              { rank: 6, displayName: "Error", score: 0 },
-              { rank: 7, displayName: "Error", score: 0 },
-              { rank: 8, displayName: "Error", score: 0 },
-              { rank: 9, displayName: "Error", score: 0 }
+              { rank: 2, displayName: "Has", score: 0 },
+              { rank: 3, displayName: "Occurred", score: 0 },
+              { rank: 4, displayName: "While", score: 0 },
+              { rank: 5, displayName: "Trying", score: 0 },
+              { rank: 6, displayName: "To", score: 0 },
+              { rank: 7, displayName: "Retrieve", score: 0 },
+              { rank: 8, displayName: "The", score: 0 },
+              { rank: 9, displayName: "Leaderboard", score: 0 }
             ];
           } else {
             if (isAroundPlayer) {
@@ -44508,8 +44575,26 @@
                 gtag("event", "defeat_root_normal", {
                   "value": 1
                 });
+                gtag("event", "mother_tree_hit_invincible", {
+                  "value": 1
+                });
+                gtag("event", "mother_tree_hit", {
+                  "value": 1
+                });
+                gtag("event", "root_hit_normal", {
+                  "value": 1
+                });
+                gtag("event", "root_hit_axe_spawn", {
+                  "value": 1
+                });
+                gtag("event", "root_hit", {
+                  "value": 1
+                });
                 let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
                 for (let timeMovingStep of timeMovingSteps) {
+                  gtag("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
+                    "value": 1
+                  });
                   gtag("event", "moving_for_" + timeMovingStep + "_minutes_vr", {
                     "value": 1
                   });
@@ -44520,6 +44605,26 @@
                 let timeGrabbedSteps = [5, 10, 15, 30];
                 for (let timeGrabbedStep of timeGrabbedSteps) {
                   gtag("event", "fruit_grab_for_" + timeGrabbedStep + "_seconds", {
+                    "value": 1
+                  });
+                }
+                for (let i = 0; i <= 4; i++) {
+                  gtag("event", "root_hit_normal_" + i, {
+                    "value": 1
+                  });
+                  gtag("event", "root_hit_axe_spawn_" + i, {
+                    "value": 1
+                  });
+                  gtag("event", "root_hit_" + i, {
+                    "value": 1
+                  });
+                  gtag("event", "defeat_root_axe_spawn_" + i, {
+                    "value": 1
+                  });
+                  gtag("event", "defeat_root_normal_" + i, {
+                    "value": 1
+                  });
+                  gtag("event", "defeat_root_" + i, {
                     "value": 1
                   });
                 }
@@ -45573,6 +45678,7 @@
               phase.pp_setActive(false);
             }
             if (this._myHit == 0) {
+              Global.myRootsDefeated += 1;
               this._myPhases[2].pp_setActive(true);
               let tree = WL.scene.pp_getComponent("big-tree");
               if (tree) {
@@ -45582,18 +45688,50 @@
                 gtag("event", "defeat_root", {
                   "value": 1
                 });
+                gtag("event", "defeat_root_" + Global.myRootsDefeated, {
+                  "value": 1
+                });
                 if (this._myAxeSpawnRoot) {
                   gtag("event", "defeat_root_axe_spawn", {
+                    "value": 1
+                  });
+                  gtag("event", "defeat_root_axe_spawn_" + Global.myRootsDefeated, {
                     "value": 1
                   });
                 } else {
                   gtag("event", "defeat_root_normal", {
                     "value": 1
                   });
+                  gtag("event", "defeat_root_normal_" + Global.myRootsDefeated, {
+                    "value": 1
+                  });
                 }
               }
             } else {
               this._myPhases[1].pp_setActive(true);
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "root_hit", {
+                  "value": 1
+                });
+                gtag("event", "root_hit_" + Global.myRootsDefeated, {
+                  "value": 1
+                });
+                if (this._myAxeSpawnRoot) {
+                  gtag("event", "root_hit_axe_spawn", {
+                    "value": 1
+                  });
+                  gtag("event", "root_hit_axe_spawn_" + Global.myRootsDefeated, {
+                    "value": 1
+                  });
+                } else {
+                  gtag("event", "root_hit_normal", {
+                    "value": 1
+                  });
+                  gtag("event", "root_hit_normal_" + Global.myRootsDefeated, {
+                    "value": 1
+                  });
+                }
+              }
             }
           }
           return hitted;
@@ -45604,6 +45742,7 @@
           return clonedComponent;
         }
       });
+      Global.myRootsDefeated = 0;
     }
   });
 
@@ -45748,7 +45887,19 @@
                     leaderboard.updateLeaderboard();
                   }
                 });
+              } else {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "mother_tree_hit", {
+                    "value": 1
+                  });
+                }
               }
+            }
+          } else {
+            if (Global.myGoogleAnalytics) {
+              gtag("event", "mother_tree_hit_invincible", {
+                "value": 1
+              });
             }
           }
           return hitted;
