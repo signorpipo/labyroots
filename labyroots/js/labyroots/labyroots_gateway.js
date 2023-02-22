@@ -22,6 +22,10 @@ WL.registerComponent("labyroots-gateway", {
         PP.CAUtils.setUseDummyServerOnError(true);
 
         Global.mySaveManager = new PP.SaveManager();
+
+        this._myTimePlayingVR = 0;
+        this._myTimePlayingVRStep = [1, 3, 5, 10, 20, 30, 60];
+        this._myTimePlayingVRStepIndex = 0;
     },
     update: function (dt) {
         if (!this._myLoadSetupDone) {
@@ -81,6 +85,21 @@ WL.registerComponent("labyroots-gateway", {
                             "value": 1
                         });
                     }
+                }
+            }
+        }
+
+        if (Global.myReady) {
+            if (PP.XRUtils.isSessionActive()) {
+                this._myTimePlayingVR += dt;
+
+                if (this._myTimePlayingVRStepIndex < this._myTimePlayingVRStep.length && this._myTimePlayingVR > this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] * 60) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
+                            "value": 1
+                        });
+                    }
+                    this._myTimePlayingVRStepIndex++;
                 }
             }
         }
