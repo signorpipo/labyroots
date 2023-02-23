@@ -31,7 +31,7 @@ WL.registerComponent('open-github', {
             if (this._myChange == 0) {
                 let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
 
-                if (!result) {
+                if (result == null) {
                     this._myChange = 10;
                 } else {
                     Global.myUnmute = true;
@@ -77,8 +77,21 @@ WL.registerComponent('open-github', {
             this._myChange = 0;
             let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
 
-            if (!result) {
+            if (result == null) {
                 this._myChange = 10;
+            } else {
+                Global.myUnmute = true;
+                Howler.mute(true);
+
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                    Global.myAxe._myGrabbable.release();
+                }
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "open_github_success", {
+                        "value": 1
+                    });
+                }
             }
         }
     }

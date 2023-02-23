@@ -28,15 +28,7 @@ WL.registerComponent('open-zesty', {
         if (this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                let zesty = WL.scene.pp_getComponent("zesty-banner");
-                if (zesty != null) {
-                    Global.myZestyComponent = this;
-                    if (zesty.banner != null) {
-                        let result = zesty.onClick();
-                    } else {
-                        let result = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
-                    }
-                }
+                this.openZestyUrl();
             }
         }
     },
@@ -65,32 +57,38 @@ WL.registerComponent('open-zesty', {
     _onXRSessionEnd() {
         if (this._myChange > 0) {
             this._myChange = 0;
-            let zesty = WL.scene.pp_getComponent("zesty-banner");
-            if (zesty != null) {
-                Global.myZestyComponent = this;
-                if (zesty.banner != null) {
-                    let result = zesty.onClick();
-                } else {
-                    let result = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
-                }
-            }
+            this.openZestyUrl();
         }
     },
     result(result) {
-        if (!result) {
-            this._myChange = 10;
-        } else {
-            Global.myUnmute = true;
-            Howler.mute(true);
+    },
+    openZestyUrl() {
+        let zesty = WL.scene.pp_getComponent("zesty-banner");
+        if (zesty != null) {
+            Global.myZestyComponent = this;
 
-            if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                Global.myAxe._myGrabbable.release();
+            let result = null;
+            if (zesty.banner != null) {
+                result = zesty.executeClick();
+            } else {
+                result = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
             }
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "open_zesty_success", {
-                    "value": 1
-                });
+            if (result == null) {
+                this._myChange = 10;
+            } else {
+                Global.myUnmute = true;
+                Howler.mute(true);
+
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                    Global.myAxe._myGrabbable.release();
+                }
+
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "open_zesty_success", {
+                        "value": 1
+                    });
+                }
             }
         }
     }
