@@ -42443,7 +42443,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 16;
+                let currentVersion = 17;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -42821,7 +42821,7 @@
             this._myChange--;
             if (this._myChange == 0) {
               let result2 = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
-              if (!result2) {
+              if (result2 == null) {
                 this._myChange = 10;
               } else {
                 Global.myUnmute = true;
@@ -42862,8 +42862,19 @@
           if (this._myChange > 0) {
             this._myChange = 0;
             let result2 = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
-            if (!result2) {
+            if (result2 == null) {
               this._myChange = 10;
+            } else {
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
+              }
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "open_ggj_success", {
+                  "value": 1
+                });
+              }
             }
           }
         }
@@ -42901,7 +42912,7 @@
             this._myChange--;
             if (this._myChange == 0) {
               let result2 = Global.windowOpen("https://github.com/SignorPipo/labyroots");
-              if (!result2) {
+              if (result2 == null) {
                 this._myChange = 10;
               } else {
                 Global.myUnmute = true;
@@ -42942,8 +42953,19 @@
           if (this._myChange > 0) {
             this._myChange = 0;
             let result2 = Global.windowOpen("https://github.com/SignorPipo/labyroots");
-            if (!result2) {
+            if (result2 == null) {
               this._myChange = 10;
+            } else {
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
+              }
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "open_github_success", {
+                  "value": 1
+                });
+              }
             }
           }
         }
@@ -42980,15 +43002,7 @@
           if (this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              let zesty = WL.scene.pp_getComponent("zesty-banner");
-              if (zesty != null) {
-                Global.myZestyComponent = this;
-                if (zesty.banner != null) {
-                  let result2 = zesty.onClick();
-                } else {
-                  let result2 = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
-                }
-              }
+              this.openZestyUrl();
             }
           }
         },
@@ -43015,30 +43029,34 @@
         _onXRSessionEnd() {
           if (this._myChange > 0) {
             this._myChange = 0;
-            let zesty = WL.scene.pp_getComponent("zesty-banner");
-            if (zesty != null) {
-              Global.myZestyComponent = this;
-              if (zesty.banner != null) {
-                let result2 = zesty.onClick();
-              } else {
-                let result2 = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
-              }
-            }
+            this.openZestyUrl();
           }
         },
         result(result2) {
-          if (!result2) {
-            this._myChange = 10;
-          } else {
-            Global.myUnmute = true;
-            Howler.mute(true);
-            if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-              Global.myAxe._myGrabbable.release();
+        },
+        openZestyUrl() {
+          let zesty = WL.scene.pp_getComponent("zesty-banner");
+          if (zesty != null) {
+            Global.myZestyComponent = this;
+            let result2 = null;
+            if (zesty.banner != null) {
+              result2 = zesty.executeClick();
+            } else {
+              result2 = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
             }
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "open_zesty_success", {
-                "value": 1
-              });
+            if (result2 == null) {
+              this._myChange = 10;
+            } else {
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
+              }
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "open_zesty_success", {
+                  "value": 1
+                });
+              }
             }
           }
         }
@@ -43841,11 +43859,7 @@
             if (be().match) {
               if (t.includes("https://www.oculus.com/experiences/quest/")) {
                 setTimeout(() => {
-                  Global.windowOpen(t, function(result2) {
-                    if (Global.myZestyComponent) {
-                      Global.myZestyComponent.result(result2);
-                    }
-                  });
+                  window.open(t, "_blank");
                 }, 1e3);
                 return;
               }
@@ -43854,23 +43868,15 @@
               e.style.backgroundColor = "rgb(0, 0, 0, 0.75)", e.style.color = "white", e.style.textAlign = "center", e.style.position = "fixed", e.style.top = "50%", e.style.left = "50%", e.style.padding = "5%", e.style.borderRadius = "5%", e.style.transform = "translate(-50%, -50%)", n.innerHTML = `<b>This billboard leads to ${t}. Continue?</b>`, s.innerText = "Move cursor back into window.", s.style.width = "100vw", s.style.height = "100vh", s.onmouseenter = () => {
                 s.style.width = "auto", s.style.height = "auto", s.innerText = "Yes";
               }, s.onclick = () => {
-                Global.windowOpen(t, function(result2) {
-                  if (Global.myZestyComponent) {
-                    Global.myZestyComponent.result(result2);
-                  }
-                }), e.remove();
+                window.open(t, "_blank"), e.remove();
               }, i.innerText = "No", i.onclick = () => {
                 e.remove();
               }, e.append(r), r.append(n), r.append(s), r.append(i), document.body.append(e);
               return;
             }
-            Global.windowOpen(t, function(result2) {
-              if (Global.myZestyComponent) {
-                Global.myZestyComponent.result(result2);
-              }
-            });
+            window.open(t, "_blank");
           }
-        }, Wt = (t) => t.indexOf("utm_source = ") !== -1 || t.indexOf("utm_campaign = ") !== -1 || t.indexOf("utm_channel = ") !== -1, $t = (t, e) => {
+        }, Wt = (t) => t.indexOf("utm_source=") !== -1 || t.indexOf("utm_campaign=") !== -1 || t.indexOf("utm_channel=") !== -1, $t = (t, e) => {
           let r = new URL(t);
           return r.searchParams.set("utm_source", "ZestyMarket"), r.searchParams.set("utm_campaign", "ZestyCampaign"), r.searchParams.set("utm_channel", `SpaceId_${e}`), r.href;
         };
@@ -43976,7 +43982,9 @@
         }, onClick: function() {
           this.banner?.url && (WL.xrSession ? WL.xrSession.end().then(this.executeClick.bind(this)) : this.executeClick());
         }, executeClick: function() {
-          Ht(this.banner.url), this.beacon && Zt(this.space);
+          let result2 = Global.windowOpen(this.banner.url);
+          result2 != null && this.beacon && Zt(this.space);
+          return result2;
         }, loadBanner: async function(t, e, r, n) {
           e = e ? "polygon" : "rinkeby";
           let s = await Kt(t, e), i = await Xt(s.uri, r, n, t, this.formatsOverride), a = i.data.url;
