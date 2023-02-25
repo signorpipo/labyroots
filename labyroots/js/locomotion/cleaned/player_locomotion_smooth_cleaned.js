@@ -50,7 +50,7 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
 
         this._myNonVRPlayingTimer = new PP.Timer(30);
         this._myTimeMoving = 0;
-        this._myTimeMovingStep = [1, 3, 5, 10, 20, 30, 60];
+        this._myTimeMovingStep = [1, 2, 3, 5, 10, 20, 30, 60];
         this._myTimeMovingStepIndex = 0;
     }
 

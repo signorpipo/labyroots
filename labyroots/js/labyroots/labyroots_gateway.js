@@ -24,7 +24,7 @@ WL.registerComponent("labyroots-gateway", {
         Global.mySaveManager = new PP.SaveManager();
 
         this._myTimePlayingVR = 0;
-        this._myTimePlayingVRStep = [1, 3, 5, 10, 20, 30, 60];
+        this._myTimePlayingVRStep = [1, 2, 3, 5, 10, 20, 30, 60];
         this._myTimePlayingVRStepIndex = 0;
     },
     update: function (dt) {

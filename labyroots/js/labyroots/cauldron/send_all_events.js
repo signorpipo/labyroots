@@ -161,7 +161,7 @@ WL.registerComponent('send-all-events', {
                         "value": 1
                     });
 
-                    let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
+                    let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
                     for (let timeMovingStep of timeMovingSteps) {
                         gtag("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
                             "value": 1

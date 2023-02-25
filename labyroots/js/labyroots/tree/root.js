@@ -89,7 +89,8 @@ WL.registerComponent('root', {
                         "value": 1
                     });
 
-                    gtag("event", "root_hit_" + Global.myRootsDefeated, {
+                    let rootHit = Global.myRootsDefeated + 1;
+                    gtag("event", "root_hit_" + rootHit, {
                         "value": 1
                     });
 
@@ -98,7 +99,7 @@ WL.registerComponent('root', {
                             "value": 1
                         });
 
-                        gtag("event", "root_hit_axe_spawn_" + Global.myRootsDefeated, {
+                        gtag("event", "root_hit_axe_spawn_" + rootHit, {
                             "value": 1
                         });
                     } else {
@@ -106,7 +107,7 @@ WL.registerComponent('root', {
                             "value": 1
                         });
 
-                        gtag("event", "root_hit_normal_" + Global.myRootsDefeated, {
+                        gtag("event", "root_hit_normal_" + rootHit, {
                             "value": 1
                         });
                     }
