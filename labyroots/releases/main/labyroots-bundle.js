@@ -40953,7 +40953,7 @@
           this.stepCounter = 0;
           this._myNonVRPlayingTimer = new PP.Timer(30);
           this._myTimeMoving = 0;
-          this._myTimeMovingStep = [1, 3, 5, 10, 20, 30, 60];
+          this._myTimeMovingStep = [1, 2, 3, 5, 10, 20, 30, 60];
           this._myTimeMovingStepIndex = 0;
         }
         update(dt) {
@@ -41890,7 +41890,7 @@
           PP.CAUtils.setUseDummyServerOnError(true);
           Global.mySaveManager = new PP.SaveManager();
           this._myTimePlayingVR = 0;
-          this._myTimePlayingVRStep = [1, 3, 5, 10, 20, 30, 60];
+          this._myTimePlayingVRStep = [1, 2, 3, 5, 10, 20, 30, 60];
           this._myTimePlayingVRStepIndex = 0;
         },
         update: function(dt) {
@@ -42443,7 +42443,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 17;
+                let currentVersion = 18;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -44598,7 +44598,7 @@
                 gtag("event", "root_hit", {
                   "value": 1
                 });
-                let timeMovingSteps = [1, 3, 5, 10, 20, 30, 60];
+                let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
                 for (let timeMovingStep of timeMovingSteps) {
                   gtag("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
                     "value": 1
@@ -45721,21 +45721,22 @@
                 gtag("event", "root_hit", {
                   "value": 1
                 });
-                gtag("event", "root_hit_" + Global.myRootsDefeated, {
+                let rootHit = Global.myRootsDefeated + 1;
+                gtag("event", "root_hit_" + rootHit, {
                   "value": 1
                 });
                 if (this._myAxeSpawnRoot) {
                   gtag("event", "root_hit_axe_spawn", {
                     "value": 1
                   });
-                  gtag("event", "root_hit_axe_spawn_" + Global.myRootsDefeated, {
+                  gtag("event", "root_hit_axe_spawn_" + rootHit, {
                     "value": 1
                   });
                 } else {
                   gtag("event", "root_hit_normal", {
                     "value": 1
                   });
-                  gtag("event", "root_hit_normal_" + Global.myRootsDefeated, {
+                  gtag("event", "root_hit_normal_" + rootHit, {
                     "value": 1
                   });
                 }
