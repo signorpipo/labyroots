@@ -52,6 +52,9 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "is_wedding_maze", {
                         "value": 1
                     });
+                    gtag("event", "is_multiverse_maze", {
+                        "value": 1
+                    });
                     gtag("event", "is_normal_maze", {
                         "value": 1
                     });
@@ -74,6 +77,12 @@ WL.registerComponent('send-all-events', {
                         "value": 1
                     });
                     gtag("event", "secret_code_wedding", {
+                        "value": 1
+                    });
+                    gtag("event", "secret_code_multiverse", {
+                        "value": 1
+                    });
+                    gtag("event", "secret_code_multiverse_success", {
                         "value": 1
                     });
                     gtag("event", "death", {

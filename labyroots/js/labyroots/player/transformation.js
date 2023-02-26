@@ -17,6 +17,7 @@ WL.registerComponent('transformation', {
 
         this._myWeddingDelay = 2;
         this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
+        this._myMultiverseTimer = new PP.Timer(this._myWeddingDelay);
 
         this._myChange = 0;
         this._myEnd = 0;
@@ -38,6 +39,8 @@ WL.registerComponent('transformation', {
         this._myRepeatHealSoundTimer = new PP.Timer(0.4);
 
         this._myPosition = [0, 0, 0];
+
+        this._myIsWedding = false;
     },
     update: function (dt) {
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
@@ -127,7 +130,11 @@ WL.registerComponent('transformation', {
                             }
                         }
                     } else {
-                        url = url + "/?wedding=1";
+                        if (this._myIsWedding) {
+                            url = url + "/?wedding=1";
+                        } else {
+                            url = url + "/?multiverse=1";
+                        }
                     }
 
                     let result = false;
@@ -143,11 +150,19 @@ WL.registerComponent('transformation', {
                         }
 
                         if (Global.myGoogleAnalytics) {
-                            gtag("event", "secret_code_wedding_success", {
-                                "value": 1
-                            });
+                            if (this._myIsWedding) {
+                                gtag("event", "secret_code_wedding_success", {
+                                    "value": 1
+                                });
+                            } else {
+                                gtag("event", "secret_code_multiverse_success", {
+                                    "value": 1
+                                });
+                            }
                         }
                     }
+
+                    this._myIsWedding = false;
                 }
             }
 
@@ -218,7 +233,30 @@ WL.registerComponent('transformation', {
                 }
             }
 
-            if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+            if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+                if (this._myMultiverseTimer.isRunning()) {
+                    this._myMultiverseTimer.update(dt);
+                    if (this._myMultiverseTimer.isDone()) {
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "secret_code_multiverse", {
+                                "value": 1
+                            });
+                        }
+
+                        Global.mySaveManager.save("is_multiverse", true, false);
+
+                        this._myEnd = 30;
+                        this._myChange = 180;
+                        this._myIsWedding = false;
+                    }
+                }
+            } else {
+                this._myMultiverseTimer.start();
+            }
+
+            if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+                PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+                PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                 if (this._myWeddingTimer.isRunning()) {
                     this._myWeddingTimer.update(dt);
                     if (this._myWeddingTimer.isDone()) {
@@ -232,6 +270,7 @@ WL.registerComponent('transformation', {
 
                         this._myEnd = 30;
                         this._myChange = 180;
+                        this._myIsWedding = true;
                     }
                 }
             } else {

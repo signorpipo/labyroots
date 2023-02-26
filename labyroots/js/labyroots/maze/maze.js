@@ -17,10 +17,20 @@ LR.Maze = class Maze {
 
     createCells(mazeSetup) {
         let isWedding = Global.isWedding();
+        let isMultiverse = Global.isMultiverse();
 
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
-        if (isWedding) {
+        if (isMultiverse) {
+            this._myGridToUse = Global.createMultiverseMaze();
+            this._myGridToUse = mazeSetup.myGrid;
+
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "is_multiverse_maze", {
+                    "value": 1
+                });
+            }
+        } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
 
@@ -38,6 +48,7 @@ LR.Maze = class Maze {
         }
 
         Global.mySaveManager.save("is_wedding", false, false);
+        Global.mySaveManager.save("is_multiverse", false, false);
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
@@ -367,5 +378,22 @@ Global.isWedding = function () {
         }
     }
 
-    return isWedding;
+    return isWedding && !Global.isMultiverse();
+}
+
+Global.isMultiverse = function () {
+    let isMultiverse = Global.mySaveManager.loadBool("is_multiverse", false);
+
+    if (!isMultiverse) {
+        try {
+            let urlSearchParams = new URL(window.location).searchParams;
+            if (urlSearchParams != null && urlSearchParams.get("multiverse") != null) {
+                isMultiverse = true;
+            }
+        } catch (error) {
+
+        }
+    }
+
+    return isMultiverse;
 }
