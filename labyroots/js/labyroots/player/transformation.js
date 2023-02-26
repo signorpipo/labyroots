@@ -27,6 +27,7 @@ WL.registerComponent('transformation', {
             this._onXRSessionStart(WL.xrSession);
         }
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
         Global.myTimerStopExit = new PP.Timer(1, false);
 
@@ -43,13 +44,14 @@ WL.registerComponent('transformation', {
         this._myIsWedding = false;
     },
     update: function (dt) {
+        this._secretMazeCodeUpdate(dt);
+
         Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
         if (!this._myStarted) {
             if (Global.myReady) {
                 this._start();
             }
         } else {
-
             if (this._myRepeatHealSound > 0) {
                 this._myRepeatHealSoundTimer.update(dt);
                 if (this._myRepeatHealSoundTimer.isDone()) {
@@ -72,97 +74,6 @@ WL.registerComponent('transformation', {
                 let axeComponent = Global.myAxe.pp_getComponent("axe");
                 if (axeComponent != null) {
                     axeComponent.setStartTransforms(Global.myAxeCell.myCellPosition);
-                }
-            }
-
-            if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
-                Global.myUnmute = false;
-                Howler.mute(false);
-            }
-
-            if (Global.myTimerStopExit.isRunning()) {
-                Global.myTimerStopExit.update(dt);
-                if (Global.myTimerStopExit.isDone()) {
-                    this._myCloseSession = 0;
-                    Global.myExitSession = false;
-                }
-            }
-
-            if (this._myCloseSession > 0) {
-                this._myCloseSession--;
-                if (this._myCloseSession == 0) {
-                    if (WL.xrSession) {
-                        Global.myUnmute = true;
-                        Howler.mute(true);
-
-                        if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                            Global.myAxe._myGrabbable.release();
-                        }
-
-                        WL.xrSession.end();
-                    }
-                }
-            }
-
-            if (this._myEnd > 0) {
-                this._myEnd--;
-                if (this._myEnd == 0) {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
-                }
-            }
-
-            if (this._myChange > 0) {
-                this._myChange--;
-                if (this._myChange == 0) {
-                    let url = window.location.origin;
-
-                    if (window.location != window.parent.location) {
-                        url = "https://heyvr.io/game/labyroots";
-                        if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
-                            let ancestorOrigin = window.location.ancestorOrigins[0];
-
-                            if (ancestorOrigin.includes("itch.io")) {
-                                url = "https://signor-pipo.itch.io/labyroots";
-                            } else if (ancestorOrigin.includes("heyvr.io")) {
-                                url = "https://heyvr.io/game/labyroots";
-                            }
-                        }
-                    } else {
-                        if (this._myIsWedding) {
-                            url = url + "/?wedding=1";
-                        } else {
-                            url = url + "/?multiverse=1";
-                        }
-                    }
-
-                    let result = false;
-                    result = Global.windowOpen(url);
-
-                    if (!result) {
-                        this._myChange = 10;
-                    } else {
-                        Global.myUnmute = true;
-                        Howler.mute(true);
-                        if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                            Global.myAxe._myGrabbable.release();
-                        }
-
-                        if (Global.myGoogleAnalytics) {
-                            if (this._myIsWedding) {
-                                gtag("event", "secret_code_wedding_success", {
-                                    "value": 1
-                                });
-                            } else {
-                                gtag("event", "secret_code_multiverse_success", {
-                                    "value": 1
-                                });
-                            }
-                        }
-                    }
-
-                    this._myIsWedding = false;
                 }
             }
 
@@ -231,50 +142,6 @@ WL.registerComponent('transformation', {
                         "value": 1
                     });
                 }
-            }
-
-            if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-                if (this._myMultiverseTimer.isRunning()) {
-                    this._myMultiverseTimer.update(dt);
-                    if (this._myMultiverseTimer.isDone()) {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "secret_code_multiverse", {
-                                "value": 1
-                            });
-                        }
-
-                        Global.mySaveManager.save("is_multiverse", true, false);
-
-                        this._myEnd = 30;
-                        this._myChange = 180;
-                        this._myIsWedding = false;
-                    }
-                }
-            } else {
-                this._myMultiverseTimer.start();
-            }
-
-            if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
-                PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
-                PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
-                if (this._myWeddingTimer.isRunning()) {
-                    this._myWeddingTimer.update(dt);
-                    if (this._myWeddingTimer.isDone()) {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "secret_code_wedding", {
-                                "value": 1
-                            });
-                        }
-
-                        Global.mySaveManager.save("is_wedding", true, false);
-
-                        this._myEnd = 30;
-                        this._myChange = 180;
-                        this._myIsWedding = true;
-                    }
-                }
-            } else {
-                this._myWeddingTimer.start();
             }
         }
     },
@@ -496,6 +363,148 @@ WL.registerComponent('transformation', {
         if (Global.myExitSession) {
             Global.myExitSession = false;
             this._myCloseSession = 2;
+        }
+    },
+    _secretMazeCodeUpdate(dt) {
+        if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
+            Global.myUnmute = false;
+            Howler.mute(false);
+        }
+
+        if (Global.myTimerStopExit.isRunning()) {
+            Global.myTimerStopExit.update(dt);
+            if (Global.myTimerStopExit.isDone()) {
+                this._myCloseSession = 0;
+                Global.myExitSession = false;
+            }
+        }
+
+        if (this._myCloseSession > 0) {
+            this._myCloseSession--;
+            if (this._myCloseSession == 0) {
+                if (WL.xrSession) {
+                    Global.myUnmute = true;
+                    Howler.mute(true);
+
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
+
+                    WL.xrSession.end();
+                }
+            }
+        }
+
+        if (this._myEnd > 0) {
+            this._myEnd--;
+            if (this._myEnd == 0) {
+                if (WL.xrSession) {
+                    WL.xrSession.end();
+                }
+            }
+        }
+
+        if (this._myEnd == 0 && this._myChange > 0) {
+            this._myChange--;
+            if (this._myChange == 0) {
+                let url = window.location.origin;
+
+                if (window.location != window.parent.location) {
+                    url = "https://heyvr.io/game/labyroots";
+                    if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
+                        let ancestorOrigin = window.location.ancestorOrigins[0];
+
+                        if (ancestorOrigin.includes("itch.io")) {
+                            url = "https://signor-pipo.itch.io/labyroots";
+                        } else if (ancestorOrigin.includes("heyvr.io")) {
+                            url = "https://heyvr.io/game/labyroots";
+                        }
+                    }
+                } else {
+                    if (this._myIsWedding) {
+                        url = url + "/?wedding=1";
+                    } else {
+                        url = url + "/?multiverse=1";
+                    }
+                }
+
+                let result = false;
+                result = Global.windowOpen(url);
+
+                if (!result) {
+                    this._myChange = 10;
+                } else {
+                    Global.myUnmute = true;
+                    Howler.mute(true);
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
+
+                    if (Global.myGoogleAnalytics) {
+                        if (this._myIsWedding) {
+                            gtag("event", "secret_code_wedding_success", {
+                                "value": 1
+                            });
+                        } else {
+                            gtag("event", "secret_code_multiverse_success", {
+                                "value": 1
+                            });
+                        }
+                    }
+                }
+
+                this._myIsWedding = false;
+            }
+        }
+
+        if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+            if (this._myMultiverseTimer.isRunning()) {
+                this._myMultiverseTimer.update(dt);
+                if (this._myMultiverseTimer.isDone()) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "secret_code_multiverse", {
+                            "value": 1
+                        });
+                    }
+
+                    Global.mySaveManager.save("is_multiverse", true, false);
+
+                    this._myEnd = 10;
+                    this._myChange = 10;
+                    this._myIsWedding = false;
+                }
+            }
+        } else {
+            this._myMultiverseTimer.start();
+        }
+
+        if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+            PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
+            if (this._myWeddingTimer.isRunning()) {
+                this._myWeddingTimer.update(dt);
+                if (this._myWeddingTimer.isDone()) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "secret_code_wedding", {
+                            "value": 1
+                        });
+                    }
+
+                    Global.mySaveManager.save("is_wedding", true, false);
+
+                    this._myEnd = 10;
+                    this._myChange = 10;
+                    this._myIsWedding = true;
+                }
+            }
+        } else {
+            this._myWeddingTimer.start();
+        }
+    },
+    _onXRSessionEnd() {
+        this._myEnd = 0;
+        if (this._myChange > 0) {
+            this._myChange = 1;
         }
     }
 });

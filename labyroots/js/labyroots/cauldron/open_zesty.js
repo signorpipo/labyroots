@@ -25,7 +25,7 @@ WL.registerComponent('open-zesty', {
             }
         }
 
-        if (this._myChange > 0) {
+        if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
                 this.openZestyUrl();
@@ -41,8 +41,8 @@ WL.registerComponent('open-zesty', {
         return true;
     },
     open() {
-        this._myEnd = 30;
-        this._myChange = 180;
+        this._myEnd = 10;
+        this._myChange = 10;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "open_zesty", {
@@ -55,6 +55,7 @@ WL.registerComponent('open-zesty', {
         return clonedComponent;
     },
     _onXRSessionEnd() {
+        this._myEnd = 0;
         if (this._myChange > 0) {
             this._myChange = 0;
             this.openZestyUrl();

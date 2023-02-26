@@ -26,7 +26,7 @@ WL.registerComponent('open-ggj', {
             }
         }
 
-        if (this._myChange > 0) {
+        if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
                 let result = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
@@ -60,8 +60,8 @@ WL.registerComponent('open-ggj', {
         return true;
     },
     open() {
-        this._myEnd = 30;
-        this._myChange = 180;
+        this._myEnd = 10;
+        this._myChange = 10;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "open_ggj", {
@@ -74,6 +74,7 @@ WL.registerComponent('open-ggj', {
         return clonedComponent;
     },
     _onXRSessionEnd() {
+        this._myEnd = 0;
         if (this._myChange > 0) {
             this._myChange = 0;
             let result = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");

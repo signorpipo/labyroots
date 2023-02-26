@@ -26,7 +26,7 @@ WL.registerComponent('open-github', {
             }
         }
 
-        if (this._myChange > 0) {
+        if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
                 let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
@@ -59,8 +59,8 @@ WL.registerComponent('open-github', {
         return true;
     },
     open() {
-        this._myEnd = 30;
-        this._myChange = 180;
+        this._myEnd = 10;
+        this._myChange = 10;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "open_github", {
@@ -73,6 +73,7 @@ WL.registerComponent('open-github', {
         return clonedComponent;
     },
     _onXRSessionEnd() {
+        this._myEnd = 0;
         if (this._myChange > 0) {
             this._myChange = 0;
             let result = Global.windowOpen("https://github.com/SignorPipo/labyroots");
