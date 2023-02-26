@@ -13,6 +13,8 @@ WL.registerComponent('open-zesty', {
         if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
+                this._myChange = 1;
+
                 if (WL.xrSession) {
                     Global.myUnmute = true;
                     Howler.mute(true);
@@ -41,8 +43,8 @@ WL.registerComponent('open-zesty', {
         return true;
     },
     open() {
-        this._myEnd = 10;
-        this._myChange = 10;
+        this._myEnd = 60;
+        this._myChange = 60;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "open_zesty", {
@@ -57,8 +59,7 @@ WL.registerComponent('open-zesty', {
     _onXRSessionEnd() {
         this._myEnd = 0;
         if (this._myChange > 0) {
-            this._myChange = 0;
-            this.openZestyUrl();
+            this._myChange = 1;
         }
     },
     result(result) {

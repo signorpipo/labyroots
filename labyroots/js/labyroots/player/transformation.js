@@ -398,6 +398,8 @@ WL.registerComponent('transformation', {
         if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
+                this._myChange = 1;
+
                 if (WL.xrSession) {
                     WL.xrSession.end();
                 }
