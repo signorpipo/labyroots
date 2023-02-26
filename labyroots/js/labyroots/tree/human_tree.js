@@ -83,6 +83,20 @@ WL.registerComponent('human-tree', {
                     Global.myBigTreeDead = true;
                     Global.myStage = 0;
                 }
+            } else {
+                if (this._myType != 90) {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "human_tree_hit", {
+                            "value": 1
+                        });
+                    }
+                } else {
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "bride_tree_hit", {
+                            "value": 1
+                        });
+                    }
+                }
             }
         }
 
