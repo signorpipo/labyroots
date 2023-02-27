@@ -21,7 +21,7 @@ LR.Maze = class Maze {
 
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
-        if (isMultiverse) {
+        if (isMultiverse && false) {
             this._myGridToUse = Global.createMultiverseMaze();
             this._myGridToUse = mazeSetup.myGrid;
 

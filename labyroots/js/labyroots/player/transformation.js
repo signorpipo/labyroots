@@ -459,7 +459,9 @@ WL.registerComponent('transformation', {
             }
         }
 
-        if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+        if (false && this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+            PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
             if (this._myMultiverseTimer.isRunning()) {
                 this._myMultiverseTimer.update(dt);
                 if (this._myMultiverseTimer.isDone()) {
@@ -480,9 +482,8 @@ WL.registerComponent('transformation', {
             this._myMultiverseTimer.start();
         }
 
-        if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
-            PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
-            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
+        if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()
+            && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (this._myWeddingTimer.isRunning()) {
                 this._myWeddingTimer.update(dt);
                 if (this._myWeddingTimer.isDone()) {
