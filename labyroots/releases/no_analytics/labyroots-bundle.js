@@ -42078,9 +42078,18 @@
         }
         createCells(mazeSetup) {
           let isWedding = Global.isWedding();
+          let isMultiverse = Global.isMultiverse();
           this._myGridToUse = mazeSetup.myGrid;
           Global.myIsWeddingTime = false;
-          if (isWedding) {
+          if (isMultiverse && false) {
+            this._myGridToUse = Global.createMultiverseMaze();
+            this._myGridToUse = mazeSetup.myGrid;
+            if (Global.myGoogleAnalytics) {
+              gtag("event", "is_multiverse_maze", {
+                "value": 1
+              });
+            }
+          } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
             if (Global.myGoogleAnalytics) {
@@ -42096,6 +42105,7 @@
             }
           }
           Global.mySaveManager.save("is_wedding", false, false);
+          Global.mySaveManager.save("is_multiverse", false, false);
           this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
           let grid = this._myGridToUse;
           for (let i = 0; i < grid.length; i++) {
@@ -42337,7 +42347,20 @@
           } catch (error) {
           }
         }
-        return isWedding;
+        return isWedding && !Global.isMultiverse();
+      };
+      Global.isMultiverse = function() {
+        let isMultiverse = Global.mySaveManager.loadBool("is_multiverse", false);
+        if (!isMultiverse) {
+          try {
+            let urlSearchParams = new URL(window.location).searchParams;
+            if (urlSearchParams != null && urlSearchParams.get("multiverse") != null) {
+              isMultiverse = true;
+            }
+          } catch (error) {
+          }
+        }
+        return isMultiverse;
       };
     }
   });
@@ -42379,6 +42402,15 @@
         HUMAN_TREE_2: 70,
         HUMAN_TREE_3: 80,
         HUMAN_TREE_4: 90
+      };
+    }
+  });
+
+  // js/labyroots/maze/multiverse_maze.js
+  var require_multiverse_maze = __commonJS({
+    "js/labyroots/maze/multiverse_maze.js"() {
+      Global.createMultiverseMaze = function() {
+        return null;
       };
     }
   });
@@ -42443,7 +42475,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 18;
+                let currentVersion = 19;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -42807,6 +42839,7 @@
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
+              this._myChange = 1;
               if (WL.xrSession) {
                 Global.myUnmute = true;
                 Howler.mute(true);
@@ -42817,7 +42850,7 @@
               }
             }
           }
-          if (this._myChange > 0) {
+          if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
               let result2 = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
@@ -42846,8 +42879,8 @@
           return true;
         },
         open() {
-          this._myEnd = 30;
-          this._myChange = 180;
+          this._myEnd = 60;
+          this._myChange = 60;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_ggj", {
               "value": 1
@@ -42859,23 +42892,9 @@
           return clonedComponent;
         },
         _onXRSessionEnd() {
+          this._myEnd = 0;
           if (this._myChange > 0) {
-            this._myChange = 0;
-            let result2 = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
-            if (result2 == null) {
-              this._myChange = 10;
-            } else {
-              Global.myUnmute = true;
-              Howler.mute(true);
-              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                Global.myAxe._myGrabbable.release();
-              }
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "open_ggj_success", {
-                  "value": 1
-                });
-              }
-            }
+            this._myChange = 1;
           }
         }
       });
@@ -42898,6 +42917,7 @@
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
+              this._myChange = 1;
               if (WL.xrSession) {
                 Global.myUnmute = true;
                 Howler.mute(true);
@@ -42908,7 +42928,7 @@
               }
             }
           }
-          if (this._myChange > 0) {
+          if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
               let result2 = Global.windowOpen("https://github.com/SignorPipo/labyroots");
@@ -42937,8 +42957,8 @@
           return true;
         },
         open() {
-          this._myEnd = 30;
-          this._myChange = 180;
+          this._myEnd = 60;
+          this._myChange = 60;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_github", {
               "value": 1
@@ -42950,23 +42970,9 @@
           return clonedComponent;
         },
         _onXRSessionEnd() {
+          this._myEnd = 0;
           if (this._myChange > 0) {
-            this._myChange = 0;
-            let result2 = Global.windowOpen("https://github.com/SignorPipo/labyroots");
-            if (result2 == null) {
-              this._myChange = 10;
-            } else {
-              Global.myUnmute = true;
-              Howler.mute(true);
-              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                Global.myAxe._myGrabbable.release();
-              }
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "open_github_success", {
-                  "value": 1
-                });
-              }
-            }
+            this._myChange = 1;
           }
         }
       });
@@ -42989,6 +42995,7 @@
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
+              this._myChange = 1;
               if (WL.xrSession) {
                 Global.myUnmute = true;
                 Howler.mute(true);
@@ -42999,7 +43006,7 @@
               }
             }
           }
-          if (this._myChange > 0) {
+          if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
               this.openZestyUrl();
@@ -43014,8 +43021,8 @@
           return true;
         },
         open() {
-          this._myEnd = 30;
-          this._myChange = 180;
+          this._myEnd = 60;
+          this._myChange = 60;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_zesty", {
               "value": 1
@@ -43027,9 +43034,9 @@
           return clonedComponent;
         },
         _onXRSessionEnd() {
+          this._myEnd = 0;
           if (this._myChange > 0) {
-            this._myChange = 0;
-            this.openZestyUrl();
+            this._myChange = 1;
           }
         },
         result(result2) {
@@ -44490,6 +44497,9 @@
                 gtag("event", "is_wedding_maze", {
                   "value": 1
                 });
+                gtag("event", "is_multiverse_maze", {
+                  "value": 1
+                });
                 gtag("event", "is_normal_maze", {
                   "value": 1
                 });
@@ -44512,6 +44522,12 @@
                   "value": 1
                 });
                 gtag("event", "secret_code_wedding", {
+                  "value": 1
+                });
+                gtag("event", "secret_code_multiverse", {
+                  "value": 1
+                });
+                gtag("event", "secret_code_multiverse_success", {
                   "value": 1
                 });
                 gtag("event", "death", {
@@ -44661,6 +44677,7 @@
           this._myObjectToIgnore = [];
           this._myWeddingDelay = 2;
           this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
+          this._myMultiverseTimer = new PP.Timer(this._myWeddingDelay);
           this._myChange = 0;
           this._myEnd = 0;
           this._myCloseSession = 0;
@@ -44668,6 +44685,7 @@
             this._onXRSessionStart(WL.xrSession);
           }
           WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
           Global.myTimerStopExit = new PP.Timer(1, false);
           this._myTimeAlive = 0;
           this._myStageTotalTime = 0;
@@ -44675,8 +44693,10 @@
           this._myRepeatHealSound = 0;
           this._myRepeatHealSoundTimer = new PP.Timer(0.4);
           this._myPosition = [0, 0, 0];
+          this._myIsWedding = false;
         },
         update: function(dt) {
+          this._secretMazeCodeUpdate(dt);
           Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0);
           if (!this._myStarted) {
             if (Global.myReady) {
@@ -44700,73 +44720,6 @@
               let axeComponent = Global.myAxe.pp_getComponent("axe");
               if (axeComponent != null) {
                 axeComponent.setStartTransforms(Global.myAxeCell.myCellPosition);
-              }
-            }
-            if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
-              Global.myUnmute = false;
-              Howler.mute(false);
-            }
-            if (Global.myTimerStopExit.isRunning()) {
-              Global.myTimerStopExit.update(dt);
-              if (Global.myTimerStopExit.isDone()) {
-                this._myCloseSession = 0;
-                Global.myExitSession = false;
-              }
-            }
-            if (this._myCloseSession > 0) {
-              this._myCloseSession--;
-              if (this._myCloseSession == 0) {
-                if (WL.xrSession) {
-                  Global.myUnmute = true;
-                  Howler.mute(true);
-                  if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                    Global.myAxe._myGrabbable.release();
-                  }
-                  WL.xrSession.end();
-                }
-              }
-            }
-            if (this._myEnd > 0) {
-              this._myEnd--;
-              if (this._myEnd == 0) {
-                if (WL.xrSession) {
-                  WL.xrSession.end();
-                }
-              }
-            }
-            if (this._myChange > 0) {
-              this._myChange--;
-              if (this._myChange == 0) {
-                let url = window.location.origin;
-                if (window.location != window.parent.location) {
-                  url = "https://heyvr.io/game/labyroots";
-                  if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
-                    let ancestorOrigin = window.location.ancestorOrigins[0];
-                    if (ancestorOrigin.includes("itch.io")) {
-                      url = "https://signor-pipo.itch.io/labyroots";
-                    } else if (ancestorOrigin.includes("heyvr.io")) {
-                      url = "https://heyvr.io/game/labyroots";
-                    }
-                  }
-                } else {
-                  url = url + "/?wedding=1";
-                }
-                let result2 = false;
-                result2 = Global.windowOpen(url);
-                if (!result2) {
-                  this._myChange = 10;
-                } else {
-                  Global.myUnmute = true;
-                  Howler.mute(true);
-                  if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                    Global.myAxe._myGrabbable.release();
-                  }
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "secret_code_wedding_success", {
-                      "value": 1
-                    });
-                  }
-                }
               }
             }
             let playerPosition = Global.myPlayer.getPosition(this._myPosition);
@@ -44814,23 +44767,6 @@
                   "value": 1
                 });
               }
-            }
-            if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-              if (this._myWeddingTimer.isRunning()) {
-                this._myWeddingTimer.update(dt);
-                if (this._myWeddingTimer.isDone()) {
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "secret_code_wedding", {
-                      "value": 1
-                    });
-                  }
-                  Global.mySaveManager.save("is_wedding", true, false);
-                  this._myEnd = 30;
-                  this._myChange = 180;
-                }
-              }
-            } else {
-              this._myWeddingTimer.start();
             }
           }
         },
@@ -45011,6 +44947,129 @@
           if (Global.myExitSession) {
             Global.myExitSession = false;
             this._myCloseSession = 2;
+          }
+        },
+        _secretMazeCodeUpdate(dt) {
+          if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
+            Global.myUnmute = false;
+            Howler.mute(false);
+          }
+          if (Global.myTimerStopExit.isRunning()) {
+            Global.myTimerStopExit.update(dt);
+            if (Global.myTimerStopExit.isDone()) {
+              this._myCloseSession = 0;
+              Global.myExitSession = false;
+            }
+          }
+          if (this._myCloseSession > 0) {
+            this._myCloseSession--;
+            if (this._myCloseSession == 0) {
+              if (WL.xrSession) {
+                Global.myUnmute = true;
+                Howler.mute(true);
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                  Global.myAxe._myGrabbable.release();
+                }
+                WL.xrSession.end();
+              }
+            }
+          }
+          if (this._myEnd > 0) {
+            this._myEnd--;
+            if (this._myEnd == 0) {
+              this._myChange = 1;
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
+            }
+          }
+          if (this._myEnd == 0 && this._myChange > 0) {
+            this._myChange--;
+            if (this._myChange == 0) {
+              let url = window.location.origin;
+              if (window.location != window.parent.location) {
+                url = "https://heyvr.io/game/labyroots";
+                if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
+                  let ancestorOrigin = window.location.ancestorOrigins[0];
+                  if (ancestorOrigin.includes("itch.io")) {
+                    url = "https://signor-pipo.itch.io/labyroots";
+                  } else if (ancestorOrigin.includes("heyvr.io")) {
+                    url = "https://heyvr.io/game/labyroots";
+                  }
+                }
+              } else {
+                if (this._myIsWedding) {
+                  url = url + "/?wedding=1";
+                } else {
+                  url = url + "/?multiverse=1";
+                }
+              }
+              let result2 = false;
+              result2 = Global.windowOpen(url);
+              if (!result2) {
+                this._myChange = 10;
+              } else {
+                Global.myUnmute = true;
+                Howler.mute(true);
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                  Global.myAxe._myGrabbable.release();
+                }
+                if (Global.myGoogleAnalytics) {
+                  if (this._myIsWedding) {
+                    gtag("event", "secret_code_wedding_success", {
+                      "value": 1
+                    });
+                  } else {
+                    gtag("event", "secret_code_multiverse_success", {
+                      "value": 1
+                    });
+                  }
+                }
+              }
+              this._myIsWedding = false;
+            }
+          }
+          if (false) {
+            if (this._myMultiverseTimer.isRunning()) {
+              this._myMultiverseTimer.update(dt);
+              if (this._myMultiverseTimer.isDone()) {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "secret_code_multiverse", {
+                    "value": 1
+                  });
+                }
+                Global.mySaveManager.save("is_multiverse", true, false);
+                this._myEnd = 10;
+                this._myChange = 10;
+                this._myIsWedding = false;
+              }
+            }
+          } else {
+            this._myMultiverseTimer.start();
+          }
+          if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+            if (this._myWeddingTimer.isRunning()) {
+              this._myWeddingTimer.update(dt);
+              if (this._myWeddingTimer.isDone()) {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "secret_code_wedding", {
+                    "value": 1
+                  });
+                }
+                Global.mySaveManager.save("is_wedding", true, false);
+                this._myEnd = 10;
+                this._myChange = 10;
+                this._myIsWedding = true;
+              }
+            }
+          } else {
+            this._myWeddingTimer.start();
+          }
+        },
+        _onXRSessionEnd() {
+          this._myEnd = 0;
+          if (this._myChange > 0) {
+            this._myChange = 1;
           }
         }
       });
@@ -46001,6 +46060,20 @@
                 Global.myBigTreeDead = true;
                 Global.myStage = 0;
               }
+            } else {
+              if (this._myType != 90) {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "human_tree_hit", {
+                    "value": 1
+                  });
+                }
+              } else {
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "bride_tree_hit", {
+                    "value": 1
+                  });
+                }
+              }
             }
           }
           return hitted;
@@ -46333,6 +46406,7 @@
   require_file_manager();
   require_maze();
   require_maze_item_type();
+  require_multiverse_maze();
   require_billboard_player();
   require_story();
   init_audio_load();
