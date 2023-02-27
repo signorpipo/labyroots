@@ -22681,7 +22681,7 @@
             "pipeline": "7a753214-907d-4260-92e1-0b67e30a7e28",
             "Phong": {
                 "ambientFactor": 0.5,
-                "diffuseTexture": "e8885204-f8b1-4ca8-b92c-4855af1c2930"
+                "diffuseTexture": null
             }
         },
         "56c684d4-54c6-4cdb-b60c-7f074013b177": {
