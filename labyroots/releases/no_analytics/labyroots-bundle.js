@@ -42360,7 +42360,7 @@
           } catch (error) {
           }
         }
-        return isMultiverse;
+        return isMultiverse && false;
       };
     }
   });
@@ -42459,7 +42459,7 @@
           this._myStarted = false;
           this._myResetPhysx = true;
           this._myTimer2 = new PP.Timer(4);
-          this._myTimer = new PP.Timer(22);
+          this._myTimer = new PP.Timer(30);
           this._mySteps = [];
           this._myStepDelay = 0.8;
           this._myStepTimer = new PP.Timer(0.1);
@@ -42469,13 +42469,13 @@
           this._myCanSkip = false;
         },
         update: function(dt) {
-          if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(3) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(3) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(3) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(3)) {
+          if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2)) {
             this._mySkip = true;
           }
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 19;
+                let currentVersion = 20;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
