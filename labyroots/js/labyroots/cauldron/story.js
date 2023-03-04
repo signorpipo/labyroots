@@ -7,7 +7,7 @@ WL.registerComponent('story', {
         this._myStarted = false;
         this._myResetPhysx = true;
         this._myTimer2 = new PP.Timer(4);
-        this._myTimer = new PP.Timer(22);
+        this._myTimer = new PP.Timer(30);
 
         this._mySteps = [];
         this._myStepDelay = 0.8;
@@ -28,14 +28,14 @@ WL.registerComponent('story', {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                    let currentVersion = 19;
+                    let currentVersion = 20;
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
                     this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
                     if (Global.myIsWeddingTime) {
-                        this._myTimer.start(8);
+                        this._myTimer.start(10);
                     }
                 }
             }

@@ -395,5 +395,5 @@ Global.isMultiverse = function () {
         }
     }
 
-    return isMultiverse;
+    return isMultiverse && false;
 }
