@@ -35,7 +35,7 @@ WL.registerComponent('story', {
                     this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
                     if (Global.myIsWeddingTime) {
-                        this._myTimer.start(10);
+                        this._myTimer.start(8);
                     }
                 }
             }
