@@ -38,6 +38,11 @@ WL.registerComponent('story', {
                         this._myTimer.start(8);
                     }
 
+                    if (Global.myIsMultiverseTime) {
+                        Global.mySky.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
+                        Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
+                    }
+
                     Global.mySaveManager.save("is_wedding", false, false);
                     //Global.mySaveManager.save("is_multiverse", false, false); keep multiverse until switch
                 }

@@ -325,6 +325,8 @@ require('./labyroots/cauldron/show_drifting');
 require('./labyroots/cauldron/increase_floor_tile');
 require('./labyroots/cauldron/render_closest_walls_first');
 require('./labyroots/cauldron/send_all_events');
+require('./labyroots/cauldron/sky_setter');
+require('./labyroots/cauldron/lights_setter');
 
 require('./labyroots/player/transformation');
 require('./labyroots/player/stage_switch');
