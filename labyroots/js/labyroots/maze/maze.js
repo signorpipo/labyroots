@@ -25,7 +25,10 @@ LR.Maze = class Maze {
         Global.myIsMultiverseTime = false;
         if (isMultiverse) {
             this._myGridToUse = Global.createMultiverseMaze();
-            this._myGridToUse = mazeSetup.myGrid;
+            if (this._myGridToUse == null) {
+                this._myGridToUse = mazeSetup.myGrid;
+            }
+
             Global.myIsMultiverseTime = true;
 
             if (Global.myGoogleAnalytics) {

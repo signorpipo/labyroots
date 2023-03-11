@@ -34,7 +34,7 @@ WL.registerComponent('story', {
                     this._myStarted = true;
                     this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
-                    if (Global.myIsWeddingTime) {
+                    if (Global.myIsWeddingTime || Global.myIsMultiverseTime) {
                         this._myTimer.start(8);
                     }
                 }
