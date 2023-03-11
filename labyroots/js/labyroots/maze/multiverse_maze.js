@@ -28,8 +28,8 @@ Global.createMultiverseMaze = function () {
 Global.initializeMaze = function () {
     let maze = [];
 
-    let columns = Math.max(20, 25);
-    let rows = Math.max(20, Math.pp_randomPick([35, 35, 25]));
+    let columns = Math.pp_randomInt(20, 25);
+    let rows = Math.pp_randomInt(20, Math.pp_randomPick([35, 35, 25]));
 
     for (let i = 0; i < rows; i++) {
         maze[i] = [];
