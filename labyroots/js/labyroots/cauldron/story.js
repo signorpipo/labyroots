@@ -82,7 +82,7 @@ WL.registerComponent('story', {
                 this._myTimer.update(dt);
                 this._myTimer2.update(dt);
                 if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {
-                    if (this._mySkip && this._myTimer2.isDone()) {
+                    if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                         if (Global.myGoogleAnalytics) {
                             gtag("event", "intro_skipped", {
                                 "value": 1
@@ -94,6 +94,12 @@ WL.registerComponent('story', {
                                 "value": 1
                             });
                         }
+                    }
+
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "intro_done", {
+                            "value": 1
+                        });
                     }
 
                     PP.CAUtils.getUser(function (user) {
