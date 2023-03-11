@@ -21045,6 +21045,600 @@
                     }
                 }
             ]
+        },
+        "6392043a-157f-429a-85ae-cd01a29820b8": {
+            "name": "40",
+            "parent": "7cbd9105-a8fe-4425-badd-d877732475d1"
+        },
+        "63b84e40-7f15-43d9-8349-799e06ea6185": {
+            "name": "1",
+            "parent": "6392043a-157f-429a-85ae-cd01a29820b8",
+            "translation": [
+                4.476252,
+                0.0,
+                7.5
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "765599d9-467b-4897-99a6-673d0f60412c": {
+            "name": "Pivot",
+            "parent": "63b84e40-7f15-43d9-8349-799e06ea6185",
+            "rotation": [
+                -6.181724643283816e-8,
+                0.7071068,
+                -6.181724643283816e-8,
+                -0.7071068
+            ],
+            "components": [
+                {
+                    "type": "deactivate-physx-if-far-from-player"
+                }
+            ]
+        },
+        "c7f931a7-adac-475f-a9ab-48011d4c7fe0": {
+            "name": "Pivot",
+            "parent": "765599d9-467b-4897-99a6-673d0f60412c",
+            "rotation": [
+                0.0,
+                0.7071068,
+                0.0,
+                0.7071067
+            ],
+            "translation": [
+                -0.0000057,
+                0.0,
+                0.4999961
+            ],
+            "scale": [
+                0.9999899,
+                1.0,
+                0.9999899
+            ]
+        },
+        "6fdd01b2-370a-408c-ad13-65e8b98cb268": {
+            "name": "2",
+            "parent": "c7f931a7-adac-475f-a9ab-48011d4c7fe0",
+            "translation": [
+                0.5,
+                0.0,
+                -0.0000019
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.9999958,
+                1.0,
+                0.9999958
+            ]
+        },
+        "b6f71df4-36d0-4e47-888a-daf8f2c2d1e7": {
+            "name": "Physx",
+            "parent": "6fdd01b2-370a-408c-ad13-65e8b98cb268",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.25,
+                                0.5
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14,
+                        "static": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "eb018a22-377b-4902-be15-08e0f189c2c4": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "6fdd01b2-370a-408c-ad13-65e8b98cb268",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "e39d4d37-8c8a-4b0c-bd47-9a3c60997f1b": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "eb018a22-377b-4902-be15-08e0f189c2c4"
+        },
+        "1ba37479-4e18-4950-9dc0-2a62d31d6b19": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "e39d4d37-8c8a-4b0c-bd47-9a3c60997f1b"
+        },
+        "5cd0b49d-0f6b-49f3-9501-a9d5cb29ab5e": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "1ba37479-4e18-4950-9dc0-2a62d31d6b19"
+        },
+        "2a2bf8f6-74b9-493f-951f-fa57dfc0afa8": {
+            "link": {
+                "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "5cd0b49d-0f6b-49f3-9501-a9d5cb29ab5e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "6d0e666d-c362-4e2a-a9a0-88283f263266"
+                    }
+                }
+            ]
+        },
+        "2ac63b18-a445-4ebb-b708-2db3fe54714d": {
+            "name": "1",
+            "parent": "c7f931a7-adac-475f-a9ab-48011d4c7fe0",
+            "translation": [
+                1.25,
+                0.0,
+                0.0000038
+            ],
+            "rotation": [
+                0.0,
+                0.7071068,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                0.9999893,
+                1.0,
+                0.4999946
+            ]
+        },
+        "c5c46082-fff4-401c-8e8f-3cd080b5fb0b": {
+            "name": "Physx",
+            "parent": "2ac63b18-a445-4ebb-b708-2db3fe54714d",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.25,
+                                0.25
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14,
+                        "static": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "debc1a88-57a3-45da-9201-3eeedbdb855e": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "2ac63b18-a445-4ebb-b708-2db3fe54714d",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "adcca073-2519-46a7-92fd-29a89e128fe8": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "debc1a88-57a3-45da-9201-3eeedbdb855e"
+        },
+        "7b871fd8-4044-42c0-926a-18eab9f0d936": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "adcca073-2519-46a7-92fd-29a89e128fe8"
+        },
+        "5f9ae58f-f057-45c9-a0f6-7800858cccca": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "7b871fd8-4044-42c0-926a-18eab9f0d936"
+        },
+        "9894a2c6-d66e-40af-966d-0f03e935f1ef": {
+            "link": {
+                "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "5f9ae58f-f057-45c9-a0f6-7800858cccca",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                    }
+                }
+            ]
+        },
+        "49598bfe-0fa1-4414-b911-3cd69f41605e": {
+            "name": "2",
+            "parent": "c7f931a7-adac-475f-a9ab-48011d4c7fe0",
+            "translation": [
+                0.5,
+                0.0,
+                -0.7500057
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.9999821,
+                1.0,
+                0.499995
+            ]
+        },
+        "b4055189-26ba-466e-9988-c7390be93842": {
+            "name": "Physx",
+            "parent": "49598bfe-0fa1-4414-b911-3cd69f41605e",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.25,
+                                0.25
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14,
+                        "static": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "f687b708-8fe6-49de-9605-99f5bb8ddc79": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "49598bfe-0fa1-4414-b911-3cd69f41605e",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "d140889a-19f6-49d0-92f0-6ce465ff2005": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "f687b708-8fe6-49de-9605-99f5bb8ddc79"
+        },
+        "69a46a8a-8b46-487d-856c-e2537a2936a5": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "d140889a-19f6-49d0-92f0-6ce465ff2005"
+        },
+        "9b64569a-b300-4d64-9723-3531442df30e": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "69a46a8a-8b46-487d-856c-e2537a2936a5"
+        },
+        "27e16744-b538-4b86-8ad7-8d671aac78a9": {
+            "link": {
+                "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "9b64569a-b300-4d64-9723-3531442df30e",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                    }
+                }
+            ]
+        },
+        "8c9adc9f-da4a-4b20-bf7a-af1b57c168e3": {
+            "name": "2",
+            "parent": "c7f931a7-adac-475f-a9ab-48011d4c7fe0",
+            "translation": [
+                0.5000038,
+                0.0,
+                0.7500104
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                0.9999803,
+                1.0,
+                0.4999941
+            ]
+        },
+        "badfab98-594a-4afe-a87e-382e14d41205": {
+            "name": "Physx",
+            "parent": "8c9adc9f-da4a-4b20-bf7a-af1b57c168e3",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.25,
+                                0.25
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14,
+                        "static": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "82ba3344-6151-48cf-a4a5-35976eee2b6b": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "8c9adc9f-da4a-4b20-bf7a-af1b57c168e3",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "3783e945-1ba3-41a2-a2ae-22dd9d599dc1": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "82ba3344-6151-48cf-a4a5-35976eee2b6b"
+        },
+        "ba13bf90-c301-4a87-b5c8-3e436260efed": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "3783e945-1ba3-41a2-a2ae-22dd9d599dc1"
+        },
+        "78a0446d-8270-4f97-8e19-c8aa188ff2fa": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "ba13bf90-c301-4a87-b5c8-3e436260efed"
+        },
+        "2d305b3a-d03d-49d0-acdc-2e056e6d8258": {
+            "link": {
+                "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "78a0446d-8270-4f97-8e19-c8aa188ff2fa",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                    }
+                }
+            ]
+        },
+        "0d60694b-6f0f-41d9-bbf7-a1c81183f479": {
+            "name": "1",
+            "parent": "c7f931a7-adac-475f-a9ab-48011d4c7fe0",
+            "translation": [
+                -0.25,
+                0.0,
+                0.0000038
+            ],
+            "rotation": [
+                0.0,
+                0.7071068,
+                0.0,
+                0.7071067
+            ],
+            "scale": [
+                0.9999893,
+                1.0,
+                0.4999946
+            ]
+        },
+        "02837871-ba29-44f7-860b-caa544d581c5": {
+            "name": "Physx",
+            "parent": "0d60694b-6f0f-41d9-bbf7-a1c81183f479",
+            "components": [
+                {
+                    "type": "physx",
+                    "physx": {
+                        "shape": "box",
+                        "box": {
+                            "extents": [
+                                0.5,
+                                1.25,
+                                0.25
+                            ]
+                        },
+                        "gravity": false,
+                        "kinematic": true,
+                        "groups": 1,
+                        "block": 14,
+                        "static": true
+                    }
+                }
+            ],
+            "translation": [
+                0.0,
+                1.25,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "4c976177-6c14-4686-b856-3ad4f4612f85": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "0d60694b-6f0f-41d9-bbf7-a1c81183f479",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ]
+        },
+        "822345fd-cd9a-4cbc-84e2-1a70070ab798": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "4c976177-6c14-4686-b856-3ad4f4612f85"
+        },
+        "af593fbb-fc44-4e46-9202-0300693877c1": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "822345fd-cd9a-4cbc-84e2-1a70070ab798"
+        },
+        "9c582763-be33-4f9e-a483-88e244fe678f": {
+            "link": {
+                "name": "Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "af593fbb-fc44-4e46-9202-0300693877c1"
+        },
+        "77fcb24e-bbe6-4351-a8b0-8ef8698ed810": {
+            "link": {
+                "name": "Angolo_A<Angolo_A_$AssimpFbx$_ScalingPivotInverse<Angolo_A_$AssimpFbx$_ScalingPivot<Angolo_A_$AssimpFbx$_RotationPivotInverse<Angolo_A_$AssimpFbx$_RotationPivot",
+                "file": "assets\\models\\Angoli\\Angolo_1.fbx"
+            },
+            "parent": "9c582763-be33-4f9e-a483-88e244fe678f",
+            "components": [
+                {
+                    "mesh": {
+                        "material": "1bfc919b-6cb0-483b-9e84-c4290f355457"
+                    }
+                }
+            ]
         }
     },
     "meshes": {
