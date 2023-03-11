@@ -1,5 +1,6 @@
 Global.mySecretWall = null;
 Global.myIsWeddingTime = false;
+Global.myIsMultiverseTime = false;
 
 LR.Maze = class Maze {
     constructor(mazeSetup, parent) {
@@ -21,9 +22,11 @@ LR.Maze = class Maze {
 
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
-        if (isMultiverse && false) {
+        Global.myIsMultiverseTime = false;
+        if (isMultiverse) {
             this._myGridToUse = Global.createMultiverseMaze();
             this._myGridToUse = mazeSetup.myGrid;
+            Global.myIsMultiverseTime = true;
 
             if (Global.myGoogleAnalytics) {
                 gtag("event", "is_multiverse_maze", {

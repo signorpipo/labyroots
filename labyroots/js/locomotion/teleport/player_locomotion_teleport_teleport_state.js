@@ -110,6 +110,8 @@ PlayerLocomotionTeleportTeleportState = class PlayerLocomotionTeleportTeleportSt
     }
 
     _teleportDone() {
+        Global.myPlayer.resetReal(true, false, false);
+        Global.myPlayer.resetHeadToReal();
 
         this._myParentFSM.performDelayed("done");
     }

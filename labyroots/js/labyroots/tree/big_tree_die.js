@@ -46,8 +46,10 @@ LR.BigTreeDie = class BigTreeDie {
                 } else {
                     let wallPosition = Global.mySecretWall.pp_getPosition();
                     this._mySecretWallDie.setPosition(wallPosition.vec3_add([0, 1.5, 0]));
-                    this._mySecretWallDie.play();
-                    Global.mySecretWall.pp_setActive(false);
+                    if (!Global.myIsMultiverseTime) {
+                        this._mySecretWallDie.play();
+                        Global.mySecretWall.pp_setActive(false);
+                    }
 
                     PP.myLeftGamepad.pulse(0.75, 0.75);
                     PP.myRightGamepad.pulse(0.75, 0.75);
