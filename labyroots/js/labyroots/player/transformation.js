@@ -281,6 +281,8 @@ WL.registerComponent('transformation', {
                 Global.myPlayer.setRotationQuat(rotationQuat);
             }
 
+            PP.myPlayerObjects.myNonVRCamera.pp_setUp([0, 1, 0]);
+
             Global.myPlayer.resetReal(true, false, false, true);
             Global.myPlayer.resetHeadToReal();
         }
