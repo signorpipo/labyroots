@@ -1,6 +1,6 @@
 WL.registerComponent('activate-if-wedding', {
     _myIsWedding: { type: WL.Type.Bool, default: false },
-    _myIsMultiverse: { type: WL.Type.Bool, default: false }
+    _myIsMazeverse: { type: WL.Type.Bool, default: false }
 }, {
     init: function () {
     },
@@ -11,10 +11,10 @@ WL.registerComponent('activate-if-wedding', {
         if (!this._myDone) {
             this._myDone = true;
             let isWedding = Global.isWedding();
-            let isMultiverse = Global.isMultiverse();
+            let isMazeverse = Global.isMazeverse();
 
-            if (isMultiverse) {
-                if (!this._myIsMultiverse) {
+            if (isMazeverse) {
+                if (!this._myIsMazeverse) {
                     this.object.pp_setActive(false);
                 } else {
                     this.object.pp_setActive(true);
@@ -26,7 +26,7 @@ WL.registerComponent('activate-if-wedding', {
                     this.object.pp_setActive(true);
                 }
             } else {
-                if (this._myIsWedding || this._myIsMultiverse) {
+                if (this._myIsWedding || this._myIsMazeverse) {
                     this.object.pp_setActive(false);
                 } else {
                     this.object.pp_setActive(true);

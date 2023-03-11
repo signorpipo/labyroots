@@ -11,7 +11,7 @@ Global.cellCoordinatesEqual = function (first, second) {
     return first[0] == second[0] && first[1] == second[1];
 }
 
-Global.createMultiverseMaze = function () {
+Global.createMazeverseMaze = function () {
     let maze = Global.initializeMaze();
 
     let createWallsResults = Global.createWalls(maze);

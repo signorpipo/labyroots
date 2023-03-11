@@ -34,17 +34,17 @@ WL.registerComponent('story', {
                     this._myStarted = true;
                     this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
-                    if (Global.myIsWeddingTime || Global.myIsMultiverseTime) {
+                    if (Global.myIsWeddingTime || Global.myIsMazeverseTime) {
                         this._myTimer.start(8);
                     }
 
-                    if (Global.myIsMultiverseTime) {
+                    if (Global.myIsMazeverseTime) {
                         Global.mySky.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                         Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                     }
 
                     Global.mySaveManager.save("is_wedding", false, false);
-                    //Global.mySaveManager.save("is_multiverse", false, false); keep multiverse until switch
+                    //Global.mySaveManager.save("is_mazeverse", false, false); keep mazeverse until switch
                 }
             }
         } else {

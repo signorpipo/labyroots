@@ -46,7 +46,7 @@ LR.BigTreeDie = class BigTreeDie {
                 } else {
                     let wallPosition = Global.mySecretWall.pp_getPosition();
                     this._mySecretWallDie.setPosition(wallPosition.vec3_add([0, 1.5, 0]));
-                    if (!Global.myIsMultiverseTime) {
+                    if (!Global.myIsMazeverseTime) {
                         this._mySecretWallDie.play();
                         Global.mySecretWall.pp_setActive(false);
                     }

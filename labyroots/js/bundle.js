@@ -303,7 +303,7 @@ require('./labyroots/json/file_manager');
 
 require('./labyroots/maze/maze');
 require('./labyroots/maze/maze_item_type');
-require('./labyroots/maze/multiverse_maze');
+require('./labyroots/maze/mazeverse_maze');
 
 require('./labyroots/cauldron/billboard_player');
 require('./labyroots/cauldron/story');

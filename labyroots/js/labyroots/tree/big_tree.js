@@ -113,7 +113,7 @@ WL.registerComponent('big-tree', {
                         });
                     }
 
-                    if (!Global.myIsMultiverseTime) {
+                    if (!Global.myIsMazeverseTime) {
                         let score = Math.floor(this._myTimeToWin * 1000);
                         PP.CAUtils.submitScore("labyroots", score, function () {
                             let leaderboards = WL.scene.pp_getComponents("display-leaderboard");

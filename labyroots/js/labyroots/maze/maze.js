@@ -1,6 +1,6 @@
 Global.mySecretWall = null;
 Global.myIsWeddingTime = false;
-Global.myIsMultiverseTime = false;
+Global.myIsMazeverseTime = false;
 
 LR.Maze = class Maze {
     constructor(mazeSetup, parent) {
@@ -18,21 +18,21 @@ LR.Maze = class Maze {
 
     createCells(mazeSetup) {
         let isWedding = Global.isWedding();
-        let isMultiverse = Global.isMultiverse();
+        let isMazeverse = Global.isMazeverse();
 
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
-        Global.myIsMultiverseTime = false;
-        if (isMultiverse) {
-            this._myGridToUse = Global.createMultiverseMaze();
+        Global.myIsMazeverseTime = false;
+        if (isMazeverse) {
+            this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {
                 this._myGridToUse = mazeSetup.myGrid;
             }
 
-            Global.myIsMultiverseTime = true;
+            Global.myIsMazeverseTime = true;
 
             if (Global.myGoogleAnalytics) {
-                gtag("event", "is_multiverse_maze", {
+                gtag("event", "is_mazeverse_maze", {
                     "value": 1
                 });
             }
@@ -384,19 +384,19 @@ Global.isWedding = function () {
     return isWedding;
 }
 
-Global.isMultiverse = function () {
-    let isMultiverse = Global.mySaveManager.loadBool("is_multiverse", false);
+Global.isMazeverse = function () {
+    let isMazeverse = Global.mySaveManager.loadBool("is_mazeverse", false);
 
-    if (!isMultiverse) {
+    if (!isMazeverse) {
         try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("multiverse") != null) {
-                isMultiverse = true;
+            if (urlSearchParams != null && urlSearchParams.get("mazeverse") != null) {
+                isMazeverse = true;
             }
         } catch (error) {
 
         }
     }
 
-    return isMultiverse && !Global.isWedding();
+    return isMazeverse && !Global.isWedding();
 }

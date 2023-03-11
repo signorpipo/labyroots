@@ -17,7 +17,7 @@ WL.registerComponent('transformation', {
 
         this._myWeddingDelay = 2;
         this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
-        this._myMultiverseTimer = new PP.Timer(this._myWeddingDelay);
+        this._myMazeverseTimer = new PP.Timer(this._myWeddingDelay);
 
         this._myChange = 0;
         this._myEnd = 0;
@@ -438,8 +438,8 @@ WL.registerComponent('transformation', {
                     if (this._myIsWedding) {
                         url = url + "/?wedding=1";
                     } else {
-                        if (!Global.myIsMultiverseTime) {
-                            url = url + "/?multiverse=1";
+                        if (!Global.myIsMazeverseTime) {
+                            url = url + "/?mazeverse=1";
                         }
                     }
                 }
@@ -462,7 +462,7 @@ WL.registerComponent('transformation', {
                                 "value": 1
                             });
                         } else {
-                            gtag("event", "secret_code_multiverse_success", {
+                            gtag("event", "secret_code_mazeverse_success", {
                                 "value": 1
                             });
                         }
@@ -475,16 +475,16 @@ WL.registerComponent('transformation', {
 
         if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()
             && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-            if (this._myMultiverseTimer.isRunning()) {
-                this._myMultiverseTimer.update(dt);
-                if (this._myMultiverseTimer.isDone()) {
+            if (this._myMazeverseTimer.isRunning()) {
+                this._myMazeverseTimer.update(dt);
+                if (this._myMazeverseTimer.isDone()) {
                     if (Global.myGoogleAnalytics) {
-                        gtag("event", "secret_code_multiverse", {
+                        gtag("event", "secret_code_mazeverse", {
                             "value": 1
                         });
                     }
 
-                    Global.mySaveManager.save("is_multiverse", !Global.myIsMultiverseTime, false);
+                    Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
 
                     this._myEnd = 10;
                     this._myChange = 10;
@@ -492,7 +492,7 @@ WL.registerComponent('transformation', {
                 }
             }
         } else {
-            this._myMultiverseTimer.start();
+            this._myMazeverseTimer.start();
         }
 
         if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() &&
