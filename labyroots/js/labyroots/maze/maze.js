@@ -51,7 +51,7 @@ LR.Maze = class Maze {
         }
 
         Global.mySaveManager.save("is_wedding", false, false);
-        Global.mySaveManager.save("is_multiverse", false, false);
+        //Global.mySaveManager.save("is_multiverse", false, false); keep multiverse until switch
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
@@ -398,5 +398,5 @@ Global.isMultiverse = function () {
         }
     }
 
-    return isMultiverse && false;
+    return isMultiverse;
 }
