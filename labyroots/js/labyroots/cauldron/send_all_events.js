@@ -172,6 +172,9 @@ WL.registerComponent('send-all-events', {
                     gtag("event", "intro_done", {
                         "value": 1
                     });
+                    gtag("event", "enter_vr_first_time", {
+                        "value": 1
+                    });
 
                     let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
                     for (let timeMovingStep of timeMovingSteps) {

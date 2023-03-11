@@ -121,6 +121,17 @@ WL.registerComponent("labyroots-gateway", {
             });
         }
 
+        let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
+        if (isFirstEnterVR) {
+            if (Global.myGoogleAnalytics) {
+                gtag("event", "enter_vr_first_time", {
+                    "value": 1
+                });
+            }
+        }
+
+        Global.mySaveManager.save("is_first_enter_vr", false, false);
+
         Global.mySessionStarted = true;
     }
 });
