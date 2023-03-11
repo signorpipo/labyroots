@@ -92,3 +92,54 @@ Global.convertMazeToString = function (maze) {
         }
     }
 }
+
+Global.lookPlayerAligned = function (position) {
+    let rotationQuat = PP.quat_create();
+
+    let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
+    if (cell != null) {
+        let cellPosition = cell[0].myCellPosition;
+        let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
+        if (!direction.vec3_isZero(0.00001)) {
+            direction.vec3_normalize(direction);
+
+            if (Math.abs(direction[0]) > Math.abs(direction[2])) {
+                direction = [1 * Math.pp_sign(direction[0]), 0, 0];
+            } else {
+                direction = [0, 0, 1 * Math.pp_sign(direction[2])];
+            }
+
+            direction.vec3_normalize(direction);
+        }
+
+        rotationQuat.quat_setUp([0, 1, 0], direction);
+    }
+
+    return rotationQuat;
+}
+
+
+Global.lookBigTreeAligned = function (position) {
+    let rotationQuat = PP.quat_create();
+
+    let cell = Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE);
+    if (cell != null) {
+        let cellPosition = cell[0].myCellPosition;
+        let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
+        if (!direction.vec3_isZero(0.00001)) {
+            direction.vec3_normalize(direction);
+
+            if (Math.abs(direction[0]) > Math.abs(direction[2])) {
+                direction = [1 * Math.pp_sign(direction[0]), 0, 0];
+            } else {
+                direction = [0, 0, 1 * Math.pp_sign(direction[2])];
+            }
+
+            direction.vec3_normalize(direction);
+        }
+
+        rotationQuat.quat_setUp([0, 1, 0], direction);
+    }
+
+    return rotationQuat;
+}

@@ -81,6 +81,12 @@ WL.registerComponent('player-locomotion', {
 
                     if (cell != null) {
                         this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
+
+                        if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null) {
+                            let rotationQuat = Global.lookBigTreeAligned(this._myPlayerLocomotion._myPlayerTransformManager.getPosition());
+                            this._myPlayerLocomotion._myPlayerTransformManager.setRotationQuat(rotationQuat);
+                        }
+
                         Global.myPlayer.resetReal(true, false, false, true);
                         Global.myPlayer.resetHeadToReal();
                     }

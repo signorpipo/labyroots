@@ -43,6 +43,9 @@ WL.registerComponent('big-tree', {
                 this._myHit = Global.mySetup.myTreeSetup.myBigTreeHit;
 
                 this._myPhases[0].pp_setActive(true);
+
+                let rotationQuat = Global.lookPlayerAligned(this.object.pp_getPosition());
+                this.object.pp_setRotationQuat(rotationQuat);
             }
         } else if (this._myHit == 0) {
             this._myBigTreeDie.update(dt);
