@@ -79,10 +79,10 @@ WL.registerComponent('player-locomotion', {
 
                     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 
-                    if (cell != null) {
+                    if (cell != null && cell.length > 0) {
                         this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
 
-                        if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null) {
+                        if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
                             let rotationQuat = Global.lookBigTreeAligned(this._myPlayerLocomotion._myPlayerTransformManager.getPosition());
                             this._myPlayerLocomotion._myPlayerTransformManager.setRotationQuat(rotationQuat);
                         }

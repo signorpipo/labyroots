@@ -185,7 +185,7 @@ WL.registerComponent('transformation', {
         let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
         Global.myPlayer.setRotationQuat(rotationQuat);
 
-        if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null) {
+        if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
             rotationQuat = Global.lookBigTreeAligned(Global.myPlayer.getPosition());
             Global.myPlayer.setRotationQuat(rotationQuat);
         }
@@ -270,13 +270,13 @@ WL.registerComponent('transformation', {
 
         let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
 
-        if (cell != null) {
+        if (cell != null && cell.length > 0) {
             Global.myPlayer.teleportPosition(cell[0].myCellPosition, null, true);
 
             let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
             Global.myPlayer.setRotationQuat(rotationQuat);
 
-            if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null) {
+            if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
                 rotationQuat = Global.lookBigTreeAligned(Global.myPlayer.getPosition());
                 Global.myPlayer.setRotationQuat(rotationQuat);
             }

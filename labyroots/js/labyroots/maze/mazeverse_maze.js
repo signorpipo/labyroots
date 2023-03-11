@@ -97,7 +97,7 @@ Global.lookPlayerAligned = function (position) {
     let rotationQuat = PP.quat_create();
 
     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
-    if (cell != null) {
+    if (cell != null && cell.length > 0) {
         let cellPosition = cell[0].myCellPosition;
         let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
         if (!direction.vec3_isZero(0.00001)) {
@@ -123,7 +123,7 @@ Global.lookBigTreeAligned = function (position) {
     let rotationQuat = PP.quat_create();
 
     let cell = Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE);
-    if (cell != null) {
+    if (cell != null && cell.length > 0) {
         let cellPosition = cell[0].myCellPosition;
         let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
         if (!direction.vec3_isZero(0.00001)) {
