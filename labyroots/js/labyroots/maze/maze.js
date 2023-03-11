@@ -53,9 +53,6 @@ LR.Maze = class Maze {
             }
         }
 
-        Global.mySaveManager.save("is_wedding", false, false);
-        //Global.mySaveManager.save("is_multiverse", false, false); keep multiverse until switch
-
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
 
         let grid = this._myGridToUse;
@@ -384,7 +381,7 @@ Global.isWedding = function () {
         }
     }
 
-    return isWedding && !Global.isMultiverse();
+    return isWedding;
 }
 
 Global.isMultiverse = function () {
@@ -401,5 +398,5 @@ Global.isMultiverse = function () {
         }
     }
 
-    return isMultiverse;
+    return isMultiverse && !Global.isWedding();
 }

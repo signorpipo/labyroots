@@ -37,6 +37,9 @@ WL.registerComponent('story', {
                     if (Global.myIsWeddingTime || Global.myIsMultiverseTime) {
                         this._myTimer.start(8);
                     }
+
+                    Global.mySaveManager.save("is_wedding", false, false);
+                    //Global.mySaveManager.save("is_multiverse", false, false); keep multiverse until switch
                 }
             }
         } else {
