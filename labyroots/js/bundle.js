@@ -304,6 +304,8 @@ require('./labyroots/json/file_manager');
 require('./labyroots/maze/maze');
 require('./labyroots/maze/maze_item_type');
 require('./labyroots/maze/mazeverse_maze');
+require('./labyroots/maze/mazeverse_create_walls');
+require('./labyroots/maze/mazeverse_add_elements');
 
 require('./labyroots/cauldron/billboard_player');
 require('./labyroots/cauldron/story');
