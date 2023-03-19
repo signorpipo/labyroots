@@ -304,11 +304,19 @@ Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
     let door = null;
     let maxAttempts = 100;
 
+    let amountChance = [];
+    let chance1 = Math.max(Math.ceil(70 / wallCells.length), 3);
+    for (let i = 0; i < chance1; i++) {
+        amountChance.push(1);
+    }
+
+    amountChance.push(2, 2, 3);
+
     while (door == null && maxAttempts > 0) {
         maxAttempts--;
         let doorCell = Math.pp_randomPick(wallCells);
 
-        let amount = 1; // random amount 
+        let amount = Math.pp_randomPick(amountChance);
         door = Global.addDoorToMaze(doorCell, amount, maze);
     }
 
@@ -321,22 +329,22 @@ Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
 
 Global.addExtraDoors = function (maze, createWallsResults) {
     let doorsAmount = createWallsResults.myDoors.length;
-    let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
+    let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 1), Math.round(doorsAmount * 1.25));
     extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
 
     if (Math.pp_randomInt(0, 10) == 0) {
         extraDoors = extraDoors * 1000;
     }
 
-    let maxRetry = extraDoors * 10;
+    let maxRetry = extraDoors * 100;
 
     for (let i = 0; i < extraDoors; i++) {
         let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
 
-        let amount = 1; // random amount 
+        let amount = Math.pp_randomPick(1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3);
         let door = Global.addDoorToMaze(doorCell, amount, maze);
         if (door != null) {
-            Global.addDoorToResults(door, maze, createWallsResults);
+            Global.addDoorToResults(door, maze, createWallsResults, true);
         }
 
         if (door == null && maxRetry > 0) {
@@ -346,11 +354,15 @@ Global.addExtraDoors = function (maze, createWallsResults) {
     }
 };
 
-Global.addDoorToResults = function (door, maze, createWallsResults) {
+Global.addDoorToResults = function (door, maze, createWallsResults, isExtra) {
     for (let i = 1; i < door.length; i++) {
         let doorCell = door[i];
 
-        maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+        if (isExtra) {
+            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+        } else {
+            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+        }
 
         createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
         createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
