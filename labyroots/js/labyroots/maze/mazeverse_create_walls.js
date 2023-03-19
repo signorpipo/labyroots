@@ -143,7 +143,9 @@ Global.createWalls = function (maze) {
         }
     }
 
-    Global.addExtraDoors(maze, createWallsResults);
+    if (Math.pp_randomInt(0, 10) != 0) {
+        Global.addExtraDoors(maze, createWallsResults);
+    }
 
     Global.adjustMazeWalls(maze);
 
@@ -311,7 +313,7 @@ Global.addExtraDoors = function (maze, createWallsResults) {
     let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
     extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
 
-    if (Math.pp_randomInt(0, 20) == 0) {
+    if (Math.pp_randomInt(0, 10) == 0) {
         extraDoors = extraDoors * 1000;
     }
 
