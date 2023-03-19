@@ -40,11 +40,15 @@ Global.createWalls = function (maze) {
 
                 let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0])
                 if (rowColumnDiff < 0) {
-                    useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 1 : 2))) == 0;
+                    useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 0.5 : 2))) == 0;
                 } else if (rowColumnDiff > 0) {
-                    useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 1))) != 0;
+                    useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 0.5))) != 0;
                 } else {
-                    useRow = Math.pp_randomInt(0, 1) != 0;
+                    if (usedRow) {
+                        useRow = Math.pp_randomInt(0, 2) == 0;
+                    } else {
+                        useRow = Math.pp_randomInt(0, 2) != 0;
+                    }
                 }
 
                 if (useRow) {
@@ -81,48 +85,48 @@ Global.createWalls = function (maze) {
                 }
             }
 
-            if (wall == null) {
+            if (wall != null) {
+                let wallCells = [];
+                if (useRow) {
+                    let rowStart = wall[0][0];
+                    let columnStart = wall[0][1];
+                    for (let i = 0; i <= wall[1][1] - wall[0][1]; i++) {
+                        wallCells.push([rowStart, columnStart + i]);
+                    }
+                } else {
+                    let rowStart = wall[0][0];
+                    let columnStart = wall[0][1];
+                    for (let i = 0; i <= wall[1][0] - wall[0][0]; i++) {
+                        wallCells.push([rowStart + i, columnStart]);
+                    }
+                }
+
+                for (let wallCell of wallCells) {
+                    createWallsResults.myWallCells.pp_pushUnique(wallCell, Global.cellCoordinatesEqual);
+                    createWallsResults.myFreeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
+
+                    maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                }
+
+                if (useRow) {
+                    let upRoom = [[start[0], start[1]], [wall[0][0] - 1, end[1]], useRow];
+                    let bottomRoom = [[wall[0][0] + 1, start[1]], [end[0], end[1]], useRow];
+
+                    rooms.push(upRoom);
+                    rooms.push(bottomRoom);
+                } else {
+                    let leftRoom = [[start[0], start[1]], [end[0], wall[0][1] - 1], useRow];
+                    let rightRoom = [[start[0], wall[0][1] + 1], [end[0], end[1]], useRow];
+
+                    rooms.push(leftRoom);
+                    rooms.push(rightRoom);
+                }
+
+                Global.addDoorToWall(wallCells, useRow, maze, createWallsResults);
+                // add doors
+            } else {
                 console.error("WALL NULL");
-                return null;
             }
-
-            let wallCells = [];
-            if (useRow) {
-                let rowStart = wall[0][0];
-                let columnStart = wall[0][1];
-                for (let i = 0; i <= wall[1][1] - wall[0][1]; i++) {
-                    wallCells.push([rowStart, columnStart + i]);
-                }
-            } else {
-                let rowStart = wall[0][0];
-                let columnStart = wall[0][1];
-                for (let i = 0; i <= wall[1][0] - wall[0][0]; i++) {
-                    wallCells.push([rowStart + i, columnStart]);
-                }
-            }
-
-            for (let wallCell of wallCells) {
-                createWallsResults.myWallCells.pp_pushUnique(wallCell, Global.cellCoordinatesEqual);
-                createWallsResults.myFreeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
-
-                maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
-            }
-
-            if (useRow) {
-                let upRoom = [[start[0], start[1]], [wall[0][0] - 1, end[1]], useRow];
-                let bottomRoom = [[wall[0][0] + 1, start[1]], [end[0], end[1]], useRow];
-
-                rooms.push(upRoom);
-                rooms.push(bottomRoom);
-            } else {
-                let leftRoom = [[start[0], start[1]], [end[0], wall[0][1] - 1], useRow];
-                let rightRoom = [[start[0], wall[0][1] + 1], [end[0], end[1]], useRow];
-
-                rooms.push(leftRoom);
-                rooms.push(rightRoom);
-            }
-
-            // add doors
         }
 
         firstExtraDistance = 0;
@@ -131,7 +135,7 @@ Global.createWalls = function (maze) {
     Global.adjustMazeWalls(maze);
 
     return createWallsResults;
-}
+};
 
 Global.skipRoom = function (room, createWallsResults) {
     let skipRoom = false;
@@ -145,7 +149,7 @@ Global.skipRoom = function (room, createWallsResults) {
     }
 
     return skipRoom;
-}
+};
 
 Global.adjustMazeWalls = function (maze) {
     for (let i = 0; i < maze.length; i++) {
@@ -181,10 +185,30 @@ Global.adjustMazeWalls = function (maze) {
                 } else if (!left && right && up && !bottom) {
                     row[j] = LR.MazeItemType.ROCK_WALL_BOTTOM_RIGHT;
 
+                } else if (!left && right && !up && !bottom) {
+                    row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                } else if (left && !right && !up && !bottom) {
+                    row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+
+                } else if (!left && !right && up && !bottom) {
+                    row[j] = LR.MazeItemType.ROCK_WALL_VERTICAL;
+                } else if (!left && !right && !up && bottom) {
+                    row[j] = LR.MazeItemType.ROCK_WALL_VERTICAL;
+
                 } else {
                     row[j] = LR.MazeItemType.ROCK_WALL_CROSS;
                 }
             }
         }
     }
-}
+};
+
+Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
+    let doorCell = Math.pp_randomPick(wallCells);
+
+    maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+
+    createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+    createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
+    createWallsResults.myDoors.pp_pushUnique([useRow, doorCell], Global.doorsEqual);
+};

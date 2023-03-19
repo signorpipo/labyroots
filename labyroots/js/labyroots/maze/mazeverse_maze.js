@@ -1,8 +1,9 @@
 LR.CreateWallsResults = class CreateWallsResults {
     constructor() {
         this.myFreeCells = [];
-        this.myDoorCells = [];
         this.myWallCells = [];
+
+        this.myDoors = [];
         this.mySpecialRooms = [];
     }
 };
@@ -29,6 +30,23 @@ Chiarimenti
 
 Global.cellCoordinatesEqual = function (first, second) {
     return first[0] == second[0] && first[1] == second[1];
+}
+
+Global.doorsEqual = function (first, second) {
+    let equal = true;
+
+    if (first.length != second.length) {
+        equal = false;
+    } else {
+        for (let i = 0; i < first.length; i++) {
+            if (first[i] != second[i]) {
+                equal = false;
+                break;
+            }
+        }
+    }
+
+    return equal;
 }
 
 Global.createMazeverseMaze = function () {
