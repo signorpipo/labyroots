@@ -140,7 +140,7 @@ Global.createWalls = function (maze) {
                     return null;
                 }
             } else {
-                console.error("WALL NULL");
+                //console.error("WALL NULL");
             }
         }
     }
@@ -301,7 +301,6 @@ Global.isWallType = function (type, rootWallIsWall = false) {
 };
 
 Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
-
     let door = null;
     let maxAttempts = 100;
 
@@ -320,6 +319,33 @@ Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
     return door != null;
 };
 
+Global.addExtraDoors = function (maze, createWallsResults) {
+    let doorsAmount = createWallsResults.myDoors.length;
+    let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
+    extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
+
+    if (Math.pp_randomInt(0, 10) == 0) {
+        extraDoors = extraDoors * 1000;
+    }
+
+    let maxRetry = extraDoors * 10;
+
+    for (let i = 0; i < extraDoors; i++) {
+        let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
+
+        let amount = 1; // random amount 
+        let door = Global.addDoorToMaze(doorCell, amount, maze);
+        if (door != null) {
+            Global.addDoorToResults(door, maze, createWallsResults);
+        }
+
+        if (door == null && maxRetry > 0) {
+            maxRetry--;
+            i--;
+        }
+    }
+};
+
 Global.addDoorToResults = function (door, maze, createWallsResults) {
     for (let i = 1; i < door.length; i++) {
         let doorCell = door[i];
@@ -331,7 +357,7 @@ Global.addDoorToResults = function (door, maze, createWallsResults) {
     }
 
     createWallsResults.myDoors.pp_pushUnique(door, Global.doorsEqual);
-}
+};
 
 Global.addDoorToMaze = function (doorCell, amount, maze) {
     let doorDirection = Global.getDoorDirection(doorCell, maze);
@@ -342,11 +368,14 @@ Global.addDoorToMaze = function (doorCell, amount, maze) {
 
     let door = [doorDirection];
     let doorCellsToReturn = [];
+    let doorCellsVisited = [];
 
     let doorCells = [];
     doorCells.push(doorCell);
     while (doorCells.length > 0 && amount > 0) {
         let currentCell = Math.pp_randomPick(doorCells);
+        doorCellsVisited.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+
         doorCells.pp_removeEqual(currentCell, Global.cellCoordinatesEqual);
 
         let currentCellDirection = Global.getDoorDirection(currentCell, maze);
@@ -385,6 +414,10 @@ Global.addDoorToMaze = function (doorCell, amount, maze) {
                     doorCells.pp_pushUnique([currentCell[0] - 1, currentCell[1]], Global.cellCoordinatesEqual);
                     doorCells.pp_pushUnique([currentCell[0] + 1, currentCell[1]], Global.cellCoordinatesEqual);
                 }
+
+                for (let doorCellVisited of doorCellsVisited) {
+                    doorCells.pp_removeEqual(doorCellVisited, Global.cellCoordinatesEqual);
+                }
             }
         }
     }
@@ -394,33 +427,6 @@ Global.addDoorToMaze = function (doorCell, amount, maze) {
     }
 
     return door.length > 1 ? door : null;
-}
-
-Global.addExtraDoors = function (maze, createWallsResults) {
-    let doorsAmount = createWallsResults.myDoors.length;
-    let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
-    extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
-
-    if (Math.pp_randomInt(0, 10) == 0) {
-        extraDoors = extraDoors * 1000;
-    }
-
-    let maxRetry = extraDoors * 10;
-
-    for (let i = 0; i < extraDoors; i++) {
-        let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
-
-        let amount = 1; // random amount 
-        let door = Global.addDoorToMaze(doorCell, amount, maze);
-        if (door != null) {
-            Global.addDoorToResults(door, maze, createWallsResults);
-        }
-
-        if (door == null && maxRetry > 0) {
-            maxRetry--;
-            i--;
-        }
-    }
 };
 
 Global.getDoorDirection = function (doorCell, maze) {

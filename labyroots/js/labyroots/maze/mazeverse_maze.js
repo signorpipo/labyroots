@@ -113,7 +113,7 @@ Global.convertMazeToString = function (maze) {
     for (let i = 0; i < maze.length; i++) {
         let row = maze[i];
         for (let j = 0; j < row.length; j++) {
-            maze[i][j] = row[i].toString();
+            maze[i][j] = row[j].toString();
             if (maze[i][j].length < 2) {
                 maze[i][j] = "0" + maze[i][j];
             }
