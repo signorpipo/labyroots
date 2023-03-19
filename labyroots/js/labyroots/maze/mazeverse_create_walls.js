@@ -31,13 +31,16 @@ Global.createWalls = function (maze) {
 
             let wall = null;
             let useRow = false;
-            while (wall == null) {
-                // add max attempts because if there is only holes because of a door tehre is not change to create a wall possibly
+            let maxAttempts = 100;
+
+            while (wall == null && maxAttempts > 0) {
+                maxAttempts--;
+
                 let wallAttempt = [[], []];
 
                 let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0])
                 if (rowColumnDiff < 0) {
-                    useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 1 : 2))) == 0; // cambia in base alla differenza fra i due
+                    useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 1 : 2))) == 0;
                 } else if (rowColumnDiff > 0) {
                     useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 1))) != 0;
                 } else {
@@ -76,6 +79,11 @@ Global.createWalls = function (maze) {
                         console.error("IMPOSSIBLE");
                     }
                 }
+            }
+
+            if (wall == null) {
+                console.error("WALL NULL");
+                return null;
             }
 
             let wallCells = [];

@@ -13,4 +13,6 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
 
         maze[randomCell[0]][randomCell[1]] = itemToAdd;
     }
+
+    return true;
 }
