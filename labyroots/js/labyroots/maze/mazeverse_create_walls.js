@@ -174,10 +174,10 @@ Global.adjustMazeWalls = function (maze) {
         for (let j = 0; j < row.length; j++) {
             let item = row[j];
             if (item >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && item <= LR.MazeItemType.ROCK_WALL_CROSS) {
-                let left = (j == 0) ? LR.MazeItemType.NONE : row[j - 1];
-                let right = (j == row.length - 1) ? LR.MazeItemType.NONE : row[j + 1];
-                let up = (i == 0) ? LR.MazeItemType.NONE : maze[i - 1][j];
-                let bottom = (i == maze.length - 1) ? LR.MazeItemType.NONE : maze[i + 1][j];
+                let left = Global.isWallType((j == 0) ? LR.MazeItemType.NONE : row[j - 1]);
+                let right = Global.isWallType((j == row.length - 1) ? LR.MazeItemType.NONE : row[j + 1]);
+                let up = Global.isWallType((i == 0) ? LR.MazeItemType.NONE : maze[i - 1][j]);
+                let bottom = Global.isWallType((i == maze.length - 1) ? LR.MazeItemType.NONE : maze[i + 1][j]);
 
                 if (left && right && !up && !bottom) {
                     row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
@@ -289,3 +289,17 @@ Global.getReachableCells = function (startCell, maze, rootWallsBlock = false) {
 
     return reachableCells;
 };
+
+Global.isWallType = function (type, rootWallIsWall = false) {
+    let isWallType = false;
+
+    if (type >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && type <= LR.MazeItemType.ROCK_WALL_CROSS) {
+        isWallType = true;
+    } else if (rootWallIsWall) {
+        if (type == LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL || type == LR.MazeItemType.BIG_TREE_WALL_VERTICAL) {
+            isWallType = true;
+        }
+    }
+
+    return isWallType;
+}
