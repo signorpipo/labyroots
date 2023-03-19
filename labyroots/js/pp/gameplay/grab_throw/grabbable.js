@@ -137,6 +137,7 @@ WL.registerComponent('pp-grabbable', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myThrowLinearVelocityMultiplier = this._myThrowLinearVelocityMultiplier;
         clonedComponent._myThrowAngularVelocityMultiplier = this._myThrowAngularVelocityMultiplier;

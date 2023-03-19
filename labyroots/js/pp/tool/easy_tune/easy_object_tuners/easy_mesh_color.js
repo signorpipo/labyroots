@@ -23,6 +23,7 @@ WL.registerComponent("pp-easy-mesh-color", {
             "_myColorModel": this._myColorModel,
             "_myColorType": this._myColorType,
         });
+        clonedComponent.active = this.active;
 
         return clonedComponent;
     }

@@ -84,6 +84,7 @@ WL.registerComponent('fruit', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myType = this._myType;
 

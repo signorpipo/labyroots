@@ -18,6 +18,7 @@ WL.registerComponent("pp-easy-mesh-ambient-factor", {
             "_mySetAsDefault": this._mySetAsDefault,
             "_myUseTuneTarget": this._myUseTuneTarget
         });
+        clonedComponent.active = this.active;
 
         return clonedComponent;
     }

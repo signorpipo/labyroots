@@ -381,6 +381,7 @@ WL.registerComponent('axe', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myStartTransform.quat2_copy(this._myStartTransform);
 

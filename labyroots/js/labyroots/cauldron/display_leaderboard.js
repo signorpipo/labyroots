@@ -69,6 +69,7 @@ WL.registerComponent("display-leaderboard", {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myName = this._myName;
         clonedComponent._myIsLocal = this._myIsLocal;

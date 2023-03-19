@@ -37,6 +37,7 @@ WL.registerComponent('deactivate-physx-if-far-from-player', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
         return clonedComponent;
     }
 });

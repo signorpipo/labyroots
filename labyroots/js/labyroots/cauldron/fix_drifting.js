@@ -9,6 +9,7 @@ WL.registerComponent('fix-drifting', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
         return clonedComponent;
     }
 });

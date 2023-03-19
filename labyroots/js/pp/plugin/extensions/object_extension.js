@@ -2127,8 +2127,8 @@ if (WL && WL.Object) {
 
                 // Clone post process
                 // Can be useful if you have to get some data from other components in the hierarchy which have now been created
-                while (componentsToCloneData.length > 0) {
-                    let cloneData = componentsToCloneData.shift();
+                while (componentsToPostProcessData.length > 0) {
+                    let cloneData = componentsToPostProcessData.shift();
                     let componentToClone = cloneData[0];
                     let currentClonedComponent = cloneData[1];
 

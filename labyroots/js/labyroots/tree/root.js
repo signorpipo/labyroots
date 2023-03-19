@@ -119,6 +119,7 @@ WL.registerComponent('root', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myAxeSpawnRoot = this._myAxeSpawnRoot;
 

@@ -18,7 +18,7 @@ WL.registerComponent('big-tree', {
         this._myPhases = [];
 
         this._myCurrentPhase = 0;
-        this.avoidIncrement = false;
+        this._myAvoidIncrement = false;
 
         Global.myBigTree = this;
 
@@ -74,7 +74,7 @@ WL.registerComponent('big-tree', {
 
         if (this._myBigTreeRoots == 0) {
 
-            if (!this.avoidIncrement) {
+            if (!this._myAvoidIncrement) {
                 this._myCurrentPhase++;
             }
 
@@ -95,7 +95,7 @@ WL.registerComponent('big-tree', {
                 } else {
                     this._myPhases[4].pp_setActive(true);
                 }
-                this.avoidIncrement = true;
+                this._myAvoidIncrement = true;
 
                 if (this._myHit == 0) {
                     Global.myBigTreeDead = true;
@@ -142,6 +142,7 @@ WL.registerComponent('big-tree', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         return clonedComponent;
     },

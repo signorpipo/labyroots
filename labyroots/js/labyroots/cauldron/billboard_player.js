@@ -20,6 +20,7 @@ WL.registerComponent('billboard-player', {
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
+        clonedComponent.active = this.active;
 
         clonedComponent._myKeepUp = this._myKeepUp;
 
