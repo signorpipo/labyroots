@@ -135,8 +135,10 @@ Global.createWalls = function (maze) {
                     rooms.push(rightRoom);
                 }
 
-                Global.addDoorToWall(wallCells, useRow, maze, createWallsResults);
-                // add doors
+                if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
+                    console.error("CAN'T CREATE DOOR");
+                    return null;
+                }
             } else {
                 console.error("WALL NULL");
             }
@@ -224,16 +226,6 @@ Global.adjustMazeWalls = function (maze) {
     }
 };
 
-Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
-    let doorCell = Math.pp_randomPick(wallCells);
-
-    maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
-
-    createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
-    createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
-    createWallsResults.myDoors.pp_pushUnique([useRow, doorCell], Global.doorsEqual);
-};
-
 Global.checkFreeCellsReachable = function (maze, createWallsResults, rootWallsBlock = false) {
     let freeCellsReachable = true;
 
@@ -308,6 +300,102 @@ Global.isWallType = function (type, rootWallIsWall = false) {
     return isWallType;
 };
 
+Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
+
+    let door = null;
+    let maxAttempts = 100;
+
+    while (door == null && maxAttempts > 0) {
+        maxAttempts--;
+        let doorCell = Math.pp_randomPick(wallCells);
+
+        let amount = 1; // random amount 
+        door = Global.addDoorToMaze(doorCell, amount, maze);
+    }
+
+    if (door != null) {
+        Global.addDoorToResults(door, maze, createWallsResults);
+    }
+
+    return door != null;
+};
+
+Global.addDoorToResults = function (door, maze, createWallsResults) {
+    for (let i = 1; i < door.length; i++) {
+        let doorCell = door[i];
+
+        maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+
+        createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+        createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
+    }
+
+    createWallsResults.myDoors.pp_pushUnique(door, Global.doorsEqual);
+}
+
+Global.addDoorToMaze = function (doorCell, amount, maze) {
+    let doorDirection = Global.getDoorDirection(doorCell, maze);
+
+    if (doorDirection == null) {
+        return null;
+    }
+
+    let door = [doorDirection];
+    let doorCellsToReturn = [];
+
+    let doorCells = [];
+    doorCells.push(doorCell);
+    while (doorCells.length > 0 && amount > 0) {
+        let currentCell = Math.pp_randomPick(doorCells);
+        doorCells.pp_removeEqual(currentCell, Global.cellCoordinatesEqual);
+
+        let currentCellDirection = Global.getDoorDirection(currentCell, maze);
+        if (currentCellDirection == doorDirection) {
+
+            let backupMazeCell = maze[currentCell[0]][currentCell[1]];
+
+            maze[currentCell[0]][currentCell[1]] = LR.MazeItemType.NONE;
+
+            let isOk = true;
+            if (doorDirection) {
+                let leftIsAlone = Global.isAloneWall([currentCell[0], currentCell[1] - 1], maze);
+                let rightIsAlone = Global.isAloneWall([currentCell[0], currentCell[1] + 1], maze);
+
+                if (leftIsAlone || rightIsAlone) {
+                    isOk = false;
+                }
+            } else {
+                let upIsAlone = Global.isAloneWall([currentCell[0] - 1, currentCell[1]], maze);
+                let bottomIsAlone = Global.isAloneWall([currentCell[0] + 1, currentCell[1]], maze);
+
+                if (upIsAlone || bottomIsAlone) {
+                    isOk = false;
+                }
+            }
+
+            maze[currentCell[0]][currentCell[1]] = backupMazeCell;
+
+            if (isOk) {
+                amount--;
+                doorCellsToReturn.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+                if (doorDirection) {
+                    doorCells.pp_pushUnique([currentCell[0], currentCell[1] - 1], Global.cellCoordinatesEqual);
+                    doorCells.pp_pushUnique([currentCell[0], currentCell[1] + 1], Global.cellCoordinatesEqual);
+                } else {
+                    doorCells.pp_pushUnique([currentCell[0] - 1, currentCell[1]], Global.cellCoordinatesEqual);
+                    doorCells.pp_pushUnique([currentCell[0] + 1, currentCell[1]], Global.cellCoordinatesEqual);
+                }
+            }
+        }
+    }
+
+    for (let doorCellToReturn of doorCellsToReturn) {
+        door.push(doorCellToReturn);
+    }
+
+    return door.length > 1 ? door : null;
+}
+
 Global.addExtraDoors = function (maze, createWallsResults) {
     let doorsAmount = createWallsResults.myDoors.length;
     let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
@@ -322,39 +410,13 @@ Global.addExtraDoors = function (maze, createWallsResults) {
     for (let i = 0; i < extraDoors; i++) {
         let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
 
-        let doorDirection = Global.getDoorDirection(doorCell, maze);
-
-        if (doorDirection != null) {
-            let backupMazeCell = maze[doorCell[0]][doorCell[1]];
-
-            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
-
-            if (doorDirection) {
-                let leftIsAlone = Global.isAloneWall([doorCell[0], doorCell[1] - 1], maze);
-                let rightIsAlone = Global.isAloneWall([doorCell[0], doorCell[1] + 1], maze);
-
-                if (leftIsAlone || rightIsAlone) {
-                    doorDirection = null;
-                }
-            } else {
-                let upIsAlone = Global.isAloneWall([doorCell[0] - 1, doorCell[1]], maze);
-                let bottomIsAlone = Global.isAloneWall([doorCell[0] + 1, doorCell[1]], maze);
-
-                if (upIsAlone || bottomIsAlone) {
-                    doorDirection = null;
-                }
-            }
-
-            if (doorDirection == null) {
-                maze[doorCell[0]][doorCell[1]] = backupMazeCell;
-            } else {
-                createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
-                createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
-                createWallsResults.myDoors.pp_pushUnique([doorDirection, doorCell], Global.doorsEqual);
-            }
+        let amount = 1; // random amount 
+        let door = Global.addDoorToMaze(doorCell, amount, maze);
+        if (door != null) {
+            Global.addDoorToResults(door, maze, createWallsResults);
         }
 
-        if (doorDirection == null && maxRetry > 0) {
+        if (door == null && maxRetry > 0) {
             maxRetry--;
             i--;
         }
