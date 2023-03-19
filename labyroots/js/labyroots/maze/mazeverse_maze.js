@@ -11,10 +11,7 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- mettere i buchi per le porte
-    - segnare le porte come orizzontali o verticali già
-- controllare che le celle libere, partendo da una random, siano effettivamente tutte visitabili
-- aggiungere porte extra
+- fare che le porte possono anche essere di 2-3 celle
 - metti le porte radici
 - metti il player e poi la radice ascia (poi gestire se c'è la stanza speciale)
     - controllare che si possa raggiungere considerando le radici muro come muro altrimenti rimetterle

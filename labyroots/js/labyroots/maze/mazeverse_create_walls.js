@@ -13,7 +13,7 @@ Global.createWalls = function (maze) {
         for (let j = 0; j < row.length; j++) {
             if (i < 1 || i > maze.length - 2 || j < 1 || j > row.length - 2) {
                 maze[i][j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
-                createWallsResults.myWallCells.pp_pushUnique([i, j], Global.cellCoordinatesEqual);
+                //createWallsResults.myWallCells.pp_pushUnique([i, j], Global.cellCoordinatesEqual);
             }
         }
     }
@@ -142,6 +142,8 @@ Global.createWalls = function (maze) {
             }
         }
     }
+
+    Global.addExtraDoors(maze, createWallsResults);
 
     Global.adjustMazeWalls(maze);
 
@@ -302,4 +304,91 @@ Global.isWallType = function (type, rootWallIsWall = false) {
     }
 
     return isWallType;
-}
+};
+
+Global.addExtraDoors = function (maze, createWallsResults) {
+    let doorsAmount = createWallsResults.myDoors.length;
+    let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 0.75), Math.round(doorsAmount * 1.25));
+    extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
+
+    if (Math.pp_randomInt(0, 20) == 0) {
+        extraDoors = extraDoors * 1000;
+    }
+
+    let maxRetry = extraDoors * 10;
+
+    for (let i = 0; i < extraDoors; i++) {
+        let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
+
+        let doorDirection = Global.getDoorDirection(doorCell, maze);
+
+        if (doorDirection != null) {
+            let backupMazeCell = maze[doorCell[0]][doorCell[1]];
+
+            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+
+            if (doorDirection) {
+                let leftIsAlone = Global.isAloneWall([doorCell[0], doorCell[1] - 1], maze);
+                let rightIsAlone = Global.isAloneWall([doorCell[0], doorCell[1] + 1], maze);
+
+                if (leftIsAlone || rightIsAlone) {
+                    doorDirection = null;
+                }
+            } else {
+                let upIsAlone = Global.isAloneWall([doorCell[0] - 1, doorCell[1]], maze);
+                let bottomIsAlone = Global.isAloneWall([doorCell[0] + 1, doorCell[1]], maze);
+
+                if (upIsAlone || bottomIsAlone) {
+                    doorDirection = null;
+                }
+            }
+
+            if (doorDirection == null) {
+                maze[doorCell[0]][doorCell[1]] = backupMazeCell;
+            } else {
+                createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+                createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
+                createWallsResults.myDoors.pp_pushUnique([doorDirection, doorCell], Global.doorsEqual);
+            }
+        }
+
+        if (doorDirection == null && maxRetry > 0) {
+            maxRetry--;
+            i--;
+        }
+    }
+};
+
+Global.getDoorDirection = function (doorCell, maze) {
+    let doorDirection = null;
+
+    let left = Global.isWallType((doorCell[1] == 0) ? LR.MazeItemType.NONE : maze[doorCell[0]][doorCell[1] - 1]);
+    let right = Global.isWallType((doorCell[1] == maze[0].length - 1) ? LR.MazeItemType.NONE : maze[doorCell[0]][doorCell[1] + 1]);
+    let up = Global.isWallType((doorCell[0] == 0) ? LR.MazeItemType.NONE : maze[doorCell[0] - 1][doorCell[1]]);
+    let bottom = Global.isWallType((doorCell[0] == maze.length - 1) ? LR.MazeItemType.NONE : maze[doorCell[0] + 1][doorCell[1]]);
+
+    if (left && right && !up && !bottom) {
+        doorDirection = true;
+    } else if (!left && !right && up && bottom) {
+        doorDirection = false;
+    }
+
+    return doorDirection;
+};
+
+Global.isAloneWall = function (wallCell, maze) {
+    let isAlone = true;
+
+    let left = Global.isWallType((wallCell[1] == 0) ? LR.MazeItemType.NONE : maze[wallCell[0]][wallCell[1] - 1]);
+    let right = Global.isWallType((wallCell[1] == maze[0].length - 1) ? LR.MazeItemType.NONE : maze[wallCell[0]][wallCell[1] + 1]);
+    let up = Global.isWallType((wallCell[0] == 0) ? LR.MazeItemType.NONE : maze[wallCell[0] - 1][wallCell[1]]);
+    let bottom = Global.isWallType((wallCell[0] == maze.length - 1) ? LR.MazeItemType.NONE : maze[wallCell[0] + 1][wallCell[1]]);
+
+    if (left || right || up || bottom) {
+        isAlone = false;
+    } else if (!Global.isWallType(maze[wallCell[0]][wallCell[1]])) {
+        isAlone = false;
+    }
+
+    return isAlone;
+};
