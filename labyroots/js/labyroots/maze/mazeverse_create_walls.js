@@ -145,6 +145,12 @@ Global.createWalls = function (maze) {
 
     Global.adjustMazeWalls(maze);
 
+    let reachable = Global.checkFreeCellsReachable(maze, createWallsResults, false);
+    if (!reachable) {
+        console.error("NOT REACHABLE");
+        return null;
+    }
+
     return createWallsResults;
 };
 
@@ -222,4 +228,64 @@ Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
     createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
     createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
     createWallsResults.myDoors.pp_pushUnique([useRow, doorCell], Global.doorsEqual);
+};
+
+Global.checkFreeCellsReachable = function (maze, createWallsResults, rootWallsBlock = false) {
+    let freeCellsReachable = true;
+
+    let startCell = Math.pp_randomPick(createWallsResults.myFreeCells);
+
+    let reachableCells = Global.getReachableCells(startCell, maze, rootWallsBlock);
+
+    if (reachableCells.length != createWallsResults.myFreeCells.length) {
+        freeCellsReachable = false;
+    } else {
+        for (let reachableCell of reachableCells) {
+            if (!createWallsResults.myFreeCells.pp_hasEqual(reachableCell, Global.cellCoordinatesEqual)) {
+                freeCellsReachable = false;
+                break;
+            }
+        }
+    }
+
+    return freeCellsReachable;
+};
+
+Global.getReachableCells = function (startCell, maze, rootWallsBlock = false) {
+    let reachableCells = [];
+
+    let cellsToExplore = [];
+    cellsToExplore.push(startCell);
+
+    let exploredCells = [];
+
+    while (cellsToExplore.length > 0) {
+        let currentCell = cellsToExplore.shift();
+        reachableCells.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+        exploredCells.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+
+        let neighborCells = [];
+        neighborCells.push([currentCell[0] + 1, currentCell[1]]);
+        neighborCells.push([currentCell[0], currentCell[1] + 1]);
+        neighborCells.push([currentCell[0] - 1, currentCell[1]]);
+        neighborCells.push([currentCell[0], currentCell[1] - 1]);
+
+        for (let neighborCell of neighborCells) {
+            if (!exploredCells.pp_hasEqual(neighborCell, Global.cellCoordinatesEqual)) {
+                if (neighborCell[0] >= 0 && neighborCell[0] <= maze.length - 1) {
+                    if (neighborCell[1] >= 0 && neighborCell[1] <= maze[0].length - 1) {
+                        let mazeCell = maze[neighborCell[0]][neighborCell[1]];
+
+                        if (mazeCell < LR.MazeItemType.ROCK_WALL_HORIZONTAL || mazeCell > LR.MazeItemType.ROCK_WALL_CROSS) {
+                            if (!rootWallsBlock || (mazeCell != LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL && mazeCell != LR.MazeItemType.BIG_TREE_WALL_VERTICAL)) {
+                                cellsToExplore.pp_pushUnique(neighborCell, Global.cellCoordinatesEqual);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return reachableCells;
 };
