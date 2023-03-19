@@ -18,7 +18,6 @@ Global.createWalls = function (maze) {
         }
     }
 
-    let firstExtraDistance = 3;
     let rooms = [[[1, 1], [maze.length - 2, maze[0].length - 2], Math.pp_randomInt(0, 1)]];
     while (rooms.length > 0) {
         let room = Math.pp_randomPick(rooms);
@@ -52,8 +51,15 @@ Global.createWalls = function (maze) {
                 }
 
                 if (useRow) {
-                    if (end[0] - start[0] > 1) {
-                        wallAttempt[0][0] = Math.pp_randomInt(start[0] + 1 + firstExtraDistance, end[0] - 1 - firstExtraDistance);
+                    let difference = end[0] - start[0];
+                    let extraDistance = Math.floor(difference / 4);
+                    let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                    extraDistance = Math.ceil(extraDistance * extraDistanceMultiplier);
+
+                    let startFixed = start[0] + 1 + extraDistance;
+                    let endFixed = end[0] - 1 - extraDistance;
+                    if (endFixed - startFixed >= 0) {
+                        wallAttempt[0][0] = Math.pp_randomInt(startFixed, endFixed);
                         wallAttempt[0][1] = start[1];
                         wallAttempt[1][0] = wallAttempt[0][0];
                         wallAttempt[1][1] = end[1];
@@ -64,8 +70,15 @@ Global.createWalls = function (maze) {
                         }
                     }
                 } else {
-                    if (end[1] - start[1] > 1) {
-                        wallAttempt[0][1] = Math.pp_randomInt(start[1] + 1 + firstExtraDistance, end[1] - 1 - firstExtraDistance);
+                    let difference = end[1] - start[1];
+                    let extraDistance = Math.floor(difference / 4);
+                    let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                    extraDistance = Math.round(extraDistance * extraDistanceMultiplier);
+
+                    let startFixed = start[1] + 1 + extraDistance;
+                    let endFixed = end[1] - 1 - extraDistance;
+                    if (endFixed - startFixed >= 0) {
+                        wallAttempt[0][1] = Math.pp_randomInt(startFixed, endFixed);
                         wallAttempt[0][0] = start[0];
                         wallAttempt[1][1] = wallAttempt[0][1];
                         wallAttempt[1][0] = end[0];
@@ -128,8 +141,6 @@ Global.createWalls = function (maze) {
                 console.error("WALL NULL");
             }
         }
-
-        firstExtraDistance = 0;
     }
 
     Global.adjustMazeWalls(maze);
