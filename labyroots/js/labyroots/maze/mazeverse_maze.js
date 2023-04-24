@@ -5,6 +5,8 @@ LR.CreateWallsResults = class CreateWallsResults {
 
         this.myDoors = [];
 
+        this.myNoDoors = false;
+
         this.myBigTreeRoom = null;
         this.myBigTreeRoomSize = null;
 
@@ -16,6 +18,8 @@ LR.CreateWallsResults = class CreateWallsResults {
     }
 
     reset() {
+        this.myNoDoors = false;
+
         this.myFreeCells = [];
         this.myWallCells = [];
 

@@ -377,6 +377,7 @@ Global.addExtraDoors = function (maze, createWallsResults) {
     extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
 
     if (Math.pp_randomInt(0, 10) == 0) {
+        createWallsResults.myNoDoors = true;
         extraDoors = extraDoors * 1000;
     }
 
