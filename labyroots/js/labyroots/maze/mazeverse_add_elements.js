@@ -1,6 +1,13 @@
 LR.AddElemenstResults = class AddElemenstResults {
     constructor() {
         this.myElementsFar = [];
+
+        this.myRootsFar = [];
+
+        this.myTreesFar = [];
+
+        this.myZestyFar = [];
+
         this.myPlayer = [0, 0];
         this.myFirstRoot = [0, 0];
     }
@@ -57,6 +64,7 @@ Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsRe
     freeCells.pp_removeEqual(bigTreePosition, Global.cellCoordinatesEqual);
 
     addElementsResults.myElementsFar.push(bigTreePosition);
+    addElementsResults.myRootsFar.push(bigTreePosition);
 }
 
 Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsResults) {
@@ -87,6 +95,7 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
 
         addElementsResults.myElementsFar.push(playerPosition);
         addElementsResults.myPlayer.pp_copy(playerPosition);
+        addElementsResults.myRootsFar.push(playerPosition);
 
         let firstRootPosition = [0, 0];
         let found = false;
@@ -103,6 +112,7 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
 
         addElementsResults.myElementsFar.push(firstRootPosition);
         addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
+        addElementsResults.myRootsFar.push(firstRootPosition);
     } else {
         let randomCell = Math.pp_randomPick(freeCells);
         freeCells.pp_removeEqual(randomCell, Global.cellCoordinatesEqual);
@@ -111,23 +121,24 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
 
         addElementsResults.myElementsFar.push(randomCell);
         addElementsResults.myPlayer.pp_copy(randomCell);
+        addElementsResults.myRootsFar.push(randomCell);
     }
 
     return firstRootAdded;
 }
 
 Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElementsResults) {
-    let far = Math.pp_randomInt(0, 1) != 0;
+    let far = Math.pp_randomInt(0, 3) != 0;
 
     let firstRootPosition = Math.pp_randomPick(freeCells);
-    let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myElementsFar, maze);
+    let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
 
     let maxAttempts = 100;
     while (far && !isFar && maxAttempts > 0) {
         maxAttempts--;
 
         firstRootPosition = Math.pp_randomPick(freeCells);
-        isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myElementsFar, maze);
+        isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
     }
 
     maze[firstRootPosition[0]][firstRootPosition[1]] = LR.MazeItemType.BIG_TREE_FIRST_ROOT;
@@ -136,6 +147,7 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
 
     addElementsResults.myElementsFar.push(firstRootPosition);
     addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
+    addElementsResults.myRootsFar.push(firstRootPosition);
 }
 
 Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze) {
