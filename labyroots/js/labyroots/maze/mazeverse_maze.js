@@ -4,14 +4,33 @@ LR.CreateWallsResults = class CreateWallsResults {
         this.myWallCells = [];
 
         this.myDoors = [];
-        this.mySpecialRooms = [];
+
+        this.myBigTreeRoom = null;
+        this.myBigTreeRoomSize = null;
+
+        this.myPlayerRoom = null;
+        this.myPlayerRoomSize = null;
+
+        this.myWoodsRoom = null;
+        this.myWoodsRoomSize = null;
+    }
+
+    reset() {
+        this.myFreeCells = [];
+        this.myWallCells = [];
+
+        this.myDoors = [];
+
+        this.myBigTreeRoom = null;
+        this.myPlayerRoom = null;
+        this.myWoodsRoom = null;
+
     }
 };
 
 /*
 TODO
 
-- fare che le porte possono anche essere di 2-3 celle
 - metti le porte radici
 - metti il player e poi la radice ascia (poi gestire se c'è la stanza speciale)
     - controllare che si possa raggiungere considerando le radici muro come muro altrimenti rimetterle
@@ -20,8 +39,9 @@ TODO
     - magari anche un controllo globale ceh se è true allora per forza sono tutti distanti
 - mettere da 2 a 4 zesty
 
-Chiarimenti
-- essere dsitante significa essere a più di 1/3 del lato piu corto
+- trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
+
+- essere distante significa essere a più di 1/3 del lato piu corto
 
 */
 
@@ -57,13 +77,21 @@ Global.createMazeverseMaze = function () {
         try {
             maze = Global.initializeMaze();
 
-            let createWallsResults = null;
+            let createWallsResults = new LR.CreateWallsResults();
             let createWallsMaxAttempts = 100;
+            let returnedCreateWallsResults = null;
+
+            Global.chooseSpecialRoomSetups(createWallsResults);
             do {
+                Global.emptyMaze(maze);
+
                 createWallsMaxAttempts--;
 
-                createWallsResults = Global.createWalls(maze);
-            } while (createWallsResults == null && createWallsMaxAttempts > 0);
+                createWallsResults.reset();
+                returnedCreateWallsResults = Global.createWalls(maze, createWallsResults);
+            } while (returnedCreateWallsResults == null && createWallsMaxAttempts > 0);
+
+            createWallsResults = returnedCreateWallsResults;
 
             if (createWallsResults == null) {
                 throw "Create Wall Failed";
@@ -96,8 +124,10 @@ Global.createMazeverseMaze = function () {
 Global.initializeMaze = function () {
     let maze = [];
 
-    let columns = Math.pp_randomInt(20, 25);
-    let rows = Math.pp_randomInt(20, Math.pp_randomPick([35, 35, 25]));
+    let rowMax = Math.pp_randomPick(27, 27, 27, 30)
+    let columnMax = Math.pp_randomPick(27, 27, 27, 30)
+    let columns = Math.pp_randomInt(20, rowMax);
+    let rows = Math.pp_randomInt(20, columnMax);
 
     for (let i = 0; i < rows; i++) {
         maze[i] = [];
@@ -107,6 +137,15 @@ Global.initializeMaze = function () {
     }
 
     return maze;
+}
+
+Global.emptyMaze = function (maze) {
+    for (let i = 0; i < maze.length; i++) {
+        let row = maze[i];
+        for (let j = 0; j < row.length; j++) {
+            maze[i][j] = LR.MazeItemType.NONE;
+        }
+    }
 }
 
 Global.convertMazeToString = function (maze) {

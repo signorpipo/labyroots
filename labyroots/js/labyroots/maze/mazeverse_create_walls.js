@@ -1,6 +1,4 @@
-Global.createWalls = function (maze) {
-    let createWallsResults = new LR.CreateWallsResults();
-
+Global.createWalls = function (maze, createWallsResults) {
     for (let i = 1; i < maze.length - 1; i++) {
         let row = maze[i];
         for (let j = 1; j < row.length - 1; j++) {
@@ -23,124 +21,126 @@ Global.createWalls = function (maze) {
         let room = Math.pp_randomPick(rooms);
         rooms.pp_removeEqual(room);
 
-        if (!Global.skipRoom(room, createWallsResults)) {
-            let start = room[0];
-            let end = room[1];
-            let usedRow = room[1];
+        if (!Global.useAsSpecialRoom(room, createWallsResults)) {
+            if (!Global.skipRoom(room, createWallsResults)) {
+                let start = room[0];
+                let end = room[1];
+                let usedRow = room[1];
 
-            let wall = null;
-            let useRow = false;
-            let maxAttempts = 100;
+                let wall = null;
+                let useRow = false;
+                let maxAttempts = 100;
 
-            while (wall == null && maxAttempts > 0) {
-                maxAttempts--;
+                while (wall == null && maxAttempts > 0) {
+                    maxAttempts--;
 
-                let wallAttempt = [[], []];
+                    let wallAttempt = [[], []];
 
-                let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0])
-                if (rowColumnDiff < 0) {
-                    useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 0.5 : 2))) == 0;
-                } else if (rowColumnDiff > 0) {
-                    useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 0.5))) != 0;
-                } else {
-                    if (usedRow) {
-                        useRow = Math.pp_randomInt(0, 2) == 0;
+                    let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0])
+                    if (rowColumnDiff < 0) {
+                        useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 0.5 : 2))) == 0;
+                    } else if (rowColumnDiff > 0) {
+                        useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 0.5))) != 0;
                     } else {
-                        useRow = Math.pp_randomInt(0, 2) != 0;
-                    }
-                }
-
-                if (useRow) {
-                    let difference = end[0] - start[0];
-                    let extraDistance = Math.floor(difference / 4);
-                    let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
-                    extraDistance = Math.ceil(extraDistance * extraDistanceMultiplier);
-
-                    let startFixed = start[0] + 1 + extraDistance;
-                    let endFixed = end[0] - 1 - extraDistance;
-                    if (endFixed - startFixed >= 0) {
-                        wallAttempt[0][0] = Math.pp_randomInt(startFixed, endFixed);
-                        wallAttempt[0][1] = start[1];
-                        wallAttempt[1][0] = wallAttempt[0][0];
-                        wallAttempt[1][1] = end[1];
-
-                        if (maze[wallAttempt[0][0]][wallAttempt[0][1] - 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL &&
-                            maze[wallAttempt[1][0]][wallAttempt[1][1] + 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
-                            wall = wallAttempt;
+                        if (usedRow) {
+                            useRow = Math.pp_randomInt(0, 2) == 0;
+                        } else {
+                            useRow = Math.pp_randomInt(0, 2) != 0;
                         }
                     }
-                } else {
-                    let difference = end[1] - start[1];
-                    let extraDistance = Math.floor(difference / 4);
-                    let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
-                    extraDistance = Math.round(extraDistance * extraDistanceMultiplier);
 
-                    let startFixed = start[1] + 1 + extraDistance;
-                    let endFixed = end[1] - 1 - extraDistance;
-                    if (endFixed - startFixed >= 0) {
-                        wallAttempt[0][1] = Math.pp_randomInt(startFixed, endFixed);
-                        wallAttempt[0][0] = start[0];
-                        wallAttempt[1][1] = wallAttempt[0][1];
-                        wallAttempt[1][0] = end[0];
+                    if (useRow) {
+                        let difference = end[0] - start[0];
+                        let extraDistance = Math.floor(difference / 4);
+                        let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                        extraDistance = Math.ceil(extraDistance * extraDistanceMultiplier);
 
-                        if (maze[wallAttempt[0][0] - 1][wallAttempt[0][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL &&
-                            maze[wallAttempt[1][0] + 1][wallAttempt[1][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
-                            wall = wallAttempt;
+                        let startFixed = start[0] + 1 + extraDistance;
+                        let endFixed = end[0] - 1 - extraDistance;
+                        if (endFixed - startFixed >= 0) {
+                            wallAttempt[0][0] = Math.pp_randomInt(startFixed, endFixed);
+                            wallAttempt[0][1] = start[1];
+                            wallAttempt[1][0] = wallAttempt[0][0];
+                            wallAttempt[1][1] = end[1];
+
+                            if (maze[wallAttempt[0][0]][wallAttempt[0][1] - 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL &&
+                                maze[wallAttempt[1][0]][wallAttempt[1][1] + 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
+                                wall = wallAttempt;
+                            }
+                        }
+                    } else {
+                        let difference = end[1] - start[1];
+                        let extraDistance = Math.floor(difference / 4);
+                        let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                        extraDistance = Math.round(extraDistance * extraDistanceMultiplier);
+
+                        let startFixed = start[1] + 1 + extraDistance;
+                        let endFixed = end[1] - 1 - extraDistance;
+                        if (endFixed - startFixed >= 0) {
+                            wallAttempt[0][1] = Math.pp_randomInt(startFixed, endFixed);
+                            wallAttempt[0][0] = start[0];
+                            wallAttempt[1][1] = wallAttempt[0][1];
+                            wallAttempt[1][0] = end[0];
+
+                            if (maze[wallAttempt[0][0] - 1][wallAttempt[0][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL &&
+                                maze[wallAttempt[1][0] + 1][wallAttempt[1][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
+                                wall = wallAttempt;
+                            }
+                        }
+                    }
+
+                    if (wall != null) {
+                        if (wall[1][0] - wall[0][0] < 1 && wall[1][1] - wall[0][1] < 1) {
+                            wall = null;
+                            console.error("IMPOSSIBLE");
                         }
                     }
                 }
 
                 if (wall != null) {
-                    if (wall[1][0] - wall[0][0] < 1 && wall[1][1] - wall[0][1] < 1) {
-                        wall = null;
-                        console.error("IMPOSSIBLE");
+                    let wallCells = [];
+                    if (useRow) {
+                        let rowStart = wall[0][0];
+                        let columnStart = wall[0][1];
+                        for (let i = 0; i <= wall[1][1] - wall[0][1]; i++) {
+                            wallCells.push([rowStart, columnStart + i]);
+                        }
+                    } else {
+                        let rowStart = wall[0][0];
+                        let columnStart = wall[0][1];
+                        for (let i = 0; i <= wall[1][0] - wall[0][0]; i++) {
+                            wallCells.push([rowStart + i, columnStart]);
+                        }
                     }
-                }
-            }
 
-            if (wall != null) {
-                let wallCells = [];
-                if (useRow) {
-                    let rowStart = wall[0][0];
-                    let columnStart = wall[0][1];
-                    for (let i = 0; i <= wall[1][1] - wall[0][1]; i++) {
-                        wallCells.push([rowStart, columnStart + i]);
+                    for (let wallCell of wallCells) {
+                        createWallsResults.myWallCells.pp_pushUnique(wallCell, Global.cellCoordinatesEqual);
+                        createWallsResults.myFreeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
+
+                        maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                    }
+
+                    if (useRow) {
+                        let upRoom = [[start[0], start[1]], [wall[0][0] - 1, end[1]], useRow];
+                        let bottomRoom = [[wall[0][0] + 1, start[1]], [end[0], end[1]], useRow];
+
+                        rooms.push(upRoom);
+                        rooms.push(bottomRoom);
+                    } else {
+                        let leftRoom = [[start[0], start[1]], [end[0], wall[0][1] - 1], useRow];
+                        let rightRoom = [[start[0], wall[0][1] + 1], [end[0], end[1]], useRow];
+
+                        rooms.push(leftRoom);
+                        rooms.push(rightRoom);
+                    }
+
+                    if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
+                        console.error("CAN'T CREATE DOOR");
+                        return null;
                     }
                 } else {
-                    let rowStart = wall[0][0];
-                    let columnStart = wall[0][1];
-                    for (let i = 0; i <= wall[1][0] - wall[0][0]; i++) {
-                        wallCells.push([rowStart + i, columnStart]);
-                    }
+                    //console.error("WALL NULL");
                 }
-
-                for (let wallCell of wallCells) {
-                    createWallsResults.myWallCells.pp_pushUnique(wallCell, Global.cellCoordinatesEqual);
-                    createWallsResults.myFreeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
-
-                    maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
-                }
-
-                if (useRow) {
-                    let upRoom = [[start[0], start[1]], [wall[0][0] - 1, end[1]], useRow];
-                    let bottomRoom = [[wall[0][0] + 1, start[1]], [end[0], end[1]], useRow];
-
-                    rooms.push(upRoom);
-                    rooms.push(bottomRoom);
-                } else {
-                    let leftRoom = [[start[0], start[1]], [end[0], wall[0][1] - 1], useRow];
-                    let rightRoom = [[start[0], wall[0][1] + 1], [end[0], end[1]], useRow];
-
-                    rooms.push(leftRoom);
-                    rooms.push(rightRoom);
-                }
-
-                if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
-                    console.error("CAN'T CREATE DOOR");
-                    return null;
-                }
-            } else {
-                //console.error("WALL NULL");
             }
         }
     }
@@ -154,6 +154,13 @@ Global.createWalls = function (maze) {
     let reachable = Global.checkFreeCellsReachable(maze, createWallsResults, false);
     if (!reachable) {
         console.error("NOT REACHABLE");
+        return null;
+    }
+
+    if ((createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null) ||
+        (createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null) ||
+        (createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null)) {
+        console.error("SPECIAL ROOMS FAILURE");
         return null;
     }
 
@@ -172,6 +179,43 @@ Global.skipRoom = function (room, createWallsResults) {
     }
 
     return skipRoom;
+};
+
+Global.useAsSpecialRoom = function (room, createWallsResults) {
+    let used = false;
+
+    let rows = room[1][0] - room[0][0] + 1;
+    let columns = room[1][1] - room[0][1] + 1;
+
+    if (createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null) {
+        if ((rows == createWallsResults.myBigTreeRoomSize[0] && columns == createWallsResults.myBigTreeRoomSize[1]) ||
+            (rows == createWallsResults.myBigTreeRoomSize[1] && columns == createWallsResults.myBigTreeRoomSize[0])) {
+            createWallsResults.myBigTreeRoom = room;
+            used = true;
+        }
+    }
+
+    if (!used) {
+        if (createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null) {
+            if ((rows == createWallsResults.myPlayerRoomSize[0] && columns == createWallsResults.myPlayerRoomSize[1]) ||
+                (rows == createWallsResults.myPlayerRoomSize[1] && columns == createWallsResults.myPlayerRoomSize[0])) {
+                createWallsResults.myPlayerRoom = room;
+                used = true;
+            }
+        }
+    }
+
+    if (!used) {
+        if (createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null) {
+            if ((rows == createWallsResults.myWoodsRoomSize[0] && columns == createWallsResults.myWoodsRoomSize[1]) ||
+                (rows == createWallsResults.myWoodsRoomSize[1] && columns == createWallsResults.myWoodsRoomSize[0])) {
+                createWallsResults.myWoodsRoom = room;
+                used = true;
+            }
+        }
+    }
+
+    return used;
 };
 
 Global.adjustMazeWalls = function (maze) {
@@ -473,4 +517,26 @@ Global.isAloneWall = function (wallCell, maze) {
     }
 
     return isAlone;
+};
+
+Global.chooseSpecialRoomSetups = function (createWallsResults) {
+    let bigTreeSize = [0, 0];
+
+    {
+        let randomSizes = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 4)];
+        let first = Math.pp_randomInt(0, 1);
+        bigTreeSize[0] = randomSizes[first];
+        bigTreeSize[1] = randomSizes[first + 1 % 2];
+        createWallsResults.myBigTreeRoomSize = bigTreeSize;
+    }
+
+    let createPlayerRoom = Math.pp_randomInt(0, 3) != 0;
+    if (createPlayerRoom) {
+        createWallsResults.myPlayerRoomSize = [Math.pp_randomInt(3, 4), Math.pp_randomInt(3, 4)];
+    }
+
+    let specialRoom = Math.pp_randomInt(0, 3) == 0;
+    if (specialRoom) {
+        createWallsResults.myWoodsRoomSize = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 5)];
+    }
 };
