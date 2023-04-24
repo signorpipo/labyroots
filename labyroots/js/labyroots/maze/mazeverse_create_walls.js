@@ -526,7 +526,7 @@ Global.chooseSpecialRoomSetups = function (createWallsResults) {
         let randomSizes = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 4)];
         let first = Math.pp_randomInt(0, 1);
         bigTreeSize[0] = randomSizes[first];
-        bigTreeSize[1] = randomSizes[first + 1 % 2];
+        bigTreeSize[1] = randomSizes[(first + 1) % 2];
         createWallsResults.myBigTreeRoomSize = bigTreeSize;
     }
 

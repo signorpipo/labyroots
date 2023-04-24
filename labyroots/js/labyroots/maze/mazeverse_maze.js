@@ -99,7 +99,24 @@ Global.createMazeverseMaze = function () {
 
             let addElementsResult = false;
             let addElementsMaxAttempts = 100;
+
+            let mazeClone = [];
+            for (let i = 0; i < maze.length; i++) {
+                mazeClone[i] = [];
+                let row = maze[i];
+                for (let j = 0; j < row.length; j++) {
+                    mazeClone[i][j] = maze[i][j];
+                }
+            }
+
             do {
+                for (let i = 0; i < mazeClone.length; i++) {
+                    let row = mazeClone[i];
+                    for (let j = 0; j < row.length; j++) {
+                        maze[i][j] = mazeClone[i][j];
+                    }
+                }
+
                 addElementsMaxAttempts--;
 
                 addElementsResult = Global.addElementsToMaze(maze, createWallsResults);
