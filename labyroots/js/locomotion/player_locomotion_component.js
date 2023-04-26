@@ -34,7 +34,7 @@ WL.registerComponent('player-locomotion', {
         params.mySnapTurnAngle = this._mySnapTurnAngle;
         params.mySnapTurnSpeedDegrees = this._mySnapTurnSpeedDegrees;
 
-        params.myFlyEnabled = this._myFlyEnabled;
+        params.myFlyEnabled = this._myFlyEnabled || Global.myFromAbove;
         params.myMinAngleToFlyUpNonVR = this._myMinAngleToFlyUpNonVR;
         params.myMinAngleToFlyDownNonVR = this._myMinAngleToFlyDownNonVR;
         params.myMinAngleToFlyUpVR = this._myMinAngleToFlyUpVR;

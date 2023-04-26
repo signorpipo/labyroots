@@ -35,7 +35,11 @@ WL.registerComponent('story', {
                     this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
 
                     if (Global.myIsWeddingTime || Global.myIsMazeverseTime) {
-                        this._myTimer.start(8);
+                        if (Global.myFromAbove) {
+                            this._myTimer.start(0);
+                        } else {
+                            this._myTimer.start(8);
+                        }
                     }
 
                     if (Global.myIsMazeverseTime) {

@@ -168,6 +168,9 @@ WL.registerComponent('transformation', {
 
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+        if (Global.myFromAbove) {
+            this._myTransformationTimersSetup[0] = 1000000;
+        }
         for (let timer of this._myTransformationTimersSetup) {
             this._myStageTotalTime += timer;
         }
@@ -188,6 +191,13 @@ WL.registerComponent('transformation', {
         if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
             rotationQuat = Global.lookBigTreeAligned(Global.myPlayer.getPosition());
             Global.myPlayer.setRotationQuat(rotationQuat);
+        }
+
+        if (Global.myFromAbove) {
+            Global.myPlayer.teleportPosition([0, 40, 0], null, true);
+            Global.myPlayer.resetReal(true, false, false, true);
+            Global.myPlayer.resetHeadToReal();
+            Global.myPlayer.getPlayerHeadManager().setRotationHeadQuat(rotationQuat.quat_setForward([0, -1, 0]));
         }
     },
     _resetTransformation() {

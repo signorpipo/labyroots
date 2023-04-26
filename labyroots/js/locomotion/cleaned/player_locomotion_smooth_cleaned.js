@@ -28,7 +28,9 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         this._myDirectionConverterVR = new PP.Direction2DTo3DConverter(directionConverterVRParams);
         this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;
 
-        this._myLocomotionRuntimeParams.myIsFlying = false;
+        if (Global.myFromAbove) {
+            this._myLocomotionRuntimeParams.myIsFlying = true;
+        }
 
         this._myGravitySpeed = 0;
 

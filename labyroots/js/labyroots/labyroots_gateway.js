@@ -1,7 +1,9 @@
 WL.registerComponent("labyroots-gateway", {
+    _myFromAbove: { type: WL.Type.Bool, default: false }
 }, {
     init: function () {
         Global.myGoogleAnalytics = window.gtag != null;
+        Global.myFromAbove = this._myFromAbove;
     },
     start: function () {
         this._myLoadSetupDone = false;
@@ -149,6 +151,7 @@ Global = {
     myFruits: [],
     myAxeProto: null,
     myFollowAxe: null,
+    myFromAbove: false
 };
 
 Global.mySessionStarted = false;
