@@ -165,19 +165,25 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
     addElementsResults.myRootsFar.push(firstRootPosition);
 }
 
-
 Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addElementsResults) {
     let rootWallsToAdd = Math.round(createWallsResults.myDoors.length * (Math.pp_random(0.2, 0.4)));
 
+    let rootWallsAdded = 0;
+    let rootWallsToAddOriginal = rootWallsToAdd;
+
+    let blockedDoors = 0;
+    let doorsLength = doors.length;
     while (rootWallsToAdd > 0) {
         rootWallsToAdd--;
 
         let maxAttempts = 100;
-        while (maxAttempts > 0) {
+        while (maxAttempts > 0 && doors.length > 0) {
             maxAttempts--;
 
             let randomDoorIndex = Math.pp_randomInt(0, doors.length - 1);
             let randomDoor = doors[randomDoorIndex];
+            doors.pp_removeIndex(randomDoorIndex);
+
             if (Global.isDoorFree(randomDoor, freeCells)) {
                 if (!Global.isDoorBlockingPlayer(addElementsResults.myPlayer, addElementsResults.myFirstRoot, randomDoor, maze)) {
                     for (let i = 1; i < randomDoor.length; i++) {
@@ -190,21 +196,60 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
                         addElementsResults.myAllElements.push(doorCell);
                     }
 
-                    doors.pp_removeIndex(randomDoorIndex);
+                    rootWallsAdded++;
 
                     break;
+                } else {
+                    blockedDoors++;
+                    if (blockedDoors > doorsLength - 4) {
+                        console.error("all doors are blocking?");
+                    }
+
+                    console.error("door blocking player");
                 }
+            } else {
+                console.error("door not free");
             }
         }
     }
+
+    console.error("root walls:", rootWallsToAddOriginal, "- ", rootWallsAdded)
 }
 
 Global.isDoorFree = function isDoorFree(door, freeCells) {
-    return true;
+    let isDoorFree = true;
+
+    for (let i = 1; i < door.length; i++) {
+        let doorCell = door[i];
+
+        if (!freeCells.pp_hasEqual(doorCell)) {
+            isDoorFree = false;
+            break;
+        }
+    }
+
+    return isDoorFree;
 }
 
 Global.isDoorBlockingPlayer = function isDoorBlockingPlayer(player, firstRoot, randomDoor, maze) {
-    return false;
+    let mazeClone = [];
+    for (let i = 0; i < maze.length; i++) {
+        mazeClone[i] = [];
+        let row = maze[i];
+        for (let j = 0; j < row.length; j++) {
+            mazeClone[i][j] = maze[i][j];
+        }
+    }
+
+    for (let i = 1; i < randomDoor.length; i++) {
+        let doorCell = randomDoor[i];
+
+        mazeClone[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+    }
+
+    let reachableCells = Global.getReachableCells(player, mazeClone, true);
+
+    return !reachableCells.pp_hasEqual(firstRoot, Global.cellCoordinatesEqual);
 }
 
 Global.isEverythingReachable = function isEverythingReachable(maze, addElementsResult) {
