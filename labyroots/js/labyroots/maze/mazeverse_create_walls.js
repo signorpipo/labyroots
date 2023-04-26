@@ -164,6 +164,11 @@ Global.createWalls = function (maze, createWallsResults) {
         return null;
     }
 
+    if (createWallsResults.myFreeCells.length < 50) {
+        console.error("TOO FEW FREE CELLS");
+        return null;
+    }
+
     return createWallsResults;
 };
 

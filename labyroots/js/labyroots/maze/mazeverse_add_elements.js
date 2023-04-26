@@ -1,5 +1,9 @@
 LR.AddElemenstResults = class AddElemenstResults {
     constructor() {
+        this.myRootsMustBeFar = false;
+
+        this.myAllElements = [];
+
         this.myElementsFar = [];
 
         this.myRootsFar = [];
@@ -19,6 +23,7 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
     let doors = createWallsResults.myDoors.pp_clone();
 
     let addElementsResults = new LR.AddElemenstResults();
+    addElementsResults.myRootsMustBeFar = Math.pp_randomInt(0, 5) != 0;
 
     Global.addBigTree(maze, createWallsResults, freeCells, addElementsResults);
     let firstRootAdded = Global.addPlayer(maze, createWallsResults, freeCells, addElementsResults);
@@ -44,7 +49,7 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
         maze[randomCell[0]][randomCell[1]] = itemToAdd;
     }
 
-    return true;
+    return Global.isEverythingReachable(maze, addElementsResults);
 }
 
 Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsResults) {
@@ -68,6 +73,7 @@ Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsRe
 
     freeCells.pp_removeEqual(bigTreePosition, Global.cellCoordinatesEqual);
 
+    addElementsResults.myAllElements.push(bigTreePosition);
     addElementsResults.myElementsFar.push(bigTreePosition);
     addElementsResults.myRootsFar.push(bigTreePosition);
 }
@@ -98,6 +104,7 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
 
         freeCells.pp_removeEqual(playerPosition, Global.cellCoordinatesEqual);
 
+        addElementsResults.myAllElements.push(playerPosition);
         addElementsResults.myElementsFar.push(playerPosition);
         addElementsResults.myPlayer.pp_copy(playerPosition);
         addElementsResults.myRootsFar.push(playerPosition);
@@ -115,25 +122,27 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
 
         freeCells.pp_removeEqual(firstRootPosition, Global.cellCoordinatesEqual);
 
+        addElementsResults.myAllElements.push(firstRootPosition);
         addElementsResults.myElementsFar.push(firstRootPosition);
         addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
         addElementsResults.myRootsFar.push(firstRootPosition);
     } else {
-        let randomCell = Math.pp_randomPick(freeCells);
-        freeCells.pp_removeEqual(randomCell, Global.cellCoordinatesEqual);
+        let playerPosition = Math.pp_randomPick(freeCells);
+        freeCells.pp_removeEqual(playerPosition, Global.cellCoordinatesEqual);
 
-        maze[randomCell[0]][randomCell[1]] = LR.MazeItemType.PLAYER_START;
+        maze[playerPosition[0]][playerPosition[1]] = LR.MazeItemType.PLAYER_START;
 
-        addElementsResults.myElementsFar.push(randomCell);
-        addElementsResults.myPlayer.pp_copy(randomCell);
-        addElementsResults.myRootsFar.push(randomCell);
+        addElementsResults.myAllElements.push(playerPosition);
+        addElementsResults.myElementsFar.push(playerPosition);
+        addElementsResults.myPlayer.pp_copy(playerPosition);
+        addElementsResults.myRootsFar.push(playerPosition);
     }
 
     return firstRootAdded;
 }
 
 Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElementsResults) {
-    let far = Math.pp_randomInt(0, 3) != 0;
+    let far = addElementsResults.myRootsMustBeFar;
 
     let firstRootPosition = Math.pp_randomPick(freeCells);
     let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
@@ -150,6 +159,7 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
 
     freeCells.pp_removeEqual(firstRootPosition, Global.cellCoordinatesEqual);
 
+    addElementsResults.myAllElements.push(firstRootPosition);
     addElementsResults.myElementsFar.push(firstRootPosition);
     addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
     addElementsResults.myRootsFar.push(firstRootPosition);
@@ -176,6 +186,8 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
                         maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
 
                         freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+
+                        addElementsResults.myAllElements.push(doorCell);
                     }
 
                     doors.pp_removeIndex(randomDoorIndex);
@@ -193,6 +205,21 @@ Global.isDoorFree = function isDoorFree(door, freeCells) {
 
 Global.isDoorBlockingPlayer = function isDoorBlockingPlayer(player, firstRoot, randomDoor, maze) {
     return false;
+}
+
+Global.isEverythingReachable = function isEverythingReachable(maze, addElementsResult) {
+    let reachableCells = Global.getReachableCells(addElementsResult.myPlayer, maze, false);
+
+    let allElements = addElementsResult.myAllElements.pp_clone();
+    console.error("Elements Not Reachable:", allElements.length);
+
+    for (let reachableCell of reachableCells) {
+        allElements.pp_removeEqual(reachableCell, Global.cellCoordinatesEqual);
+    }
+
+    console.error("Elements Not Reachable:", allElements.length);
+
+    return allElements.length == 0;
 }
 
 Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze) {
