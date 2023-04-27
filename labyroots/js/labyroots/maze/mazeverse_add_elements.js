@@ -1,16 +1,20 @@
 LR.AddElemenstResults = class AddElemenstResults {
     constructor() {
         this.myRootsMustBeFar = false;
+        this.myTreesMustBeFar = false;
+
+        this.myRootsToAdd = 3;
 
         this.myAllElements = [];
 
         this.myElementsFar = [];
 
         this.myRootsFar = [];
+        this.myTreesFar = [];
 
         this.myTreesFar = [];
 
-        this.myZestyFar = [];
+        this.myZestiesFar = [];
 
         this.myPlayer = [0, 0];
         this.myFirstRoot = [0, 0];
@@ -24,6 +28,11 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
 
     let addElementsResults = new LR.AddElemenstResults();
     addElementsResults.myRootsMustBeFar = Math.pp_randomInt(0, 5) != 0;
+    addElementsResults.myTreesMustBeFar = Math.pp_randomInt(0, 5) != 0;
+
+    if (createWallsResults.myWoodsRoom != null) {
+        Global.addWoods(maze, createWallsResults, freeCells, addElementsResults);
+    }
 
     Global.addBigTree(maze, createWallsResults, freeCells, addElementsResults);
     let firstRootAdded = Global.addPlayer(maze, createWallsResults, freeCells, addElementsResults);
@@ -36,20 +45,13 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
         Global.addRootWalls(maze, createWallsResults, freeCells, doors, addElementsResults);
     }
 
-    let itemsToAdd = [
-        LR.MazeItemType.BIG_TREE_ROOT, LR.MazeItemType.BIG_TREE_ROOT, LR.MazeItemType.BIG_TREE_ROOT,
-        LR.MazeItemType.HUMAN_TREE_0, LR.MazeItemType.HUMAN_TREE_0, LR.MazeItemType.HUMAN_TREE_0,
-    ];
+    Global.addRoots(maze, createWallsResults, freeCells, addElementsResults);
+    Global.addTrees(maze, createWallsResults, freeCells, addElementsResults);
+    Global.addZesties(maze, createWallsResults, freeCells, addElementsResults);
 
+    let everythingReachable = Global.isEverythingReachable(maze, addElementsResults);
 
-    for (let itemToAdd of itemsToAdd) {
-        let randomCell = Math.pp_randomPick(freeCells);
-        freeCells.pp_removeEqual(randomCell, Global.cellCoordinatesEqual);
-
-        maze[randomCell[0]][randomCell[1]] = itemToAdd;
-    }
-
-    return Global.isEverythingReachable(maze, addElementsResults);
+    return everythingReachable;
 }
 
 Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsResults) {
@@ -214,6 +216,153 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
     }
 
     console.error("root walls:", rootWallsToAddOriginal, "- ", rootWallsAdded)
+}
+
+Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResults) {
+    let addRoot = Math.pp_randomInt(0, 2) != 0;
+
+    let room = createWallsResults.myWoodsRoom;
+
+    let start = room[0];
+    let end = room[1];
+
+    let roomCells = [];
+    for (let row = start[0]; row <= end[0]; row++) {
+        for (let column = start[1]; column <= end[1]; column++) {
+            roomCells.push([row, column]);
+        }
+    }
+
+    if (addRoot) {
+        let rootPosition = Math.pp_randomPick(roomCells);
+        roomCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+
+        if (!freeCells.pp_hasEqual(rootPosition, Global.cellCoordinatesEqual)) {
+            console.error("NOT IN A FREE CELL NOT POSSIBLE");
+        }
+        freeCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+
+        maze[rootPosition[0]][rootPosition[1]] = LR.MazeItemType.BIG_TREE_ROOT;
+
+        addElementsResults.myAllElements.push(rootPosition);
+        addElementsResults.myElementsFar.push(rootPosition);
+        addElementsResults.myRootsFar.push(rootPosition);
+
+        addElementsResults.myRootsToAdd--;
+    }
+
+    while (roomCells.length > 0) {
+        let treePosition = Math.pp_randomPick(roomCells);
+        roomCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+
+        if (!freeCells.pp_hasEqual(treePosition, Global.cellCoordinatesEqual)) {
+            console.error("NOT IN A FREE CELL NOT POSSIBLE");
+        }
+        freeCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+
+        maze[treePosition[0]][treePosition[1]] = LR.MazeItemType.HUMAN_TREE_0 + 7;
+
+        addElementsResults.myAllElements.push(treePosition);
+        addElementsResults.myElementsFar.push(treePosition);
+    }
+}
+
+Global.addRoots = function (maze, createWallsResults, freeCells, addElementsResults) {
+    let far = addElementsResults.myRootsMustBeFar;
+
+    let rootsToAdd = addElementsResults.myRootsToAdd
+    for (let i = 0; i < rootsToAdd; i++) {
+        let rootPosition = Math.pp_randomPick(freeCells);
+        let isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze);
+
+        let maxAttempts = 100;
+        while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+
+            rootPosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze);
+        }
+
+        maze[rootPosition[0]][rootPosition[1]] = LR.MazeItemType.BIG_TREE_ROOT;
+
+        freeCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+
+        addElementsResults.myAllElements.push(rootPosition);
+        addElementsResults.myElementsFar.push(rootPosition);
+        addElementsResults.myRootsFar.push(rootPosition);
+    }
+}
+
+Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResults) {
+    let far = addElementsResults.myTreesFar;
+
+    let extra = 0;
+    if (maze.length * maze[0].length > 700) {
+        extra = 2
+    } else if (maze.length * maze[0].length > 550) {
+        extra = 1
+    }
+
+    let treesToAdd = Math.pp_randomInt(4 + extra, 8 + extra);
+    if (Math.pp_randomInt(0, 10) == 0) {
+        treesToAdd = 0;
+    }
+
+    for (let i = 0; i < treesToAdd; i++) {
+        let treePosition = Math.pp_randomPick(freeCells);
+        let isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze);
+
+        let maxAttempts = 100;
+        while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+
+            treePosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze);
+        }
+
+        maze[treePosition[0]][treePosition[1]] = LR.MazeItemType.HUMAN_TREE_0 + 7;
+
+        freeCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+
+        addElementsResults.myAllElements.push(treePosition);
+        addElementsResults.myElementsFar.push(treePosition);
+        addElementsResults.myTreesFar.push(treePosition);
+    }
+}
+
+Global.addZesties = function (maze, createWallsResults, freeCells, addElementsResults) {
+    let far = true;
+
+    let extra = 0;
+    if (maze.length * maze[0].length > 650) {
+        extra = 1
+    }
+
+    let zestiesToAdd = Math.pp_randomInt(2, 3 + extra);
+    if (Math.pp_randomInt(0, 10) == 0) {
+        zestiesToAdd = 0;
+    }
+
+    for (let i = 0; i < zestiesToAdd; i++) {
+        let zestyPosition = Math.pp_randomPick(freeCells);
+        let isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze);
+
+        let maxAttempts = 100;
+        while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+
+            zestyPosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze);
+        }
+
+        maze[zestyPosition[0]][zestyPosition[1]] = LR.MazeItemType.ZESTY;
+
+        freeCells.pp_removeEqual(zestyPosition, Global.cellCoordinatesEqual);
+
+        addElementsResults.myAllElements.push(zestyPosition);
+        addElementsResults.myElementsFar.push(zestyPosition);
+        addElementsResults.myZestiesFar.push(zestyPosition);
+    }
 }
 
 Global.isDoorFree = function isDoorFree(door, freeCells) {

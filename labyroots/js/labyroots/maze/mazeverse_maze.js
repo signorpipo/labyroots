@@ -35,17 +35,7 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- metti le porte radici
-- metti il player e poi la radice ascia (poi gestire se c'è la stanza speciale)
-    - controllare che si possa raggiungere considerando le radici muro come muro altrimenti rimetterle
-- mettere le altre radici, con una certa probabilità stanno distanti sia dal player che dalle altre radici
-- mettere alberi, anche qua con un certa probabilità controllano (singolarmente) che siano distanti
-    - magari anche un controllo globale ceh se è true allora per forza sono tutti distanti
-- mettere da 2 a 4 zesty
-
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
-
-- essere distante significa essere a più di 1/3 del lato piu corto
 
 */
 
