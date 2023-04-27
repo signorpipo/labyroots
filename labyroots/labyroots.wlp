@@ -21676,8 +21676,8 @@
                     "type": "physx",
                     "physx": {
                         "kinematic": true,
-                        "gravity": false,
-                        "shape": "box",
+                        "gravity": true,
+                        "shape": "convexMesh",
                         "box": {
                             "extents": [
                                 0.125,
@@ -21685,23 +21685,85 @@
                                 0.05
                             ]
                         },
-                        "groups": 16
+                        "groups": 4,
+                        "convexMesh": {
+                            "mesh": "24649e12-ab70-4c1b-b95b-976a31bf74e4"
+                        }
                     }
                 },
                 {
                     "type": "wondermelon"
+                },
+                {
+                    "type": "pp-grabbable"
                 }
             ],
             "scale": [
-                0.2,
-                0.2,
-                0.2
+                1.0,
+                1.0,
+                1.0
             ],
             "translation": [
                 0.0,
                 1.25,
                 0.0
             ]
+        },
+        "03ae1a95-5cc1-4cfe-a445-4492cd225c4e": {
+            "link": {
+                "name": "Wondermelon",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "parent": "364fa4e7-f2e6-4be3-95d7-c0c76f09619a",
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "7fef88a2-9860-4d14-8181-1229a325ef9f": {
+            "link": {
+                "name": "Wondermelon Peel<Wondermelon",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "parent": "03ae1a95-5cc1-4cfe-a445-4492cd225c4e"
+        },
+        "bed17362-2a56-428c-bddd-2ab9bf4a0295": {
+            "link": {
+                "name": "Wondermelon Rind<Wondermelon",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "parent": "03ae1a95-5cc1-4cfe-a445-4492cd225c4e"
+        },
+        "b76d16e5-2f40-40d5-a79b-5094bce4e870": {
+            "link": {
+                "name": "Wondermelon Pulp<Wondermelon",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "parent": "03ae1a95-5cc1-4cfe-a445-4492cd225c4e",
+            "translation": [
+                0.0,
+                0.0,
+                0.0
+            ],
+            "rotation": [
+                0.0,
+                0.0,
+                0.0,
+                1.0
+            ],
+            "scale": [
+                1.0,
+                1.0,
+                1.0
+            ]
+        },
+        "6ee5fd85-8d32-4db5-a84e-c69a7ea03a04": {
+            "link": {
+                "name": "Wondermelon Seed<Wondermelon",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "parent": "03ae1a95-5cc1-4cfe-a445-4492cd225c4e"
         }
     },
     "meshes": {
@@ -21877,6 +21939,42 @@
             "link": {
                 "name": "Icosphere",
                 "file": "assets\\models\\altro\\fix_sky.fbx"
+            }
+        },
+        "c9826bf4-ff38-4afa-bfd7-758eef97946d": {
+            "link": {
+                "name": "Wondermelon Peel",
+                "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "a609629e-84e6-40a7-ae99-b780019de1d5": {
+            "link": {
+                "name": "Wondermelon Rind",
+                "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "4947fcdb-ba5a-41a5-b395-8ab949b90015": {
+            "link": {
+                "name": "Wondermelon Pulp",
+                "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "242a9c0f-95cd-4443-8d01-3043590b9526": {
+            "link": {
+                "name": "Wondermelon Seed",
+                "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "24649e12-ab70-4c1b-b95b-976a31bf74e4": {
+            "link": {
+                "name": "Wondermelon Convex Mesh Loose",
+                "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "9ddd8967-3a1c-4d25-89cd-1effebf7bb7b": {
+            "link": {
+                "name": "Wondermelon Convex Mesh Fit",
+                "file": "assets\\models\\wondermelon.fbx"
             }
         }
     },
@@ -23567,6 +23665,46 @@
                 ],
                 "ambientFactor": 0.3249999
             }
+        },
+        "be71f583-41f1-48fe-ba54-e82a20c408ef": {
+            "link": {
+                "name": "Wondermelon Peel",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "Phong": {
+                "ambientFactor": 0.1,
+                "shininess": 10
+            }
+        },
+        "e32df4fe-568a-4c83-b3ec-7348c0784dfb": {
+            "link": {
+                "name": "Wondermelon Rind",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "Phong": {
+                "ambientFactor": 0.1,
+                "shininess": 10
+            }
+        },
+        "c26f0e5b-1868-46d0-a8ba-6a9e38b3f8d7": {
+            "link": {
+                "name": "Wondermelon Pulp",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "Phong": {
+                "ambientFactor": 0.1,
+                "shininess": 10
+            }
+        },
+        "96585588-96c7-4a99-a7c3-1ef866bd6288": {
+            "link": {
+                "name": "Wondermelon Seed",
+                "file": "assets\\models\\wondermelon.fbx"
+            },
+            "Phong": {
+                "ambientFactor": 0.1,
+                "shininess": 10
+            }
         }
     },
     "shaders": {
@@ -24119,7 +24257,8 @@
         "assets/textures/png/Environment/terreno_laby2.png",
         "assets/textures/webp/concept foglie albero/texture mani1.2 destra.webp",
         "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp",
-        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp"
+        "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp",
+        "assets/models/wondermelon.fbx"
     ],
     "fonts": {
         "147": {
