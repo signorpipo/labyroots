@@ -23,13 +23,26 @@ WL.registerComponent('mouth', {
     _onCollision(type, physXComponent) {
         if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
             let fruit = physXComponent.object.pp_getComponent("fruit");
-            if (fruit) {
+            if (fruit != null) {
                 if (!fruit._myUsed) {
                     fruit.activateEffect();
                     if (fruit._myUsed) {
                         //fruit.object.pp_setActive(false);
                         this._myFruitToDestroy.push(fruit.object);
                         this._myTimerDestroy.start();
+                    }
+                }
+            } else {
+                let wondermelon = physXComponent.object.pp_getComponent("wondermelon");
+
+                if (wondermelon != null) {
+                    if (!wondermelon._myUsed) {
+                        wondermelon.activateEffect();
+                        if (wondermelon._myUsed) {
+                            //fruit.object.pp_setActive(false);
+                            this._myFruitToDestroy.push(wondermelon.object);
+                            this._myTimerDestroy.start();
+                        }
                     }
                 }
             }
