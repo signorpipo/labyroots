@@ -11,6 +11,7 @@ LR.MazeItemType = {
     BUILD_CELL: 9,
     PLAYER_START: 10,
     PLAYER_RESPAWN: 11,
+    WONDERMELON: 12,
     BIG_TREE: 20,
     BIG_TREE_HEART: 21,
     BIG_TREE_ROOT: 22,

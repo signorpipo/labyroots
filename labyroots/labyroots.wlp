@@ -43,7 +43,10 @@
                     "type": "pp-debug-manager"
                 },
                 {
-                    "type": "labyroots-gateway"
+                    "type": "labyroots-gateway",
+                    "labyroots-gateway": {
+                        "_myFromAbove": true
+                    }
                 },
                 {
                     "type": "story",
@@ -23921,7 +23924,7 @@
             "visualizePhysX": false,
             "pwa": {
                 "appIcon": "f72d2a43-8590-4974-84d8-909cec241927",
-                "enable": true,
+                "enable": false,
                 "customManifest": true,
                 "customServiceWorker": true
             },

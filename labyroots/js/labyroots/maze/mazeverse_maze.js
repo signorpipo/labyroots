@@ -120,7 +120,7 @@ Global.createMazeverseMaze = function () {
                 throw "Add Elements Failed";
             }
         } catch (error) {
-            console.error("FAIL - Attempt:", maxAttempts, "- Error:", error);
+            //console.error("FAIL - Attempt:", maxAttempts, "- Error:", error);
             maze = null;
         }
     }

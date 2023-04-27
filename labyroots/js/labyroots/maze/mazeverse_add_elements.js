@@ -49,6 +49,8 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
     Global.addTrees(maze, createWallsResults, freeCells, addElementsResults);
     Global.addZesties(maze, createWallsResults, freeCells, addElementsResults);
 
+    Global.addWondermelon(maze, createWallsResults, freeCells, addElementsResults);
+
     let everythingReachable = Global.isEverythingReachable(maze, addElementsResults);
 
     return everythingReachable;
@@ -70,7 +72,7 @@ Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsRe
     maze[bigTreePosition[0]][bigTreePosition[1]] = LR.MazeItemType.BIG_TREE;
 
     if (!freeCells.pp_hasEqual(bigTreePosition, Global.cellCoordinatesEqual)) {
-        console.error("NOT IN A FREE CELL NOT POSSIBLE");
+        //console.error("NOT IN A FREE CELL NOT POSSIBLE");
     }
 
     freeCells.pp_removeEqual(bigTreePosition, Global.cellCoordinatesEqual);
@@ -101,7 +103,7 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
         maze[playerPosition[0]][playerPosition[1]] = LR.MazeItemType.PLAYER_START;
 
         if (!freeCells.pp_hasEqual(playerPosition, Global.cellCoordinatesEqual)) {
-            console.error("NOT IN A FREE CELL NOT POSSIBLE");
+            //console.error("NOT IN A FREE CELL NOT POSSIBLE");
         }
 
         freeCells.pp_removeEqual(playerPosition, Global.cellCoordinatesEqual);
@@ -210,18 +212,18 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
                 } else {
                     blockedDoors++;
                     if (blockedDoors > doorsLength - 4) {
-                        console.error("all doors are blocking?");
+                        //console.error("all doors are blocking?");
                     }
 
-                    console.error("door blocking player");
+                    //console.error("door blocking player");
                 }
             } else {
-                console.error("door not free");
+                //console.error("door not free");
             }
         }
     }
 
-    console.error("root walls:", rootWallsToAddOriginal, "- ", rootWallsAdded)
+    //console.error("root walls:", rootWallsToAddOriginal, "- ", rootWallsAdded)
 }
 
 Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResults) {
@@ -244,7 +246,7 @@ Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResu
         roomCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
 
         if (!freeCells.pp_hasEqual(rootPosition, Global.cellCoordinatesEqual)) {
-            console.error("NOT IN A FREE CELL NOT POSSIBLE");
+            //console.error("NOT IN A FREE CELL NOT POSSIBLE");
         }
         freeCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
 
@@ -262,7 +264,7 @@ Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResu
         roomCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
 
         if (!freeCells.pp_hasEqual(treePosition, Global.cellCoordinatesEqual)) {
-            console.error("NOT IN A FREE CELL NOT POSSIBLE");
+            //console.error("NOT IN A FREE CELL NOT POSSIBLE");
         }
         freeCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
 
@@ -389,6 +391,18 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
     }
 }
 
+Global.addWondermelon = function (maze, createWallsResults, freeCells, addElementsResults) {
+    let wondermelonPosition = Math.pp_randomPick(freeCells);
+
+    maze[wondermelonPosition[0]][wondermelonPosition[1]] = LR.MazeItemType.WONDERMELON;
+
+    freeCells.pp_removeEqual(wondermelonPosition, Global.cellCoordinatesEqual);
+
+    addElementsResults.myAllElements.push(wondermelonPosition);
+    addElementsResults.myElementsFar.push(wondermelonPosition);
+    addElementsResults.myZestiesFar.push(wondermelonPosition);
+}
+
 Global.isDoorFree = function isDoorFree(door, freeCells) {
     let isDoorFree = true;
 
@@ -429,13 +443,13 @@ Global.isEverythingReachable = function isEverythingReachable(maze, addElementsR
     let reachableCells = Global.getReachableCells(addElementsResult.myPlayer, maze, false);
 
     let allElements = addElementsResult.myAllElements.pp_clone();
-    console.error("Elements Not Reachable:", allElements.length);
+    //console.error("Elements Not Reachable:", allElements.length);
 
     for (let reachableCell of reachableCells) {
         allElements.pp_removeEqual(reachableCell, Global.cellCoordinatesEqual);
     }
 
-    console.error("Elements Not Reachable:", allElements.length);
+    //console.error("Elements Not Reachable:", allElements.length);
 
     return allElements.length == 0;
 }

@@ -92,7 +92,7 @@ Global.createWalls = function (maze, createWallsResults) {
                     if (wall != null) {
                         if (wall[1][0] - wall[0][0] < 1 && wall[1][1] - wall[0][1] < 1) {
                             wall = null;
-                            console.error("IMPOSSIBLE");
+                            //console.error("IMPOSSIBLE");
                         }
                     }
                 }
@@ -135,7 +135,7 @@ Global.createWalls = function (maze, createWallsResults) {
                     }
 
                     if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
-                        console.error("CAN'T CREATE DOOR");
+                        //console.error("CAN'T CREATE DOOR");
                         return null;
                     }
                 } else {
@@ -153,19 +153,19 @@ Global.createWalls = function (maze, createWallsResults) {
 
     let reachable = Global.checkFreeCellsReachable(maze, createWallsResults, false);
     if (!reachable) {
-        console.error("NOT REACHABLE");
+        //console.error("NOT REACHABLE");
         return null;
     }
 
     if ((createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null) ||
         (createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null) ||
         (createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null)) {
-        console.error("SPECIAL ROOMS FAILURE");
+        //console.error("SPECIAL ROOMS FAILURE");
         return null;
     }
 
     if (createWallsResults.myFreeCells.length < 50) {
-        console.error("TOO FEW FREE CELLS");
+        //console.error("TOO FEW FREE CELLS");
         return null;
     }
 
