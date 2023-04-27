@@ -150,11 +150,17 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
     let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
 
     let maxAttempts = 100;
+    let farDistance = 3;
     while (far && !isFar && maxAttempts > 0) {
         maxAttempts--;
 
         firstRootPosition = Math.pp_randomPick(freeCells);
-        isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
+        isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze, farDistance);
+
+        if (!isFar && maxAttempts == 0 && farDistance == 3) {
+            farDistance = 4;
+            maxAttempts = 50;
+        }
     }
 
     maze[firstRootPosition[0]][firstRootPosition[1]] = LR.MazeItemType.BIG_TREE_FIRST_ROOT;
@@ -276,11 +282,17 @@ Global.addRoots = function (maze, createWallsResults, freeCells, addElementsResu
         let isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze);
 
         let maxAttempts = 100;
+        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
             rootPosition = Math.pp_randomPick(freeCells);
-            isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze);
+            isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze, farDistance);
+
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+                farDistance = 4;
+                maxAttempts = 50;
+            }
         }
 
         maze[rootPosition[0]][rootPosition[1]] = LR.MazeItemType.BIG_TREE_ROOT;
@@ -313,11 +325,17 @@ Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResu
         let isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze);
 
         let maxAttempts = 100;
+        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
             treePosition = Math.pp_randomPick(freeCells);
-            isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze);
+            isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze, farDistance);
+
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+                farDistance = 4;
+                maxAttempts = 50;
+            }
         }
 
         maze[treePosition[0]][treePosition[1]] = LR.MazeItemType.HUMAN_TREE_0 + 7;
@@ -334,7 +352,7 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
     let far = true;
 
     let extra = 0;
-    if (maze.length * maze[0].length > 650) {
+    if (maze.length * maze[0].length > 600) {
         extra = 1
     }
 
@@ -348,11 +366,17 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
         let isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze);
 
         let maxAttempts = 100;
+        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
             zestyPosition = Math.pp_randomPick(freeCells);
-            isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze);
+            isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze, farDistance);
+
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+                farDistance = 4;
+                maxAttempts = 50;
+            }
         }
 
         maze[zestyPosition[0]][zestyPosition[1]] = LR.MazeItemType.ZESTY;
@@ -416,11 +440,11 @@ Global.isEverythingReachable = function isEverythingReachable(maze, addElementsR
     return allElements.length == 0;
 }
 
-Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze) {
+Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze, far = 3) {
     let farFromAll = true;
 
     for (let otherCell of otherCells) {
-        if (!Global.isFar(cell, otherCell, maze, 4)) {
+        if (!Global.isFar(cell, otherCell, maze, far)) {
             farFromAll = false;
             break;
         }
@@ -429,7 +453,7 @@ Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze) {
     return farFromAll;
 }
 
-Global.isFar = function isFar(first, second, maze, far = 3.5) {
+Global.isFar = function isFar(first, second, maze, far = 3) {
     return Global.distanceBetweenCellPositions(first, second) > Math.max(maze.length, maze[0].length) / far;
 }
 
