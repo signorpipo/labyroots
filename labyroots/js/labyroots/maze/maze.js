@@ -27,14 +27,20 @@ LR.Maze = class Maze {
             this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {
                 this._myGridToUse = mazeSetup.myGrid;
-            }
 
-            Global.myIsMazeverseTime = true;
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "mazeverse_maze_failed", {
+                        "value": 1
+                    });
+                }
+            } else {
+                Global.myIsMazeverseTime = true;
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "is_mazeverse_maze", {
-                    "value": 1
-                });
+                if (Global.myGoogleAnalytics) {
+                    gtag("event", "is_mazeverse_maze", {
+                        "value": 1
+                    });
+                }
             }
         } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
