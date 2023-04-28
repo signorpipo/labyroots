@@ -132,6 +132,9 @@ Global.createMazeverseMaze = function () {
             if (!addElementsResult) {
                 throw "Add Elements Failed";
             }
+
+            Global.adjustMazeWalls(maze);
+
         } catch (error) {
             //console.error("FAIL - Attempt:", maxAttempts, "- Error:", error);
             maze = null;
