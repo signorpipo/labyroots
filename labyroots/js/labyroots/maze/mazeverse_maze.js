@@ -35,10 +35,6 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- aggustare i muri col fatto che ci sono ora i muri radici che devono fare angolo
-    - se la porta radice è di 3 mettere un muro nel mezzo
-    - se è di 2, mettere un muro in una delle due poret
-    - se è piu di 3 scartare la porta come porta radice
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - aggiornare zesty
 
@@ -136,7 +132,9 @@ Global.createMazeverseMaze = function () {
             Global.adjustMazeWalls(maze);
 
         } catch (error) {
-            //console.error("FAIL - Attempt:", maxAttempts, "- Error:", error);
+            if (Global.myFromAbove) {
+                console.error("FAIL - Attempt:", maxAttempts, "- Error:", error);
+            }
             maze = null;
         }
     }
