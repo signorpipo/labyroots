@@ -76,6 +76,10 @@ Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsRe
     }
 
     freeCells.pp_removeEqual(bigTreePosition, Global.cellCoordinatesEqual);
+    freeCells.pp_removeEqual([bigTreePosition[0] - 1, bigTreePosition[1]], Global.cellCoordinatesEqual);
+    freeCells.pp_removeEqual([bigTreePosition[0] + 1, bigTreePosition[1]], Global.cellCoordinatesEqual);
+    freeCells.pp_removeEqual([bigTreePosition[0], bigTreePosition[1] - 1], Global.cellCoordinatesEqual);
+    freeCells.pp_removeEqual([bigTreePosition[0], bigTreePosition[1] + 1], Global.cellCoordinatesEqual);
 
     addElementsResults.myAllElements.push(bigTreePosition);
     addElementsResults.myElementsFar.push(bigTreePosition);

@@ -83,6 +83,10 @@ Global.createMazeverseMaze = function () {
 
                 createWallsResults.reset();
                 returnedCreateWallsResults = Global.createWalls(maze, createWallsResults);
+
+                if (returnedCreateWallsResults == null) {
+                    //console.error("Create Walls Failed:", createWallsMaxAttempts);
+                }
             } while (returnedCreateWallsResults == null && createWallsMaxAttempts > 0);
 
             createWallsResults = returnedCreateWallsResults;
@@ -114,6 +118,10 @@ Global.createMazeverseMaze = function () {
                 addElementsMaxAttempts--;
 
                 addElementsResult = Global.addElementsToMaze(maze, createWallsResults);
+
+                if (!addElementsResult) {
+                    //console.error("Add Elements Failed:", addElementsMaxAttempts);
+                }
             } while (!addElementsResult && addElementsMaxAttempts > 0);
 
             if (!addElementsResult) {
