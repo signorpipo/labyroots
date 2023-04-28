@@ -45,7 +45,6 @@ WL.registerComponent('fruit', {
         this._myStarted = false;
     },
     update: function (dt) {
-
         if (!this._myStarted) {
             if (Global.myStoryReady) {
                 this._myStarted = true;

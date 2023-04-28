@@ -21648,9 +21648,9 @@
             "name": "12",
             "parent": "7cbd9105-a8fe-4425-badd-d877732475d1",
             "translation": [
-                -4.5,
-                0.0,
-                0.0
+                -0.0670456,
+                1.5,
+                10.0
             ],
             "rotation": [
                 0.0,
@@ -21705,7 +21705,7 @@
             ],
             "translation": [
                 0.0,
-                1.25,
+                0.0,
                 0.0
             ]
         },
@@ -23673,7 +23673,19 @@
             },
             "Phong": {
                 "ambientFactor": 0.1,
-                "shininess": 10
+                "shininess": 2,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.3921568
+                ],
+                "diffuseColor": [
+                    0.0,
+                    0.5294117,
+                    0.317647,
+                    1.0
+                ]
             }
         },
         "e32df4fe-568a-4c83-b3ec-7348c0784dfb": {
@@ -23683,7 +23695,19 @@
             },
             "Phong": {
                 "ambientFactor": 0.1,
-                "shininess": 10
+                "shininess": 2,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.3921568
+                ],
+                "diffuseColor": [
+                    1.0,
+                    0.8,
+                    0.6666666,
+                    1.0
+                ]
             }
         },
         "c26f0e5b-1868-46d0-a8ba-6a9e38b3f8d7": {
@@ -23693,7 +23717,19 @@
             },
             "Phong": {
                 "ambientFactor": 0.1,
-                "shininess": 10
+                "shininess": 10,
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.3921568
+                ],
+                "diffuseColor": [
+                    0.8627451,
+                    0.117647,
+                    0.345098,
+                    1.0
+                ]
             }
         },
         "96585588-96c7-4a99-a7c3-1ef866bd6288": {
@@ -23703,7 +23739,25 @@
             },
             "Phong": {
                 "ambientFactor": 0.1,
-                "shininess": 10
+                "shininess": 10,
+                "ambientColor": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0
+                ],
+                "diffuseColor": [
+                    0.0980392,
+                    0.0980392,
+                    0.0980392,
+                    1.0
+                ],
+                "specularColor": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    0.3921568
+                ]
             }
         }
     },

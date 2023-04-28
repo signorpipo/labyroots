@@ -11,11 +11,18 @@ WL.registerComponent('wondermelon', {
         this._myChange = 0;
         this._myEnd = 0;
 
+        this._myPhysx = this.object.pp_getComponent("physx");
+        if (this._myPhysx != null) {
+            this._myPhysx.kinematic = true;
+            this._myPulseCounter = 90;
+        }
+
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
+                this.object.pp_translate([0, 0.25, 0]);
                 this._myStarted = true;
                 this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
@@ -38,6 +45,20 @@ WL.registerComponent('wondermelon', {
             }
         } else {
             this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+        }
+
+        if (Global.myStoryReady) {
+            if (this._myPulseCounter > 0) {
+                this._myPulseCounter--;
+                this._myPhysx.kinematic = false;
+
+                if (this._myPulseCounter == 0) {
+                    let maxLinear = 2;
+                    let maxAngular = 1;
+                    this._myPhysx.linearVelocity = [Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign(), 1, Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign()];
+                    this._myPhysx.angularVelocity = [Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign()];
+                }
+            }
         }
 
         this._updateOpenLink(dt);
