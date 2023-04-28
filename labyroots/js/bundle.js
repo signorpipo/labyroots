@@ -330,6 +330,7 @@ require('./labyroots/cauldron/send_all_events');
 require('./labyroots/cauldron/sky_setter');
 require('./labyroots/cauldron/lights_setter');
 require('./labyroots/cauldron/wondermelon');
+require('./labyroots/cauldron/spawn_floor');
 
 require('./labyroots/player/transformation');
 require('./labyroots/player/stage_switch');

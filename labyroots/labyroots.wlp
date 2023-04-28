@@ -12565,6 +12565,16 @@
                 0.0,
                 1.0,
                 -4.3711388286737935e-8
+            ],
+            "components": [
+                {
+                    "type": "spawn-floor",
+                    "spawn-floor": {
+                        "_myFloor": "6a28fe6c-08a4-4b3b-8e30-784eace766a7",
+                        "_myStartTile": "3b9f3ad3-e592-4274-bae2-0f8d8e46ef30",
+                        "_myOnlyIfFromAbove": false
+                    }
+                }
             ]
         },
         "3283331a-6ad7-4d8b-9990-e98540cd1454": {
@@ -24175,7 +24185,7 @@
             "visualizePhysX": false,
             "pwa": {
                 "appIcon": "f72d2a43-8590-4974-84d8-909cec241927",
-                "enable": false,
+                "enable": true,
                 "customManifest": true,
                 "customServiceWorker": true
             },
