@@ -1,6 +1,6 @@
 # LabyRoots
 
-GGJ 2023 - Theme: Roots
+Global Game Jam 2023 - Theme: Roots - Entry: [LabyRoots](https://globalgamejam.org/2023/games/labyroots-4)
 
 # Credits
 
