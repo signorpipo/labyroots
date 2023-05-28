@@ -135,7 +135,9 @@ Global.createWalls = function (maze, createWallsResults) {
                     }
 
                     if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
-                        //console.error("CAN'T CREATE DOOR");
+                        if (Global.myFromAbove) {
+                            console.error("CAN'T CREATE DOOR");
+                        }
                         return null;
                     }
                 } else {
@@ -145,7 +147,7 @@ Global.createWalls = function (maze, createWallsResults) {
         }
     }
 
-    if (Math.pp_randomInt(0, 10) != 0) {
+    if (Math.pp_randomInt(0, 9) != 0) {
         Global.addExtraDoors(maze, createWallsResults);
     }
 
@@ -153,19 +155,25 @@ Global.createWalls = function (maze, createWallsResults) {
 
     let reachable = Global.checkFreeCellsReachable(maze, createWallsResults, false);
     if (!reachable) {
-        //console.error("NOT REACHABLE");
+        if (Global.myFromAbove) {
+            console.error("NOT REACHABLE");
+        }
         return null;
     }
 
     if ((createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null) ||
         (createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null) ||
         (createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null)) {
-        //console.error("SPECIAL ROOMS FAILURE");
+        if (Global.myFromAbove) {
+            console.error("SPECIAL ROOMS FAILURE");
+        }
         return null;
     }
 
     if (createWallsResults.myFreeCells.length < 50) {
-        //console.error("TOO FEW FREE CELLS");
+        if (Global.myFromAbove) {
+            console.error("TOO FEW FREE CELLS");
+        }
         return null;
     }
 
@@ -381,7 +389,7 @@ Global.addExtraDoors = function (maze, createWallsResults) {
     let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 1), Math.round(doorsAmount * 1.25));
     extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
 
-    if (Math.pp_randomInt(0, 10) == 0) {
+    if (Math.pp_randomInt(0, 9) == 0) {
         createWallsResults.myNoDoors = true;
         extraDoors = extraDoors * 1000;
     }

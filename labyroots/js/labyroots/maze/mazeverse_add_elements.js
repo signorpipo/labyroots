@@ -27,8 +27,8 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
     let doors = createWallsResults.myDoors.pp_clone();
 
     let addElementsResults = new LR.AddElemenstResults();
-    addElementsResults.myRootsMustBeFar = Math.pp_randomInt(0, 5) != 0;
-    addElementsResults.myTreesMustBeFar = Math.pp_randomInt(0, 5) != 0;
+    addElementsResults.myRootsMustBeFar = Math.pp_randomInt(0, 4) != 0;
+    addElementsResults.myTreesMustBeFar = Math.pp_randomInt(0, 4) != 0;
 
     if (createWallsResults.myWoodsRoom != null) {
         Global.addWoods(maze, createWallsResults, freeCells, addElementsResults);
@@ -41,7 +41,7 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
         Global.addFirstRoot(maze, createWallsResults, freeCells, addElementsResults);
     }
 
-    if (Math.pp_randomInt(0, 10) != 0 && (!createWallsResults.myNoDoors || Math.pp_randomInt(0, 2) != 0)) {
+    if (Math.pp_randomInt(0, 9) != 0 && (!createWallsResults.myNoDoors || Math.pp_randomInt(0, 2) != 0)) {
         //console.error("roots");
         Global.addRootWalls(maze, createWallsResults, freeCells, doors, addElementsResults);
     }
@@ -154,10 +154,10 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
     let far = addElementsResults.myRootsMustBeFar;
 
     let firstRootPosition = Math.pp_randomPick(freeCells);
-    let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze);
+    let farDistance = 3;
+    let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze, farDistance);
 
     let maxAttempts = 100;
-    let farDistance = 3;
     while (far && !isFar && maxAttempts > 0) {
         maxAttempts--;
 
@@ -324,10 +324,10 @@ Global.addRoots = function (maze, createWallsResults, freeCells, addElementsResu
     let rootsToAdd = addElementsResults.myRootsToAdd
     for (let i = 0; i < rootsToAdd; i++) {
         let rootPosition = Math.pp_randomPick(freeCells);
-        let isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze);
+        let farDistance = 3;
+        let isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze, farDistance);
 
         let maxAttempts = 100;
-        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
@@ -367,10 +367,10 @@ Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResu
 
     for (let i = 0; i < treesToAdd; i++) {
         let treePosition = Math.pp_randomPick(freeCells);
-        let isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze);
+        let farDistance = 3;
+        let isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze, farDistance);
 
         let maxAttempts = 100;
-        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
@@ -408,10 +408,10 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
 
     for (let i = 0; i < zestiesToAdd; i++) {
         let zestyPosition = Math.pp_randomPick(freeCells);
-        let isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze);
+        let farDistance = 3;
+        let isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze, farDistance);
 
         let maxAttempts = 100;
-        let farDistance = 3;
         while (far && !isFar && maxAttempts > 0) {
             maxAttempts--;
 
