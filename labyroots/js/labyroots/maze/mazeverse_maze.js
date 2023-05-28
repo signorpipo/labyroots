@@ -34,9 +34,10 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- Browser Utils open link con fake click
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - aggiornare zesty
+- testare random maze e un po' di tune
+
 */
 
 Global.cellCoordinatesEqual = function (first, second) {
@@ -148,10 +149,10 @@ Global.createMazeverseMaze = function () {
 Global.initializeMaze = function () {
     let maze = [];
 
-    let rowMax = Math.pp_randomPick(27, 27, 27, 30)
-    let columnMax = Math.pp_randomPick(27, 27, 27, 30)
-    let columns = Math.pp_randomInt(20, rowMax);
-    let rows = Math.pp_randomInt(20, columnMax);
+    let rowMax = Math.pp_randomPick(25, 25, 25, 25, 30)
+    let columnMax = Math.pp_randomPick(25, 25, 25, 25, 30)
+    let rows = Math.pp_randomInt(20, rowMax);
+    let columns = Math.pp_randomInt(20, columnMax);
 
     for (let i = 0; i < rows; i++) {
         maze[i] = [];

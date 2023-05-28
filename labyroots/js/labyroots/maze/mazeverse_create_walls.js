@@ -354,12 +354,12 @@ Global.addDoorToWall = function (wallCells, useRow, maze, createWallsResults) {
     let maxAttempts = 100;
 
     let amountChance = [];
-    let chance1 = Math.max(Math.ceil(70 / wallCells.length), 3);
+    let chance1 = Math.max(Math.ceil(49 / wallCells.length), 3);
     for (let i = 0; i < chance1; i++) {
         amountChance.push(1);
     }
 
-    amountChance.push(2, 2, 3);
+    amountChance.push(2, 2, 2, 3);
 
     while (door == null && maxAttempts > 0) {
         maxAttempts--;
@@ -390,16 +390,17 @@ Global.addExtraDoors = function (maze, createWallsResults) {
 
     for (let i = 0; i < extraDoors; i++) {
         let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
+        if (doorCell != null) {
+            let amount = Math.pp_randomPick(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3);
+            let door = Global.addDoorToMaze(doorCell, amount, maze);
+            if (door != null) {
+                Global.addDoorToResults(door, maze, createWallsResults, true);
+            }
 
-        let amount = Math.pp_randomPick(1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3);
-        let door = Global.addDoorToMaze(doorCell, amount, maze);
-        if (door != null) {
-            Global.addDoorToResults(door, maze, createWallsResults, true);
-        }
-
-        if (door == null && maxRetry > 0) {
-            maxRetry--;
-            i--;
+            if (door == null && maxRetry > 0) {
+                maxRetry--;
+                i--;
+            }
         }
     }
 };
@@ -541,7 +542,7 @@ Global.chooseSpecialRoomSetups = function (createWallsResults) {
         createWallsResults.myPlayerRoomSize = [Math.pp_randomInt(3, 4), Math.pp_randomInt(3, 4)];
     }
 
-    let specialRoom = Math.pp_randomInt(0, 3) == 0;
+    let specialRoom = Math.pp_randomInt(0, 2) == 0;
     if (specialRoom) {
         createWallsResults.myWoodsRoomSize = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 5)];
     }
