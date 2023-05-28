@@ -303,6 +303,20 @@
             "components": [
                 {
                     "type": "pp-set-hand-local-transform"
+                },
+                {
+                    "type": "hide-if-pose-not-valid",
+                    "hide-if-pose-not-valid": {
+                        "_myHand": "b8418728-9728-46c6-8041-dedac6ef6fd4"
+                    },
+                    "active": true
+                },
+                {
+                    "type": "hide-if-pose-not-valid",
+                    "hide-if-pose-not-valid": {
+                        "_myHand": "9f5806db-c077-426c-9f79-d7825fce8af4"
+                    },
+                    "active": true
                 }
             ],
             "translation": [
@@ -450,6 +464,22 @@
                     "pp-set-hand-local-transform": {
                         "_myHandedness": "right"
                     }
+                },
+                {
+                    "type": "hide-if-pose-not-valid",
+                    "hide-if-pose-not-valid": {
+                        "_myHand": "043d9aad-ab79-4d70-97b5-5e0f8a3728f4",
+                        "_myHandedness": "right"
+                    },
+                    "active": true
+                },
+                {
+                    "type": "hide-if-pose-not-valid",
+                    "hide-if-pose-not-valid": {
+                        "_myHand": "85c60095-e941-4e21-ad59-e6eed85a73c3",
+                        "_myHandedness": "right"
+                    },
+                    "active": true
                 }
             ],
             "translation": [
@@ -14024,20 +14054,12 @@
                 null,
                 null,
                 null,
-                null,
-                {
-                    "type": "vr-mode-active-switch"
-                }
+                null
             ]
         },
         "853600a1-bad2-4a87-b064-de648b56ecbf": {
             "name": "Empty.001",
-            "parent": "99",
-            "components": [
-                {
-                    "type": "vr-mode-active-switch"
-                }
-            ]
+            "parent": "99"
         },
         "d74144f3-f004-43fa-978b-2a34d56a2c95": {
             "name": "Stage 3",
@@ -24176,7 +24198,8 @@
             "webxr": {
                 "optionalFeatures": {
                     "hand-tracking": true,
-                    "local-floor": true
+                    "local-floor": true,
+                    "hit-test": false
                 },
                 "requiredFeatures": {
                     "local-floor": true
