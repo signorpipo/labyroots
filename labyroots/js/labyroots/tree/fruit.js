@@ -89,8 +89,8 @@ WL.registerComponent('fruit', {
 
         return clonedComponent;
     },
-    pp_clonePostProcess() {
-        this.start();
+    pp_clonePostProcess(clonedComponent) {
+        clonedComponent.start();
     },
     activateEffect() {
         if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {

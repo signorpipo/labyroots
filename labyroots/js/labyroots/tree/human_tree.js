@@ -103,7 +103,7 @@ WL.registerComponent('human-tree', {
 
         return hitted;
     },
-    pp_clonePostProcess() {
-        this.start();
+    pp_clonePostProcess(clonedComponent) {
+        clonedComponent.start();
     }
 });

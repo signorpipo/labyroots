@@ -146,7 +146,7 @@ WL.registerComponent('big-tree', {
 
         return clonedComponent;
     },
-    pp_clonePostProcess() {
-        this.start();
+    pp_clonePostProcess(clonedComponent) {
+        clonedComponent.start();
     }
 });

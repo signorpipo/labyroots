@@ -35,9 +35,15 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
+- Browser Utils open link con fake click
+- add a hide if hand pose invalid component, deactivando la mano che grabba cosi che lascia anche cadere l'ascia
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - aggiornare zesty
-
+- rimuovere un paio di secondi da intro?
+- Wondermelon fruit destroy bug auto deactivate
+    - invece di farlo disattivare dall'ascia, lo fa da solo perché deve farlo dopo aver aperto il link
+    - metterlo non piu mangiabile
+    - dopo aperto link disattivare
 */
 
 Global.cellCoordinatesEqual = function (first, second) {

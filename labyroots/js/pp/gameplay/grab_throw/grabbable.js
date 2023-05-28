@@ -145,7 +145,7 @@ WL.registerComponent('pp-grabbable', {
 
         return clonedComponent;
     },
-    pp_clonePostProcess() {
-        this.start();
+    pp_clonePostProcess(clonedComponent) {
+        clonedComponent.start();
     }
 });
