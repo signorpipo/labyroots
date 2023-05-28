@@ -6,8 +6,6 @@ WL.registerComponent('open-zesty', {
         this._myChange = 0;
         this._myEnd = 0;
         this._myHit = 3;
-
-        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
     },
     update: function (dt) {
         if (this._myEnd > 0) {
@@ -15,14 +13,11 @@ WL.registerComponent('open-zesty', {
             if (this._myEnd == 0) {
                 this._myChange = 1;
 
-                if (WL.xrSession) {
-                    Global.myUnmute = true;
-                    Howler.mute(true);
+                Global.myUnmute = true;
+                Howler.mute(true);
 
-                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                        Global.myAxe._myGrabbable.release();
-                    }
-                    WL.xrSession.end();
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                    Global.myAxe._myGrabbable.release();
                 }
             }
         }
@@ -43,8 +38,8 @@ WL.registerComponent('open-zesty', {
         return true;
     },
     open() {
-        this._myEnd = 60;
-        this._myChange = 60;
+        this._myEnd = 90;
+        this._myChange = 1;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "open_zesty", {
@@ -57,29 +52,22 @@ WL.registerComponent('open-zesty', {
         clonedComponent.active = this.active;
         return clonedComponent;
     },
-    _onXRSessionEnd() {
-        this._myEnd = 0;
-        if (this._myChange > 0) {
-            this._myChange = 1;
-        }
-    },
     result(result) {
     },
     openZestyUrl() {
         let zesty = WL.scene.pp_getComponent("zesty-banner");
         if (zesty != null) {
-            Global.myZestyComponent = this;
-
-            let result = null;
-            if (zesty.banner != null) {
-                result = zesty.executeClick();
-            } else {
-                result = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
+            if (WL.xrSession) {
+                WL.xrSession.end();
             }
 
-            if (result == null) {
-                this._myChange = 10;
-            } else {
+            Global.myZestyComponent = this;
+
+            let onSuccess = function () {
+                if (WL.xrSession) {
+                    WL.xrSession.end();
+                }
+
                 Global.myUnmute = true;
                 Howler.mute(true);
 
@@ -92,6 +80,20 @@ WL.registerComponent('open-zesty', {
                         "value": 1
                     });
                 }
+            }.bind(this);
+
+            let onError = function () {
+                this._myChange = 10;
+            }.bind(this);
+
+            if (zesty.banner != null) {
+                let onZestySuccess = function () {
+                    onSuccess();
+                    zesty.clickSuccess();
+                }.bind(this);
+                Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
+            } else {
+                Global.windowOpen("https://app.zesty.market/space/" + zesty.space, onSuccess, onError);
             }
         }
     }

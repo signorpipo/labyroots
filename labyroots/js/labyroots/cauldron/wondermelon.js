@@ -17,8 +17,6 @@ WL.registerComponent('wondermelon', {
             this._myPulseCounter = 90;
         }
 
-        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
-
         this._myDisable = false;
     },
     update: function (dt) {
@@ -83,8 +81,8 @@ WL.registerComponent('wondermelon', {
     activateEffect() {
         if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
 
-            this._myEnd = 60;
-            this._myChange = 60;
+            this._myEnd = 90;
+            this._myChange = 1;
 
             if (Global.myGoogleAnalytics) {
                 gtag("event", "open_wondermelon", {
@@ -107,15 +105,11 @@ WL.registerComponent('wondermelon', {
             if (this._myEnd == 0) {
                 this._myChange = 1;
 
-                if (WL.xrSession) {
-                    Global.myUnmute = true;
-                    Howler.mute(true);
+                Global.myUnmute = true;
+                Howler.mute(true);
 
-                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                        Global.myAxe._myGrabbable.release();
-                    }
-
-                    WL.xrSession.end();
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                    Global.myAxe._myGrabbable.release();
                 }
             }
         }
@@ -123,11 +117,15 @@ WL.registerComponent('wondermelon', {
         if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                let result = Global.windowOpen("https://signor-pipo.itch.io");
+                if (WL.xrSession) {
+                    WL.xrSession.end();
+                }
 
-                if (result == null) {
-                    this._myChange = 10;
-                } else {
+                let onSuccess = function () {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
+
                     Global.myUnmute = true;
                     Howler.mute(true);
 
@@ -142,14 +140,14 @@ WL.registerComponent('wondermelon', {
                     }
 
                     this.active = false;
-                }
+                }.bind(this);
+
+                let onError = function () {
+                    this._myChange = 10;
+                }.bind(this);
+
+                Global.windowOpen("https://signor-pipo.itch.io", onSuccess, onError);
             }
-        }
-    },
-    _onXRSessionEnd() {
-        this._myEnd = 0;
-        if (this._myChange > 0) {
-            this._myChange = 1;
         }
     }
 });

@@ -21,15 +21,6 @@ WL.registerComponent('transformation', {
 
         this._myChange = 0;
         this._myEnd = 0;
-        this._myCloseSession = 0;
-
-        if (WL.xrSession) {
-            this._onXRSessionStart(WL.xrSession);
-        }
-        WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
-        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
-
-        Global.myTimerStopExit = new PP.Timer(1, false);
 
         this._myTimeAlive = 0;
         this._myStageTotalTime = 0;
@@ -381,40 +372,10 @@ WL.registerComponent('transformation', {
             }
         }
     },
-    _onXRSessionStart(session) {
-        if (Global.myExitSession) {
-            Global.myExitSession = false;
-            this._myCloseSession = 2;
-        }
-    },
     _secretMazeCodeUpdate(dt) {
-        if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
+        if (Global.myUnmute && PP.XRUtils.isSessionActive()) {
             Global.myUnmute = false;
             Howler.mute(false);
-        }
-
-        if (Global.myTimerStopExit.isRunning()) {
-            Global.myTimerStopExit.update(dt);
-            if (Global.myTimerStopExit.isDone()) {
-                this._myCloseSession = 0;
-                Global.myExitSession = false;
-            }
-        }
-
-        if (this._myCloseSession > 0) {
-            this._myCloseSession--;
-            if (this._myCloseSession == 0) {
-                if (WL.xrSession) {
-                    Global.myUnmute = true;
-                    Howler.mute(true);
-
-                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                        Global.myAxe._myGrabbable.release();
-                    }
-
-                    WL.xrSession.end();
-                }
-            }
         }
 
         if (this._myEnd > 0) {
@@ -422,8 +383,11 @@ WL.registerComponent('transformation', {
             if (this._myEnd == 0) {
                 this._myChange = 1;
 
-                if (WL.xrSession) {
-                    WL.xrSession.end();
+                Global.myUnmute = true;
+                Howler.mute(true);
+
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                    Global.myAxe._myGrabbable.release();
                 }
             }
         }
@@ -431,6 +395,10 @@ WL.registerComponent('transformation', {
         if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
+                if (WL.xrSession) {
+                    WL.xrSession.end();
+                }
+
                 let url = window.location.origin;
 
                 if (window.location != window.parent.location) {
@@ -454,12 +422,11 @@ WL.registerComponent('transformation', {
                     }
                 }
 
-                let result = false;
-                result = Global.windowOpen(url);
+                let onSuccess = function () {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
 
-                if (!result) {
-                    this._myChange = 10;
-                } else {
                     Global.myUnmute = true;
                     Howler.mute(true);
                     if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -477,7 +444,13 @@ WL.registerComponent('transformation', {
                             });
                         }
                     }
-                }
+                }.bind(this);
+
+                let onError = function () {
+                    this._myChange = 10;
+                }.bind(this);
+
+                Global.windowOpen(url, onSuccess, onError);
 
                 this._myIsWedding = false;
             }
@@ -496,8 +469,8 @@ WL.registerComponent('transformation', {
 
                     Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
 
-                    this._myEnd = 10;
-                    this._myChange = 10;
+                    this._myEnd = 1;
+                    this._myChange = 1;
                     this._myIsWedding = false;
                 }
             }
@@ -519,19 +492,13 @@ WL.registerComponent('transformation', {
 
                     Global.mySaveManager.save("is_wedding", true, false);
 
-                    this._myEnd = 10;
-                    this._myChange = 10;
+                    this._myEnd = 1;
+                    this._myChange = 1;
                     this._myIsWedding = true;
                 }
             }
         } else {
             this._myWeddingTimer.start();
-        }
-    },
-    _onXRSessionEnd() {
-        this._myEnd = 0;
-        if (this._myChange > 0) {
-            this._myChange = 1;
         }
     }
 });
@@ -542,24 +509,31 @@ Global.myExitSession = false;
 Global.myDeadOnce = false;
 
 Global.myWindowOpenResult = false;
-Global.windowOpen = function (url, callback) {
-    let result = null;
-    let maxAttempt = 1;
-    while (result == null && maxAttempt > 0) {
-        maxAttempt--;
-        result = window.open(url, "_blank");
-    }
+Global.windowOpen = function (urlString, successCallback, errorCallback) {
+    let result = true;
 
-    Global.myWindowOpenResult = result != null;
+    let element = document.createElement("a");
+    //element.href = urlString;
+    //element.target = "_blank";
+    element.style.display = "none";
 
-    if (callback != null) {
-        callback(result != null);
-    }
+    document.body.appendChild(element);
 
-    if (result != null) {
-        Global.myTimerStopExit = new PP.Timer(3);
-        Global.myExitSession = true;
-    }
+    element.addEventListener("click", function () {
+        let result = window.open(urlString, "_blank");
+
+        if (result != null) {
+            if (successCallback != null) {
+                successCallback();
+            }
+        } else {
+            if (errorCallback != null) {
+                errorCallback();
+            }
+        }
+    });
+
+    element.click();
 
     return result;
 }
