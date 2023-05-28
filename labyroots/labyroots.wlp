@@ -23705,8 +23705,8 @@
                 "file": "assets\\models\\wondermelon.fbx"
             },
             "Phong": {
-                "ambientFactor": 0.1,
-                "shininess": 2,
+                "ambientFactor": 0.15,
+                "shininess": 20,
                 "specularColor": [
                     1.0,
                     1.0,
@@ -23727,8 +23727,8 @@
                 "file": "assets\\models\\wondermelon.fbx"
             },
             "Phong": {
-                "ambientFactor": 0.1,
-                "shininess": 2,
+                "ambientFactor": 0.15,
+                "shininess": 20,
                 "specularColor": [
                     1.0,
                     1.0,
@@ -23749,8 +23749,8 @@
                 "file": "assets\\models\\wondermelon.fbx"
             },
             "Phong": {
-                "ambientFactor": 0.1,
-                "shininess": 10,
+                "ambientFactor": 0.15,
+                "shininess": 20,
                 "specularColor": [
                     1.0,
                     1.0,
@@ -23771,8 +23771,8 @@
                 "file": "assets\\models\\wondermelon.fbx"
             },
             "Phong": {
-                "ambientFactor": 0.1,
-                "shininess": 10,
+                "ambientFactor": 0.15,
+                "shininess": 20,
                 "ambientColor": [
                     0.0,
                     0.0,

@@ -28,7 +28,6 @@ LR.CreateWallsResults = class CreateWallsResults {
         this.myBigTreeRoom = null;
         this.myPlayerRoom = null;
         this.myWoodsRoom = null;
-
     }
 };
 
@@ -38,10 +37,6 @@ TODO
 - Browser Utils open link con fake click
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - aggiornare zesty
-- Wondermelon fruit destroy bug auto deactivate
-    - invece di farlo disattivare dall'ascia, lo fa da solo perché deve farlo dopo aver aperto il link
-    - metterlo non piu mangiabile
-    - dopo aperto link disattivare
 */
 
 Global.cellCoordinatesEqual = function (first, second) {

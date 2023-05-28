@@ -40,8 +40,8 @@ WL.registerComponent('mouth', {
                         wondermelon.activateEffect();
                         if (wondermelon._myUsed) {
                             //fruit.object.pp_setActive(false);
-                            this._myFruitToDestroy.push(wondermelon.object);
-                            this._myTimerDestroy.start();
+                            //this._myFruitToDestroy.push(wondermelon.object);
+                            //this._myTimerDestroy.start();
                         }
                     }
                 }

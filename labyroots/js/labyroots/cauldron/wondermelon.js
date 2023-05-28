@@ -18,50 +18,58 @@ WL.registerComponent('wondermelon', {
         }
 
         WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
+
+        this._myDisable = false;
     },
     update: function (dt) {
         if (!this._myStarted) {
             if (Global.myStoryReady) {
-                this.object.pp_translate([0, 0.25, 0]);
+                this.object.pp_translate([0, 0.5, 0]);
                 this._myStarted = true;
                 this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
-        }
+        } else {
+            if (this._myDisable) {
+                this._myDisable = false;
+                this.object.pp_setActive(false);
+                this.active = true;
+            }
 
-        if (this._myGrabbable != null) {
-            if (this._myGrabbable.isGrabbed()) {
-                if (!this._myGathered) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "collect_wondermelon", {
-                            "value": 1
-                        });
+            if (this._myGrabbable != null) {
+                if (this._myGrabbable.isGrabbed()) {
+                    if (!this._myGathered) {
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "collect_wondermelon", {
+                                "value": 1
+                            });
+                        }
+                    }
+
+                    this._myGathered = true;
+                    this._myIsGrabbed = true;
+                } else {
+                    this._myIsGrabbed = false;
+                }
+            } else {
+                this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+            }
+
+            if (Global.myStoryReady) {
+                if (this._myPulseCounter > 0) {
+                    this._myPulseCounter--;
+                    this._myPhysx.kinematic = false;
+
+                    if (this._myPulseCounter == 0) {
+                        let maxLinear = 2;
+                        let maxAngular = 1;
+                        this._myPhysx.linearVelocity = [Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign(), 1, Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign()];
+                        this._myPhysx.angularVelocity = [Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign()];
                     }
                 }
-
-                this._myGathered = true;
-                this._myIsGrabbed = true;
-            } else {
-                this._myIsGrabbed = false;
             }
-        } else {
-            this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+
+            this._updateOpenLink(dt);
         }
-
-        if (Global.myStoryReady) {
-            if (this._myPulseCounter > 0) {
-                this._myPulseCounter--;
-                this._myPhysx.kinematic = false;
-
-                if (this._myPulseCounter == 0) {
-                    let maxLinear = 2;
-                    let maxAngular = 1;
-                    this._myPhysx.linearVelocity = [Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign(), 1, Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign()];
-                    this._myPhysx.angularVelocity = [Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign()];
-                }
-            }
-        }
-
-        this._updateOpenLink(dt);
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -89,6 +97,8 @@ WL.registerComponent('wondermelon', {
             //this._myAudioMangia.setPosition(this.object.pp_getPosition());
             this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
             this._myAudioMangia.play();
+
+            this._myDisable = true;
         }
     },
     _updateOpenLink(dt) {
@@ -130,6 +140,8 @@ WL.registerComponent('wondermelon', {
                             "value": 1
                         });
                     }
+
+                    this.active = false;
                 }
             }
         }
