@@ -35,7 +35,6 @@ LR.CreateWallsResults = class CreateWallsResults {
 TODO
 
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
-- aggiornare zesty
 - testare random maze e un po' di tune
 
 */

@@ -61,7 +61,7 @@ WL.registerComponent('open-zesty', {
                 WL.xrSession.end();
             }
 
-            Global.myZestyComponent = this;
+            Global.myZestyComponent = zesty;
 
             let onSuccess = function () {
                 if (WL.xrSession) {
@@ -89,7 +89,7 @@ WL.registerComponent('open-zesty', {
             if (zesty.banner != null) {
                 let onZestySuccess = function () {
                     onSuccess();
-                    zesty.clickSuccess();
+                    zesty.executeClick();
                 }.bind(this);
                 Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
             } else {

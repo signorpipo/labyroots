@@ -7,7 +7,7 @@ WL.registerComponent('set-texture-after-delay', {
         this._myTimer = new PP.Timer(5);
     },
     update: function (dt) {
-        if (Global.myReady) {
+        if (Global.myStoryReady) {
             if (this._myTimer.isRunning()) {
                 this._myTimer.update(dt);
                 if (this._myTimer.isDone()) {

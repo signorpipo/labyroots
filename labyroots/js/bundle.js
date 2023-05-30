@@ -314,7 +314,7 @@ require('./labyroots/cauldron/deactivate_on_story');
 require('./labyroots/cauldron/open_ggj');
 require('./labyroots/cauldron/open_github');
 require('./labyroots/cauldron/open_zesty');
-require('./labyroots/cauldron/zesty');
+require('./labyroots/cauldron/zesty-wonderland-sdk-compat');
 require('./labyroots/cauldron/set_texture_after_delay');
 require('./labyroots/cauldron/secret_zone_check');
 require('./labyroots/cauldron/display_leaderboard');

@@ -16478,8 +16478,10 @@
                     "zesty-banner": {
                         "createAutomaticCollision": false,
                         "format": "tall",
-                        "space": 223
-                    }
+                        "space": 223,
+                        "adUnit": "27daa80b-a8f9-4293-85b1-94174f4484ef"
+                    },
+                    "active": true
                 },
                 {
                     "type": "mesh",
