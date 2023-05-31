@@ -34,6 +34,7 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
+- rimuovere pipeline feature non utilizzate
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - testare random maze e un po' di tune
 

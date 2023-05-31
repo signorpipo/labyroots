@@ -93,7 +93,7 @@ WL.registerComponent('open-zesty', {
                 }.bind(this);
                 Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
             } else {
-                Global.windowOpen("https://app.zesty.market/space/" + zesty.space, onSuccess, onError);
+                Global.windowOpen("https://app.zesty.market/space/11457541-0720-4287-a2a7-e3adfe7426a9", onSuccess, onError);
             }
         }
     }

@@ -16479,7 +16479,8 @@
                         "createAutomaticCollision": false,
                         "format": "tall",
                         "space": 223,
-                        "adUnit": "27daa80b-a8f9-4293-85b1-94174f4484ef"
+                        "adUnit": "27daa80b-a8f9-4293-85b1-94174f4484ef",
+                        "textureProperty": "diffuseTexture"
                     },
                     "active": true
                 },
@@ -16515,35 +16516,6 @@
                 0.0,
                 0.0,
                 1.0
-            ]
-        },
-        "103ba556-2a36-4406-81c0-ffec1204ca8a": {
-            "name": "Zesty Fallback",
-            "parent": "88e46c45-8c38-4df4-b0e2-85a3c8a77f9e",
-            "translation": [
-                0.0,
-                -5.0,
-                0.0
-            ],
-            "components": [
-                {
-                    "type": "mesh",
-                    "mesh": {
-                        "mesh": "p0",
-                        "material": "56c684d4-54c6-4cdb-b60c-7f074013b177"
-                    }
-                },
-                {
-                    "type": "set-texture-after-delay",
-                    "set-texture-after-delay": {
-                        "_myToSet": "bc2871a5-4ec8-40e6-a577-bb34ae56e698"
-                    }
-                }
-            ],
-            "scale": [
-                0.075,
-                0.1,
-                0.1
             ]
         },
         "e1287b99-5e80-46d8-8259-ddb50443b66e": {
@@ -23541,7 +23513,7 @@
             "pipeline": "7a753214-907d-4260-92e1-0b67e30a7e28",
             "Phong": {
                 "ambientFactor": 0.5,
-                "diffuseTexture": null
+                "diffuseTexture": "e8885204-f8b1-4ca8-b92c-4855af1c2930"
             }
         },
         "56c684d4-54c6-4cdb-b60c-7f074013b177": {
@@ -24081,7 +24053,7 @@
                 "file": "default"
             },
             "features": {
-                "ALPHA_MASKED": true,
+                "ALPHA_MASKED": false,
                 "WITH_FOG": false,
                 "WITH_EMISSIVE": false
             },
