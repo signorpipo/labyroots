@@ -23909,10 +23909,12 @@
             },
             "features": {
                 "VERTEX_COLORS": false,
-                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": true,
-                "SHADOW_NORMAL_OFFSET_UV_ONLY": true
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "WITH_FOG": false
             },
-            "doubleSided": false
+            "doubleSided": false,
+            "castShadows": false
         },
         "146": {
             "link": {
@@ -23923,8 +23925,11 @@
             "features": {
                 "LIGHTMAP": false,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
-            }
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false
+            },
+            "castShadows": false
         },
         "ab5a182a-267f-436d-927f-133148883cc3": {
             "link": {
@@ -23934,7 +23939,9 @@
             "features": {
                 "ALPHA_MASKED": false,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": true,
             "castShadows": false,
@@ -23948,7 +23955,9 @@
             "features": {
                 "ALPHA_MASKED": true,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": true,
             "castShadows": false,
@@ -24018,9 +24027,12 @@
             },
             "features": {
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": true
+                "WITH_EMISSIVE": true,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
-            "doubleSided": false
+            "doubleSided": false,
+            "castShadows": false
         },
         "1a9f8525-447a-4c63-bd65-bf9215462df7": {
             "link": {
@@ -24031,7 +24043,9 @@
             "doubleSided": true,
             "castShadows": false,
             "features": {
-                "WITH_FOG": false
+                "WITH_FOG": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             }
         },
         "0e6a5664-5547-401a-bcc1-f8bbb94199b0": {
@@ -24043,7 +24057,9 @@
             "doubleSided": true,
             "features": {
                 "TEXTURED": true,
-                "WITH_FOG": false
+                "WITH_FOG": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "castShadows": false
         },
@@ -24055,7 +24071,9 @@
             "features": {
                 "ALPHA_MASKED": false,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": true,
             "name": "Phong Opaque Textured Blend",
@@ -24076,7 +24094,9 @@
             "features": {
                 "ALPHA_MASKED": false,
                 "WITH_EMISSIVE": false,
-                "WITH_FOG": false
+                "WITH_FOG": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": true,
             "name": "Phong Opaque Textured Double",
@@ -24090,7 +24110,9 @@
             "features": {
                 "ALPHA_MASKED": false,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": false,
             "castShadows": false,
@@ -24100,13 +24122,27 @@
             "link": {
                 "name": "Phong Lightmapped",
                 "file": "default"
-            }
+            },
+            "features": {
+                "WITH_EMISSIVE": false,
+                "WITH_FOG": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
+            },
+            "castShadows": false
         },
         "151": {
             "link": {
                 "name": "Phong Opaque Textured",
                 "file": "default"
-            }
+            },
+            "features": {
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false
+            },
+            "castShadows": false
         },
         "faf05eae-b84b-42de-a29a-fb0939648e74": {
             "link": {
@@ -24116,7 +24152,9 @@
             "features": {
                 "ALPHA_MASKED": true,
                 "WITH_FOG": false,
-                "WITH_EMISSIVE": false
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
             },
             "doubleSided": true,
             "castShadows": false,
