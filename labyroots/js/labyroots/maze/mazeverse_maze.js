@@ -34,7 +34,7 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- rimuovere pipeline feature non utilizzate
+- controllare png con pixel volanti
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - testare random maze e un po' di tune
 
@@ -153,8 +153,8 @@ Global.createMazeverseMaze = function () {
 Global.initializeMaze = function () {
     let maze = [];
 
-    let rowMax = Math.pp_randomPick(25, 25, 25, 25, 30)
-    let columnMax = Math.pp_randomPick(25, 25, 25, 25, 30)
+    let rowMax = Math.pp_randomPick(25, 30);
+    let columnMax = Math.pp_randomPick(25, 30);
     let rows = Math.pp_randomInt(20, rowMax);
     let columns = Math.pp_randomInt(20, columnMax);
 

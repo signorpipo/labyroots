@@ -220,27 +220,37 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
 
                                 let wallCellIndex = (doorCellIndex + 1) % 2;
                                 let wallCell = randomDoor[wallCellIndex + 1];
-                                maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                                if (Math.pp_randomInt(0, 12) != 0) {
+                                    maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                                } else {
+                                    maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                                }
                                 freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
 
                             } else if (randomDoor.length == 4) {
                                 //console.error("root door 4");
-                                let doorCellIndex = 1;
-                                let doorCell = randomDoor[doorCellIndex];
-                                maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
-                                freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
-                                addElementsResults.myAllElements.push(doorCell);
+                                let indexes = [1, 2, 3];
 
-                                let wallCellIndex = 2;
+                                let middleDoorIndex = Global.getMiddleDoorIndex(randomDoor);
+
+                                let wallCellIndex = middleDoorIndex;
                                 let wallCell = randomDoor[wallCellIndex];
-                                maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                                if (Math.pp_randomInt(0, 6) != 0) {
+                                    maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                                } else {
+                                    maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                                }
                                 freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
 
-                                doorCellIndex = 3;
-                                doorCell = randomDoor[doorCellIndex];
-                                maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
-                                freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
-                                addElementsResults.myAllElements.push(doorCell);
+                                indexes.pp_removeEqual(middleDoorIndex);
+
+                                for (let i = 0; i < indexes.length; i++) {
+                                    let doorCellIndex = indexes[i];
+                                    let doorCell = randomDoor[doorCellIndex];
+                                    maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                                    freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+                                    addElementsResults.myAllElements.push(doorCell);
+                                }
                             } else {
                                 //console.error("root door nope", randomDoor.length);
                             }
@@ -361,7 +371,7 @@ Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResu
     }
 
     let treesToAdd = Math.pp_randomInt(4 + extra, 8 + extra);
-    if (Math.pp_randomInt(0, 10) == 0) {
+    if (Math.pp_randomInt(0, 9) == 0) {
         treesToAdd = 0;
     }
 
@@ -402,7 +412,7 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
     }
 
     let zestiesToAdd = Math.pp_randomInt(2, 3 + extra);
-    if (Math.pp_randomInt(0, 10) == 0) {
+    if (Math.pp_randomInt(0, 9) == 0) {
         zestiesToAdd = 0;
     }
 
@@ -550,4 +560,47 @@ Global.isFar = function isFar(first, second, maze, far = 3) {
 
 Global.distanceBetweenCellPositions = function distanceBetweenCellPositions(first, second) {
     return Math.max(Math.abs(first[0] - second[0]), Math.abs(first[1] - second[1]))
+}
+
+Global.getMiddleDoorIndex = function getMiddleDoorIndex(door) {
+    let middleIndex = -1;
+    let direction = door[0];
+
+    for (let i = 0; i < 3; i++) {
+        let currentDoor = door[1 + i];
+        let previousPos = [currentDoor[0], currentDoor[1] - 1];
+        let nextPos = [currentDoor[0], currentDoor[1] + 1];
+        if (!direction) {
+            previousPos = [currentDoor[0] - 1, currentDoor[1]];
+            nextPos = [currentDoor[0] + 1, currentDoor[1]];
+        }
+
+        let previousFound = false;
+        let nextFound = false;
+
+        for (let j = 0; j < 3; j++) {
+            let doorToCheck = door[1 + j];
+            if (doorToCheck[0] == previousPos[0] && doorToCheck[1] == previousPos[1]) {
+                previousFound = true;
+            }
+
+            if (doorToCheck[0] == nextPos[0] && doorToCheck[1] == nextPos[1]) {
+                nextFound = true;
+            }
+        }
+
+        if (previousFound && nextFound) {
+            middleIndex = 1 + i;
+            break;
+        }
+    }
+
+    if (middleIndex == -1) {
+        middleIndex = 1;
+        if (Global.myFromAbove) {
+            console.error("ERROR MIDDLE INDEX NOT FOUND");
+        }
+    }
+
+    return middleIndex;
 }
