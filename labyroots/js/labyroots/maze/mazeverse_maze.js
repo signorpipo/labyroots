@@ -34,10 +34,9 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- ridurre 10 secondi il tempo per random maze
 - controllare png con pixel volanti
-- trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 - testare random maze e un po' di tune
+- trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 
 */
 
