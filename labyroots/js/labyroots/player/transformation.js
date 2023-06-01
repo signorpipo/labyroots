@@ -159,6 +159,10 @@ WL.registerComponent('transformation', {
 
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+        if (Global.myIsMazeverseTime) {
+            this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
+        }
+
         if (Global.myFromAbove) {
             this._myTransformationTimersSetup[0] = 1000000;
         }

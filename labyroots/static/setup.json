@@ -18,6 +18,7 @@
 "myPlayerSetup":
 	{
 		"myTransformationTimers": [14,13,12,10,8,3],
+		"myMazeverseTransformationTimers": [11,10,10,9,7,3],
 		"myAxeSpeedToHit": 0.025
 	},
 "myMazeSetup":
