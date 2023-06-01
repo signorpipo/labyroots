@@ -186,6 +186,11 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
     let rootWallsAdded = 0;
     let rootWallsToAddOriginal = rootWallsToAdd;
 
+    let allowOneBigRootWall = false;
+    if (Math.pp_randomInt(0, 9) == 0) {
+        allowOneBigRootWall = true;
+    }
+
     let blockedDoors = 0;
     let doorsLength = doors.length;
     while (rootWallsToAdd > 0) {
@@ -220,9 +225,10 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
 
                                 let wallCellIndex = (doorCellIndex + 1) % 2;
                                 let wallCell = randomDoor[wallCellIndex + 1];
-                                if (Math.pp_randomInt(0, 12) != 0) {
+                                if (!allowOneBigRootWall) {
                                     maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
                                 } else {
+                                    allowOneBigRootWall = false;
                                     maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
                                 }
                                 freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
@@ -235,9 +241,10 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
 
                                 let wallCellIndex = middleDoorIndex;
                                 let wallCell = randomDoor[wallCellIndex];
-                                if (Math.pp_randomInt(0, 6) != 0) {
+                                if (!allowOneBigRootWall) {
                                     maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
                                 } else {
+                                    allowOneBigRootWall = false;
                                     maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
                                 }
                                 freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
