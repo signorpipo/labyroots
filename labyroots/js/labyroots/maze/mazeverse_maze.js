@@ -153,16 +153,22 @@ Global.createMazeverseMaze = function () {
 Global.initializeMaze = function () {
     let maze = [];
 
-    let rowMax = Math.pp_randomPick(25, 30);
-    let columnMax = Math.pp_randomPick(25, 30);
-    let rows = Math.pp_randomInt(20, rowMax);
-    let columns = Math.pp_randomInt(20, columnMax);
+    let rowMax = Math.pp_randomPick(26, 30);
+    let columnMax = Math.pp_randomPick(26, 30);
+    let rowMin = Math.pp_randomPick(20, 21);
+    let columnMin = Math.pp_randomPick(20, 21);
+    let rows = Math.pp_randomInt(rowMin, rowMax);
+    let columns = Math.pp_randomInt(columnMin, columnMax);
 
     for (let i = 0; i < rows; i++) {
         maze[i] = [];
         for (let j = 0; j < columns; j++) {
             maze[i][j] = LR.MazeItemType.NONE;
         }
+    }
+
+    if (Global.myFromAbove) {
+        console.error("Size: [", rows, ",", columns, "]");
     }
 
     return maze;
