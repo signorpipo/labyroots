@@ -36,6 +36,7 @@ TODO
 
 - controllare png con pixel volanti
 - testare random maze e un po' di tune
+- controllare che i testi e le shortcut siano giusti
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 
 */
