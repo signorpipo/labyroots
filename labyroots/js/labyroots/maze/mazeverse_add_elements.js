@@ -413,12 +413,14 @@ Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResu
 Global.addZesties = function (maze, createWallsResults, freeCells, addElementsResults) {
     let far = true;
 
-    let extra = 0;
-    if (maze.length * maze[0].length > 600) {
-        extra = 1
+    let zestyMax = [1, 1, 1, 2];
+    if (maze.length * maze[0].length > 700) {
+        zestyMax = [1, 2];
+    } else if (maze.length * maze[0].length > 550) {
+        zestyMax = [1, 1, 2];
     }
 
-    let zestiesToAdd = Math.pp_randomInt(2, 3 + extra);
+    let zestiesToAdd = Math.pp_randomPick(zestyMax);
     if (Math.pp_randomInt(0, 9) == 0) {
         zestiesToAdd = 0;
     }
