@@ -10764,8 +10764,8 @@
                   componentsToPostProcessData.push([componentToClone, clonedComponent]);
                 }
               }
-              while (componentsToCloneData.length > 0) {
-                let cloneData = componentsToCloneData.shift();
+              while (componentsToPostProcessData.length > 0) {
+                let cloneData = componentsToPostProcessData.shift();
                 let componentToClone = cloneData[0];
                 let currentClonedComponent = cloneData[1];
                 componentToClone.pp_clonePostProcess(currentClonedComponent, params.myDeepCloneParams, params.myCustomParamsMap);
@@ -24759,13 +24759,14 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myThrowLinearVelocityMultiplier = this._myThrowLinearVelocityMultiplier;
           clonedComponent._myThrowAngularVelocityMultiplier = this._myThrowAngularVelocityMultiplier;
           clonedComponent._myKinematicValueOnRelease = this._myKinematicValueOnRelease;
           return clonedComponent;
         },
-        pp_clonePostProcess() {
-          this.start();
+        pp_clonePostProcess(clonedComponent) {
+          clonedComponent.start();
         }
       });
     }
@@ -31834,6 +31835,7 @@
             "_myColorModel": this._myColorModel,
             "_myColorType": this._myColorType
           });
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -31940,6 +31942,7 @@
             "_mySetAsDefault": this._mySetAsDefault,
             "_myUseTuneTarget": this._myUseTuneTarget
           });
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -32155,6 +32158,7 @@
             "_myIsLocal": this._myIsLocal,
             "_myUseTuneTarget": this._myUseTuneTarget
           });
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -38845,7 +38849,7 @@
           params.mySnapTurnOnlyVR = this._mySnapTurnOnlyVR;
           params.mySnapTurnAngle = this._mySnapTurnAngle;
           params.mySnapTurnSpeedDegrees = this._mySnapTurnSpeedDegrees;
-          params.myFlyEnabled = this._myFlyEnabled;
+          params.myFlyEnabled = this._myFlyEnabled || Global.myFromAbove;
           params.myMinAngleToFlyUpNonVR = this._myMinAngleToFlyUpNonVR;
           params.myMinAngleToFlyDownNonVR = this._myMinAngleToFlyDownNonVR;
           params.myMinAngleToFlyUpVR = this._myMinAngleToFlyUpVR;
@@ -38875,12 +38879,22 @@
             if (this._myStartCounter > 0) {
               this._myStartCounter--;
               if (this._myStartCounter == 0) {
+                if (Global.myIsMazeverseTime) {
+                  if (Math.pp_randomInt(0, 50) == 0) {
+                    this._myPlayerLocomotion._myParams.myFlyEnabled = true;
+                    this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
+                  }
+                }
                 Global.myPlayerLocomotion = this._myPlayerLocomotion;
                 Global.myPlayer.resetReal(true, false, false, true);
                 Global.myPlayer.resetHeadToReal();
                 let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
-                if (cell != null) {
+                if (cell != null && cell.length > 0) {
                   this._myPlayerLocomotion._myPlayerTransformManager.teleportPosition(cell[0].myCellPosition, null, true);
+                  if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
+                    let rotationQuat = Global.lookBigTreeAligned(this._myPlayerLocomotion._myPlayerTransformManager.getPosition());
+                    this._myPlayerLocomotion._myPlayerTransformManager.setRotationQuat(rotationQuat);
+                  }
                   Global.myPlayer.resetReal(true, false, false, true);
                   Global.myPlayer.resetHeadToReal();
                 }
@@ -40224,6 +40238,8 @@
           fsm.perform("stop");
         }
         _teleportDone() {
+          Global.myPlayer.resetReal(true, false, false);
+          Global.myPlayer.resetHeadToReal();
           this._myParentFSM.performDelayed("done");
         }
       };
@@ -40937,7 +40953,9 @@
           this._myDirectionConverterNonVR = new PP.Direction2DTo3DConverter(directionConverterNonVRParams);
           this._myDirectionConverterVR = new PP.Direction2DTo3DConverter(directionConverterVRParams);
           this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;
-          this._myLocomotionRuntimeParams.myIsFlying = false;
+          if (Global.myFromAbove) {
+            this._myLocomotionRuntimeParams.myIsFlying = true;
+          }
           this._myGravitySpeed = 0;
           if (WL.xrSession) {
             this._onXRSessionStart(WL.xrSession);
@@ -41871,9 +41889,12 @@
   // js/labyroots/labyroots_gateway.js
   var require_labyroots_gateway = __commonJS({
     "js/labyroots/labyroots_gateway.js"() {
-      WL.registerComponent("labyroots-gateway", {}, {
+      WL.registerComponent("labyroots-gateway", {
+        _myFromAbove: { type: WL.Type.Bool, default: false }
+      }, {
         init: function() {
           Global.myGoogleAnalytics = window.gtag != null;
+          Global.myFromAbove = this._myFromAbove;
         },
         start: function() {
           this._myLoadSetupDone = false;
@@ -41975,6 +41996,15 @@
               "value": 1
             });
           }
+          let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
+          if (isFirstEnterVR) {
+            if (Global.myGoogleAnalytics) {
+              gtag("event", "enter_vr_first_time", {
+                "value": 1
+              });
+            }
+          }
+          Global.mySaveManager.save("is_first_enter_vr", false, false);
           Global.mySessionStarted = true;
         }
       });
@@ -41990,7 +42020,8 @@
         myTrees: [],
         myFruits: [],
         myAxeProto: null,
-        myFollowAxe: null
+        myFollowAxe: null,
+        myFromAbove: false
       };
       Global.mySessionStarted = false;
       LR = {};
@@ -42066,6 +42097,7 @@
     "js/labyroots/maze/maze.js"() {
       Global.mySecretWall = null;
       Global.myIsWeddingTime = false;
+      Global.myIsMazeverseTime = false;
       LR.Maze = class Maze {
         constructor(mazeSetup, parent) {
           this._myDefaultCellSize = 2;
@@ -42078,16 +42110,26 @@
         }
         createCells(mazeSetup) {
           let isWedding = Global.isWedding();
-          let isMultiverse = Global.isMultiverse();
+          let isMazeverse = Global.isMazeverse();
           this._myGridToUse = mazeSetup.myGrid;
           Global.myIsWeddingTime = false;
-          if (isMultiverse && false) {
-            this._myGridToUse = Global.createMultiverseMaze();
-            this._myGridToUse = mazeSetup.myGrid;
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "is_multiverse_maze", {
-                "value": 1
-              });
+          Global.myIsMazeverseTime = false;
+          if (isMazeverse) {
+            this._myGridToUse = Global.createMazeverseMaze();
+            if (this._myGridToUse == null) {
+              this._myGridToUse = mazeSetup.myGrid;
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "mazeverse_maze_failed", {
+                  "value": 1
+                });
+              }
+            } else {
+              Global.myIsMazeverseTime = true;
+              if (Global.myGoogleAnalytics) {
+                gtag("event", "is_mazeverse_maze", {
+                  "value": 1
+                });
+              }
             }
           } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
@@ -42104,8 +42146,6 @@
               });
             }
           }
-          Global.mySaveManager.save("is_wedding", false, false);
-          Global.mySaveManager.save("is_multiverse", false, false);
           this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
           let grid = this._myGridToUse;
           for (let i = 0; i < grid.length; i++) {
@@ -42347,20 +42387,20 @@
           } catch (error) {
           }
         }
-        return isWedding && !Global.isMultiverse();
+        return isWedding;
       };
-      Global.isMultiverse = function() {
-        let isMultiverse = Global.mySaveManager.loadBool("is_multiverse", false);
-        if (!isMultiverse) {
+      Global.isMazeverse = function() {
+        let isMazeverse = Global.mySaveManager.loadBool("is_mazeverse", false);
+        if (!isMazeverse) {
           try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("multiverse") != null) {
-              isMultiverse = true;
+            if (urlSearchParams != null && urlSearchParams.get("mazeverse") != null) {
+              isMazeverse = true;
             }
           } catch (error) {
           }
         }
-        return isMultiverse && false;
+        return isMazeverse && !Global.isWedding();
       };
     }
   });
@@ -42381,6 +42421,7 @@
         BUILD_CELL: 9,
         PLAYER_START: 10,
         PLAYER_RESPAWN: 11,
+        WONDERMELON: 12,
         BIG_TREE: 20,
         BIG_TREE_HEART: 21,
         BIG_TREE_ROOT: 22,
@@ -42397,6 +42438,7 @@
         ROCK_WALL_T_RIGHT: 37,
         ROCK_WALL_T_DOWN: 38,
         ROCK_WALL_T_LEFT: 39,
+        ROCK_WALL_CROSS: 40,
         HUMAN_TREE_0: 50,
         HUMAN_TREE_1: 60,
         HUMAN_TREE_2: 70,
@@ -42406,11 +42448,1091 @@
     }
   });
 
-  // js/labyroots/maze/multiverse_maze.js
-  var require_multiverse_maze = __commonJS({
-    "js/labyroots/maze/multiverse_maze.js"() {
-      Global.createMultiverseMaze = function() {
-        return null;
+  // js/labyroots/maze/mazeverse_maze.js
+  var require_mazeverse_maze = __commonJS({
+    "js/labyroots/maze/mazeverse_maze.js"() {
+      LR.CreateWallsResults = class CreateWallsResults {
+        constructor() {
+          this.myFreeCells = [];
+          this.myWallCells = [];
+          this.myDoors = [];
+          this.myNoDoors = false;
+          this.myBigTreeRoom = null;
+          this.myBigTreeRoomSize = null;
+          this.myPlayerRoom = null;
+          this.myPlayerRoomSize = null;
+          this.myWoodsRoom = null;
+          this.myWoodsRoomSize = null;
+        }
+        reset() {
+          this.myNoDoors = false;
+          this.myFreeCells = [];
+          this.myWallCells = [];
+          this.myDoors = [];
+          this.myBigTreeRoom = null;
+          this.myPlayerRoom = null;
+          this.myWoodsRoom = null;
+        }
+      };
+      Global.cellCoordinatesEqual = function(first, second) {
+        return first[0] == second[0] && first[1] == second[1];
+      };
+      Global.doorsEqual = function(first, second) {
+        let equal = true;
+        if (first.length != second.length) {
+          equal = false;
+        } else {
+          for (let i = 0; i < first.length; i++) {
+            if (first[i] != second[i]) {
+              equal = false;
+              break;
+            }
+          }
+        }
+        return equal;
+      };
+      Global.createMazeverseMaze = function() {
+        let maxAttempts = 10;
+        let maze = null;
+        while (maxAttempts > 0 && maze == null) {
+          maxAttempts--;
+          try {
+            maze = Global.initializeMaze();
+            let createWallsResults = new LR.CreateWallsResults();
+            let createWallsMaxAttempts = 100;
+            let returnedCreateWallsResults = null;
+            Global.chooseSpecialRoomSetups(createWallsResults);
+            do {
+              Global.emptyMaze(maze);
+              createWallsMaxAttempts--;
+              createWallsResults.reset();
+              returnedCreateWallsResults = Global.createWalls(maze, createWallsResults);
+              if (returnedCreateWallsResults == null) {
+                if (Global.myFromAbove) {
+                  console.error("Create Walls Failed:", 100 - createWallsMaxAttempts);
+                }
+              }
+            } while (returnedCreateWallsResults == null && createWallsMaxAttempts > 0);
+            createWallsResults = returnedCreateWallsResults;
+            if (createWallsResults == null) {
+              throw "Create Wall Failed";
+            }
+            let addElementsResult = false;
+            let addElementsMaxAttempts = 100;
+            let mazeClone = [];
+            for (let i = 0; i < maze.length; i++) {
+              mazeClone[i] = [];
+              let row = maze[i];
+              for (let j = 0; j < row.length; j++) {
+                mazeClone[i][j] = maze[i][j];
+              }
+            }
+            do {
+              for (let i = 0; i < mazeClone.length; i++) {
+                let row = mazeClone[i];
+                for (let j = 0; j < row.length; j++) {
+                  maze[i][j] = mazeClone[i][j];
+                }
+              }
+              addElementsMaxAttempts--;
+              addElementsResult = Global.addElementsToMaze(maze, createWallsResults);
+              if (!addElementsResult) {
+                if (Global.myFromAbove) {
+                  console.error("Add Elements Failed:", 100 - addElementsMaxAttempts);
+                }
+              }
+            } while (!addElementsResult && addElementsMaxAttempts > 0);
+            if (!addElementsResult) {
+              throw "Add Elements Failed";
+            }
+            Global.adjustMazeWalls(maze);
+          } catch (error) {
+            if (Global.myFromAbove) {
+              console.error("FAIL - Attempt:", 10 - maxAttempts, "- Error:", error);
+            }
+            maze = null;
+          }
+        }
+        return maze;
+      };
+      Global.initializeMaze = function() {
+        let maze = [];
+        let rowMax = Math.pp_randomPick(26, 30);
+        let columnMax = Math.pp_randomPick(26, 30);
+        let rowMin = Math.pp_randomPick(20, 21);
+        let columnMin = Math.pp_randomPick(20, 21);
+        let rows = Math.pp_randomInt(rowMin, rowMax);
+        let columns = Math.pp_randomInt(columnMin, columnMax);
+        for (let i = 0; i < rows; i++) {
+          maze[i] = [];
+          for (let j = 0; j < columns; j++) {
+            maze[i][j] = LR.MazeItemType.NONE;
+          }
+        }
+        if (Global.myFromAbove) {
+          console.error("Size: [", rows, ",", columns, "]");
+        }
+        return maze;
+      };
+      Global.emptyMaze = function(maze) {
+        for (let i = 0; i < maze.length; i++) {
+          let row = maze[i];
+          for (let j = 0; j < row.length; j++) {
+            maze[i][j] = LR.MazeItemType.NONE;
+          }
+        }
+      };
+      Global.convertMazeToString = function(maze) {
+        for (let i = 0; i < maze.length; i++) {
+          let row = maze[i];
+          for (let j = 0; j < row.length; j++) {
+            maze[i][j] = row[j].toString();
+            if (maze[i][j].length < 2) {
+              maze[i][j] = "0" + maze[i][j];
+            }
+          }
+        }
+      };
+      Global.lookPlayerAligned = function(position) {
+        let rotationQuat = PP.quat_create();
+        let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
+        if (cell != null && cell.length > 0) {
+          let cellPosition = cell[0].myCellPosition;
+          let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
+          if (!direction.vec3_isZero(1e-5)) {
+            direction.vec3_normalize(direction);
+            if (Math.abs(direction[0]) > Math.abs(direction[2])) {
+              direction = [1 * Math.pp_sign(direction[0]), 0, 0];
+            } else {
+              direction = [0, 0, 1 * Math.pp_sign(direction[2])];
+            }
+            direction.vec3_normalize(direction);
+          }
+          rotationQuat.quat_setUp([0, 1, 0], direction);
+        }
+        return rotationQuat;
+      };
+      Global.lookBigTreeAligned = function(position) {
+        let rotationQuat = PP.quat_create();
+        let cell = Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE);
+        if (cell != null && cell.length > 0) {
+          let cellPosition = cell[0].myCellPosition;
+          let direction = cellPosition.vec3_sub(position).vec3_removeComponentAlongAxis([0, 1, 0]);
+          if (!direction.vec3_isZero(1e-5)) {
+            direction.vec3_normalize(direction);
+            if (Math.abs(direction[0]) > Math.abs(direction[2])) {
+              direction = [1 * Math.pp_sign(direction[0]), 0, 0];
+            } else {
+              direction = [0, 0, 1 * Math.pp_sign(direction[2])];
+            }
+            direction.vec3_normalize(direction);
+          }
+          rotationQuat.quat_setUp([0, 1, 0], direction);
+        }
+        return rotationQuat;
+      };
+    }
+  });
+
+  // js/labyroots/maze/mazeverse_create_walls.js
+  var require_mazeverse_create_walls = __commonJS({
+    "js/labyroots/maze/mazeverse_create_walls.js"() {
+      Global.createWalls = function(maze, createWallsResults) {
+        for (let i = 1; i < maze.length - 1; i++) {
+          let row = maze[i];
+          for (let j = 1; j < row.length - 1; j++) {
+            createWallsResults.myFreeCells.pp_pushUnique([i, j], Global.cellCoordinatesEqual);
+          }
+        }
+        for (let i = 0; i < maze.length; i++) {
+          let row = maze[i];
+          for (let j = 0; j < row.length; j++) {
+            if (i < 1 || i > maze.length - 2 || j < 1 || j > row.length - 2) {
+              maze[i][j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+            }
+          }
+        }
+        let rooms = [[[1, 1], [maze.length - 2, maze[0].length - 2], Math.pp_randomInt(0, 1)]];
+        while (rooms.length > 0) {
+          let room = Math.pp_randomPick(rooms);
+          rooms.pp_removeEqual(room);
+          if (!Global.useAsSpecialRoom(room, createWallsResults)) {
+            if (!Global.skipRoom(room, createWallsResults)) {
+              let start = room[0];
+              let end = room[1];
+              let usedRow = room[1];
+              let wall = null;
+              let useRow = false;
+              let maxAttempts = 100;
+              while (wall == null && maxAttempts > 0) {
+                maxAttempts--;
+                let wallAttempt = [[], []];
+                let rowColumnDiff = start[1] - start[0] - (end[1] - end[0]);
+                if (rowColumnDiff < 0) {
+                  useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 0.5 : 2))) == 0;
+                } else if (rowColumnDiff > 0) {
+                  useRow = Math.pp_randomInt(0, Math.ceil(rowColumnDiff / (usedRow ? 2 : 0.5))) != 0;
+                } else {
+                  if (usedRow) {
+                    useRow = Math.pp_randomInt(0, 2) == 0;
+                  } else {
+                    useRow = Math.pp_randomInt(0, 2) != 0;
+                  }
+                }
+                if (useRow) {
+                  let difference = end[0] - start[0];
+                  let extraDistance = Math.floor(difference / 4);
+                  let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                  extraDistance = Math.ceil(extraDistance * extraDistanceMultiplier);
+                  let startFixed = start[0] + 1 + extraDistance;
+                  let endFixed = end[0] - 1 - extraDistance;
+                  if (endFixed - startFixed >= 0) {
+                    wallAttempt[0][0] = Math.pp_randomInt(startFixed, endFixed);
+                    wallAttempt[0][1] = start[1];
+                    wallAttempt[1][0] = wallAttempt[0][0];
+                    wallAttempt[1][1] = end[1];
+                    if (maze[wallAttempt[0][0]][wallAttempt[0][1] - 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL && maze[wallAttempt[1][0]][wallAttempt[1][1] + 1] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
+                      wall = wallAttempt;
+                    }
+                  }
+                } else {
+                  let difference = end[1] - start[1];
+                  let extraDistance = Math.floor(difference / 4);
+                  let extraDistanceMultiplier = Math.pp_randomPick(1, 1, 1, 1, 0.5, 0.5, 0);
+                  extraDistance = Math.round(extraDistance * extraDistanceMultiplier);
+                  let startFixed = start[1] + 1 + extraDistance;
+                  let endFixed = end[1] - 1 - extraDistance;
+                  if (endFixed - startFixed >= 0) {
+                    wallAttempt[0][1] = Math.pp_randomInt(startFixed, endFixed);
+                    wallAttempt[0][0] = start[0];
+                    wallAttempt[1][1] = wallAttempt[0][1];
+                    wallAttempt[1][0] = end[0];
+                    if (maze[wallAttempt[0][0] - 1][wallAttempt[0][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL && maze[wallAttempt[1][0] + 1][wallAttempt[1][1]] == LR.MazeItemType.ROCK_WALL_HORIZONTAL) {
+                      wall = wallAttempt;
+                    }
+                  }
+                }
+                if (wall != null) {
+                  if (wall[1][0] - wall[0][0] < 1 && wall[1][1] - wall[0][1] < 1) {
+                    wall = null;
+                  }
+                }
+              }
+              if (wall != null) {
+                let wallCells = [];
+                if (useRow) {
+                  let rowStart = wall[0][0];
+                  let columnStart = wall[0][1];
+                  for (let i = 0; i <= wall[1][1] - wall[0][1]; i++) {
+                    wallCells.push([rowStart, columnStart + i]);
+                  }
+                } else {
+                  let rowStart = wall[0][0];
+                  let columnStart = wall[0][1];
+                  for (let i = 0; i <= wall[1][0] - wall[0][0]; i++) {
+                    wallCells.push([rowStart + i, columnStart]);
+                  }
+                }
+                for (let wallCell of wallCells) {
+                  createWallsResults.myWallCells.pp_pushUnique(wallCell, Global.cellCoordinatesEqual);
+                  createWallsResults.myFreeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
+                  maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                }
+                if (useRow) {
+                  let upRoom = [[start[0], start[1]], [wall[0][0] - 1, end[1]], useRow];
+                  let bottomRoom = [[wall[0][0] + 1, start[1]], [end[0], end[1]], useRow];
+                  rooms.push(upRoom);
+                  rooms.push(bottomRoom);
+                } else {
+                  let leftRoom = [[start[0], start[1]], [end[0], wall[0][1] - 1], useRow];
+                  let rightRoom = [[start[0], wall[0][1] + 1], [end[0], end[1]], useRow];
+                  rooms.push(leftRoom);
+                  rooms.push(rightRoom);
+                }
+                if (!Global.addDoorToWall(wallCells, useRow, maze, createWallsResults)) {
+                  if (Global.myFromAbove) {
+                    console.error("CAN'T CREATE DOOR");
+                  }
+                  return null;
+                }
+              } else {
+              }
+            }
+          }
+        }
+        if (Math.pp_randomInt(0, 9) != 0) {
+          Global.addExtraDoors(maze, createWallsResults);
+        }
+        let reachable = Global.checkFreeCellsReachable(maze, createWallsResults, false);
+        if (!reachable) {
+          if (Global.myFromAbove) {
+            console.error("NOT REACHABLE");
+          }
+          return null;
+        }
+        if (createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null || createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null || createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null) {
+          if (Global.myFromAbove) {
+            console.error("SPECIAL ROOMS FAILURE");
+          }
+          return null;
+        }
+        if (createWallsResults.myFreeCells.length < 50) {
+          if (Global.myFromAbove) {
+            console.error("TOO FEW FREE CELLS");
+          }
+          return null;
+        }
+        return createWallsResults;
+      };
+      Global.skipRoom = function(room, createWallsResults) {
+        let skipRoom = false;
+        let start = room[0];
+        let end = room[1];
+        if (end[0] - start[0] <= 0 || end[1] - start[1] <= 0) {
+          skipRoom = true;
+        } else if (end[0] - start[0] <= 1 && end[1] - start[1] <= 1) {
+          skipRoom = true;
+        }
+        return skipRoom;
+      };
+      Global.useAsSpecialRoom = function(room, createWallsResults) {
+        let used = false;
+        let rows = room[1][0] - room[0][0] + 1;
+        let columns = room[1][1] - room[0][1] + 1;
+        if (createWallsResults.myBigTreeRoomSize != null && createWallsResults.myBigTreeRoom == null) {
+          if (rows == createWallsResults.myBigTreeRoomSize[0] && columns == createWallsResults.myBigTreeRoomSize[1] || rows == createWallsResults.myBigTreeRoomSize[1] && columns == createWallsResults.myBigTreeRoomSize[0]) {
+            createWallsResults.myBigTreeRoom = room;
+            used = true;
+          }
+        }
+        if (!used) {
+          if (createWallsResults.myPlayerRoomSize != null && createWallsResults.myPlayerRoom == null) {
+            if (rows == createWallsResults.myPlayerRoomSize[0] && columns == createWallsResults.myPlayerRoomSize[1] || rows == createWallsResults.myPlayerRoomSize[1] && columns == createWallsResults.myPlayerRoomSize[0]) {
+              createWallsResults.myPlayerRoom = room;
+              used = true;
+            }
+          }
+        }
+        if (!used) {
+          if (createWallsResults.myWoodsRoomSize != null && createWallsResults.myWoodsRoom == null) {
+            if (rows == createWallsResults.myWoodsRoomSize[0] && columns == createWallsResults.myWoodsRoomSize[1] || rows == createWallsResults.myWoodsRoomSize[1] && columns == createWallsResults.myWoodsRoomSize[0]) {
+              createWallsResults.myWoodsRoom = room;
+              used = true;
+            }
+          }
+        }
+        return used;
+      };
+      Global.adjustMazeWalls = function(maze) {
+        for (let i = 0; i < maze.length; i++) {
+          let row = maze[i];
+          for (let j = 0; j < row.length; j++) {
+            let item = row[j];
+            if (item >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && item <= LR.MazeItemType.ROCK_WALL_CROSS) {
+              let left = Global.isWallType(j == 0 ? LR.MazeItemType.NONE : row[j - 1], true);
+              let right = Global.isWallType(j == row.length - 1 ? LR.MazeItemType.NONE : row[j + 1], true);
+              let up = Global.isWallType(i == 0 ? LR.MazeItemType.NONE : maze[i - 1][j], true);
+              let bottom = Global.isWallType(i == maze.length - 1 ? LR.MazeItemType.NONE : maze[i + 1][j], true);
+              if (left && right && !up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+              } else if (!left && !right && up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_VERTICAL;
+              } else if (left && !right && up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_T_LEFT;
+              } else if (!left && right && up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_T_RIGHT;
+              } else if (left && right && !up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_T_DOWN;
+              } else if (left && right && up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_T_UP;
+              } else if (left && !right && up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_BOTTOM_LEFT;
+              } else if (left && !right && !up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_TOP_LEFT;
+              } else if (!left && right && !up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_TOP_RIGHT;
+              } else if (!left && right && up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_BOTTOM_RIGHT;
+              } else if (!left && right && !up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+              } else if (left && !right && !up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+              } else if (!left && !right && up && !bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_VERTICAL;
+              } else if (!left && !right && !up && bottom) {
+                row[j] = LR.MazeItemType.ROCK_WALL_VERTICAL;
+              } else {
+                row[j] = LR.MazeItemType.ROCK_WALL_CROSS;
+              }
+            }
+          }
+        }
+      };
+      Global.checkFreeCellsReachable = function(maze, createWallsResults, rootWallsBlock = false) {
+        let freeCellsReachable = true;
+        let startCell = Math.pp_randomPick(createWallsResults.myFreeCells);
+        let reachableCells = Global.getReachableCells(startCell, maze, rootWallsBlock);
+        if (reachableCells.length != createWallsResults.myFreeCells.length) {
+          freeCellsReachable = false;
+        } else {
+          for (let reachableCell of reachableCells) {
+            if (!createWallsResults.myFreeCells.pp_hasEqual(reachableCell, Global.cellCoordinatesEqual)) {
+              freeCellsReachable = false;
+              break;
+            }
+          }
+        }
+        return freeCellsReachable;
+      };
+      Global.getReachableCells = function(startCell, maze, rootWallsBlock = false) {
+        let reachableCells = [];
+        let cellsToExplore = [];
+        cellsToExplore.push(startCell);
+        let exploredCells = [];
+        while (cellsToExplore.length > 0) {
+          let currentCell = cellsToExplore.shift();
+          reachableCells.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+          exploredCells.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+          let neighborCells = [];
+          neighborCells.push([currentCell[0] + 1, currentCell[1]]);
+          neighborCells.push([currentCell[0], currentCell[1] + 1]);
+          neighborCells.push([currentCell[0] - 1, currentCell[1]]);
+          neighborCells.push([currentCell[0], currentCell[1] - 1]);
+          for (let neighborCell of neighborCells) {
+            if (!exploredCells.pp_hasEqual(neighborCell, Global.cellCoordinatesEqual)) {
+              if (neighborCell[0] >= 0 && neighborCell[0] <= maze.length - 1) {
+                if (neighborCell[1] >= 0 && neighborCell[1] <= maze[0].length - 1) {
+                  let mazeCell = maze[neighborCell[0]][neighborCell[1]];
+                  if (mazeCell < LR.MazeItemType.ROCK_WALL_HORIZONTAL || mazeCell > LR.MazeItemType.ROCK_WALL_CROSS) {
+                    if (!rootWallsBlock || mazeCell != LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL && mazeCell != LR.MazeItemType.BIG_TREE_WALL_VERTICAL) {
+                      cellsToExplore.pp_pushUnique(neighborCell, Global.cellCoordinatesEqual);
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        return reachableCells;
+      };
+      Global.isWallType = function(type2, rootWallIsWall = false) {
+        let isWallType = false;
+        if (type2 >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && type2 <= LR.MazeItemType.ROCK_WALL_CROSS) {
+          isWallType = true;
+        } else if (rootWallIsWall) {
+          if (type2 == LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL || type2 == LR.MazeItemType.BIG_TREE_WALL_VERTICAL) {
+            isWallType = true;
+          }
+        }
+        return isWallType;
+      };
+      Global.addDoorToWall = function(wallCells, useRow, maze, createWallsResults) {
+        let door = null;
+        let maxAttempts = 100;
+        let amountChance = [];
+        let chance1 = Math.max(Math.ceil(49 / wallCells.length), 3);
+        for (let i = 0; i < chance1; i++) {
+          amountChance.push(1);
+        }
+        amountChance.push(2, 2, 2, 3);
+        while (door == null && maxAttempts > 0) {
+          maxAttempts--;
+          let doorCell = Math.pp_randomPick(wallCells);
+          let amount = Math.pp_randomPick(amountChance);
+          door = Global.addDoorToMaze(doorCell, amount, maze);
+        }
+        if (door != null) {
+          Global.addDoorToResults(door, maze, createWallsResults);
+        }
+        return door != null;
+      };
+      Global.addExtraDoors = function(maze, createWallsResults) {
+        let doorsAmount = createWallsResults.myDoors.length;
+        let extraDoors = Math.pp_randomInt(Math.round(doorsAmount * 1), Math.round(doorsAmount * 1.25));
+        extraDoors = Math.round(doorsAmount / Math.pp_random(4, 6));
+        if (Math.pp_randomInt(0, 9) == 0) {
+          createWallsResults.myNoDoors = true;
+          extraDoors = extraDoors * 1e3;
+        }
+        let maxRetry = extraDoors * 100;
+        for (let i = 0; i < extraDoors; i++) {
+          let doorCell = Math.pp_randomPick(createWallsResults.myWallCells);
+          if (doorCell != null) {
+            let amount = Math.pp_randomPick(1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 3);
+            let door = Global.addDoorToMaze(doorCell, amount, maze);
+            if (door != null) {
+              Global.addDoorToResults(door, maze, createWallsResults, true);
+            }
+            if (door == null && maxRetry > 0) {
+              maxRetry--;
+              i--;
+            }
+          }
+        }
+      };
+      Global.addDoorToResults = function(door, maze, createWallsResults, isExtra) {
+        for (let i = 1; i < door.length; i++) {
+          let doorCell = door[i];
+          if (isExtra) {
+            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+          } else {
+            maze[doorCell[0]][doorCell[1]] = LR.MazeItemType.NONE;
+          }
+          createWallsResults.myWallCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+          createWallsResults.myFreeCells.pp_pushUnique(doorCell, Global.cellCoordinatesEqual);
+        }
+        createWallsResults.myDoors.pp_pushUnique(door, Global.doorsEqual);
+      };
+      Global.addDoorToMaze = function(doorCell, amount, maze) {
+        let doorDirection = Global.getDoorDirection(doorCell, maze);
+        if (doorDirection == null) {
+          return null;
+        }
+        let door = [doorDirection];
+        let doorCellsToReturn = [];
+        let doorCellsVisited = [];
+        let doorCells = [];
+        doorCells.push(doorCell);
+        while (doorCells.length > 0 && amount > 0) {
+          let currentCell = Math.pp_randomPick(doorCells);
+          doorCellsVisited.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+          doorCells.pp_removeEqual(currentCell, Global.cellCoordinatesEqual);
+          let currentCellDirection = Global.getDoorDirection(currentCell, maze);
+          if (currentCellDirection == doorDirection) {
+            let backupMazeCell = maze[currentCell[0]][currentCell[1]];
+            maze[currentCell[0]][currentCell[1]] = LR.MazeItemType.NONE;
+            let isOk = true;
+            if (doorDirection) {
+              let leftIsAlone = Global.isAloneWall([currentCell[0], currentCell[1] - 1], maze);
+              let rightIsAlone = Global.isAloneWall([currentCell[0], currentCell[1] + 1], maze);
+              if (leftIsAlone || rightIsAlone) {
+                isOk = false;
+              }
+            } else {
+              let upIsAlone = Global.isAloneWall([currentCell[0] - 1, currentCell[1]], maze);
+              let bottomIsAlone = Global.isAloneWall([currentCell[0] + 1, currentCell[1]], maze);
+              if (upIsAlone || bottomIsAlone) {
+                isOk = false;
+              }
+            }
+            maze[currentCell[0]][currentCell[1]] = backupMazeCell;
+            if (isOk) {
+              amount--;
+              doorCellsToReturn.pp_pushUnique(currentCell, Global.cellCoordinatesEqual);
+              if (doorDirection) {
+                doorCells.pp_pushUnique([currentCell[0], currentCell[1] - 1], Global.cellCoordinatesEqual);
+                doorCells.pp_pushUnique([currentCell[0], currentCell[1] + 1], Global.cellCoordinatesEqual);
+              } else {
+                doorCells.pp_pushUnique([currentCell[0] - 1, currentCell[1]], Global.cellCoordinatesEqual);
+                doorCells.pp_pushUnique([currentCell[0] + 1, currentCell[1]], Global.cellCoordinatesEqual);
+              }
+              for (let doorCellVisited of doorCellsVisited) {
+                doorCells.pp_removeEqual(doorCellVisited, Global.cellCoordinatesEqual);
+              }
+            }
+          }
+        }
+        for (let doorCellToReturn of doorCellsToReturn) {
+          door.push(doorCellToReturn);
+        }
+        return door.length > 1 ? door : null;
+      };
+      Global.getDoorDirection = function(doorCell, maze) {
+        let doorDirection = null;
+        let left = Global.isWallType(doorCell[1] == 0 ? LR.MazeItemType.NONE : maze[doorCell[0]][doorCell[1] - 1]);
+        let right = Global.isWallType(doorCell[1] == maze[0].length - 1 ? LR.MazeItemType.NONE : maze[doorCell[0]][doorCell[1] + 1]);
+        let up = Global.isWallType(doorCell[0] == 0 ? LR.MazeItemType.NONE : maze[doorCell[0] - 1][doorCell[1]]);
+        let bottom = Global.isWallType(doorCell[0] == maze.length - 1 ? LR.MazeItemType.NONE : maze[doorCell[0] + 1][doorCell[1]]);
+        if (left && right && !up && !bottom) {
+          doorDirection = true;
+        } else if (!left && !right && up && bottom) {
+          doorDirection = false;
+        }
+        return doorDirection;
+      };
+      Global.isAloneWall = function(wallCell, maze) {
+        let isAlone = true;
+        let left = Global.isWallType(wallCell[1] == 0 ? LR.MazeItemType.NONE : maze[wallCell[0]][wallCell[1] - 1]);
+        let right = Global.isWallType(wallCell[1] == maze[0].length - 1 ? LR.MazeItemType.NONE : maze[wallCell[0]][wallCell[1] + 1]);
+        let up = Global.isWallType(wallCell[0] == 0 ? LR.MazeItemType.NONE : maze[wallCell[0] - 1][wallCell[1]]);
+        let bottom = Global.isWallType(wallCell[0] == maze.length - 1 ? LR.MazeItemType.NONE : maze[wallCell[0] + 1][wallCell[1]]);
+        if (left || right || up || bottom) {
+          isAlone = false;
+        } else if (!Global.isWallType(maze[wallCell[0]][wallCell[1]])) {
+          isAlone = false;
+        }
+        return isAlone;
+      };
+      Global.chooseSpecialRoomSetups = function(createWallsResults) {
+        let bigTreeSize = [0, 0];
+        {
+          let randomSizes = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 4)];
+          let first = Math.pp_randomInt(0, 1);
+          bigTreeSize[0] = randomSizes[first];
+          bigTreeSize[1] = randomSizes[(first + 1) % 2];
+          createWallsResults.myBigTreeRoomSize = bigTreeSize;
+        }
+        let createPlayerRoom = Math.pp_randomInt(0, 3) != 0;
+        if (createPlayerRoom) {
+          createWallsResults.myPlayerRoomSize = [Math.pp_randomInt(3, 4), Math.pp_randomInt(3, 4)];
+        }
+        let specialRoom = Math.pp_randomInt(0, 2) == 0;
+        if (specialRoom) {
+          createWallsResults.myWoodsRoomSize = [Math.pp_randomInt(3, 5), Math.pp_randomInt(3, 5)];
+        }
+      };
+    }
+  });
+
+  // js/labyroots/maze/mazeverse_add_elements.js
+  var require_mazeverse_add_elements = __commonJS({
+    "js/labyroots/maze/mazeverse_add_elements.js"() {
+      LR.AddElemenstResults = class AddElemenstResults {
+        constructor() {
+          this.myRootsMustBeFar = false;
+          this.myTreesMustBeFar = false;
+          this.myRootsToAdd = 3;
+          this.myAllElements = [];
+          this.myElementsFar = [];
+          this.myRootsFar = [];
+          this.myTreesFar = [];
+          this.myTreesFar = [];
+          this.myZestiesFar = [];
+          this.myPlayer = [0, 0];
+          this.myFirstRoot = [0, 0];
+        }
+      };
+      Global.addElementsToMaze = function(maze, createWallsResults) {
+        let freeCells = createWallsResults.myFreeCells.pp_clone();
+        let doors = createWallsResults.myDoors.pp_clone();
+        let addElementsResults = new LR.AddElemenstResults();
+        addElementsResults.myRootsMustBeFar = Math.pp_randomInt(0, 4) != 0;
+        addElementsResults.myTreesMustBeFar = Math.pp_randomInt(0, 4) != 0;
+        if (createWallsResults.myWoodsRoom != null) {
+          Global.addWoods(maze, createWallsResults, freeCells, addElementsResults);
+        }
+        Global.addBigTree(maze, createWallsResults, freeCells, addElementsResults);
+        let firstRootAdded = Global.addPlayer(maze, createWallsResults, freeCells, addElementsResults);
+        if (!firstRootAdded) {
+          Global.addFirstRoot(maze, createWallsResults, freeCells, addElementsResults);
+        }
+        if (Math.pp_randomInt(0, 9) != 0 && (!createWallsResults.myNoDoors || Math.pp_randomInt(0, 2) != 0)) {
+          Global.addRootWalls(maze, createWallsResults, freeCells, doors, addElementsResults);
+        }
+        Global.addRoots(maze, createWallsResults, freeCells, addElementsResults);
+        Global.addTrees(maze, createWallsResults, freeCells, addElementsResults);
+        Global.addZesties(maze, createWallsResults, freeCells, addElementsResults);
+        Global.addWondermelon(maze, createWallsResults, freeCells, addElementsResults);
+        let everythingReachable = Global.isEverythingReachable(maze, addElementsResults);
+        return everythingReachable;
+      };
+      Global.addBigTree = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let room = createWallsResults.myBigTreeRoom;
+        let start = room[0];
+        let end = room[1];
+        let rowStart = start[0] + 1;
+        let rowEnd = end[0] - 1;
+        let columnStart = start[1] + 1;
+        let columnEnd = end[1] - 1;
+        let bigTreePosition = [Math.pp_randomInt(rowStart, rowEnd), Math.pp_randomInt(columnStart, columnEnd)];
+        maze[bigTreePosition[0]][bigTreePosition[1]] = LR.MazeItemType.BIG_TREE;
+        if (!freeCells.pp_hasEqual(bigTreePosition, Global.cellCoordinatesEqual)) {
+        }
+        freeCells.pp_removeEqual(bigTreePosition, Global.cellCoordinatesEqual);
+        freeCells.pp_removeEqual([bigTreePosition[0] - 1, bigTreePosition[1]], Global.cellCoordinatesEqual);
+        freeCells.pp_removeEqual([bigTreePosition[0] + 1, bigTreePosition[1]], Global.cellCoordinatesEqual);
+        freeCells.pp_removeEqual([bigTreePosition[0], bigTreePosition[1] - 1], Global.cellCoordinatesEqual);
+        freeCells.pp_removeEqual([bigTreePosition[0], bigTreePosition[1] + 1], Global.cellCoordinatesEqual);
+        addElementsResults.myAllElements.push(bigTreePosition);
+        addElementsResults.myElementsFar.push(bigTreePosition);
+        addElementsResults.myRootsFar.push(bigTreePosition);
+      };
+      Global.addPlayer = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let firstRootAdded = false;
+        if (createWallsResults.myPlayerRoom != null) {
+          firstRootAdded = true;
+          let room = createWallsResults.myPlayerRoom;
+          let start = room[0];
+          let end = room[1];
+          let rowStart = start[0];
+          let rowEnd = end[0];
+          let columnStart = start[1];
+          let columnEnd = end[1];
+          let playerPosition = [Math.pp_randomInt(rowStart, rowEnd), Math.pp_randomInt(columnStart, columnEnd)];
+          maze[playerPosition[0]][playerPosition[1]] = LR.MazeItemType.PLAYER_START;
+          if (!freeCells.pp_hasEqual(playerPosition, Global.cellCoordinatesEqual)) {
+          }
+          freeCells.pp_removeEqual(playerPosition, Global.cellCoordinatesEqual);
+          addElementsResults.myAllElements.push(playerPosition);
+          addElementsResults.myElementsFar.push(playerPosition);
+          addElementsResults.myPlayer.pp_copy(playerPosition);
+          addElementsResults.myRootsFar.push(playerPosition);
+          let firstRootPosition = [0, 0];
+          let found = false;
+          while (!found) {
+            firstRootPosition = [Math.pp_randomInt(rowStart, rowEnd), Math.pp_randomInt(columnStart, columnEnd)];
+            if (freeCells.pp_hasEqual(firstRootPosition, Global.cellCoordinatesEqual)) {
+              found = true;
+            }
+          }
+          maze[firstRootPosition[0]][firstRootPosition[1]] = LR.MazeItemType.BIG_TREE_FIRST_ROOT;
+          freeCells.pp_removeEqual(firstRootPosition, Global.cellCoordinatesEqual);
+          addElementsResults.myAllElements.push(firstRootPosition);
+          addElementsResults.myElementsFar.push(firstRootPosition);
+          addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
+          addElementsResults.myRootsFar.push(firstRootPosition);
+        } else {
+          let playerPosition = Math.pp_randomPick(freeCells);
+          freeCells.pp_removeEqual(playerPosition, Global.cellCoordinatesEqual);
+          maze[playerPosition[0]][playerPosition[1]] = LR.MazeItemType.PLAYER_START;
+          addElementsResults.myAllElements.push(playerPosition);
+          addElementsResults.myElementsFar.push(playerPosition);
+          addElementsResults.myPlayer.pp_copy(playerPosition);
+          addElementsResults.myRootsFar.push(playerPosition);
+        }
+        return firstRootAdded;
+      };
+      Global.addFirstRoot = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let far = addElementsResults.myRootsMustBeFar;
+        let firstRootPosition = Math.pp_randomPick(freeCells);
+        let farDistance = 3;
+        let isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze, farDistance);
+        let maxAttempts = 100;
+        while (far && !isFar && maxAttempts > 0) {
+          maxAttempts--;
+          firstRootPosition = Math.pp_randomPick(freeCells);
+          isFar = Global.isFarFromAll(firstRootPosition, addElementsResults.myRootsFar, maze, farDistance);
+          if (!isFar && maxAttempts == 0 && farDistance == 3) {
+            farDistance = 4;
+            maxAttempts = 50;
+          }
+        }
+        maze[firstRootPosition[0]][firstRootPosition[1]] = LR.MazeItemType.BIG_TREE_FIRST_ROOT;
+        freeCells.pp_removeEqual(firstRootPosition, Global.cellCoordinatesEqual);
+        addElementsResults.myAllElements.push(firstRootPosition);
+        addElementsResults.myElementsFar.push(firstRootPosition);
+        addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
+        addElementsResults.myRootsFar.push(firstRootPosition);
+      };
+      Global.addRootWalls = function(maze, createWallsResults, freeCells, doors, addElementsResults) {
+        let rootWallsToAdd = Math.round(createWallsResults.myDoors.length * Math.pp_random(0.2, 0.4));
+        let rootWallsAdded = 0;
+        let rootWallsToAddOriginal = rootWallsToAdd;
+        let allowOneBigRootWall = false;
+        if (Math.pp_randomInt(0, 9) == 0) {
+          allowOneBigRootWall = true;
+        }
+        let blockedDoors = 0;
+        let doorsLength = doors.length;
+        while (rootWallsToAdd > 0) {
+          rootWallsToAdd--;
+          let maxAttempts = 100;
+          while (maxAttempts > 0 && doors.length > 0) {
+            maxAttempts--;
+            let randomDoorIndex = Math.pp_randomInt(0, doors.length - 1);
+            let randomDoor = doors[randomDoorIndex];
+            doors.pp_removeIndex(randomDoorIndex);
+            if (randomDoor.length < 5) {
+              if (Global.isDoorFree(randomDoor, freeCells)) {
+                if (Global.isDoorLimited(randomDoor, maze)) {
+                  if (!Global.isDoorBlockingPlayer(addElementsResults.myPlayer, addElementsResults.myFirstRoot, randomDoor, maze)) {
+                    if (randomDoor.length == 2) {
+                      let doorCell = randomDoor[1];
+                      maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                      freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+                      addElementsResults.myAllElements.push(doorCell);
+                    } else if (randomDoor.length == 3) {
+                      let doorCellIndex = Math.pp_randomInt(0, 1);
+                      let doorCell = randomDoor[doorCellIndex + 1];
+                      maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                      freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+                      addElementsResults.myAllElements.push(doorCell);
+                      let wallCellIndex = (doorCellIndex + 1) % 2;
+                      let wallCell = randomDoor[wallCellIndex + 1];
+                      if (!allowOneBigRootWall) {
+                        maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                      } else {
+                        allowOneBigRootWall = false;
+                        maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                      }
+                      freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
+                    } else if (randomDoor.length == 4) {
+                      let indexes = [1, 2, 3];
+                      let middleDoorIndex = Global.getMiddleDoorIndex(randomDoor);
+                      let wallCellIndex = middleDoorIndex;
+                      let wallCell = randomDoor[wallCellIndex];
+                      if (!allowOneBigRootWall) {
+                        maze[wallCell[0]][wallCell[1]] = LR.MazeItemType.ROCK_WALL_HORIZONTAL;
+                      } else {
+                        allowOneBigRootWall = false;
+                        maze[wallCell[0]][wallCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                      }
+                      freeCells.pp_removeEqual(wallCell, Global.cellCoordinatesEqual);
+                      indexes.pp_removeEqual(middleDoorIndex);
+                      for (let i = 0; i < indexes.length; i++) {
+                        let doorCellIndex = indexes[i];
+                        let doorCell = randomDoor[doorCellIndex];
+                        maze[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+                        freeCells.pp_removeEqual(doorCell, Global.cellCoordinatesEqual);
+                        addElementsResults.myAllElements.push(doorCell);
+                      }
+                    } else {
+                    }
+                    rootWallsAdded++;
+                    break;
+                  } else {
+                    blockedDoors++;
+                    if (blockedDoors > doorsLength - 4) {
+                    }
+                  }
+                } else {
+                }
+              } else {
+              }
+            }
+          }
+        }
+      };
+      Global.addWoods = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let addRoot = Math.pp_randomInt(0, 2) != 0;
+        let room = createWallsResults.myWoodsRoom;
+        let start = room[0];
+        let end = room[1];
+        let roomCells = [];
+        for (let row = start[0]; row <= end[0]; row++) {
+          for (let column = start[1]; column <= end[1]; column++) {
+            roomCells.push([row, column]);
+          }
+        }
+        if (addRoot) {
+          let rootPosition = Math.pp_randomPick(roomCells);
+          roomCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+          if (!freeCells.pp_hasEqual(rootPosition, Global.cellCoordinatesEqual)) {
+          }
+          freeCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+          maze[rootPosition[0]][rootPosition[1]] = LR.MazeItemType.BIG_TREE_ROOT;
+          addElementsResults.myAllElements.push(rootPosition);
+          addElementsResults.myElementsFar.push(rootPosition);
+          addElementsResults.myRootsFar.push(rootPosition);
+          addElementsResults.myRootsToAdd--;
+        }
+        while (roomCells.length > 0) {
+          let treePosition = Math.pp_randomPick(roomCells);
+          roomCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+          if (!freeCells.pp_hasEqual(treePosition, Global.cellCoordinatesEqual)) {
+          }
+          freeCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+          maze[treePosition[0]][treePosition[1]] = LR.MazeItemType.HUMAN_TREE_0 + 7;
+          addElementsResults.myAllElements.push(treePosition);
+          addElementsResults.myElementsFar.push(treePosition);
+        }
+      };
+      Global.addRoots = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let far = addElementsResults.myRootsMustBeFar;
+        let rootsToAdd = addElementsResults.myRootsToAdd;
+        for (let i = 0; i < rootsToAdd; i++) {
+          let rootPosition = Math.pp_randomPick(freeCells);
+          let farDistance = 3;
+          let isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze, farDistance);
+          let maxAttempts = 100;
+          while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+            rootPosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(rootPosition, addElementsResults.myRootsFar, maze, farDistance);
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+              farDistance = 4;
+              maxAttempts = 50;
+            }
+          }
+          maze[rootPosition[0]][rootPosition[1]] = LR.MazeItemType.BIG_TREE_ROOT;
+          freeCells.pp_removeEqual(rootPosition, Global.cellCoordinatesEqual);
+          addElementsResults.myAllElements.push(rootPosition);
+          addElementsResults.myElementsFar.push(rootPosition);
+          addElementsResults.myRootsFar.push(rootPosition);
+        }
+      };
+      Global.addTrees = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let far = addElementsResults.myTreesFar;
+        let extra = 0;
+        if (maze.length * maze[0].length > 700) {
+          extra = 2;
+        } else if (maze.length * maze[0].length > 550) {
+          extra = 1;
+        }
+        let treesToAdd = Math.pp_randomInt(4 + extra, 8 + extra);
+        if (Math.pp_randomInt(0, 9) == 0) {
+          treesToAdd = 0;
+        }
+        for (let i = 0; i < treesToAdd; i++) {
+          let treePosition = Math.pp_randomPick(freeCells);
+          let farDistance = 3;
+          let isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze, farDistance);
+          let maxAttempts = 100;
+          while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+            treePosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(treePosition, addElementsResults.myTreesFar, maze, farDistance);
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+              farDistance = 4;
+              maxAttempts = 50;
+            }
+          }
+          maze[treePosition[0]][treePosition[1]] = LR.MazeItemType.HUMAN_TREE_0 + 7;
+          freeCells.pp_removeEqual(treePosition, Global.cellCoordinatesEqual);
+          addElementsResults.myAllElements.push(treePosition);
+          addElementsResults.myElementsFar.push(treePosition);
+          addElementsResults.myTreesFar.push(treePosition);
+        }
+      };
+      Global.addZesties = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let far = true;
+        let zestyMax = [1, 1, 1, 2];
+        if (maze.length * maze[0].length > 700) {
+          zestyMax = [1, 2];
+        } else if (maze.length * maze[0].length > 550) {
+          zestyMax = [1, 1, 2];
+        }
+        let zestiesToAdd = Math.pp_randomPick(zestyMax);
+        if (Math.pp_randomInt(0, 9) == 0) {
+          zestiesToAdd = 0;
+        }
+        for (let i = 0; i < zestiesToAdd; i++) {
+          let zestyPosition = Math.pp_randomPick(freeCells);
+          let farDistance = 3;
+          let isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze, farDistance);
+          let maxAttempts = 100;
+          while (far && !isFar && maxAttempts > 0) {
+            maxAttempts--;
+            zestyPosition = Math.pp_randomPick(freeCells);
+            isFar = Global.isFarFromAll(zestyPosition, addElementsResults.myZestiesFar, maze, farDistance);
+            if (!isFar && maxAttempts == 0 && farDistance == 3) {
+              farDistance = 4;
+              maxAttempts = 50;
+            }
+          }
+          maze[zestyPosition[0]][zestyPosition[1]] = LR.MazeItemType.ZESTY;
+          freeCells.pp_removeEqual(zestyPosition, Global.cellCoordinatesEqual);
+          addElementsResults.myAllElements.push(zestyPosition);
+          addElementsResults.myElementsFar.push(zestyPosition);
+          addElementsResults.myZestiesFar.push(zestyPosition);
+        }
+      };
+      Global.addWondermelon = function(maze, createWallsResults, freeCells, addElementsResults) {
+        let wondermelonPosition = Math.pp_randomPick(freeCells);
+        maze[wondermelonPosition[0]][wondermelonPosition[1]] = LR.MazeItemType.WONDERMELON;
+        freeCells.pp_removeEqual(wondermelonPosition, Global.cellCoordinatesEqual);
+        addElementsResults.myAllElements.push(wondermelonPosition);
+        addElementsResults.myElementsFar.push(wondermelonPosition);
+        addElementsResults.myZestiesFar.push(wondermelonPosition);
+      };
+      Global.isDoorFree = function isDoorFree(door, freeCells) {
+        let isDoorFree2 = true;
+        for (let i = 1; i < door.length; i++) {
+          let doorCell = door[i];
+          if (!freeCells.pp_hasEqual(doorCell)) {
+            isDoorFree2 = false;
+            break;
+          }
+        }
+        return isDoorFree2;
+      };
+      Global.isDoorLimited = function isDoorLimited(door, maze) {
+        let isDoorLimited2 = true;
+        if (door[0]) {
+          let min4 = Number.MAX_VALUE;
+          let max4 = -Number.MAX_VALUE;
+          for (let i = 1; i < door.length; i++) {
+            let doorCell = door[i];
+            min4 = Math.min(min4, doorCell[1]);
+            max4 = Math.max(max4, doorCell[1]);
+          }
+          isDoorLimited2 = Global.isWallType(maze[door[1][0]][min4 - 1]) && Global.isWallType(maze[door[1][0]][max4 + 1]);
+        } else {
+          let min4 = Number.MAX_VALUE;
+          let max4 = -Number.MAX_VALUE;
+          for (let i = 1; i < door.length; i++) {
+            let doorCell = door[i];
+            min4 = Math.min(min4, doorCell[0]);
+            max4 = Math.max(max4, doorCell[0]);
+          }
+          isDoorLimited2 = Global.isWallType(maze[min4 - 1][door[1][1]]) && Global.isWallType(maze[max4 + 1][door[1][1]]);
+        }
+        return isDoorLimited2;
+      };
+      Global.isDoorBlockingPlayer = function isDoorBlockingPlayer(player, firstRoot, randomDoor, maze) {
+        let mazeClone = [];
+        for (let i = 0; i < maze.length; i++) {
+          mazeClone[i] = [];
+          let row = maze[i];
+          for (let j = 0; j < row.length; j++) {
+            mazeClone[i][j] = maze[i][j];
+          }
+        }
+        for (let i = 1; i < randomDoor.length; i++) {
+          let doorCell = randomDoor[i];
+          mazeClone[doorCell[0]][doorCell[1]] = randomDoor[0] ? LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL : LR.MazeItemType.BIG_TREE_WALL_VERTICAL;
+        }
+        let reachableCells = Global.getReachableCells(player, mazeClone, true);
+        return !reachableCells.pp_hasEqual(firstRoot, Global.cellCoordinatesEqual);
+      };
+      Global.isEverythingReachable = function isEverythingReachable(maze, addElementsResult) {
+        let reachableCells = Global.getReachableCells(addElementsResult.myPlayer, maze, false);
+        let allElements = addElementsResult.myAllElements.pp_clone();
+        for (let reachableCell of reachableCells) {
+          allElements.pp_removeEqual(reachableCell, Global.cellCoordinatesEqual);
+        }
+        return allElements.length == 0;
+      };
+      Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze, far = 3) {
+        let farFromAll = true;
+        for (let otherCell of otherCells) {
+          if (!Global.isFar(cell, otherCell, maze, far)) {
+            farFromAll = false;
+            break;
+          }
+        }
+        return farFromAll;
+      };
+      Global.isFar = function isFar(first, second, maze, far = 3) {
+        return Global.distanceBetweenCellPositions(first, second) > Math.max(maze.length, maze[0].length) / far;
+      };
+      Global.distanceBetweenCellPositions = function distanceBetweenCellPositions(first, second) {
+        return Math.max(Math.abs(first[0] - second[0]), Math.abs(first[1] - second[1]));
+      };
+      Global.getMiddleDoorIndex = function getMiddleDoorIndex(door) {
+        let middleIndex = -1;
+        let direction = door[0];
+        for (let i = 0; i < 3; i++) {
+          let currentDoor = door[1 + i];
+          let previousPos = [currentDoor[0], currentDoor[1] - 1];
+          let nextPos = [currentDoor[0], currentDoor[1] + 1];
+          if (!direction) {
+            previousPos = [currentDoor[0] - 1, currentDoor[1]];
+            nextPos = [currentDoor[0] + 1, currentDoor[1]];
+          }
+          let previousFound = false;
+          let nextFound = false;
+          for (let j = 0; j < 3; j++) {
+            let doorToCheck = door[1 + j];
+            if (doorToCheck[0] == previousPos[0] && doorToCheck[1] == previousPos[1]) {
+              previousFound = true;
+            }
+            if (doorToCheck[0] == nextPos[0] && doorToCheck[1] == nextPos[1]) {
+              nextFound = true;
+            }
+          }
+          if (previousFound && nextFound) {
+            middleIndex = 1 + i;
+            break;
+          }
+        }
+        if (middleIndex == -1) {
+          middleIndex = 1;
+          if (Global.myFromAbove) {
+            console.error("ERROR MIDDLE INDEX NOT FOUND");
+          }
+        }
+        return middleIndex;
       };
     }
   });
@@ -42440,6 +43562,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myKeepUp = this._myKeepUp;
           return clonedComponent;
         }
@@ -42475,13 +43598,22 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 20;
+                let currentVersion = 21;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
-                if (Global.myIsWeddingTime) {
-                  this._myTimer.start(8);
+                if (Global.myIsWeddingTime || Global.myIsMazeverseTime) {
+                  if (Global.myFromAbove) {
+                    this._myTimer.start(0);
+                  } else {
+                    this._myTimer.start(8);
+                  }
                 }
+                if (Global.myIsMazeverseTime) {
+                  Global.mySky.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
+                  Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
+                }
+                Global.mySaveManager.save("is_wedding", false, false);
               }
             }
           } else {
@@ -42520,7 +43652,7 @@
               this._myTimer.update(dt);
               this._myTimer2.update(dt);
               if (this._myTimer.isDone() || this._myCanSkip && this._myTimer2.isDone() && this._mySkip) {
-                if (this._mySkip && this._myTimer2.isDone()) {
+                if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                   if (Global.myGoogleAnalytics) {
                     gtag("event", "intro_skipped", {
                       "value": 1
@@ -42532,6 +43664,11 @@
                       "value": 1
                     });
                   }
+                }
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "intro_done", {
+                    "value": 1
+                  });
                 }
                 PP.CAUtils.getUser(function(user) {
                   if (user != null && user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
@@ -42833,30 +43970,29 @@
           this._myChange = 0;
           this._myEnd = 0;
           this._myHit = 3;
-          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         },
         update: function(dt) {
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
               this._myChange = 1;
-              if (WL.xrSession) {
-                Global.myUnmute = true;
-                Howler.mute(true);
-                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                  Global.myAxe._myGrabbable.release();
-                }
-                WL.xrSession.end();
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
               }
             }
           }
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              let result2 = Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4");
-              if (result2 == null) {
-                this._myChange = 10;
-              } else {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
+              let onSuccess = function() {
+                if (WL.xrSession) {
+                  WL.xrSession.end();
+                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -42867,7 +44003,11 @@
                     "value": 1
                   });
                 }
-              }
+              }.bind(this);
+              let onError = function() {
+                this._myChange = 10;
+              }.bind(this);
+              Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4", onSuccess, onError);
             }
           }
         },
@@ -42879,8 +44019,8 @@
           return true;
         },
         open() {
-          this._myEnd = 60;
-          this._myChange = 60;
+          this._myEnd = 90;
+          this._myChange = 1;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_ggj", {
               "value": 1
@@ -42889,13 +44029,8 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
-        },
-        _onXRSessionEnd() {
-          this._myEnd = 0;
-          if (this._myChange > 0) {
-            this._myChange = 1;
-          }
         }
       });
     }
@@ -42911,30 +44046,29 @@
           this._myChange = 0;
           this._myEnd = 0;
           this._myHit = 3;
-          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         },
         update: function(dt) {
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
               this._myChange = 1;
-              if (WL.xrSession) {
-                Global.myUnmute = true;
-                Howler.mute(true);
-                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                  Global.myAxe._myGrabbable.release();
-                }
-                WL.xrSession.end();
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
               }
             }
           }
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              let result2 = Global.windowOpen("https://github.com/SignorPipo/labyroots");
-              if (result2 == null) {
-                this._myChange = 10;
-              } else {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
+              let onSuccess = function() {
+                if (WL.xrSession) {
+                  WL.xrSession.end();
+                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -42945,7 +44079,11 @@
                     "value": 1
                   });
                 }
-              }
+              }.bind(this);
+              let onError = function() {
+                this._myChange = 10;
+              }.bind(this);
+              Global.windowOpen("https://github.com/SignorPipo/labyroots", onSuccess, onError);
             }
           }
         },
@@ -42958,7 +44096,7 @@
         },
         open() {
           this._myEnd = 60;
-          this._myChange = 60;
+          this._myChange = 1;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_github", {
               "value": 1
@@ -42967,13 +44105,8 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
-        },
-        _onXRSessionEnd() {
-          this._myEnd = 0;
-          if (this._myChange > 0) {
-            this._myChange = 1;
-          }
         }
       });
     }
@@ -42989,20 +44122,16 @@
           this._myChange = 0;
           this._myEnd = 0;
           this._myHit = 3;
-          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         },
         update: function(dt) {
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
               this._myChange = 1;
-              if (WL.xrSession) {
-                Global.myUnmute = true;
-                Howler.mute(true);
-                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                  Global.myAxe._myGrabbable.release();
-                }
-                WL.xrSession.end();
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
               }
             }
           }
@@ -43021,8 +44150,8 @@
           return true;
         },
         open() {
-          this._myEnd = 60;
-          this._myChange = 60;
+          this._myEnd = 90;
+          this._myChange = 1;
           if (Global.myGoogleAnalytics) {
             gtag("event", "open_zesty", {
               "value": 1
@@ -43031,29 +44160,22 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
-        },
-        _onXRSessionEnd() {
-          this._myEnd = 0;
-          if (this._myChange > 0) {
-            this._myChange = 1;
-          }
         },
         result(result2) {
         },
         openZestyUrl() {
           let zesty = WL.scene.pp_getComponent("zesty-banner");
           if (zesty != null) {
-            Global.myZestyComponent = this;
-            let result2 = null;
-            if (zesty.banner != null) {
-              result2 = zesty.executeClick();
-            } else {
-              result2 = Global.windowOpen("https://app.zesty.market/space/" + zesty.space);
+            if (WL.xrSession) {
+              WL.xrSession.end();
             }
-            if (result2 == null) {
-              this._myChange = 10;
-            } else {
+            Global.myZestyComponent = zesty;
+            let onSuccess = function() {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
               Global.myUnmute = true;
               Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -43064,6 +44186,18 @@
                   "value": 1
                 });
               }
+            }.bind(this);
+            let onError = function() {
+              this._myChange = 10;
+            }.bind(this);
+            if (zesty.banner != null) {
+              let onZestySuccess = function() {
+                onSuccess();
+                zesty.executeClick();
+              }.bind(this);
+              Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
+            } else {
+              Global.windowOpen("https://app.zesty.market/space/11457541-0720-4287-a2a7-e3adfe7426a9", onSuccess, onError);
             }
           }
         }
@@ -43072,291 +44206,292 @@
     }
   });
 
-  // js/labyroots/cauldron/zesty.js
-  var require_zesty = __commonJS({
-    "js/labyroots/cauldron/zesty.js"() {
+  // js/labyroots/cauldron/zesty-wonderland-sdk-compat.js
+  var require_zesty_wonderland_sdk_compat = __commonJS({
+    "js/labyroots/cauldron/zesty-wonderland-sdk-compat.js"() {
       (() => {
-        var tr = Object.create, K = Object.defineProperty;
-        var rr = Object.getOwnPropertyDescriptor;
-        var nr = Object.getOwnPropertyNames;
-        var sr = Object.getPrototypeOf, ir = Object.prototype.hasOwnProperty;
-        var ar = (t) => K(t, "__esModule", { value: true });
+        var Kt = Object.create;
+        var Ee = Object.defineProperty;
+        var Xt = Object.getOwnPropertyDescriptor;
+        var Gt = Object.getOwnPropertyNames;
+        var Qt = Object.getPrototypeOf, Zt = Object.prototype.hasOwnProperty;
         var l = (t, e) => () => (e || t((e = { exports: {} }).exports, e), e.exports);
-        var or = (t, e, r) => {
+        var Yt = (t, e, r, i) => {
           if (e && typeof e == "object" || typeof e == "function")
-            for (let n of nr(e))
-              !ir.call(t, n) && n !== "default" && K(t, n, { get: () => e[n], enumerable: !(r = rr(e, n)) || r.enumerable });
+            for (let n of Gt(e))
+              !Zt.call(t, n) && n !== r && Ee(t, n, { get: () => e[n], enumerable: !(i = Xt(e, n)) || i.enumerable });
           return t;
-        }, Te = (t) => or(ar(K(t != null ? tr(sr(t)) : {}, "default", t && t.__esModule && "default" in t ? { get: () => t.default, enumerable: true } : { value: t, enumerable: true })), t);
-        var X = l((yn, Ce) => {
+        };
+        var xe = (t, e, r) => (r = t != null ? Kt(Qt(t)) : {}, Yt(e || !t || !t.__esModule ? Ee(r, "default", { value: t, enumerable: true }) : r, t));
+        var V = l((cn, Oe) => {
           "use strict";
-          Ce.exports = function(e, r) {
+          Oe.exports = function(e, r) {
             return function() {
-              for (var s = new Array(arguments.length), i = 0; i < s.length; i++)
-                s[i] = arguments[i];
-              return e.apply(r, s);
+              for (var n = new Array(arguments.length), s = 0; s < n.length; s++)
+                n[s] = arguments[s];
+              return e.apply(r, n);
             };
           };
         });
-        var d = l((vn, Se) => {
+        var f = l((ln2, Ae) => {
           "use strict";
-          var ur = X(), G = Object.prototype.toString, Z = function(t) {
+          var er = V(), X = Object.prototype.toString, G = function(t) {
             return function(e) {
-              var r = G.call(e);
+              var r = X.call(e);
               return t[r] || (t[r] = r.slice(8, -1).toLowerCase());
             };
           }(/* @__PURE__ */ Object.create(null));
-          function T(t) {
+          function C(t) {
             return t = t.toLowerCase(), function(r) {
-              return Z(r) === t;
+              return G(r) === t;
             };
           }
-          function Y(t) {
+          function Q(t) {
             return Array.isArray(t);
           }
-          function F(t) {
-            return typeof t == "undefined";
+          function j(t) {
+            return typeof t > "u";
           }
-          function cr(t) {
-            return t !== null && !F(t) && t.constructor !== null && !F(t.constructor) && typeof t.constructor.isBuffer == "function" && t.constructor.isBuffer(t);
+          function tr(t) {
+            return t !== null && !j(t) && t.constructor !== null && !j(t.constructor) && typeof t.constructor.isBuffer == "function" && t.constructor.isBuffer(t);
           }
-          var Oe = T("ArrayBuffer");
-          function lr(t) {
+          var Re = C("ArrayBuffer");
+          function rr(t) {
             var e;
-            return typeof ArrayBuffer != "undefined" && ArrayBuffer.isView ? e = ArrayBuffer.isView(t) : e = t && t.buffer && Oe(t.buffer), e;
+            return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? e = ArrayBuffer.isView(t) : e = t && t.buffer && Re(t.buffer), e;
           }
-          function fr(t) {
+          function nr(t) {
             return typeof t == "string";
           }
-          function dr(t) {
+          function ir(t) {
             return typeof t == "number";
           }
-          function qe(t) {
+          function Ce(t) {
             return t !== null && typeof t == "object";
           }
-          function _(t) {
-            if (Z(t) !== "object")
+          function U(t) {
+            if (G(t) !== "object")
               return false;
             var e = Object.getPrototypeOf(t);
             return e === null || e === Object.prototype;
           }
-          var pr = T("Date"), hr = T("File"), mr = T("Blob"), yr = T("FileList");
-          function ee(t) {
-            return G.call(t) === "[object Function]";
+          var sr = C("Date"), ar = C("File"), or = C("Blob"), ur = C("FileList");
+          function Z(t) {
+            return X.call(t) === "[object Function]";
           }
-          function vr(t) {
-            return qe(t) && ee(t.pipe);
+          function cr(t) {
+            return Ce(t) && Z(t.pipe);
           }
-          function wr(t) {
+          function lr(t) {
             var e = "[object FormData]";
-            return t && (typeof FormData == "function" && t instanceof FormData || G.call(t) === e || ee(t.toString) && t.toString() === e);
+            return t && (typeof FormData == "function" && t instanceof FormData || X.call(t) === e || Z(t.toString) && t.toString() === e);
           }
-          var br = T("URLSearchParams");
-          function Er(t) {
+          var dr = C("URLSearchParams");
+          function fr(t) {
             return t.trim ? t.trim() : t.replace(/^\s+|\s+$/g, "");
           }
-          function gr() {
-            return typeof navigator != "undefined" && (navigator.product === "ReactNative" || navigator.product === "NativeScript" || navigator.product === "NS") ? false : typeof window != "undefined" && typeof document != "undefined";
+          function pr() {
+            return typeof navigator < "u" && (navigator.product === "ReactNative" || navigator.product === "NativeScript" || navigator.product === "NS") ? false : typeof window < "u" && typeof document < "u";
           }
-          function te(t, e) {
-            if (!(t === null || typeof t == "undefined"))
-              if (typeof t != "object" && (t = [t]), Y(t))
-                for (var r = 0, n = t.length; r < n; r++)
+          function Y(t, e) {
+            if (!(t === null || typeof t > "u"))
+              if (typeof t != "object" && (t = [t]), Q(t))
+                for (var r = 0, i = t.length; r < i; r++)
                   e.call(null, t[r], r, t);
               else
-                for (var s in t)
-                  Object.prototype.hasOwnProperty.call(t, s) && e.call(null, t[s], s, t);
+                for (var n in t)
+                  Object.prototype.hasOwnProperty.call(t, n) && e.call(null, t[n], n, t);
           }
-          function re() {
+          function K() {
             var t = {};
-            function e(s, i) {
-              _(t[i]) && _(s) ? t[i] = re(t[i], s) : _(s) ? t[i] = re({}, s) : Y(s) ? t[i] = s.slice() : t[i] = s;
+            function e(n, s) {
+              U(t[s]) && U(n) ? t[s] = K(t[s], n) : U(n) ? t[s] = K({}, n) : Q(n) ? t[s] = n.slice() : t[s] = n;
             }
-            for (var r = 0, n = arguments.length; r < n; r++)
-              te(arguments[r], e);
+            for (var r = 0, i = arguments.length; r < i; r++)
+              Y(arguments[r], e);
             return t;
           }
-          function xr(t, e, r) {
-            return te(e, function(s, i) {
-              r && typeof s == "function" ? t[i] = ur(s, r) : t[i] = s;
+          function hr(t, e, r) {
+            return Y(e, function(n, s) {
+              r && typeof n == "function" ? t[s] = er(n, r) : t[s] = n;
             }), t;
           }
-          function Ar(t) {
+          function mr(t) {
             return t.charCodeAt(0) === 65279 && (t = t.slice(1)), t;
           }
-          function Rr(t, e, r, n) {
-            t.prototype = Object.create(e.prototype, n), t.prototype.constructor = t, r && Object.assign(t.prototype, r);
+          function yr(t, e, r, i) {
+            t.prototype = Object.create(e.prototype, i), t.prototype.constructor = t, r && Object.assign(t.prototype, r);
           }
-          function Tr(t, e, r) {
-            var n, s, i, a = {};
+          function vr(t, e, r) {
+            var i, n, s, a = {};
             e = e || {};
             do {
-              for (n = Object.getOwnPropertyNames(t), s = n.length; s-- > 0; )
-                i = n[s], a[i] || (e[i] = t[i], a[i] = true);
+              for (i = Object.getOwnPropertyNames(t), n = i.length; n-- > 0; )
+                s = i[n], a[s] || (e[s] = t[s], a[s] = true);
               t = Object.getPrototypeOf(t);
             } while (t && (!r || r(t, e)) && t !== Object.prototype);
             return e;
           }
-          function Cr(t, e, r) {
+          function wr(t, e, r) {
             t = String(t), (r === void 0 || r > t.length) && (r = t.length), r -= e.length;
-            var n = t.indexOf(e, r);
-            return n !== -1 && n === r;
+            var i = t.indexOf(e, r);
+            return i !== -1 && i === r;
           }
-          function Or(t) {
+          function gr(t) {
             if (!t)
               return null;
             var e = t.length;
-            if (F(e))
+            if (j(e))
               return null;
             for (var r = new Array(e); e-- > 0; )
               r[e] = t[e];
             return r;
           }
-          var qr = function(t) {
+          var br = function(t) {
             return function(e) {
               return t && e instanceof t;
             };
-          }(typeof Uint8Array != "undefined" && Object.getPrototypeOf(Uint8Array));
-          Se.exports = { isArray: Y, isArrayBuffer: Oe, isBuffer: cr, isFormData: wr, isArrayBufferView: lr, isString: fr, isNumber: dr, isObject: qe, isPlainObject: _, isUndefined: F, isDate: pr, isFile: hr, isBlob: mr, isFunction: ee, isStream: vr, isURLSearchParams: br, isStandardBrowserEnv: gr, forEach: te, merge: re, extend: xr, trim: Er, stripBOM: Ar, inherits: Rr, toFlatObject: Tr, kindOf: Z, kindOfTest: T, endsWith: Cr, toArray: Or, isTypedArray: qr, isFileList: yr };
+          }(typeof Uint8Array < "u" && Object.getPrototypeOf(Uint8Array));
+          Ae.exports = { isArray: Q, isArrayBuffer: Re, isBuffer: tr, isFormData: lr, isArrayBufferView: rr, isString: nr, isNumber: ir, isObject: Ce, isPlainObject: U, isUndefined: j, isDate: sr, isFile: ar, isBlob: or, isFunction: Z, isStream: cr, isURLSearchParams: dr, isStandardBrowserEnv: pr, forEach: Y, merge: K, extend: hr, trim: fr, stripBOM: mr, inherits: yr, toFlatObject: vr, kindOf: G, kindOfTest: C, endsWith: wr, toArray: gr, isTypedArray: br, isFileList: ur };
         });
-        var ne = l((wn, Ne) => {
+        var ee = l((dn, qe) => {
           "use strict";
-          var S = d();
-          function Pe(t) {
+          var q = f();
+          function Te(t) {
             return encodeURIComponent(t).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
           }
-          Ne.exports = function(e, r, n) {
+          qe.exports = function(e, r, i) {
             if (!r)
               return e;
-            var s;
-            if (n)
-              s = n(r);
-            else if (S.isURLSearchParams(r))
-              s = r.toString();
+            var n;
+            if (i)
+              n = i(r);
+            else if (q.isURLSearchParams(r))
+              n = r.toString();
             else {
-              var i = [];
-              S.forEach(r, function(c, h) {
-                c === null || typeof c == "undefined" || (S.isArray(c) ? h = h + "[]" : c = [c], S.forEach(c, function(f) {
-                  S.isDate(f) ? f = f.toISOString() : S.isObject(f) && (f = JSON.stringify(f)), i.push(Pe(h) + "=" + Pe(f));
+              var s = [];
+              q.forEach(r, function(c, h) {
+                c === null || typeof c > "u" || (q.isArray(c) ? h = h + "[]" : c = [c], q.forEach(c, function(d) {
+                  q.isDate(d) ? d = d.toISOString() : q.isObject(d) && (d = JSON.stringify(d)), s.push(Te(h) + "=" + Te(d));
                 }));
-              }), s = i.join("&");
+              }), n = s.join("&");
             }
-            if (s) {
+            if (n) {
               var a = e.indexOf("#");
-              a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + s;
+              a !== -1 && (e = e.slice(0, a)), e += (e.indexOf("?") === -1 ? "?" : "&") + n;
             }
             return e;
           };
         });
-        var Le = l((bn, ke) => {
+        var Ne = l((fn, Se) => {
           "use strict";
-          var Sr = d();
-          function j() {
+          var Er = f();
+          function F() {
             this.handlers = [];
           }
-          j.prototype.use = function(e, r, n) {
-            return this.handlers.push({ fulfilled: e, rejected: r, synchronous: n ? n.synchronous : false, runWhen: n ? n.runWhen : null }), this.handlers.length - 1;
+          F.prototype.use = function(e, r, i) {
+            return this.handlers.push({ fulfilled: e, rejected: r, synchronous: i ? i.synchronous : false, runWhen: i ? i.runWhen : null }), this.handlers.length - 1;
           };
-          j.prototype.eject = function(e) {
+          F.prototype.eject = function(e) {
             this.handlers[e] && (this.handlers[e] = null);
           };
-          j.prototype.forEach = function(e) {
-            Sr.forEach(this.handlers, function(n) {
-              n !== null && e(n);
+          F.prototype.forEach = function(e) {
+            Er.forEach(this.handlers, function(i) {
+              i !== null && e(i);
             });
           };
-          ke.exports = j;
+          Se.exports = F;
         });
-        var Be = l((En, De) => {
+        var Pe = l((pn, ke) => {
           "use strict";
-          var Pr = d();
-          De.exports = function(e, r) {
-            Pr.forEach(e, function(s, i) {
-              i !== r && i.toUpperCase() === r.toUpperCase() && (e[r] = s, delete e[i]);
+          var xr = f();
+          ke.exports = function(e, r) {
+            xr.forEach(e, function(n, s) {
+              s !== r && s.toUpperCase() === r.toUpperCase() && (e[r] = n, delete e[s]);
             });
           };
         });
-        var C = l((gn, je) => {
+        var A = l((hn, De) => {
           "use strict";
-          var Ue = d();
-          function P(t, e, r, n, s) {
-            Error.call(this), this.message = t, this.name = "AxiosError", e && (this.code = e), r && (this.config = r), n && (this.request = n), s && (this.response = s);
+          var _e = f();
+          function S(t, e, r, i, n) {
+            Error.call(this), this.message = t, this.name = "AxiosError", e && (this.code = e), r && (this.config = r), i && (this.request = i), n && (this.response = n);
           }
-          Ue.inherits(P, Error, { toJSON: function() {
+          _e.inherits(S, Error, { toJSON: function() {
             return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code, status: this.response && this.response.status ? this.response.status : null };
           } });
-          var Fe = P.prototype, _e = {};
+          var Le = S.prototype, Be = {};
           ["ERR_BAD_OPTION_VALUE", "ERR_BAD_OPTION", "ECONNABORTED", "ETIMEDOUT", "ERR_NETWORK", "ERR_FR_TOO_MANY_REDIRECTS", "ERR_DEPRECATED", "ERR_BAD_RESPONSE", "ERR_BAD_REQUEST", "ERR_CANCELED"].forEach(function(t) {
-            _e[t] = { value: t };
+            Be[t] = { value: t };
           });
-          Object.defineProperties(P, _e);
-          Object.defineProperty(Fe, "isAxiosError", { value: true });
-          P.from = function(t, e, r, n, s, i) {
-            var a = Object.create(Fe);
-            return Ue.toFlatObject(t, a, function(c) {
+          Object.defineProperties(S, Be);
+          Object.defineProperty(Le, "isAxiosError", { value: true });
+          S.from = function(t, e, r, i, n, s) {
+            var a = Object.create(Le);
+            return _e.toFlatObject(t, a, function(c) {
               return c !== Error.prototype;
-            }), P.call(a, t.message, e, r, n, s), a.name = t.name, i && Object.assign(a, i), a;
+            }), S.call(a, t.message, e, r, i, n), a.name = t.name, s && Object.assign(a, s), a;
           };
-          je.exports = P;
+          De.exports = S;
         });
-        var se = l((xn, Me) => {
+        var te = l((mn, Ue) => {
           "use strict";
-          Me.exports = { silentJSONParsing: true, forcedJSONParsing: true, clarifyTimeoutError: false };
+          Ue.exports = { silentJSONParsing: true, forcedJSONParsing: true, clarifyTimeoutError: false };
         });
-        var ie = l((An, Ie) => {
+        var re = l((yn, je) => {
           "use strict";
-          var E = d();
-          function Nr(t, e) {
+          var b = f();
+          function Or(t, e) {
             e = e || new FormData();
             var r = [];
-            function n(i) {
-              return i === null ? "" : E.isDate(i) ? i.toISOString() : E.isArrayBuffer(i) || E.isTypedArray(i) ? typeof Blob == "function" ? new Blob([i]) : Buffer.from(i) : i;
+            function i(s) {
+              return s === null ? "" : b.isDate(s) ? s.toISOString() : b.isArrayBuffer(s) || b.isTypedArray(s) ? typeof Blob == "function" ? new Blob([s]) : Buffer.from(s) : s;
             }
-            function s(i, a) {
-              if (E.isPlainObject(i) || E.isArray(i)) {
-                if (r.indexOf(i) !== -1)
+            function n(s, a) {
+              if (b.isPlainObject(s) || b.isArray(s)) {
+                if (r.indexOf(s) !== -1)
                   throw Error("Circular reference detected in " + a);
-                r.push(i), E.forEach(i, function(c, h) {
-                  if (!E.isUndefined(c)) {
-                    var o = a ? a + "." + h : h, f;
+                r.push(s), b.forEach(s, function(c, h) {
+                  if (!b.isUndefined(c)) {
+                    var o = a ? a + "." + h : h, d;
                     if (c && !a && typeof c == "object") {
-                      if (E.endsWith(h, "{}"))
+                      if (b.endsWith(h, "{}"))
                         c = JSON.stringify(c);
-                      else if (E.endsWith(h, "[]") && (f = E.toArray(c))) {
-                        f.forEach(function(v) {
-                          !E.isUndefined(v) && e.append(o, n(v));
+                      else if (b.endsWith(h, "[]") && (d = b.toArray(c))) {
+                        d.forEach(function(v) {
+                          !b.isUndefined(v) && e.append(o, i(v));
                         });
                         return;
                       }
                     }
-                    s(c, o);
+                    n(c, o);
                   }
                 }), r.pop();
               } else
-                e.append(a, n(i));
+                e.append(a, i(s));
             }
-            return s(t), e;
+            return n(t), e;
           }
-          Ie.exports = Nr;
+          je.exports = Or;
         });
-        var He = l((Rn, ze) => {
+        var Ie = l((vn, Fe) => {
           "use strict";
-          var ae = C();
-          ze.exports = function(e, r, n) {
-            var s = n.config.validateStatus;
-            !n.status || !s || s(n.status) ? e(n) : r(new ae("Request failed with status code " + n.status, [ae.ERR_BAD_REQUEST, ae.ERR_BAD_RESPONSE][Math.floor(n.status / 100) - 4], n.config, n.request, n));
+          var ne = A();
+          Fe.exports = function(e, r, i) {
+            var n = i.config.validateStatus;
+            !i.status || !n || n(i.status) ? e(i) : r(new ne("Request failed with status code " + i.status, [ne.ERR_BAD_REQUEST, ne.ERR_BAD_RESPONSE][Math.floor(i.status / 100) - 4], i.config, i.request, i));
           };
         });
-        var $e = l((Tn, We) => {
+        var Me = l((wn, ze) => {
           "use strict";
-          var M = d();
-          We.exports = M.isStandardBrowserEnv() ? function() {
-            return { write: function(r, n, s, i, a, u) {
+          var I = f();
+          ze.exports = I.isStandardBrowserEnv() ? function() {
+            return { write: function(r, i, n, s, a, u) {
               var c = [];
-              c.push(r + "=" + encodeURIComponent(n)), M.isNumber(s) && c.push("expires=" + new Date(s).toGMTString()), M.isString(i) && c.push("path=" + i), M.isString(a) && c.push("domain=" + a), u === true && c.push("secure"), document.cookie = c.join("; ");
+              c.push(r + "=" + encodeURIComponent(i)), I.isNumber(n) && c.push("expires=" + new Date(n).toGMTString()), I.isString(s) && c.push("path=" + s), I.isString(a) && c.push("domain=" + a), u === true && c.push("secure"), document.cookie = c.join("; ");
             }, read: function(r) {
-              var n = document.cookie.match(new RegExp("(^|;\\s*)(" + r + ")=([^;]*)"));
-              return n ? decodeURIComponent(n[3]) : null;
+              var i = document.cookie.match(new RegExp("(^|;\\s*)(" + r + ")=([^;]*)"));
+              return i ? decodeURIComponent(i[3]) : null;
             }, remove: function(r) {
               this.write(r, "", Date.now() - 864e5);
             } };
@@ -43368,52 +44503,52 @@
             } };
           }();
         });
-        var Ve = l((Cn, Je) => {
+        var We = l((gn, $e) => {
           "use strict";
-          Je.exports = function(e) {
+          $e.exports = function(e) {
             return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(e);
           };
         });
-        var Ke = l((On, Qe) => {
+        var Je = l((bn, He) => {
           "use strict";
-          Qe.exports = function(e, r) {
+          He.exports = function(e, r) {
             return r ? e.replace(/\/+$/, "") + "/" + r.replace(/^\/+/, "") : e;
           };
         });
-        var oe = l((qn, Xe) => {
+        var ie = l((En, Ve) => {
           "use strict";
-          var kr = Ve(), Lr = Ke();
-          Xe.exports = function(e, r) {
-            return e && !kr(r) ? Lr(e, r) : r;
+          var Rr = We(), Cr = Je();
+          Ve.exports = function(e, r) {
+            return e && !Rr(r) ? Cr(e, r) : r;
           };
         });
-        var Ze = l((Sn, Ge) => {
+        var Xe = l((xn, Ke) => {
           "use strict";
-          var ue = d(), Dr = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];
-          Ge.exports = function(e) {
-            var r = {}, n, s, i;
-            return e && ue.forEach(e.split(`
+          var se = f(), Ar = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];
+          Ke.exports = function(e) {
+            var r = {}, i, n, s;
+            return e && se.forEach(e.split(`
 `), function(u) {
-              if (i = u.indexOf(":"), n = ue.trim(u.substr(0, i)).toLowerCase(), s = ue.trim(u.substr(i + 1)), n) {
-                if (r[n] && Dr.indexOf(n) >= 0)
+              if (s = u.indexOf(":"), i = se.trim(u.substr(0, s)).toLowerCase(), n = se.trim(u.substr(s + 1)), i) {
+                if (r[i] && Ar.indexOf(i) >= 0)
                   return;
-                n === "set-cookie" ? r[n] = (r[n] ? r[n] : []).concat([s]) : r[n] = r[n] ? r[n] + ", " + s : s;
+                i === "set-cookie" ? r[i] = (r[i] ? r[i] : []).concat([n]) : r[i] = r[i] ? r[i] + ", " + n : n;
               }
             }), r;
           };
         });
-        var tt = l((Pn, et) => {
+        var Ze = l((On, Qe) => {
           "use strict";
-          var Ye = d();
-          et.exports = Ye.isStandardBrowserEnv() ? function() {
-            var e = /(msie|trident)/i.test(navigator.userAgent), r = document.createElement("a"), n;
-            function s(i) {
-              var a = i;
+          var Ge = f();
+          Qe.exports = Ge.isStandardBrowserEnv() ? function() {
+            var e = /(msie|trident)/i.test(navigator.userAgent), r = document.createElement("a"), i;
+            function n(s) {
+              var a = s;
               return e && (r.setAttribute("href", a), a = r.href), r.setAttribute("href", a), { href: r.href, protocol: r.protocol ? r.protocol.replace(/:$/, "") : "", host: r.host, search: r.search ? r.search.replace(/^\?/, "") : "", hash: r.hash ? r.hash.replace(/^#/, "") : "", hostname: r.hostname, port: r.port, pathname: r.pathname.charAt(0) === "/" ? r.pathname : "/" + r.pathname };
             }
-            return n = s(window.location.href), function(a) {
-              var u = Ye.isString(a) ? s(a) : a;
-              return u.protocol === n.protocol && u.host === n.host;
+            return i = n(window.location.href), function(a) {
+              var u = Ge.isString(a) ? n(a) : a;
+              return u.protocol === i.protocol && u.host === i.host;
             };
           }() : function() {
             return function() {
@@ -43421,284 +44556,284 @@
             };
           }();
         });
-        var B = l((Nn, nt) => {
+        var B = l((Rn, et) => {
           "use strict";
-          var ce = C(), Br = d();
-          function rt(t) {
-            ce.call(this, t ?? "canceled", ce.ERR_CANCELED), this.name = "CanceledError";
+          var ae = A(), Tr = f();
+          function Ye(t) {
+            ae.call(this, t ?? "canceled", ae.ERR_CANCELED), this.name = "CanceledError";
           }
-          Br.inherits(rt, ce, { __CANCEL__: true });
-          nt.exports = rt;
+          Tr.inherits(Ye, ae, { __CANCEL__: true });
+          et.exports = Ye;
         });
-        var it = l((kn, st) => {
+        var rt = l((Cn, tt) => {
           "use strict";
-          st.exports = function(e) {
+          tt.exports = function(e) {
             var r = /^([-+\w]{1,25})(:?\/\/|:)/.exec(e);
             return r && r[1] || "";
           };
         });
-        var le = l((Ln, at) => {
+        var oe = l((An, nt) => {
           "use strict";
-          var U = d(), Ur = He(), Fr = $e(), _r = ne(), jr = oe(), Mr = Ze(), Ir = tt(), zr = se(), x = C(), Hr = B(), Wr = it();
-          at.exports = function(e) {
-            return new Promise(function(n, s) {
-              var i = e.data, a = e.headers, u = e.responseType, c;
+          var D = f(), qr = Ie(), Sr = Me(), Nr = ee(), kr = ie(), Pr = Xe(), _r = Ze(), Lr = te(), E = A(), Br = B(), Dr = rt();
+          nt.exports = function(e) {
+            return new Promise(function(i, n) {
+              var s = e.data, a = e.headers, u = e.responseType, c;
               function h() {
                 e.cancelToken && e.cancelToken.unsubscribe(c), e.signal && e.signal.removeEventListener("abort", c);
               }
-              U.isFormData(i) && U.isStandardBrowserEnv() && delete a["Content-Type"];
+              D.isFormData(s) && D.isStandardBrowserEnv() && delete a["Content-Type"];
               var o = new XMLHttpRequest();
               if (e.auth) {
-                var f = e.auth.username || "", v = e.auth.password ? unescape(encodeURIComponent(e.auth.password)) : "";
-                a.Authorization = "Basic " + btoa(f + ":" + v);
+                var d = e.auth.username || "", v = e.auth.password ? unescape(encodeURIComponent(e.auth.password)) : "";
+                a.Authorization = "Basic " + btoa(d + ":" + v);
               }
-              var m = jr(e.baseURL, e.url);
-              o.open(e.method.toUpperCase(), _r(m, e.params, e.paramsSerializer), true), o.timeout = e.timeout;
-              function Ae() {
-                if (!!o) {
-                  var b = "getAllResponseHeaders" in o ? Mr(o.getAllResponseHeaders()) : null, q = !u || u === "text" || u === "json" ? o.responseText : o.response, R = { data: q, status: o.status, statusText: o.statusText, headers: b, config: e, request: o };
-                  Ur(function(Q) {
-                    n(Q), h();
-                  }, function(Q) {
-                    s(Q), h();
+              var m = kr(e.baseURL, e.url);
+              o.open(e.method.toUpperCase(), Nr(m, e.params, e.paramsSerializer), true), o.timeout = e.timeout;
+              function ge() {
+                if (o) {
+                  var g = "getAllResponseHeaders" in o ? Pr(o.getAllResponseHeaders()) : null, T = !u || u === "text" || u === "json" ? o.responseText : o.response, R = { data: T, status: o.status, statusText: o.statusText, headers: g, config: e, request: o };
+                  qr(function(J) {
+                    i(J), h();
+                  }, function(J) {
+                    n(J), h();
                   }, R), o = null;
                 }
               }
-              if ("onloadend" in o ? o.onloadend = Ae : o.onreadystatechange = function() {
-                !o || o.readyState !== 4 || o.status === 0 && !(o.responseURL && o.responseURL.indexOf("file:") === 0) || setTimeout(Ae);
+              if ("onloadend" in o ? o.onloadend = ge : o.onreadystatechange = function() {
+                !o || o.readyState !== 4 || o.status === 0 && !(o.responseURL && o.responseURL.indexOf("file:") === 0) || setTimeout(ge);
               }, o.onabort = function() {
-                !o || (s(new x("Request aborted", x.ECONNABORTED, e, o)), o = null);
+                o && (n(new E("Request aborted", E.ECONNABORTED, e, o)), o = null);
               }, o.onerror = function() {
-                s(new x("Network Error", x.ERR_NETWORK, e, o, o)), o = null;
+                n(new E("Network Error", E.ERR_NETWORK, e, o, o)), o = null;
               }, o.ontimeout = function() {
-                var q = e.timeout ? "timeout of " + e.timeout + "ms exceeded" : "timeout exceeded", R = e.transitional || zr;
-                e.timeoutErrorMessage && (q = e.timeoutErrorMessage), s(new x(q, R.clarifyTimeoutError ? x.ETIMEDOUT : x.ECONNABORTED, e, o)), o = null;
-              }, U.isStandardBrowserEnv()) {
-                var Re = (e.withCredentials || Ir(m)) && e.xsrfCookieName ? Fr.read(e.xsrfCookieName) : void 0;
-                Re && (a[e.xsrfHeaderName] = Re);
+                var T = e.timeout ? "timeout of " + e.timeout + "ms exceeded" : "timeout exceeded", R = e.transitional || Lr;
+                e.timeoutErrorMessage && (T = e.timeoutErrorMessage), n(new E(T, R.clarifyTimeoutError ? E.ETIMEDOUT : E.ECONNABORTED, e, o)), o = null;
+              }, D.isStandardBrowserEnv()) {
+                var be = (e.withCredentials || _r(m)) && e.xsrfCookieName ? Sr.read(e.xsrfCookieName) : void 0;
+                be && (a[e.xsrfHeaderName] = be);
               }
-              "setRequestHeader" in o && U.forEach(a, function(q, R) {
-                typeof i == "undefined" && R.toLowerCase() === "content-type" ? delete a[R] : o.setRequestHeader(R, q);
-              }), U.isUndefined(e.withCredentials) || (o.withCredentials = !!e.withCredentials), u && u !== "json" && (o.responseType = e.responseType), typeof e.onDownloadProgress == "function" && o.addEventListener("progress", e.onDownloadProgress), typeof e.onUploadProgress == "function" && o.upload && o.upload.addEventListener("progress", e.onUploadProgress), (e.cancelToken || e.signal) && (c = function(b) {
-                !o || (s(!b || b && b.type ? new Hr() : b), o.abort(), o = null);
-              }, e.cancelToken && e.cancelToken.subscribe(c), e.signal && (e.signal.aborted ? c() : e.signal.addEventListener("abort", c))), i || (i = null);
-              var V = Wr(m);
-              if (V && ["http", "https", "file"].indexOf(V) === -1) {
-                s(new x("Unsupported protocol " + V + ":", x.ERR_BAD_REQUEST, e));
+              "setRequestHeader" in o && D.forEach(a, function(T, R) {
+                typeof s > "u" && R.toLowerCase() === "content-type" ? delete a[R] : o.setRequestHeader(R, T);
+              }), D.isUndefined(e.withCredentials) || (o.withCredentials = !!e.withCredentials), u && u !== "json" && (o.responseType = e.responseType), typeof e.onDownloadProgress == "function" && o.addEventListener("progress", e.onDownloadProgress), typeof e.onUploadProgress == "function" && o.upload && o.upload.addEventListener("progress", e.onUploadProgress), (e.cancelToken || e.signal) && (c = function(g) {
+                o && (n(!g || g && g.type ? new Br() : g), o.abort(), o = null);
+              }, e.cancelToken && e.cancelToken.subscribe(c), e.signal && (e.signal.aborted ? c() : e.signal.addEventListener("abort", c))), s || (s = null);
+              var H = Dr(m);
+              if (H && ["http", "https", "file"].indexOf(H) === -1) {
+                n(new E("Unsupported protocol " + H + ":", E.ERR_BAD_REQUEST, e));
                 return;
               }
-              o.send(i);
+              o.send(s);
             });
           };
         });
-        var ut = l((Dn, ot) => {
-          ot.exports = null;
+        var st = l((Tn, it) => {
+          it.exports = null;
         });
-        var z = l((Bn, dt) => {
+        var M = l((qn, ct) => {
           "use strict";
-          var p = d(), ct = Be(), lt = C(), $r = se(), Jr = ie(), Vr = { "Content-Type": "application/x-www-form-urlencoded" };
-          function ft(t, e) {
+          var p = f(), at = Pe(), ot = A(), Ur = te(), jr = re(), Fr = { "Content-Type": "application/x-www-form-urlencoded" };
+          function ut(t, e) {
             !p.isUndefined(t) && p.isUndefined(t["Content-Type"]) && (t["Content-Type"] = e);
           }
-          function Qr() {
+          function Ir() {
             var t;
-            return typeof XMLHttpRequest != "undefined" ? t = le() : typeof process != "undefined" && Object.prototype.toString.call(process) === "[object process]" && (t = le()), t;
+            return typeof XMLHttpRequest < "u" ? t = oe() : typeof process < "u" && Object.prototype.toString.call(process) === "[object process]" && (t = oe()), t;
           }
-          function Kr(t, e, r) {
+          function zr(t, e, r) {
             if (p.isString(t))
               try {
                 return (e || JSON.parse)(t), p.trim(t);
-              } catch (n) {
-                if (n.name !== "SyntaxError")
-                  throw n;
+              } catch (i) {
+                if (i.name !== "SyntaxError")
+                  throw i;
               }
             return (r || JSON.stringify)(t);
           }
-          var I = { transitional: $r, adapter: Qr(), transformRequest: [function(e, r) {
-            if (ct(r, "Accept"), ct(r, "Content-Type"), p.isFormData(e) || p.isArrayBuffer(e) || p.isBuffer(e) || p.isStream(e) || p.isFile(e) || p.isBlob(e))
+          var z = { transitional: Ur, adapter: Ir(), transformRequest: [function(e, r) {
+            if (at(r, "Accept"), at(r, "Content-Type"), p.isFormData(e) || p.isArrayBuffer(e) || p.isBuffer(e) || p.isStream(e) || p.isFile(e) || p.isBlob(e))
               return e;
             if (p.isArrayBufferView(e))
               return e.buffer;
             if (p.isURLSearchParams(e))
-              return ft(r, "application/x-www-form-urlencoded;charset=utf-8"), e.toString();
-            var n = p.isObject(e), s = r && r["Content-Type"], i;
-            if ((i = p.isFileList(e)) || n && s === "multipart/form-data") {
+              return ut(r, "application/x-www-form-urlencoded;charset=utf-8"), e.toString();
+            var i = p.isObject(e), n = r && r["Content-Type"], s;
+            if ((s = p.isFileList(e)) || i && n === "multipart/form-data") {
               var a = this.env && this.env.FormData;
-              return Jr(i ? { "files[]": e } : e, a && new a());
-            } else if (n || s === "application/json")
-              return ft(r, "application/json"), Kr(e);
+              return jr(s ? { "files[]": e } : e, a && new a());
+            } else if (i || n === "application/json")
+              return ut(r, "application/json"), zr(e);
             return e;
           }], transformResponse: [function(e) {
-            var r = this.transitional || I.transitional, n = r && r.silentJSONParsing, s = r && r.forcedJSONParsing, i = !n && this.responseType === "json";
-            if (i || s && p.isString(e) && e.length)
+            var r = this.transitional || z.transitional, i = r && r.silentJSONParsing, n = r && r.forcedJSONParsing, s = !i && this.responseType === "json";
+            if (s || n && p.isString(e) && e.length)
               try {
                 return JSON.parse(e);
               } catch (a) {
-                if (i)
-                  throw a.name === "SyntaxError" ? lt.from(a, lt.ERR_BAD_RESPONSE, this, null, this.response) : a;
+                if (s)
+                  throw a.name === "SyntaxError" ? ot.from(a, ot.ERR_BAD_RESPONSE, this, null, this.response) : a;
               }
             return e;
-          }], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, maxBodyLength: -1, env: { FormData: ut() }, validateStatus: function(e) {
+          }], timeout: 0, xsrfCookieName: "XSRF-TOKEN", xsrfHeaderName: "X-XSRF-TOKEN", maxContentLength: -1, maxBodyLength: -1, env: { FormData: st() }, validateStatus: function(e) {
             return e >= 200 && e < 300;
           }, headers: { common: { Accept: "application/json, text/plain, */*" } } };
           p.forEach(["delete", "get", "head"], function(e) {
-            I.headers[e] = {};
+            z.headers[e] = {};
           });
           p.forEach(["post", "put", "patch"], function(e) {
-            I.headers[e] = p.merge(Vr);
+            z.headers[e] = p.merge(Fr);
           });
-          dt.exports = I;
+          ct.exports = z;
         });
-        var ht = l((Un, pt) => {
+        var dt = l((Sn, lt) => {
           "use strict";
-          var Xr = d(), Gr = z();
-          pt.exports = function(e, r, n) {
-            var s = this || Gr;
-            return Xr.forEach(n, function(a) {
-              e = a.call(s, e, r);
+          var Mr = f(), $r = M();
+          lt.exports = function(e, r, i) {
+            var n = this || $r;
+            return Mr.forEach(i, function(a) {
+              e = a.call(n, e, r);
             }), e;
           };
         });
-        var fe = l((Fn, mt) => {
+        var ue = l((Nn, ft) => {
           "use strict";
-          mt.exports = function(e) {
+          ft.exports = function(e) {
             return !!(e && e.__CANCEL__);
           };
         });
-        var wt = l((_n, vt) => {
+        var mt = l((kn, ht) => {
           "use strict";
-          var yt = d(), de = ht(), Zr = fe(), Yr = z(), en = B();
-          function pe(t) {
+          var pt = f(), ce = dt(), Wr = ue(), Hr = M(), Jr = B();
+          function le(t) {
             if (t.cancelToken && t.cancelToken.throwIfRequested(), t.signal && t.signal.aborted)
-              throw new en();
+              throw new Jr();
           }
-          vt.exports = function(e) {
-            pe(e), e.headers = e.headers || {}, e.data = de.call(e, e.data, e.headers, e.transformRequest), e.headers = yt.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers), yt.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function(s) {
-              delete e.headers[s];
+          ht.exports = function(e) {
+            le(e), e.headers = e.headers || {}, e.data = ce.call(e, e.data, e.headers, e.transformRequest), e.headers = pt.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers), pt.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function(n) {
+              delete e.headers[n];
             });
-            var r = e.adapter || Yr.adapter;
-            return r(e).then(function(s) {
-              return pe(e), s.data = de.call(e, s.data, s.headers, e.transformResponse), s;
-            }, function(s) {
-              return Zr(s) || (pe(e), s && s.response && (s.response.data = de.call(e, s.response.data, s.response.headers, e.transformResponse))), Promise.reject(s);
+            var r = e.adapter || Hr.adapter;
+            return r(e).then(function(n) {
+              return le(e), n.data = ce.call(e, n.data, n.headers, e.transformResponse), n;
+            }, function(n) {
+              return Wr(n) || (le(e), n && n.response && (n.response.data = ce.call(e, n.response.data, n.response.headers, e.transformResponse))), Promise.reject(n);
             });
           };
         });
-        var he = l((jn, bt) => {
+        var de = l((Pn, yt) => {
           "use strict";
-          var w = d();
-          bt.exports = function(e, r) {
+          var w = f();
+          yt.exports = function(e, r) {
             r = r || {};
-            var n = {};
-            function s(o, f) {
-              return w.isPlainObject(o) && w.isPlainObject(f) ? w.merge(o, f) : w.isPlainObject(f) ? w.merge({}, f) : w.isArray(f) ? f.slice() : f;
+            var i = {};
+            function n(o, d) {
+              return w.isPlainObject(o) && w.isPlainObject(d) ? w.merge(o, d) : w.isPlainObject(d) ? w.merge({}, d) : w.isArray(d) ? d.slice() : d;
             }
-            function i(o) {
+            function s(o) {
               if (w.isUndefined(r[o])) {
                 if (!w.isUndefined(e[o]))
-                  return s(void 0, e[o]);
+                  return n(void 0, e[o]);
               } else
-                return s(e[o], r[o]);
+                return n(e[o], r[o]);
             }
             function a(o) {
               if (!w.isUndefined(r[o]))
-                return s(void 0, r[o]);
+                return n(void 0, r[o]);
             }
             function u(o) {
               if (w.isUndefined(r[o])) {
                 if (!w.isUndefined(e[o]))
-                  return s(void 0, e[o]);
+                  return n(void 0, e[o]);
               } else
-                return s(void 0, r[o]);
+                return n(void 0, r[o]);
             }
             function c(o) {
               if (o in r)
-                return s(e[o], r[o]);
+                return n(e[o], r[o]);
               if (o in e)
-                return s(void 0, e[o]);
+                return n(void 0, e[o]);
             }
             var h = { url: a, method: a, data: a, baseURL: u, transformRequest: u, transformResponse: u, paramsSerializer: u, timeout: u, timeoutMessage: u, withCredentials: u, adapter: u, responseType: u, xsrfCookieName: u, xsrfHeaderName: u, onUploadProgress: u, onDownloadProgress: u, decompress: u, maxContentLength: u, maxBodyLength: u, beforeRedirect: u, transport: u, httpAgent: u, httpsAgent: u, cancelToken: u, socketPath: u, responseEncoding: u, validateStatus: c };
-            return w.forEach(Object.keys(e).concat(Object.keys(r)), function(f) {
-              var v = h[f] || i, m = v(f);
-              w.isUndefined(m) && v !== c || (n[f] = m);
-            }), n;
+            return w.forEach(Object.keys(e).concat(Object.keys(r)), function(d) {
+              var v = h[d] || s, m = v(d);
+              w.isUndefined(m) && v !== c || (i[d] = m);
+            }), i;
           };
         });
-        var me = l((Mn, Et) => {
-          Et.exports = { version: "0.27.2" };
+        var fe = l((_n, vt) => {
+          vt.exports = { version: "0.27.2" };
         });
-        var At = l((In, xt) => {
+        var bt = l((Ln, gt) => {
           "use strict";
-          var tn = me().version, A = C(), ye = {};
+          var Vr = fe().version, O = A(), pe = {};
           ["object", "boolean", "number", "function", "string", "symbol"].forEach(function(t, e) {
-            ye[t] = function(n) {
-              return typeof n === t || "a" + (e < 1 ? "n " : " ") + t;
+            pe[t] = function(i) {
+              return typeof i === t || "a" + (e < 1 ? "n " : " ") + t;
             };
           });
-          var gt = {};
-          ye.transitional = function(e, r, n) {
-            function s(i, a) {
-              return "[Axios v" + tn + "] Transitional option '" + i + "'" + a + (n ? ". " + n : "");
+          var wt = {};
+          pe.transitional = function(e, r, i) {
+            function n(s, a) {
+              return "[Axios v" + Vr + "] Transitional option '" + s + "'" + a + (i ? ". " + i : "");
             }
-            return function(i, a, u) {
+            return function(s, a, u) {
               if (e === false)
-                throw new A(s(a, " has been removed" + (r ? " in " + r : "")), A.ERR_DEPRECATED);
-              return r && !gt[a] && (gt[a] = true, console.warn(s(a, " has been deprecated since v" + r + " and will be removed in the near future"))), e ? e(i, a, u) : true;
+                throw new O(n(a, " has been removed" + (r ? " in " + r : "")), O.ERR_DEPRECATED);
+              return r && !wt[a] && (wt[a] = true, console.warn(n(a, " has been deprecated since v" + r + " and will be removed in the near future"))), e ? e(s, a, u) : true;
             };
           };
-          function rn(t, e, r) {
+          function Kr(t, e, r) {
             if (typeof t != "object")
-              throw new A("options must be an object", A.ERR_BAD_OPTION_VALUE);
-            for (var n = Object.keys(t), s = n.length; s-- > 0; ) {
-              var i = n[s], a = e[i];
+              throw new O("options must be an object", O.ERR_BAD_OPTION_VALUE);
+            for (var i = Object.keys(t), n = i.length; n-- > 0; ) {
+              var s = i[n], a = e[s];
               if (a) {
-                var u = t[i], c = u === void 0 || a(u, i, t);
+                var u = t[s], c = u === void 0 || a(u, s, t);
                 if (c !== true)
-                  throw new A("option " + i + " must be " + c, A.ERR_BAD_OPTION_VALUE);
+                  throw new O("option " + s + " must be " + c, O.ERR_BAD_OPTION_VALUE);
                 continue;
               }
               if (r !== true)
-                throw new A("Unknown option " + i, A.ERR_BAD_OPTION);
+                throw new O("Unknown option " + s, O.ERR_BAD_OPTION);
             }
           }
-          xt.exports = { assertOptions: rn, validators: ye };
+          gt.exports = { assertOptions: Kr, validators: pe };
         });
-        var St = l((zn, qt) => {
+        var At = l((Bn, Ct) => {
           "use strict";
-          var Rt = d(), nn = ne(), Tt = Le(), Ct = wt(), H = he(), sn = oe(), Ot = At(), N = Ot.validators;
+          var Ot = f(), Xr = ee(), Et = Ne(), xt = mt(), $ = de(), Gr = ie(), Rt = bt(), N = Rt.validators;
           function k(t) {
-            this.defaults = t, this.interceptors = { request: new Tt(), response: new Tt() };
+            this.defaults = t, this.interceptors = { request: new Et(), response: new Et() };
           }
           k.prototype.request = function(e, r) {
-            typeof e == "string" ? (r = r || {}, r.url = e) : r = e || {}, r = H(this.defaults, r), r.method ? r.method = r.method.toLowerCase() : this.defaults.method ? r.method = this.defaults.method.toLowerCase() : r.method = "get";
-            var n = r.transitional;
-            n !== void 0 && Ot.assertOptions(n, { silentJSONParsing: N.transitional(N.boolean), forcedJSONParsing: N.transitional(N.boolean), clarifyTimeoutError: N.transitional(N.boolean) }, false);
-            var s = [], i = true;
+            typeof e == "string" ? (r = r || {}, r.url = e) : r = e || {}, r = $(this.defaults, r), r.method ? r.method = r.method.toLowerCase() : this.defaults.method ? r.method = this.defaults.method.toLowerCase() : r.method = "get";
+            var i = r.transitional;
+            i !== void 0 && Rt.assertOptions(i, { silentJSONParsing: N.transitional(N.boolean), forcedJSONParsing: N.transitional(N.boolean), clarifyTimeoutError: N.transitional(N.boolean) }, false);
+            var n = [], s = true;
             this.interceptors.request.forEach(function(m) {
-              typeof m.runWhen == "function" && m.runWhen(r) === false || (i = i && m.synchronous, s.unshift(m.fulfilled, m.rejected));
+              typeof m.runWhen == "function" && m.runWhen(r) === false || (s = s && m.synchronous, n.unshift(m.fulfilled, m.rejected));
             });
             var a = [];
             this.interceptors.response.forEach(function(m) {
               a.push(m.fulfilled, m.rejected);
             });
             var u;
-            if (!i) {
-              var c = [Ct, void 0];
-              for (Array.prototype.unshift.apply(c, s), c = c.concat(a), u = Promise.resolve(r); c.length; )
+            if (!s) {
+              var c = [xt, void 0];
+              for (Array.prototype.unshift.apply(c, n), c = c.concat(a), u = Promise.resolve(r); c.length; )
                 u = u.then(c.shift(), c.shift());
               return u;
             }
-            for (var h = r; s.length; ) {
-              var o = s.shift(), f = s.shift();
+            for (var h = r; n.length; ) {
+              var o = n.shift(), d = n.shift();
               try {
                 h = o(h);
               } catch (v) {
-                f(v);
+                d(v);
                 break;
               }
             }
             try {
-              u = Ct(h);
+              u = xt(h);
             } catch (v) {
               return Promise.reject(v);
             }
@@ -43707,270 +44842,208 @@
             return u;
           };
           k.prototype.getUri = function(e) {
-            e = H(this.defaults, e);
-            var r = sn(e.baseURL, e.url);
-            return nn(r, e.params, e.paramsSerializer);
+            e = $(this.defaults, e);
+            var r = Gr(e.baseURL, e.url);
+            return Xr(r, e.params, e.paramsSerializer);
           };
-          Rt.forEach(["delete", "get", "head", "options"], function(e) {
-            k.prototype[e] = function(r, n) {
-              return this.request(H(n || {}, { method: e, url: r, data: (n || {}).data }));
+          Ot.forEach(["delete", "get", "head", "options"], function(e) {
+            k.prototype[e] = function(r, i) {
+              return this.request($(i || {}, { method: e, url: r, data: (i || {}).data }));
             };
           });
-          Rt.forEach(["post", "put", "patch"], function(e) {
-            function r(n) {
-              return function(i, a, u) {
-                return this.request(H(u || {}, { method: e, headers: n ? { "Content-Type": "multipart/form-data" } : {}, url: i, data: a }));
+          Ot.forEach(["post", "put", "patch"], function(e) {
+            function r(i) {
+              return function(s, a, u) {
+                return this.request($(u || {}, { method: e, headers: i ? { "Content-Type": "multipart/form-data" } : {}, url: s, data: a }));
               };
             }
             k.prototype[e] = r(), k.prototype[e + "Form"] = r(true);
           });
-          qt.exports = k;
+          Ct.exports = k;
         });
-        var Nt = l((Hn, Pt) => {
+        var qt = l((Dn, Tt) => {
           "use strict";
-          var an = B();
-          function L(t) {
+          var Qr = B();
+          function P(t) {
             if (typeof t != "function")
               throw new TypeError("executor must be a function.");
             var e;
-            this.promise = new Promise(function(s) {
-              e = s;
+            this.promise = new Promise(function(n) {
+              e = n;
             });
             var r = this;
-            this.promise.then(function(n) {
-              if (!!r._listeners) {
-                var s, i = r._listeners.length;
-                for (s = 0; s < i; s++)
-                  r._listeners[s](n);
+            this.promise.then(function(i) {
+              if (r._listeners) {
+                var n, s = r._listeners.length;
+                for (n = 0; n < s; n++)
+                  r._listeners[n](i);
                 r._listeners = null;
               }
-            }), this.promise.then = function(n) {
-              var s, i = new Promise(function(a) {
-                r.subscribe(a), s = a;
-              }).then(n);
-              return i.cancel = function() {
-                r.unsubscribe(s);
-              }, i;
-            }, t(function(s) {
-              r.reason || (r.reason = new an(s), e(r.reason));
+            }), this.promise.then = function(i) {
+              var n, s = new Promise(function(a) {
+                r.subscribe(a), n = a;
+              }).then(i);
+              return s.cancel = function() {
+                r.unsubscribe(n);
+              }, s;
+            }, t(function(n) {
+              r.reason || (r.reason = new Qr(n), e(r.reason));
             });
           }
-          L.prototype.throwIfRequested = function() {
+          P.prototype.throwIfRequested = function() {
             if (this.reason)
               throw this.reason;
           };
-          L.prototype.subscribe = function(e) {
+          P.prototype.subscribe = function(e) {
             if (this.reason) {
               e(this.reason);
               return;
             }
             this._listeners ? this._listeners.push(e) : this._listeners = [e];
           };
-          L.prototype.unsubscribe = function(e) {
-            if (!!this._listeners) {
+          P.prototype.unsubscribe = function(e) {
+            if (this._listeners) {
               var r = this._listeners.indexOf(e);
               r !== -1 && this._listeners.splice(r, 1);
             }
           };
-          L.source = function() {
-            var e, r = new L(function(s) {
-              e = s;
+          P.source = function() {
+            var e, r = new P(function(n) {
+              e = n;
             });
             return { token: r, cancel: e };
           };
-          Pt.exports = L;
+          Tt.exports = P;
         });
-        var Lt = l((Wn, kt) => {
+        var Nt = l((Un, St) => {
           "use strict";
-          kt.exports = function(e) {
-            return function(n) {
-              return e.apply(null, n);
+          St.exports = function(e) {
+            return function(i) {
+              return e.apply(null, i);
             };
           };
         });
-        var Bt = l(($n, Dt) => {
+        var Pt = l((jn, kt) => {
           "use strict";
-          var on = d();
-          Dt.exports = function(e) {
-            return on.isObject(e) && e.isAxiosError === true;
+          var Zr = f();
+          kt.exports = function(e) {
+            return Zr.isObject(e) && e.isAxiosError === true;
           };
         });
-        var _t = l((Jn, ve) => {
+        var Bt = l((Fn, he) => {
           "use strict";
-          var Ut = d(), un = X(), W = St(), cn = he(), ln2 = z();
-          function Ft(t) {
-            var e = new W(t), r = un(W.prototype.request, e);
-            return Ut.extend(r, W.prototype, e), Ut.extend(r, e), r.create = function(s) {
-              return Ft(cn(t, s));
+          var _t = f(), Yr = V(), W = At(), en = de(), tn = M();
+          function Lt(t) {
+            var e = new W(t), r = Yr(W.prototype.request, e);
+            return _t.extend(r, W.prototype, e), _t.extend(r, e), r.create = function(n) {
+              return Lt(en(t, n));
             }, r;
           }
-          var y = Ft(ln2);
+          var y = Lt(tn);
           y.Axios = W;
           y.CanceledError = B();
-          y.CancelToken = Nt();
-          y.isCancel = fe();
-          y.VERSION = me().version;
-          y.toFormData = ie();
-          y.AxiosError = C();
+          y.CancelToken = qt();
+          y.isCancel = ue();
+          y.VERSION = fe().version;
+          y.toFormData = re();
+          y.AxiosError = A();
           y.Cancel = y.CanceledError;
           y.all = function(e) {
             return Promise.all(e);
           };
-          y.spread = Lt();
-          y.isAxiosError = Bt();
-          ve.exports = y;
-          ve.exports.default = y;
+          y.spread = Nt();
+          y.isAxiosError = Pt();
+          he.exports = y;
+          he.exports.default = y;
         });
-        var we = l((Vn, jt) => {
-          jt.exports = _t();
+        var me = l((In, Dt) => {
+          Dt.exports = Bt();
         });
-        var O = Te(we());
-        var Mt = Te(we()), $ = (t) => {
-          if (t.substring(0, 4) === "ipfs")
-            return `https://ipfs.zesty.market/ipfs/${t.substring(7)}`;
-          if (t.substring(0, 4) === "http")
-            return t;
-          if (t.substring(0, 5) === "https")
-            return t;
-          if (t.substring(0, 2) === "ar")
-            Mt.default.get(`https://arweave.net/${t.substring(5)}`).then((e) => e.url).catch((e) => {
-              console.error(e);
-            });
-          else
-            return `https://ipfs.zesty.market/ipfs/${t}`;
-        }, g = () => {
-          let t = [{ gateway: "https://ipfs.filebase.io", weight: 90 }, { gateway: "https://cloudflare-ipfs.com", weight: 5 }, { gateway: "https://gateway.pinata.cloud", weight: 5 }], e = [], r;
-          for (r = 0; r < t.length; r++)
-            e[r] = t[r].weight + (e[r - 1] || 0);
-          let n = Math.random() * e[e.length - 1];
-          for (r = 0; r < e.length && !(e[r] > n); r++)
-            ;
-          return t[r].gateway;
-        }, be = () => {
+        var L = xe(me(), 1);
+        var x = "https://zesty-storage-prod.s3.amazonaws.com/images/zesty", _ = { tall: { width: 0.75, height: 1, style: { standard: `${x}/zesty-banner-tall.png`, minimal: `${x}/zesty-banner-tall-minimal.png`, transparent: `${x}/zesty-banner-tall-transparent.png` } }, wide: { width: 4, height: 1, style: { standard: `${x}/zesty-banner-wide.png`, minimal: `${x}/zesty-banner-wide-minimal.png`, transparent: `${x}/zesty-banner-wide-transparent.png` } }, square: { width: 1, height: 1, style: { standard: `${x}/zesty-banner-square.png`, minimal: `${x}/zesty-banner-square-minimal.png`, transparent: `${x}/zesty-banner-square-transparent.png` } } }, Ut = "square";
+        var rn = xe(me(), 1);
+        var ye = () => {
           let t = window.XRHand != null && window.XRMediaBinding != null, e = navigator.userAgent.includes("OculusBrowser"), r = t && e ? "Full" : t || e ? "Partial" : "None";
           return { match: r !== "None", confidence: r };
-        }, Ee = () => {
+        }, ve = () => {
           let t = window.mozInnerScreenX != null && window.speechSynthesis == null, e = navigator.userAgent.includes("Mobile VR") && !navigator.userAgent.includes("OculusBrowser"), r = t && e ? "Full" : t || e ? "Partial" : "None";
           return { match: r !== "None", confidence: r };
-        }, It = async () => {
-          let t = await navigator.xr.isSessionSupported("immersive-vr") && await navigator.xr.isSessionSupported("immersive-ar"), e = navigator.userAgent.includes("Pico Neo 3 Link"), r = t && e ? "Full" : t || e ? "Partial" : "None";
+        }, jt = async () => {
+          let t = navigator.xr && await navigator.xr.isSessionSupported("immersive-vr") && await navigator.xr.isSessionSupported("immersive-ar"), e = navigator.userAgent.includes("Pico Neo 3 Link"), r = t && e ? "Full" : t || e ? "Partial" : "None";
           return { match: r !== "None", confidence: r };
-        }, zt = () => {
+        }, Ft = () => {
           let t = navigator.maxTouchPoints === 0 || navigator.msMaxTouchPoints === 0, e = !navigator.userAgent.includes("Android") && !navigator.userAgent.includes("Mobile"), r = t && e ? "Full" : t || e ? "Partial" : "None";
           return { match: r !== "None", confidence: r };
-        }, ge = async () => {
+        }, we = async () => {
           let t = { platform: "", confidence: "" };
-          return be().match ? t = { platform: "Oculus", confidence: be().confidence } : Ee().match ? t = { platform: "Wolvic", confidence: Ee().confidence } : await It().match ? t = { platform: "Pico", confidence: await It().confidence } : zt().match ? t = { platform: "Desktop", confidence: zt().confidence } : t = { platform: "Unknown", confidence: "None" }, t;
-        }, Ht = (t) => {
-          if (!!t) {
-            if (be().match) {
+          return ye().match ? t = { platform: "Oculus", confidence: ye().confidence } : ve().match ? t = { platform: "Wolvic", confidence: ve().confidence } : await jt().match ? t = { platform: "Pico", confidence: await jt().confidence } : Ft().match ? t = { platform: "Desktop", confidence: Ft().confidence } : t = { platform: "Unknown", confidence: "None" }, t;
+        }, It = (t) => {
+          if (t) {
+            if (ye().match) {
               if (t.includes("https://www.oculus.com/experiences/quest/")) {
                 setTimeout(() => {
                   window.open(t, "_blank");
                 }, 1e3);
                 return;
               }
-            } else if (Ee().match) {
-              let e = document.createElement("div"), r = document.createElement("div"), n = document.createElement("p"), s = document.createElement("button"), i = document.createElement("button");
-              e.style.backgroundColor = "rgb(0, 0, 0, 0.75)", e.style.color = "white", e.style.textAlign = "center", e.style.position = "fixed", e.style.top = "50%", e.style.left = "50%", e.style.padding = "5%", e.style.borderRadius = "5%", e.style.transform = "translate(-50%, -50%)", n.innerHTML = `<b>This billboard leads to ${t}. Continue?</b>`, s.innerText = "Move cursor back into window.", s.style.width = "100vw", s.style.height = "100vh", s.onmouseenter = () => {
-                s.style.width = "auto", s.style.height = "auto", s.innerText = "Yes";
-              }, s.onclick = () => {
+            } else if (ve().match) {
+              let e = document.createElement("div"), r = document.createElement("div"), i = document.createElement("p"), n = document.createElement("button"), s = document.createElement("button");
+              e.style.backgroundColor = "rgb(0, 0, 0, 0.75)", e.style.color = "white", e.style.textAlign = "center", e.style.position = "fixed", e.style.top = "50%", e.style.left = "50%", e.style.padding = "5%", e.style.borderRadius = "5%", e.style.transform = "translate(-50%, -50%)", i.innerHTML = `<b>This billboard leads to ${t}. Continue?</b>`, n.innerText = "Move cursor back into window.", n.style.width = "100vw", n.style.height = "100vh", n.onmouseenter = () => {
+                n.style.width = "auto", n.style.height = "auto", n.innerText = "Yes";
+              }, n.onclick = () => {
                 window.open(t, "_blank"), e.remove();
-              }, i.innerText = "No", i.onclick = () => {
+              }, s.innerText = "No", s.onclick = () => {
                 e.remove();
-              }, e.append(r), r.append(n), r.append(s), r.append(i), document.body.append(e);
+              }, e.append(r), r.append(i), r.append(n), r.append(s), document.body.append(e);
               return;
             }
             window.open(t, "_blank");
           }
-        }, Wt = (t) => t.indexOf("utm_source=") !== -1 || t.indexOf("utm_campaign=") !== -1 || t.indexOf("utm_channel=") !== -1, $t = (t, e) => {
-          let r = new URL(t);
-          return r.searchParams.set("utm_source", "ZestyMarket"), r.searchParams.set("utm_campaign", "ZestyCampaign"), r.searchParams.set("utm_channel", `SpaceId_${e}`), r.href;
         };
-        var D = { tall: { width: 0.75, height: 1, style: { standard: `${g()}/ipfs/QmSasURHs9AHTmJA7W98QsZ884zb6VVgFfF85Wf3HpNcBb`, minimal: `${g()}/ipfs/QmPCtWL6HhRJaeEPj3y26GSEofchLfWyX79kan2QZ66bbu`, transparent: `${g()}/ipfs/QmRiTKTFNDbe8tq7xXdWcyXqRAWsKKgbGdiz6wofrCceua` } }, wide: { width: 4, height: 1, style: { standard: `${g()}/ipfs/QmeBbzTnaMqedDaBRuxtjJCJMBwtbWuuXVsNNAAV6LQopF`, minimal: `${g()}/ipfs/QmYwZ7BxeG1drdPcPo61vH4yLaMiBo5UypymfKC6T3kehV`, transparent: `${g()}/ipfs/QmPHHXwUXHog4KtwYmPKU1bqCJ7MJ9mwPV799HaHE6MQS3` } }, square: { width: 1, height: 1, style: { standard: `${g()}/ipfs/Qmbu9MAHHxB7JCTyyt291upMMMqZCjtoqbrvDMG56Lug3z`, minimal: `${g()}/ipfs/QmYWsEm5m2MbVRHk4G4gUfH3qyNSiraVm5BS4FUxjfp6KU`, transparent: `${g()}/ipfs/QmQ3nGPFJKeTdhW3zSzgYDttARQDCbrqqh7aCSAs4Lc6pH` } } }, J = "square", Jt = "standard";
-        var Vt = "https://beacon.zesty.market", Qt = "https://beacon2.zesty.market/zgraphql", fn = { matic: "https://api.thegraph.com/subgraphs/name/zestymarket/zesty-market-graph-matic", polygon: "https://api.thegraph.com/subgraphs/name/zestymarket/zesty-market-graph-matic", rinkeby: "https://api.thegraph.com/subgraphs/name/zestymarket/zesty-market-graph-rinkeby" }, xe = { uri: void 0 }, dn = { name: "Default banner", description: "This is the default banner that would be displayed ipsum", image: "https://ipfs.zesty.market/ipfs/QmWBNfP8roDrwz3XQo4qpu9fMxvUSTn8LB7d4JK7ybrfZ2/assets/zesty-ad-square.png", url: "https://www.zesty.market" }, Kt = async (t, e = "polygon") => {
-          let r = Math.floor(Date.now() / 1e3);
-          return O.default.post(fn[e], {
-            query: `
-      query {
-        tokenDatas (
-          where: {
-            id: "${t}"
-          }
-        )
-        {
-          sellerNFTSetting {
-            sellerAuctions (
-              first: 5
-              where: {
-                contractTimeStart_lte: ${r}
-                contractTimeEnd_gte: ${r}
-                cancelled: false
-              }
-            ) {
-              id
-              buyerCampaigns {
-                id
-                uri
-              }
-              buyerCampaignsApproved
-              buyerCampaignsIdList
-            }
-          }
-          id
-        }
-      }
-    `
-          }).then((n) => pn(n)).catch((n) => (console.log(n), xe));
-        }, pn = (t) => {
-          if (t.status != 200)
-            return xe;
-          let e = t.data.data.tokenDatas[0]?.sellerNFTSetting?.sellerAuctions, r = null;
-          return e?.[0]?.buyerCampaignsApproved?.find((n, s) => {
-            if (n) {
-              let i = e[0].buyerCampaignsIdList[s];
-              r = e[0].buyerCampaigns.find((a) => a.id === i);
-            }
-          }), r ?? xe;
-        }, Xt = async (t, e, r, n, s) => {
-          if (!t) {
-            let i = { uri: "DEFAULT_URI", data: dn }, a = e || J, u = r || Jt, c = s || D;
-            return i.data.image = c[a].style[u], i;
-          }
-          return O.default.get($(t)).then((i) => (Wt(i.data.url) || (i.data.url = $t(i.data.url, n)), i.status == 200 ? { uri: t, data: i.data } : null));
-        }, Gt = async (t) => {
-          let { platform: e, confidence: r } = await ge();
+        var zt = "https://beacon.zesty.market", Mt = "https://beacon2.zesty.market/zgraphql", nn = "https://api.zesty.market/api";
+        var $t = async (t, e = "tall", r = "standard") => {
           try {
-            let n = Vt + `/api/v1/space/${t}`;
-            await O.default.put(n), await O.default.post(Qt, { query: `mutation { increment(eventType: visits, spaceId: "${t}", platform: { name: ${e}, confidence: ${r} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
+            let i = encodeURI(window.top.location.href).replace(/\/$/, "");
+            return (await L.default.get(`${nn}/ad?ad_unit_id=${t}&url=${i}`)).data;
+          } catch {
+            return console.warn("No active campaign banner could be located. Displaying default banner."), { Ads: [{ asset_url: _[e].style[r], cta_url: "https://www.zesty.market" }], CampaignId: "TestCampaign" };
+          }
+        }, Wt = async (t, e = null) => {
+          let { platform: r, confidence: i } = await we();
+          try {
+            let n = zt + `/api/v1/space/${t}`;
+            await L.default.put(n), await L.default.post(Mt, { query: `mutation { increment(eventType: visits, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
           } catch (n) {
             console.log("Failed to emit onload event", n.message);
           }
-        }, Zt = async (t) => {
-          let { platform: e, confidence: r } = await ge();
+        }, Ht = async (t, e = null) => {
+          let { platform: r, confidence: i } = await we();
           try {
-            let n = Vt + `/api/v1/space/click/${t}`;
-            await O.default.put(n), await O.default.post(Qt, { query: `mutation { increment(eventType: clicks, spaceId: "${t}", platform: { name: ${e}, confidence: ${r} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
+            let n = zt + `/api/v1/space/click/${t}`;
+            await L.default.put(n), await L.default.post(Mt, { query: `mutation { increment(eventType: clicks, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
           } catch (n) {
             console.log("Failed to emit onclick event", n.message);
           }
         };
-        var Yt = "1.6.0";
-        console.log("Zesty SDK Version: ", Yt);
-        WL.registerComponent("zesty-banner", { space: { type: WL.Type.Int }, network: { type: WL.Type.Enum, values: ["rinkeby", "polygon"], default: "polygon" }, format: { type: WL.Type.Enum, values: Object.keys(D), default: J }, style: { type: WL.Type.Enum, values: ["standard", "minimal", "transparent"], default: "transparent" }, scaleToRatio: { type: WL.Type.Bool, default: true }, textureProperty: { type: WL.Type.String, default: "auto" }, beacon: { type: WL.Type.Bool, default: true }, dynamicFormats: { type: WL.Type.Bool, default: true }, createAutomaticCollision: { type: WL.Type.Bool, default: true } }, { init: function() {
-          this.formats = Object.values(D), this.formatKeys = Object.keys(D), this.styleKeys = ["standard", "minimal", "transparent"];
+        var Jt = "2.0.5";
+        console.log(`Zesty SDK Version: ${Jt} (compatibility)`);
+        var an = "https://ipfs.io/ipns/libv2.zesty.market/zesty-formats.js", on = "https://ipfs.io/ipns/libv2.zesty.market/zesty-networking.js";
+        WL.registerComponent("zesty-banner", { adUnit: { type: WL.Type.String }, format: { type: WL.Type.Enum, values: Object.keys(_), default: Ut }, style: { type: WL.Type.Enum, values: ["standard", "minimal", "transparent"], default: "transparent" }, scaleToRatio: { type: WL.Type.Bool, default: true }, textureProperty: { type: WL.Type.String, default: "auto" }, beacon: { type: WL.Type.Bool, default: true }, dynamicFormats: { type: WL.Type.Bool, default: true }, createAutomaticCollision: { type: WL.Type.Bool, default: true }, dynamicNetworking: { type: WL.Type.Bool, default: true } }, { init: function() {
+          this.formats = Object.values(_), this.formatKeys = Object.keys(_), this.styleKeys = ["standard", "minimal", "transparent"];
         }, start: function() {
           if (this.mesh = this.object.getComponent("mesh"), !this.mesh)
             throw new Error("'zesty-banner ' missing mesh component");
           if (this.createAutomaticCollision && (this.collision = this.object.getComponent("collision") || this.object.addComponent("collision", { collider: WL.Collider.Box, group: 2 }), this.cursorTarget = this.object.getComponent("cursor-target") || this.object.addComponent("cursor-target"), this.cursorTarget.addClickFunction(this.onClick.bind(this))), this.dynamicFormats) {
             let t = document.createElement("script");
             t.onload = () => {
-              this.formatsOverride = zestyFormats.formats, this.startLoading();
-            }, t.setAttribute("src", "https://ipfs.io/ipns/lib.zesty.market/zesty-formats.js"), t.setAttribute("crossorigin", "anonymous"), document.body.appendChild(t);
-          } else
-            this.startLoading();
+              this.formatsOverride = zestyFormats.formats;
+            }, t.setAttribute("src", an), t.setAttribute("crossorigin", "anonymous"), document.body.appendChild(t);
+          }
+          this.dynamicNetworking ? import(on).then((t) => {
+            this.zestyNetworking = Object.assign({}, t), this.startLoading();
+          }) : this.startLoading();
         }, startLoading: function() {
-          this.loadBanner(this.space, this.network, this.formatKeys[this.format], this.styleKeys[this.style]).then((t) => {
+          this.loadBanner(this.adUnit, this.formatKeys[this.format], this.styleKeys[this.style]).then((t) => {
             this.banner = t, this.scaleToRatio && (this.height = this.object.scalingLocal[1], this.object.resetScaling(), this.createAutomaticCollision && (this.collision.extents = [this.formats[this.format].width * this.height, this.height, 0.1]), this.object.scale([this.formats[this.format].width * this.height, this.height, 1]));
             let e = this.mesh.material;
             if (this.textureProperty === "auto") {
@@ -43984,20 +45057,15 @@
               this.mesh.material = e;
             } else
               this.mesh.material[this.textureProperty] = t.texture;
-            this.beacon && Gt(this.space);
+            this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnLoadMetric(this.adUnit, this.banner.campaignId) : Wt(this.adUnit, this.banner.campaignId));
           });
         }, onClick: function() {
           this.banner?.url && (WL.xrSession ? WL.xrSession.end().then(this.executeClick.bind(this)) : this.executeClick());
         }, executeClick: function() {
-          let result2 = Global.windowOpen(this.banner.url);
-          result2 != null && this.beacon && Zt(this.space);
-          return result2;
-        }, loadBanner: async function(t, e, r, n) {
-          e = e ? "polygon" : "rinkeby";
-          let s = await Kt(t, e), i = await Xt(s.uri, r, n, t, this.formatsOverride), a = i.data.url;
-          a = a.match(/^http[s]?:\/\//) ? a : "https://" + a, a === "https://www.zesty.market" && (a = `https://app.zesty.market/space/${t}`);
-          let u = i.data.image;
-          return u = u.match(/^.+\.(png|jpe?g)/i) ? u : $(u), WL.textures.load(u, "").then((c) => (i.texture = c, i.imageSrc = u, i.url = a, i));
+          this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnClickMetric(this.adUnit, this.banner.campaignId) : Ht(this.adUnit, this.banner.campaignId));
+        }, loadBanner: async function(t, e, r) {
+          let i = this.dynamicNetworking ? await this.zestyNetworking.fetchCampaignAd(t, e, r) : await $t(t, e, r), { asset_url: n, cta_url: s } = i.Ads[0];
+          return WL.textures.load(n, "").then((a) => ({ texture: a, imageSrc: n, url: s, campaignId: i.CampaignId }));
         } });
       })();
     }
@@ -44015,7 +45083,7 @@
           this._myTimer = new PP.Timer(5);
         },
         update: function(dt) {
-          if (Global.myReady) {
+          if (Global.myStoryReady) {
             if (this._myTimer.isRunning()) {
               this._myTimer.update(dt);
               if (this._myTimer.isDone()) {
@@ -44075,6 +45143,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -44144,6 +45213,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myName = this._myName;
           clonedComponent._myIsLocal = this._myIsLocal;
           return clonedComponent;
@@ -44229,7 +45299,8 @@
   var require_activate_if_wedding = __commonJS({
     "js/labyroots/cauldron/activate_if_wedding.js"() {
       WL.registerComponent("activate-if-wedding", {
-        _myIsWedding: { type: WL.Type.Bool, default: false }
+        _myIsWedding: { type: WL.Type.Bool, default: false },
+        _myIsMazeverse: { type: WL.Type.Bool, default: false }
       }, {
         init: function() {
         },
@@ -44240,14 +45311,21 @@
           if (!this._myDone) {
             this._myDone = true;
             let isWedding = Global.isWedding();
-            if (isWedding) {
+            let isMazeverse = Global.isMazeverse();
+            if (isMazeverse) {
+              if (!this._myIsMazeverse) {
+                this.object.pp_setActive(false);
+              } else {
+                this.object.pp_setActive(true);
+              }
+            } else if (isWedding) {
               if (!this._myIsWedding) {
                 this.object.pp_setActive(false);
               } else {
                 this.object.pp_setActive(true);
               }
             } else {
-              if (this._myIsWedding) {
+              if (this._myIsWedding || this._myIsMazeverse) {
                 this.object.pp_setActive(false);
               } else {
                 this.object.pp_setActive(true);
@@ -44295,6 +45373,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -44324,6 +45403,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -44343,6 +45423,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -44362,6 +45443,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -44497,7 +45579,7 @@
                 gtag("event", "is_wedding_maze", {
                   "value": 1
                 });
-                gtag("event", "is_multiverse_maze", {
+                gtag("event", "is_mazeverse_maze", {
                   "value": 1
                 });
                 gtag("event", "is_normal_maze", {
@@ -44524,10 +45606,10 @@
                 gtag("event", "secret_code_wedding", {
                   "value": 1
                 });
-                gtag("event", "secret_code_multiverse", {
+                gtag("event", "secret_code_mazeverse", {
                   "value": 1
                 });
-                gtag("event", "secret_code_multiverse_success", {
+                gtag("event", "secret_code_mazeverse_success", {
                   "value": 1
                 });
                 gtag("event", "death", {
@@ -44614,6 +45696,12 @@
                 gtag("event", "root_hit", {
                   "value": 1
                 });
+                gtag("event", "intro_done", {
+                  "value": 1
+                });
+                gtag("event", "enter_vr_first_time", {
+                  "value": 1
+                });
                 let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
                 for (let timeMovingStep of timeMovingSteps) {
                   gtag("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
@@ -44660,6 +45748,233 @@
     }
   });
 
+  // js/labyroots/cauldron/sky_setter.js
+  var require_sky_setter = __commonJS({
+    "js/labyroots/cauldron/sky_setter.js"() {
+      WL.registerComponent("sky-setter", {}, {
+        init: function() {
+        },
+        start: function() {
+          Global.mySky = this.object;
+        },
+        update: function(dt) {
+        }
+      });
+      Global.mySky = null;
+    }
+  });
+
+  // js/labyroots/cauldron/lights_setter.js
+  var require_lights_setter = __commonJS({
+    "js/labyroots/cauldron/lights_setter.js"() {
+      WL.registerComponent("lights-setter", {}, {
+        init: function() {
+        },
+        start: function() {
+          Global.myLights = this.object;
+        },
+        update: function(dt) {
+        }
+      });
+      Global.myLights = null;
+    }
+  });
+
+  // js/labyroots/cauldron/wondermelon.js
+  var require_wondermelon = __commonJS({
+    "js/labyroots/cauldron/wondermelon.js"() {
+      WL.registerComponent("wondermelon", {}, {
+        start: function() {
+          this._myGathered = false;
+          this._myUsed = false;
+          this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+          this._myIsGrabbed = false;
+          this._myStarted = false;
+          this._myChange = 0;
+          this._myEnd = 0;
+          this._myPhysx = this.object.pp_getComponent("physx");
+          if (this._myPhysx != null) {
+            this._myPhysx.kinematic = true;
+            this._myPulseCounter = 90;
+          }
+          this._myDisable = false;
+        },
+        update: function(dt) {
+          if (!this._myStarted) {
+            if (Global.myStoryReady) {
+              this.object.pp_translate([0, 0.5, 0]);
+              this._myStarted = true;
+              this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
+            }
+          } else {
+            if (this._myDisable) {
+              this._myDisable = false;
+              this.object.pp_setActive(false);
+              this.active = true;
+            }
+            if (this._myGrabbable != null) {
+              if (this._myGrabbable.isGrabbed()) {
+                if (!this._myGathered) {
+                  if (Global.myGoogleAnalytics) {
+                    gtag("event", "collect_wondermelon", {
+                      "value": 1
+                    });
+                  }
+                }
+                this._myGathered = true;
+                this._myIsGrabbed = true;
+              } else {
+                this._myIsGrabbed = false;
+              }
+            } else {
+              this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
+            }
+            if (Global.myStoryReady) {
+              if (this._myPulseCounter > 0) {
+                this._myPulseCounter--;
+                this._myPhysx.kinematic = false;
+                if (this._myPulseCounter == 0) {
+                  let maxLinear = 2;
+                  let maxAngular = 1;
+                  this._myPhysx.linearVelocity = [Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign(), 1, Math.pp_random(maxLinear / 2, maxLinear) * Math.pp_randomSign()];
+                  this._myPhysx.angularVelocity = [Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign(), Math.pp_random(maxAngular / 2, maxAngular) * Math.pp_randomSign()];
+                }
+              }
+            }
+            this._updateOpenLink(dt);
+          }
+        },
+        pp_clone(targetObject) {
+          let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
+          return clonedComponent;
+        },
+        pp_clonePostProcess(clonedComponent) {
+          clonedComponent.start();
+        },
+        activateEffect() {
+          if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
+            this._myEnd = 90;
+            this._myChange = 1;
+            if (Global.myGoogleAnalytics) {
+              gtag("event", "open_wondermelon", {
+                "value": 1
+              });
+            }
+            this._myUsed = true;
+            this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+            this._myAudioMangia.play();
+            this._myDisable = true;
+          }
+        },
+        _updateOpenLink(dt) {
+          if (this._myEnd > 0) {
+            this._myEnd--;
+            if (this._myEnd == 0) {
+              this._myChange = 1;
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
+              }
+            }
+          }
+          if (this._myEnd == 0 && this._myChange > 0) {
+            this._myChange--;
+            if (this._myChange == 0) {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
+              let onSuccess = function() {
+                if (WL.xrSession) {
+                  WL.xrSession.end();
+                }
+                Global.myUnmute = true;
+                Howler.mute(true);
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                  Global.myAxe._myGrabbable.release();
+                }
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "open_wondermelon_success", {
+                    "value": 1
+                  });
+                }
+                this.active = false;
+              }.bind(this);
+              let onError = function() {
+                this._myChange = 10;
+              }.bind(this);
+              Global.windowOpen("https://signor-pipo.itch.io", onSuccess, onError);
+            }
+          }
+        }
+      });
+    }
+  });
+
+  // js/labyroots/cauldron/spawn_floor.js
+  var require_spawn_floor = __commonJS({
+    "js/labyroots/cauldron/spawn_floor.js"() {
+      WL.registerComponent("spawn-floor", {
+        _myOnlyIfFromAbove: { type: WL.Type.Bool, default: false },
+        _myFloor: { type: WL.Type.Object },
+        _myStartTile: { type: WL.Type.Object }
+      }, {
+        start: function() {
+          if (!this._myOnlyIfFromAbove || Global.myFromAbove) {
+            let spawnedFloorObject = this.object.pp_addObject();
+            let spawnedTile = this._myStartTile.pp_clone();
+            spawnedTile.pp_setParent(spawnedFloorObject);
+            this._myFloor.pp_setActive(false);
+            for (let i = 0; i < 10; i++) {
+              for (let j = 0; j < 10; j++) {
+                if (i != 0) {
+                  newTile = spawnedTile.pp_clone();
+                  newTile.pp_translate([i * 5, 0, j * -5]);
+                  newTile = spawnedTile.pp_clone();
+                  newTile.pp_translate([i * -5, 0, j * 5]);
+                }
+                if (j != 0) {
+                  let newTile2 = spawnedTile.pp_clone();
+                  newTile2.pp_translate([i * 5, 0, j * 5]);
+                  newTile2 = spawnedTile.pp_clone();
+                  newTile2.pp_translate([i * -5, 0, j * -5]);
+                }
+              }
+            }
+          }
+        }
+      });
+    }
+  });
+
+  // js/labyroots/cauldron/hide_if_pose_not_valid.js
+  var require_hide_if_pose_not_valid = __commonJS({
+    "js/labyroots/cauldron/hide_if_pose_not_valid.js"() {
+      WL.registerComponent("hide-if-pose-not-valid", {
+        _myHandedness: { type: WL.Type.Enum, values: ["left", "right"], default: "left" },
+        _myHand: { type: WL.Type.Object }
+      }, {
+        start() {
+          this._myGamepad = PP.myGamepads[PP.InputUtils.getHandednessByIndex(this._myHandedness)];
+          this._myGrabberHand = this._myHand.pp_getComponent("pp-grabber-hand");
+        },
+        update(dt) {
+          if (this._myGamepad.getHandPose() != null) {
+            if (this._myGamepad.getHandPose().isValid()) {
+              this._myHand.pp_setActive(true);
+            } else {
+              if (this._myGrabberHand != null) {
+                this._myGrabberHand.throw();
+              }
+              this._myHand.pp_setActive(false);
+            }
+          }
+        }
+      });
+    }
+  });
+
   // js/labyroots/player/transformation.js
   var require_transformation = __commonJS({
     "js/labyroots/player/transformation.js"() {
@@ -44677,16 +45992,9 @@
           this._myObjectToIgnore = [];
           this._myWeddingDelay = 2;
           this._myWeddingTimer = new PP.Timer(this._myWeddingDelay);
-          this._myMultiverseTimer = new PP.Timer(this._myWeddingDelay);
+          this._myMazeverseTimer = new PP.Timer(this._myWeddingDelay);
           this._myChange = 0;
           this._myEnd = 0;
-          this._myCloseSession = 0;
-          if (WL.xrSession) {
-            this._onXRSessionStart(WL.xrSession);
-          }
-          WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
-          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
-          Global.myTimerStopExit = new PP.Timer(1, false);
           this._myTimeAlive = 0;
           this._myStageTotalTime = 0;
           this._myResetAxePosition = 0;
@@ -44788,6 +46096,12 @@
           this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
           this._myStarted = true;
           this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+          if (Global.myIsMazeverseTime) {
+            this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
+          }
+          if (Global.myFromAbove) {
+            this._myTransformationTimersSetup[0] = 1e6;
+          }
           for (let timer of this._myTransformationTimersSetup) {
             this._myStageTotalTime += timer;
           }
@@ -44800,6 +46114,16 @@
           Global.myPlayer.getMovementCollisionCheckParams().myVerticalObjectsToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
           let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
           Global.myPlayer.setRotationQuat(rotationQuat);
+          if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
+            rotationQuat = Global.lookBigTreeAligned(Global.myPlayer.getPosition());
+            Global.myPlayer.setRotationQuat(rotationQuat);
+          }
+          if (Global.myFromAbove) {
+            Global.myPlayer.teleportPosition([0, 40, 0], null, true);
+            Global.myPlayer.resetReal(true, false, false, true);
+            Global.myPlayer.resetHeadToReal();
+            Global.myPlayer.getPlayerHeadManager().setRotationHeadQuat(rotationQuat.quat_setForward([0, -1, 0]));
+          }
         },
         _resetTransformation() {
           Global.myStage = 0;
@@ -44866,10 +46190,15 @@
           this._myTimeAlive = 0;
           this._spawnTree();
           let cell = Global.myMaze.getCellsByType(LR.MazeItemType.PLAYER_START);
-          if (cell != null) {
+          if (cell != null && cell.length > 0) {
             Global.myPlayer.teleportPosition(cell[0].myCellPosition, null, true);
             let rotationQuat = [0, 0, 0].vec3_degreesToQuat();
             Global.myPlayer.setRotationQuat(rotationQuat);
+            if (Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE) != null && Global.myMaze.getCellsByType(LR.MazeItemType.BIG_TREE).length > 0) {
+              rotationQuat = Global.lookBigTreeAligned(Global.myPlayer.getPosition());
+              Global.myPlayer.setRotationQuat(rotationQuat);
+            }
+            PP.myPlayerObjects.myNonVRCamera.pp_setUp([0, 1, 0]);
             Global.myPlayer.resetReal(true, false, false, true);
             Global.myPlayer.resetHeadToReal();
           }
@@ -44943,49 +46272,28 @@
             }
           }
         },
-        _onXRSessionStart(session) {
-          if (Global.myExitSession) {
-            Global.myExitSession = false;
-            this._myCloseSession = 2;
-          }
-        },
         _secretMazeCodeUpdate(dt) {
-          if (Global.myUnmute && PP.XRUtils.isSessionActive() && !Global.myTimerStopExit.isRunning() && this._myCloseSession <= 0) {
+          if (Global.myUnmute && PP.XRUtils.isSessionActive()) {
             Global.myUnmute = false;
             Howler.mute(false);
-          }
-          if (Global.myTimerStopExit.isRunning()) {
-            Global.myTimerStopExit.update(dt);
-            if (Global.myTimerStopExit.isDone()) {
-              this._myCloseSession = 0;
-              Global.myExitSession = false;
-            }
-          }
-          if (this._myCloseSession > 0) {
-            this._myCloseSession--;
-            if (this._myCloseSession == 0) {
-              if (WL.xrSession) {
-                Global.myUnmute = true;
-                Howler.mute(true);
-                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                  Global.myAxe._myGrabbable.release();
-                }
-                WL.xrSession.end();
-              }
-            }
           }
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
               this._myChange = 1;
-              if (WL.xrSession) {
-                WL.xrSession.end();
+              Global.myUnmute = true;
+              Howler.mute(true);
+              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                Global.myAxe._myGrabbable.release();
               }
             }
           }
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
               let url = window.location.origin;
               if (window.location != window.parent.location) {
                 url = "https://heyvr.io/game/labyroots";
@@ -45001,14 +46309,15 @@
                 if (this._myIsWedding) {
                   url = url + "/?wedding=1";
                 } else {
-                  url = url + "/?multiverse=1";
+                  if (!Global.myIsMazeverseTime) {
+                    url = url + "/?mazeverse=1";
+                  }
                 }
               }
-              let result2 = false;
-              result2 = Global.windowOpen(url);
-              if (!result2) {
-                this._myChange = 10;
-              } else {
+              let onSuccess = function() {
+                if (WL.xrSession) {
+                  WL.xrSession.end();
+                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -45020,34 +46329,38 @@
                       "value": 1
                     });
                   } else {
-                    gtag("event", "secret_code_multiverse_success", {
+                    gtag("event", "secret_code_mazeverse_success", {
                       "value": 1
                     });
                   }
                 }
-              }
+              }.bind(this);
+              let onError = function() {
+                this._myChange = 10;
+              }.bind(this);
+              Global.windowOpen(url, onSuccess, onError);
               this._myIsWedding = false;
             }
           }
-          if (false) {
-            if (this._myMultiverseTimer.isRunning()) {
-              this._myMultiverseTimer.update(dt);
-              if (this._myMultiverseTimer.isDone()) {
+          if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+            if (this._myMazeverseTimer.isRunning()) {
+              this._myMazeverseTimer.update(dt);
+              if (this._myMazeverseTimer.isDone()) {
                 if (Global.myGoogleAnalytics) {
-                  gtag("event", "secret_code_multiverse", {
+                  gtag("event", "secret_code_mazeverse", {
                     "value": 1
                   });
                 }
-                Global.mySaveManager.save("is_multiverse", true, false);
-                this._myEnd = 10;
-                this._myChange = 10;
+                Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
+                this._myEnd = 1;
+                this._myChange = 1;
                 this._myIsWedding = false;
               }
             }
           } else {
-            this._myMultiverseTimer.start();
+            this._myMazeverseTimer.start();
           }
-          if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+          if (this._myChange == 0 && !PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
             if (this._myWeddingTimer.isRunning()) {
               this._myWeddingTimer.update(dt);
               if (this._myWeddingTimer.isDone()) {
@@ -45057,19 +46370,13 @@
                   });
                 }
                 Global.mySaveManager.save("is_wedding", true, false);
-                this._myEnd = 10;
-                this._myChange = 10;
+                this._myEnd = 1;
+                this._myChange = 1;
                 this._myIsWedding = true;
               }
             }
           } else {
             this._myWeddingTimer.start();
-          }
-        },
-        _onXRSessionEnd() {
-          this._myEnd = 0;
-          if (this._myChange > 0) {
-            this._myChange = 1;
           }
         }
       });
@@ -45077,21 +46384,24 @@
       Global.myExitSession = false;
       Global.myDeadOnce = false;
       Global.myWindowOpenResult = false;
-      Global.windowOpen = function(url, callback) {
-        let result2 = null;
-        let maxAttempt = 1;
-        while (result2 == null && maxAttempt > 0) {
-          maxAttempt--;
-          result2 = window.open(url, "_blank");
-        }
-        Global.myWindowOpenResult = result2 != null;
-        if (callback != null) {
-          callback(result2 != null);
-        }
-        if (result2 != null) {
-          Global.myTimerStopExit = new PP.Timer(3);
-          Global.myExitSession = true;
-        }
+      Global.windowOpen = function(urlString, successCallback, errorCallback) {
+        let result2 = true;
+        let element = document.createElement("a");
+        element.style.display = "none";
+        document.body.appendChild(element);
+        element.addEventListener("click", function() {
+          let result3 = window.open(urlString, "_blank");
+          if (result3 != null) {
+            if (successCallback != null) {
+              successCallback();
+            }
+          } else {
+            if (errorCallback != null) {
+              errorCallback();
+            }
+          }
+        });
+        element.click();
         return result2;
       };
     }
@@ -45188,12 +46498,21 @@
         _onCollision(type2, physXComponent) {
           if (type2 == WL.CollisionEventType.Touch || type2 == WL.CollisionEventType.TriggerTouch) {
             let fruit = physXComponent.object.pp_getComponent("fruit");
-            if (fruit) {
+            if (fruit != null) {
               if (!fruit._myUsed) {
                 fruit.activateEffect();
                 if (fruit._myUsed) {
                   this._myFruitToDestroy.push(fruit.object);
                   this._myTimerDestroy.start();
+                }
+              }
+            } else {
+              let wondermelon = physXComponent.object.pp_getComponent("wondermelon");
+              if (wondermelon != null) {
+                if (!wondermelon._myUsed) {
+                  wondermelon.activateEffect();
+                  if (wondermelon._myUsed) {
+                  }
                 }
               }
             }
@@ -45553,6 +46872,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myStartTransform.quat2_copy(this._myStartTransform);
           return clonedComponent;
         }
@@ -45637,11 +46957,12 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myType = this._myType;
           return clonedComponent;
         },
-        pp_clonePostProcess() {
-          this.start();
+        pp_clonePostProcess(clonedComponent) {
+          clonedComponent.start();
         },
         activateEffect() {
           if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
@@ -45806,6 +47127,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myAxeSpawnRoot = this._myAxeSpawnRoot;
           return clonedComponent;
         }
@@ -45850,6 +47172,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         }
       });
@@ -45876,7 +47199,7 @@
           this._myHit = 0;
           this._myPhases = [];
           this._myCurrentPhase = 0;
-          this.avoidIncrement = false;
+          this._myAvoidIncrement = false;
           Global.myBigTree = this;
           this._myTimeToWin = 0;
         },
@@ -45895,6 +47218,8 @@
               this._myBigTreeRoots = Global.mySetup.myTreeSetup.myBigTreeRoots;
               this._myHit = Global.mySetup.myTreeSetup.myBigTreeHit;
               this._myPhases[0].pp_setActive(true);
+              let rotationQuat = Global.lookPlayerAligned(this.object.pp_getPosition());
+              this.object.pp_setRotationQuat(rotationQuat);
             }
           } else if (this._myHit == 0) {
             this._myBigTreeDie.update(dt);
@@ -45918,7 +47243,7 @@
         hit() {
           let hitted = false;
           if (this._myBigTreeRoots == 0) {
-            if (!this.avoidIncrement) {
+            if (!this._myAvoidIncrement) {
               this._myCurrentPhase++;
             }
             if (this._myHit > 0) {
@@ -45934,7 +47259,7 @@
               } else {
                 this._myPhases[4].pp_setActive(true);
               }
-              this.avoidIncrement = true;
+              this._myAvoidIncrement = true;
               if (this._myHit == 0) {
                 Global.myBigTreeDead = true;
                 Global.myStage = 0;
@@ -45948,13 +47273,15 @@
                     "value": Math.round(this._myTimeToWin)
                   });
                 }
-                let score = Math.floor(this._myTimeToWin * 1e3);
-                PP.CAUtils.submitScore("labyroots", score, function() {
-                  let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
-                  for (let leaderboard of leaderboards) {
-                    leaderboard.updateLeaderboard();
-                  }
-                });
+                if (!Global.myIsMazeverseTime) {
+                  let score = Math.floor(this._myTimeToWin * 1e3);
+                  PP.CAUtils.submitScore("labyroots", score, function() {
+                    let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
+                    for (let leaderboard of leaderboards) {
+                      leaderboard.updateLeaderboard();
+                    }
+                  });
+                }
               } else {
                 if (Global.myGoogleAnalytics) {
                   gtag("event", "mother_tree_hit", {
@@ -45974,10 +47301,11 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           return clonedComponent;
         },
-        pp_clonePostProcess() {
-          this.start();
+        pp_clonePostProcess(clonedComponent) {
+          clonedComponent.start();
         }
       });
     }
@@ -46012,6 +47340,7 @@
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
+          clonedComponent.active = this.active;
           clonedComponent._myType = this._myType;
           return clonedComponent;
         },
@@ -46078,8 +47407,8 @@
           }
           return hitted;
         },
-        pp_clonePostProcess() {
-          this.start();
+        pp_clonePostProcess(clonedComponent) {
+          clonedComponent.start();
         }
       });
     }
@@ -46127,8 +47456,10 @@
               } else {
                 let wallPosition = Global.mySecretWall.pp_getPosition();
                 this._mySecretWallDie.setPosition(wallPosition.vec3_add([0, 1.5, 0]));
-                this._mySecretWallDie.play();
-                Global.mySecretWall.pp_setActive(false);
+                if (!Global.myIsMazeverseTime) {
+                  this._mySecretWallDie.play();
+                  Global.mySecretWall.pp_setActive(false);
+                }
                 PP.myLeftGamepad.pulse(0.75, 0.75);
                 PP.myRightGamepad.pulse(0.75, 0.75);
               }
@@ -46406,7 +47737,9 @@
   require_file_manager();
   require_maze();
   require_maze_item_type();
-  require_multiverse_maze();
+  require_mazeverse_maze();
+  require_mazeverse_create_walls();
+  require_mazeverse_add_elements();
   require_billboard_player();
   require_story();
   init_audio_load();
@@ -46414,7 +47747,7 @@
   require_open_ggj();
   require_open_github();
   require_open_zesty();
-  require_zesty();
+  require_zesty_wonderland_sdk_compat();
   require_set_texture_after_delay();
   require_secret_zone_check();
   require_display_leaderboard();
@@ -46427,6 +47760,11 @@
   require_increase_floor_tile();
   require_render_closest_walls_first();
   require_send_all_events();
+  require_sky_setter();
+  require_lights_setter();
+  require_wondermelon();
+  require_spawn_floor();
+  require_hide_if_pose_not_valid();
   require_transformation();
   require_stage_switch();
   require_mouth();

@@ -6,7 +6,6 @@ const files = [
     "manifest.json",
     "f0.png",
     "icon192.png",
-    "wonderland.min.js",
     "vr-button.svg",
     "ar-button.svg",
     "favicon.ico",
