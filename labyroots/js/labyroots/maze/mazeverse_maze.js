@@ -34,7 +34,6 @@ LR.CreateWallsResults = class CreateWallsResults {
 /*
 TODO
 
-- controllare png con pixel volanti
 - testare random maze e un po' di tune
 - trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
 
