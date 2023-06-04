@@ -31,14 +31,6 @@ LR.CreateWallsResults = class CreateWallsResults {
     }
 };
 
-/*
-TODO
-
-- testare random maze e un po' di tune
-- trailer finale con tanti maze dall'alto e poi welcome to the mazeverse
-
-*/
-
 Global.cellCoordinatesEqual = function (first, second) {
     return first[0] == second[0] && first[1] == second[1];
 }
