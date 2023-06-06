@@ -8,6 +8,7 @@ WL.registerComponent('story', {
         this._myResetPhysx = true;
         this._myTimer2 = new PP.Timer(4);
         this._myTimer = new PP.Timer(30);
+        this._myTimerSkipFirstTime = new PP.Timer(15);
 
         this._mySteps = [];
         this._myStepDelay = 0.8;
@@ -19,10 +20,12 @@ WL.registerComponent('story', {
         this._myCanSkip = false;
     },
     update: function (dt) {
-        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2) ||
-            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2)
+        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 ||
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2
         ) {
-            this._mySkip = true;
+            if (this._myCanSkip) {
+                this._mySkip = true;
+            }
         }
 
         if (!this._myStarted) {
@@ -93,12 +96,26 @@ WL.registerComponent('story', {
 
                 this._myTimer.update(dt);
                 this._myTimer2.update(dt);
+
+                this._myTimerSkipFirstTime.update(dt);
+                if (this._myTimerSkipFirstTime.isDone()) {
+                    this._myCanSkip = true;
+                }
+
                 if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {
                     if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                         if (Global.myGoogleAnalytics) {
                             gtag("event", "intro_skipped", {
                                 "value": 1
                             });
+                        }
+
+                        if (this._myTimerSkipFirstTime.isDone()) {
+                            if (Global.myGoogleAnalytics) {
+                                gtag("event", "intro_skipped_late", {
+                                    "value": 1
+                                });
+                            }
                         }
                     } else {
                         if (Global.myGoogleAnalytics) {

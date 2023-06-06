@@ -539,5 +539,7 @@ Global.windowOpen = function (urlString, successCallback, errorCallback) {
 
     element.click();
 
+    document.body.removeChild(element);
+
     return result;
 }
