@@ -8,7 +8,7 @@ WL.registerComponent('story', {
         this._myResetPhysx = true;
         this._myTimer2 = new PP.Timer(4);
         this._myTimer = new PP.Timer(30);
-        this._myTimerSkipFirstTime = new PP.Timer(15);
+        this._myTimerSkipFirstTime = new PP.Timer(12);
 
         this._mySteps = [];
         this._myStepDelay = 0.8;
@@ -20,7 +20,9 @@ WL.registerComponent('story', {
         this._myCanSkip = false;
     },
     update: function (dt) {
-        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 ||
+        if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 ||
+            PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 ||
+            PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 ||
             PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2
         ) {
             if (this._myCanSkip) {

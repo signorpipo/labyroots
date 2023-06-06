@@ -107,6 +107,19 @@ WL.registerComponent('big-tree', {
                         });
                     }
 
+
+                    if (Global.myGoogleAnalytics) {
+                        if (Global.myIsMazeverseTime) {
+                            gtag("event", "defeat_mother_tree_mazeverse", {
+                                "value": 1
+                            });
+                        } else {
+                            gtag("event", "defeat_mother_tree_normal", {
+                                "value": 1
+                            });
+                        }
+                    }
+
                     if (Global.myGoogleAnalytics) {
                         gtag("event", "defeat_mother_tree_seconds", {
                             "value": Math.round(this._myTimeToWin)
