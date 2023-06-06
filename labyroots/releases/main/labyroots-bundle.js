@@ -43583,6 +43583,7 @@
           this._myResetPhysx = true;
           this._myTimer2 = new PP.Timer(4);
           this._myTimer = new PP.Timer(30);
+          this._myTimerSkipFirstTime = new PP.Timer(12);
           this._mySteps = [];
           this._myStepDelay = 0.8;
           this._myStepTimer = new PP.Timer(0.1);
@@ -43592,8 +43593,10 @@
           this._myCanSkip = false;
         },
         update: function(dt) {
-          if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd(2) || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd(2)) {
-            this._mySkip = true;
+          if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2) {
+            if (this._myCanSkip) {
+              this._mySkip = true;
+            }
           }
           if (!this._myStarted) {
             if (Global.myStoryReady) {
@@ -43651,12 +43654,23 @@
               }
               this._myTimer.update(dt);
               this._myTimer2.update(dt);
+              this._myTimerSkipFirstTime.update(dt);
+              if (this._myTimerSkipFirstTime.isDone()) {
+                this._myCanSkip = true;
+              }
               if (this._myTimer.isDone() || this._myCanSkip && this._myTimer2.isDone() && this._mySkip) {
                 if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                   if (Global.myGoogleAnalytics) {
                     gtag("event", "intro_skipped", {
                       "value": 1
                     });
+                  }
+                  if (this._myTimerSkipFirstTime.isDone()) {
+                    if (Global.myGoogleAnalytics) {
+                      gtag("event", "intro_skipped_late", {
+                        "value": 1
+                      });
+                    }
                   }
                 } else {
                   if (Global.myGoogleAnalytics) {
@@ -46402,6 +46416,7 @@
           }
         });
         element.click();
+        document.body.removeChild(element);
         return result2;
       };
     }
@@ -47267,6 +47282,17 @@
                   gtag("event", "defeat_mother_tree", {
                     "value": 1
                   });
+                }
+                if (Global.myGoogleAnalytics) {
+                  if (Global.myIsMazeverseTime) {
+                    gtag("event", "defeat_mother_tree_mazeverse", {
+                      "value": 1
+                    });
+                  } else {
+                    gtag("event", "defeat_mother_tree_normal", {
+                      "value": 1
+                    });
+                  }
                 }
                 if (Global.myGoogleAnalytics) {
                   gtag("event", "defeat_mother_tree_seconds", {
