@@ -96,8 +96,18 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
                 let movementIntensity = axes.vec2_length();
                 let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, movementIntensity);
-                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                     speed = 20;
+
+                    if (!Global.myDebugMoveUsed) {
+                        Global.myDebugMoveUsed = true;
+
+                        if (Global.myGoogleAnalytics) {
+                            gtag("event", "debug_movement_used", {
+                                "value": 1
+                            });
+                        }
+                    }
                 }
 
                 headMovement = direction.vec3_scale(speed * dt, headMovement);
@@ -116,8 +126,18 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
         if (this._myParams.myFlyEnabled) {
             if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed()) {
+                if (!Global.myDebugFlyUsed) {
+                    Global.myDebugFlyUsed = true;
+
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "debug_fly_used", {
+                            "value": 1
+                        });
+                    }
+                }
+
                 let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
-                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                     speed = 20;
                 }
                 verticalMovement = playerUp.vec3_scale(speed * dt, verticalMovement);
@@ -125,7 +145,7 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 this._myLocomotionRuntimeParams.myIsFlying = true;
             } else if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
                 let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
-                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                     speed = 20;
                 }
                 verticalMovement = playerUp.vec3_scale(-speed * dt, verticalMovement);

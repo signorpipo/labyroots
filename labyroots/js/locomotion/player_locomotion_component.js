@@ -74,10 +74,16 @@ WL.registerComponent('player-locomotion', {
                 this._myStartCounter--;
                 if (this._myStartCounter == 0) {
                     if (Global.myIsMazeverseTime) {
-                        if (Math.pp_randomInt(0, 50) == 0) {
+                        if (Math.pp_randomInt(0, 99) == 0) {
                             //console.error("FLY");
                             this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                             this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
+
+                            if (Global.myGoogleAnalytics) {
+                                gtag("event", "debug_movement_enabled", {
+                                    "value": 1
+                                });
+                            }
                         }
                     }
 

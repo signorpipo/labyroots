@@ -543,3 +543,6 @@ Global.windowOpen = function (urlString, successCallback, errorCallback) {
 
     return result;
 }
+
+Global.myDebugMoveUsed = false;
+Global.myDebugFlyUsed = false;
