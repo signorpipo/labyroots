@@ -38880,9 +38880,14 @@
               this._myStartCounter--;
               if (this._myStartCounter == 0) {
                 if (Global.myIsMazeverseTime) {
-                  if (Math.pp_randomInt(0, 50) == 0) {
+                  if (Math.pp_randomInt(0, 99) == 0) {
                     this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                     this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
+                    if (Global.myGoogleAnalytics) {
+                      gtag("event", "debug_movement_enabled", {
+                        "value": 1
+                      });
+                    }
                   }
                 }
                 Global.myPlayerLocomotion = this._myPlayerLocomotion;
@@ -41004,8 +41009,16 @@
               }
               let movementIntensity = axes.vec2_length();
               let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, movementIntensity);
-              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                 speed = 20;
+                if (!Global.myDebugMoveUsed) {
+                  Global.myDebugMoveUsed = true;
+                  if (Global.myGoogleAnalytics) {
+                    gtag("event", "debug_movement_used", {
+                      "value": 1
+                    });
+                  }
+                }
               }
               headMovement = direction.vec3_scale(speed * dt, headMovement);
               horizontalMovement = true;
@@ -41021,8 +41034,16 @@
           }
           if (this._myParams.myFlyEnabled) {
             if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed()) {
+              if (!Global.myDebugFlyUsed) {
+                Global.myDebugFlyUsed = true;
+                if (Global.myGoogleAnalytics) {
+                  gtag("event", "debug_fly_used", {
+                    "value": 1
+                  });
+                }
+              }
               let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
-              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                 speed = 20;
               }
               verticalMovement = playerUp.vec3_scale(speed * dt, verticalMovement);
@@ -41030,7 +41051,7 @@
               this._myLocomotionRuntimeParams.myIsFlying = true;
             } else if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
               let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
-              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+              if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
                 speed = 20;
               }
               verticalMovement = playerUp.vec3_scale(-speed * dt, verticalMovement);
@@ -43601,7 +43622,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 22;
+                let currentVersion = 23;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -46419,6 +46440,8 @@
         document.body.removeChild(element);
         return result2;
       };
+      Global.myDebugMoveUsed = false;
+      Global.myDebugFlyUsed = false;
     }
   });
 
