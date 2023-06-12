@@ -1,6 +1,6 @@
-const CACHE = "labyroots-cache-v1";
+let CACHE = "labyroots-cache-v1";
 
-const files = [
+let files = [
     "/",
     "index.html",
     "manifest.json",
@@ -84,20 +84,21 @@ const files = [
 ];
 
 // This force using the cache first if the network is failing for cached resources
-var forceTryCacheFirst = false;
+let _myForceTryCacheFirst = false;
 
 self.addEventListener("install", function (event) {
-    event.waitUntil(precacheResources());
+    event.waitUntil(_precacheResources());
 });
 
 self.addEventListener("fetch", function (event) {
-    event.respondWith(getResource(event.request, true, true));
+    event.respondWith(_getResource(event.request, true, true));
 });
 
-async function precacheResources() {
-    const cache = await caches.open(CACHE);
+async function _precacheResources() {
+    return;
+    let cache = await caches.open(CACHE);
 
-    for (const file of files) {
+    for (let file of files) {
         try {
             await cache.add(file);
         } catch (error) {
@@ -109,57 +110,62 @@ async function precacheResources() {
 /**
  * @param {Request} request 
  * 
- * @param {boolean} tryCacheFirst With tryCacheFirst you can specify if you want to first try the cache or always check the network for updates.
- *                                If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned.
+ * @param {boolean} tryCacheFirst Used to specify if you want to first try the cache or always check the network for updates
+ *                                If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned
  * 
- * @param {boolean} fetchFromNetworkInBackground If tryCacheFirst is true, you can enable this flag to also fetch from network.
- *                                               This will update the cache for the next page load, not the current one.
+ * @param {boolean} updateCacheInBackground      If @tryCacheFirst is true, after returning the current cached resource 
+ *                                               the cache will be updated, fetching the updated resource from the network
+ *                                               It's important to note that the updated changes will be available starting from the next page load
  * 
- * @param {boolean} disableForceTryCacheFirst If tryCacheFirst is false and the network fails to get a resource that is already in the cache,
- *                                            it will, by default, start using the cache as first option.
- *                                            With this flag u can prevent that and keep using the network first.
+ * @param {boolean} shouldCacheOpaqueResponse    Used to cache opaque responses
+ *                                               Caching opaque responses can lead to a number of issues so use this with caution
+ *                                               I also advise u to enable @updateCacheInBackground when caching opaque responses,
+ *                                               so to avoid caching a bad opaque responses and never recover from that
+ * 
+ * @param {boolean} disableForceTryCacheFirst If @tryCacheFirst is false and the network fails to get a resource that is already in the cache,
+ *                                            it will, by default, start using the cache as first option
+ *                                            With this flag u can prevent that and keep using the network first
  * 
  * @returns {Response}
  */
-async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBackground = false, disableForceTryCacheFirst = false) {
-    if (tryCacheFirst || (forceTryCacheFirst && !disableForceTryCacheFirst)) {
+async function _getResource(request, tryCacheFirst = true, updateCacheInBackground = false, shouldCacheOpaqueResponse = false, disableForceTryCacheFirst = false) {
+    if (tryCacheFirst || (_myForceTryCacheFirst && !disableForceTryCacheFirst)) {
         // Try to get the resource from the cache
-        const responseFromCache = await getFromCache(request.url);
-        if (responseFromCache != null) {
-            if (fetchFromNetworkInBackground) {
-                fetch(request).then(function (responseFromNetwork) {
-                    if (responseFromNetwork != null && responseFromNetwork.status == 200) {
-                        putInCache(request, responseFromNetwork.clone());
+        try {
+            let responseFromCache = await _getFromCache(request.url);
+            if (responseFromCache != null) {
+                if (updateCacheInBackground) {
+                    let responseFromNetwork = await _fetchFromNetwork(request);
+                    if (_shouldResponseBeCached(request, responseFromNetwork, shouldCacheOpaqueResponse)) {
+                        _putInCache(request, responseFromNetwork);
                     }
-                }).catch(function () { /* do nothing, we tried to update cache, it's ok if fail*/ });
-            }
+                }
 
-            return responseFromCache;
+                return responseFromCache;
+            }
+        } catch (error) {
+            // Do nothing, possibly get from cache failed so we should go on and try with the network
         }
     }
 
     // Try to get the resource from the network
-    try {
-        const responseFromNetwork = await fetch(request);
-
-        if (responseFromNetwork == null) {
-            throw new Error("Can't fetch: " + request.url + " - Response is null");
-        } else if (responseFromNetwork.status != 200) {
-            throw new Error("Can't fetch: " + request.url + " - Error Code: " + responseFromNetwork.status);
+    let responseFromNetwork = await _fetchFromNetwork(request);
+    if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
+        if (_shouldResponseBeCached(request, responseFromNetwork, shouldCacheOpaqueResponse)) {
+            // Response may be used only once
+            // We need to save clone to put one copy in cache
+            // and serve second one
+            _putInCache(request, responseFromNetwork);
         }
 
-        // response may be used only once
-        // we need to save clone to put one copy in cache
-        // and serve second one
-        putInCache(request, responseFromNetwork.clone());
         return responseFromNetwork;
-    } catch (error) {
+    } else {
         if (!tryCacheFirst) {
-            const responseFromCache = await getFromCache(request.url);
+            let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
-                if (!forceTryCacheFirst) {
+                if (!_myForceTryCacheFirst) {
                     console.error("Forcing cache first because of possible network issues");
-                    forceTryCacheFirst = true;
+                    _myForceTryCacheFirst = true;
                 }
 
                 return responseFromCache;
@@ -169,33 +175,69 @@ async function getResource(request, tryCacheFirst = true, fetchFromNetworkInBack
         // WLE use ? url params to make it so the bundle is not cached
         // but if network fails we can still try to use the cached one
         if (request.url != null) {
-            const requestWithoutParamsURL = request.url.split("?")[0];
+            let requestWithoutParamsURL = request.url.split("?")[0];
 
-            const responseFromCacheWithoutParams = await getFromCache(requestWithoutParamsURL);
+            let responseFromCacheWithoutParams = await _getFromCache(requestWithoutParamsURL);
             if (responseFromCacheWithoutParams != null) {
                 return responseFromCacheWithoutParams;
             }
         }
 
-        return new Response("Network error happened", {
-            status: 408,
-            headers: { "Content-Type": "text/plain" },
-        });
+        if (responseFromNetwork != null) {
+            return responseFromNetwork;
+        } else {
+            return new Response("Network error happened", {
+                status: 408,
+                headers: { "Content-Type": "text/plain" },
+            });
+        }
     }
 }
 
-async function getFromCache(requestURL) {
-    return caches.match(requestURL);
-}
+async function _fetchFromNetwork(request) {
+    let networkResponse = null;
 
-async function putInCache(request, response) {
     try {
-        // return if request is not GET
-        if (request.method !== "GET") return;
-
-        const cache = await caches.open(CACHE);
-        cache.put(request, response);
+        networkResponse = await fetch(request);
     } catch (error) {
-        // do nothing
+        networkResponse = null;
     }
+
+    return networkResponse;
+}
+
+async function _getFromCache(requestURL) {
+    let cachedResponse = null;
+
+    try {
+        cachedResponse = await caches.match(requestURL);
+    } catch (error) {
+        cachedResponse = null;
+    }
+
+    return cachedResponse;
+}
+
+async function _putInCache(request, response) {
+    try {
+        let clonedResponse = response.clone();
+        let cache = await caches.open(CACHE);
+        cache.put(request, clonedResponse);
+    } catch (error) {
+        // Do nothing
+    }
+}
+
+function _isResponseOk(response) {
+    return response != null && response.status == 200;
+}
+
+function _isResponseOpaque(response) {
+    return response != null && response.status == 0 && response.type.includes("opaque");
+}
+
+// Opaque responses are not cached by default, since they can lead to a collection of issues,
+// which can also depend on the specific type of opaque response
+function _shouldResponseBeCached(request, response, shouldCacheOpaqueResponse = false) {
+    return request.method == "GET" && (_isResponseOk(response) || (shouldCacheOpaqueResponse && _isResponseOpaque(response)));
 }
