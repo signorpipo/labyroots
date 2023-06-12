@@ -1,6 +1,8 @@
-let CACHE = "labyroots-cache-v1";
+let myCacheID = "labyroots-cache-v1";
 
-let files = [
+let myLogEnabled = false;
+
+let myFilesToPrecache = [
     "/",
     "index.html",
     "manifest.json",
@@ -95,13 +97,15 @@ self.addEventListener("fetch", function (event) {
 });
 
 async function _precacheResources() {
-    let cache = await caches.open(CACHE);
+    let cache = await caches.open(myCacheID);
 
-    for (let file of files) {
+    for (let fileToPrecache of myFilesToPrecache) {
         try {
-            await cache.add(file);
+            await cache.add(fileToPrecache);
         } catch (error) {
-            console.error("Can't precache " + file);
+            if (myLogEnabled) {
+                console.error("Can't precache " + fileToPrecache);
+            }
         }
     }
 }
@@ -157,8 +161,11 @@ async function _getResource(request, tryCacheFirst = true, updateCacheInBackgrou
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
                 if (!_myForceTryCacheFirst) {
-                    console.error("Forcing cache first due to possible network issues");
                     _myForceTryCacheFirst = true;
+
+                    if (myLogEnabled) {
+                        console.error("Forcing cache first due to possible network issues");
+                    }
                 }
 
                 return responseFromCache;
@@ -226,7 +233,7 @@ async function _getFromCache(requestURL) {
 async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
-        let cache = await caches.open(CACHE);
+        let cache = await caches.open(myCacheID);
         cache.put(request, clonedResponse);
     } catch (error) {
         // Do nothing
