@@ -2,6 +2,12 @@ let myCacheID = "labyroots-cache-v1";
 
 let myLogEnabled = false;
 
+// This is the list of files u want to precache, that means they will be cached on the first load,
+// when the service worker is installing and can't still catch the fetch events
+//
+// Properly filling this list make it so your app is potentially ready to work offline on first load,
+// otherwise it might require at least a second load, where the service worker will be able to actually catch
+// th fetch events and cache the responses itself
 let myFilesToPrecache = [
     "/",
     "index.html",
@@ -83,6 +89,21 @@ let myFilesToPrecache = [
     //"ipfs/QmRiTKTFNDbe8tq7xXdWcyXqRAWsKKgbGdiz6wofrCceua",
     //"subgraphs/name/zestymarket/zesty-market-graph-matic",
     //"api/v1/space/223"
+];
+
+// This is a bit specific, but, for example, even if with wonderland u can cache the bundle.js file and the wonderland.min.js file,
+// wonderland normally try to fetch it using url params and the time of the deploy (possibly to force a cache reload for a new version)
+//
+// This make it so that u can't precache those files (even if they will be cached on the second load anyway),
+// but since u can precache the bundle.js / wonderland.min.js anyway without url params,
+// if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
+// as last resort if the requested url can't be found in any other way
+//
+// Be aware that the check use String.includes, this means that it could match with a potential URL that by chance includes the below sub strings
+// so be as specific as possible (even if for the bundle.js / wonderland.min.js this should not be an issue at all, this is way they are included by default)
+let myFilesToGetFromCacheWithoutURLParamsAsLastResort = [
+    "labyroots-bundle.js",
+    "wonderland.min.js"
 ];
 
 // This force using the cache first if the network is failing for cached resources
@@ -172,14 +193,21 @@ async function _getResource(request, tryCacheFirst = true, updateCacheInBackgrou
             }
         }
 
-        // WLE use ? url params to make it so the bundle is not cached
-        // but if network fails we can still try to use the cached one
         if (request.url != null) {
-            let requestWithoutParamsURL = request.url.split("?")[0];
+            let getWithoutURLParams = false;
+            let requestURLWithoutURLParams = request.url.split("?")[0];
+            for (let fileToGetWithoutURLParams of myFilesToGetFromCacheWithoutURLParamsAsLastResort) {
+                if (requestURLWithoutURLParams.includes(fileToGetWithoutURLParams)) {
+                    getWithoutURLParams = true;
+                    break;
+                }
+            }
 
-            let responseFromCacheWithoutParams = await _getFromCache(requestWithoutParamsURL);
-            if (responseFromCacheWithoutParams != null) {
-                return responseFromCacheWithoutParams;
+            if (getWithoutURLParams) {
+                let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
+                if (responseFromCacheWithoutParams != null) {
+                    return responseFromCacheWithoutParams;
+                }
             }
         }
 
