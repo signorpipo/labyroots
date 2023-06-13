@@ -1,14 +1,16 @@
-let myCacheID = "labyroots-cache-v1";
+// START SERVICE WORKER SETUP
 
-let myLogEnabled = false;
+let _myCacheID = "labyroots-cache-v1";
+
+
 
 // This is the list of files u want to precache, that means they will be cached on the first load,
 // when the service worker is installing and can't still catch the fetch events
 //
 // Properly filling this list make it so your app is potentially ready to work offline on first load,
 // otherwise it might require at least a second load, where the service worker will be able to actually catch
-// th fetch events and cache the responses itself
-let myFilesToPrecache = [
+// the fetch events and cache the responses itself
+let _myPrecacheFiles = [
     "/",
     "index.html",
     "manifest.json",
@@ -91,6 +93,43 @@ let myFilesToPrecache = [
     //"api/v1/space/223"
 ];
 
+
+
+// Which files should be cached
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myCacheFilesToInclude = [".*"];
+let _myCacheFilesToExclude = [];
+
+
+
+// Used to specify if you want to first try the cache or always check the network for updates
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myTryCacheFirstFilesToInclude = [".*"];
+let _myTryCacheFirstFilesToExclude = [];
+
+
+
+// If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
+// It's important to note that the updated changes will be available starting from the next page load
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myUpdateCacheInBackgroundFilesToInclude = [".*"];
+let _myUpdateCacheInBackgroundFilesToExclude = [];
+
+
+
+// If a network error happens on any request, this make it so
+// that the cache will be tried first by default for these files
+// Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myForceTryCacheOnNetworkErrorFilesToInclude = [".*"];
+let _myForceTryCacheOnNetworkErrorFilesToExclude = [];
+
+
+
 // This is a bit specific, but, for example, even if with wonderland u can cache the bundle.js file and the wonderland.min.js file,
 // wonderland normally try to fetch it using url params and the time of the deploy (possibly to force a cache reload for a new version)
 //
@@ -99,67 +138,74 @@ let myFilesToPrecache = [
 // if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
 // as last resort if the requested url can't be found in any other way
 //
-// Be aware that the check use String.includes, this means that it could match with a potential URL that by chance includes the below sub strings
-// so be as specific as possible (even if for the bundle.js / wonderland.min.js this should not be an issue at all, this is way they are included by default)
-let myFilesToGetFromCacheWithoutURLParamsAsLastResort = [
-    "labyroots-bundle.js",
-    "wonderland.min.js"
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude = [
+    "bundle\.js",
+    "wonderland.min\.js"
+];
+let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = [
 ];
 
-// This force using the cache first if the network is failing for cached resources
-let _myForceTryCacheFirst = false;
+
+
+// Used to cache opaque responses
+// Caching opaque responses can lead to a number of issues so use this with caution
+// I also advise u to enable the cache update in background when caching opaque responses,
+// so to avoid caching a bad opaque response forever
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myCacheOpaqueResponseFilesToInclude = [];
+let _myCacheOpaqueResponseFilesToExclude = [];
+
+
+
+let _myLogEnabled = false;
+
+// END SERVICE WORKER SETUP
+
+
+
+
+
+
+// Used to track if a network error happened
+// As of now this is not reset on page reload, but only when using a new tab
+let _myNetworkError = false;
 
 self.addEventListener("install", function (event) {
     event.waitUntil(_precacheResources());
 });
 
 self.addEventListener("fetch", function (event) {
-    event.respondWith(_getResource(event.request, true, true));
+    event.respondWith(_getResource(event.request));
 });
 
 async function _precacheResources() {
-    let cache = await caches.open(myCacheID);
+    let cache = await caches.open(_myCacheID);
 
-    for (let fileToPrecache of myFilesToPrecache) {
+    for (let fileToPrecache of _myPrecacheFiles) {
         try {
             await cache.add(fileToPrecache);
         } catch (error) {
-            if (myLogEnabled) {
+            if (_myLogEnabled) {
                 console.error("Can't precache " + fileToPrecache);
             }
         }
     }
 }
 
-/**
- * @param {Request} request 
- * 
- * @param {boolean} tryCacheFirst Used to specify if you want to first try the cache or always check the network for updates
- *                                If cache is checked first, you could have an updated resources not being downloaded until cache is cleaned
- * 
- * @param {boolean} updateCacheInBackground      If @tryCacheFirst is true, after returning the current cached resource 
- *                                               the cache will be updated, fetching the updated resource from the network
- *                                               It's important to note that the updated changes will be available starting from the next page load
- * 
- * @param {boolean} shouldOpaqueResponseBeCached    Used to cache opaque responses
- *                                                  Caching opaque responses can lead to a number of issues so use this with caution
- *                                                  I also advise u to enable @updateCacheInBackground when caching opaque responses,
- *                                                  so to avoid caching a bad opaque responses and never recover from that
- * 
- * @param {boolean} disableForceTryCacheFirst If @tryCacheFirst is false and the network fails to get a resource that is already in the cache,
- *                                            it will, by default, start using the cache as first option
- *                                            With this flag u can prevent that and keep using the network first
- * 
- * @returns {Response}
- */
-async function _getResource(request, tryCacheFirst = true, updateCacheInBackground = false, shouldOpaqueResponseBeCached = false, disableForceTryCacheFirst = false) {
-    if (tryCacheFirst || (_myForceTryCacheFirst && !disableForceTryCacheFirst)) {
+async function _getResource(request) {
+    let tryCacheFirst = _filterFile(request.url, _myTryCacheFirstFilesToInclude, _myTryCacheFirstFilesToExclude);
+    let forceTryCacheFirstOnNetworkError = _myNetworkError && _filterFile(request.url, _myForceTryCacheOnNetworkErrorFilesToInclude, _myForceTryCacheOnNetworkErrorFilesToExclude);
+
+    if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
         // Try to get the resource from the cache
         try {
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
+                let updateCacheInBackground = _filterFile(request.url, _myUpdateCacheInBackgroundFilesToInclude, _myUpdateCacheInBackgroundFilesToExclude);
                 if (updateCacheInBackground) {
-                    _fetchFromNetworkAndUpdateCache(request, shouldOpaqueResponseBeCached);
+                    _fetchFromNetworkAndUpdateCache(request);
                 }
 
                 return responseFromCache;
@@ -172,37 +218,24 @@ async function _getResource(request, tryCacheFirst = true, updateCacheInBackgrou
     // Try to get the resource from the network
     let responseFromNetwork = await _fetchFromNetwork(request);
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResponseBeCached(request, responseFromNetwork, shouldOpaqueResponseBeCached)) {
+        if (_shouldResponseBeCached(request, responseFromNetwork)) {
             _putInCache(request, responseFromNetwork);
         }
 
         return responseFromNetwork;
     } else {
+        _myNetworkError = true;
+
         if (!tryCacheFirst) {
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
-                if (!_myForceTryCacheFirst) {
-                    _myForceTryCacheFirst = true;
-
-                    if (myLogEnabled) {
-                        console.error("Forcing cache first due to possible network issues");
-                    }
-                }
-
                 return responseFromCache;
             }
         }
 
         if (request.url != null) {
-            let getWithoutURLParams = false;
             let requestURLWithoutURLParams = request.url.split("?")[0];
-            for (let fileToGetWithoutURLParams of myFilesToGetFromCacheWithoutURLParamsAsLastResort) {
-                if (requestURLWithoutURLParams.includes(fileToGetWithoutURLParams)) {
-                    getWithoutURLParams = true;
-                    break;
-                }
-            }
-
+            let getWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude, _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude);
             if (getWithoutURLParams) {
                 let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
                 if (responseFromCacheWithoutParams != null) {
@@ -214,7 +247,7 @@ async function _getResource(request, tryCacheFirst = true, updateCacheInBackgrou
         if (responseFromNetwork != null) {
             return responseFromNetwork;
         } else {
-            return new Response("Network error", {
+            return new Response("Network Error", {
                 status: 408,
                 headers: { "Content-Type": "text/plain" },
             });
@@ -222,11 +255,11 @@ async function _getResource(request, tryCacheFirst = true, updateCacheInBackgrou
     }
 }
 
-async function _fetchFromNetworkAndUpdateCache(request, shouldOpaqueResponseBeCached = false) {
+async function _fetchFromNetworkAndUpdateCache(request) {
     let responseFromNetwork = await _fetchFromNetwork(request);
 
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResponseBeCached(request, responseFromNetwork, shouldOpaqueResponseBeCached)) {
+        if (_shouldResponseBeCached(request, responseFromNetwork)) {
             _putInCache(request, responseFromNetwork);
         }
     }
@@ -261,7 +294,7 @@ async function _getFromCache(requestURL) {
 async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
-        let cache = await caches.open(myCacheID);
+        let cache = await caches.open(_myCacheID);
         cache.put(request, clonedResponse);
     } catch (error) {
         // Do nothing
@@ -276,8 +309,29 @@ function _isResponseOpaque(response) {
     return response != null && response.status == 0 && response.type.includes("opaque");
 }
 
-// Opaque responses are not cached by default, since they can lead to a collection of issues,
-// which can also depend on the specific type of opaque response
-function _shouldResponseBeCached(request, response, shouldOpaqueResponseBeCached = false) {
-    return request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response)));
+function _shouldResponseBeCached(request, response) {
+    let shouldResponseBeCached = _filterFile(request.url, _myCacheFilesToInclude, _myCacheFilesToExclude);
+    let shouldOpaqueResponseBeCached = _filterFile(request.url, _myCacheOpaqueResponseFilesToInclude, _myCacheOpaqueResponseFilesToExclude);
+    return shouldResponseBeCached && (request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response))));
+}
+
+function _filterFile(file, includeList, excludeList) {
+    let validFile = false;
+    for (let includeFile of includeList) {
+        if (file.match(new RegExp(includeFile)) != null) {
+            validFile = true;
+            break;
+        }
+    }
+
+    if (validFile) {
+        for (let excludeFile of excludeList) {
+            if (file.match(new RegExp(excludeFile)) != null) {
+                validFile = false;
+                break;
+            }
+        }
+    }
+
+    return validFile;
 }
