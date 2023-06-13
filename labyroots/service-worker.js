@@ -120,13 +120,21 @@ let _myUpdateCacheInBackgroundFilesToExclude = [];
 
 
 
+// If a network error happens on any request, this enables the force try cache first on network error feature
+//
+// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = [];
+let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
+
+
+
 // If a network error happens on any request, this make it so
 // that the cache will be tried first by default for these files
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myForceTryCacheOnNetworkErrorFilesToInclude = [".*"];
-let _myForceTryCacheOnNetworkErrorFilesToExclude = [];
+let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = [];
+let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 
 
 
@@ -168,9 +176,8 @@ let _myLogEnabled = false;
 
 
 
-// Used to track if a network error happened
 // As of now this is not reset on page reload, but only when using a new tab
-let _myNetworkError = false;
+let _myForceTryCacheFirstOnNetworkErrorEnabled = false;
 
 self.addEventListener("install", function (event) {
     event.waitUntil(_precacheResources());
@@ -196,7 +203,7 @@ async function _precacheResources() {
 
 async function _getResource(request) {
     let tryCacheFirst = _filterFile(request.url, _myTryCacheFirstFilesToInclude, _myTryCacheFirstFilesToExclude);
-    let forceTryCacheFirstOnNetworkError = _myNetworkError && _filterFile(request.url, _myForceTryCacheOnNetworkErrorFilesToInclude, _myForceTryCacheOnNetworkErrorFilesToExclude);
+    let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _filterFile(request.url, _myForceTryCacheFirstOnNetworkErrorFilesToInclude, _myForceTryCacheFirstOnNetworkErrorFilesToExclude);
 
     if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
         // Try to get the resource from the cache
@@ -224,7 +231,12 @@ async function _getResource(request) {
 
         return responseFromNetwork;
     } else {
-        _myNetworkError = true;
+        if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
+            let enableForceTryCacheFirstOnNetworkError = _filterFile(request.url, _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude, _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude);
+            if (enableForceTryCacheFirstOnNetworkError) {
+                _myForceTryCacheFirstOnNetworkErrorEnabled = true;
+            }
+        }
 
         if (!tryCacheFirst) {
             let responseFromCache = await _getFromCache(request.url);
