@@ -1,3 +1,7 @@
+let _ANY_FILE = [".*"];
+
+
+
 // START SERVICE WORKER SETUP
 
 let _myCacheID = "labyroots-cache-v1";
@@ -100,7 +104,7 @@ let _myPrecacheFiles = [
 // Which files should be cached
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myCacheFilesToInclude = [".*"];
+let _myCacheFilesToInclude = _ANY_FILE;
 let _myCacheFilesToExclude = [];
 
 
@@ -108,7 +112,7 @@ let _myCacheFilesToExclude = [];
 // Used to specify if you want to first try the cache or always check the network for updates
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myTryCacheFirstFilesToInclude = [".*"];
+let _myTryCacheFirstFilesToInclude = _ANY_FILE;
 let _myTryCacheFirstFilesToExclude = [];
 
 
@@ -117,7 +121,7 @@ let _myTryCacheFirstFilesToExclude = [];
 // It's important to note that the updated changes will be available starting from the next page load
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myUpdateCacheInBackgroundFilesToInclude = [".*"];
+let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
 let _myUpdateCacheInBackgroundFilesToExclude = [];
 
 
@@ -204,10 +208,14 @@ async function _precacheResources() {
 }
 
 async function _getResource(request) {
+    let cacheTried = false;
+
     let tryCacheFirst = _filterFile(request.url, _myTryCacheFirstFilesToInclude, _myTryCacheFirstFilesToExclude);
     let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _filterFile(request.url, _myForceTryCacheFirstOnNetworkErrorFilesToInclude, _myForceTryCacheFirstOnNetworkErrorFilesToExclude);
 
     if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
+        cacheTried = true;
+
         // Try to get the resource from the cache
         try {
             let responseFromCache = await _getFromCache(request.url);
@@ -240,7 +248,9 @@ async function _getResource(request) {
             }
         }
 
-        if (!tryCacheFirst) {
+        if (!cacheTried) {
+            cacheTried = true;
+
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
                 return responseFromCache;
