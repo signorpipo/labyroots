@@ -10,6 +10,8 @@ let _myCacheID = "labyroots-cache-v1";
 // Properly filling this list make it so your app is potentially ready to work offline on first load,
 // otherwise it might require at least a second load, where the service worker will be able to actually catch
 // the fetch events and cache the responses itself
+//
+// The file name must match the exact name of the file u want to precache (excluding the base URL)
 let _myPrecacheFiles = [
     "/",
     "index.html",
@@ -123,7 +125,7 @@ let _myUpdateCacheInBackgroundFilesToExclude = [];
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = [];
+let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongMoreThan(_myPrecacheFiles, 3));
 let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 
 
@@ -133,7 +135,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = [];
+let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude;
 let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 
 
@@ -148,8 +150,8 @@ let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude = [
-    "bundle\.js",
-    "wonderland.min\.js"
+    "bundle\\.js",
+    "wonderland.min\\.js"
 ];
 let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = [
 ];
@@ -346,4 +348,28 @@ function _filterFile(file, includeList, excludeList) {
     }
 
     return validFile;
+}
+
+function _getFilesLongMoreThan(files, lengthThreshold) {
+    let newFiles = files.slice(0);
+
+    let index = 0;
+    do {
+        index = newFiles.findIndex((file) => file.length <= lengthThreshold);
+
+        if (index >= 0 && index < newFiles.length) {
+            newFiles.splice(index, 1);
+        }
+    } while (index >= 0);
+
+    return newFiles;
+}
+
+function _replaceSpecialCharacters(files) {
+    for (let i = 0; i < files.length; i++) {
+        files[i] = files[i].replaceAll(".", "\\.");
+        files[i] = files[i].replaceAll(" ", "%20");
+    }
+
+    return files;
 }
