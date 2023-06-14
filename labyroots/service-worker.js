@@ -1,4 +1,5 @@
 let _ANY_FILE = [".*"];
+let _NO_FILE = [];
 
 
 
@@ -105,7 +106,7 @@ let _myPrecacheFiles = [
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myCacheFilesToInclude = _ANY_FILE;
-let _myCacheFilesToExclude = [];
+let _myCacheFilesToExclude = _NO_FILE;
 
 
 
@@ -113,7 +114,7 @@ let _myCacheFilesToExclude = [];
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myTryCacheFirstFilesToInclude = _ANY_FILE;
-let _myTryCacheFirstFilesToExclude = [];
+let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
 
 
@@ -122,7 +123,7 @@ let _myTryCacheFirstFilesToExclude = [];
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
-let _myUpdateCacheInBackgroundFilesToExclude = [];
+let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 
 
 
@@ -130,7 +131,7 @@ let _myUpdateCacheInBackgroundFilesToExclude = [];
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongMoreThan(_myPrecacheFiles, 3));
-let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
+let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 
 
 
@@ -140,7 +141,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
 let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude;
-let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = [];
+let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 
 
 
@@ -157,8 +158,7 @@ let _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
-let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = [
-];
+let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = _NO_FILE;
 
 
 
@@ -168,8 +168,8 @@ let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = [
 // so to avoid caching a bad opaque response forever
 //
 // The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
-let _myCacheOpaqueResponseFilesToInclude = [];
-let _myCacheOpaqueResponseFilesToExclude = [];
+let _myCacheOpaqueResponseFilesToInclude = _NO_FILE;
+let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
 
 
 
