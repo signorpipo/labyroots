@@ -9,6 +9,12 @@ let _myCacheName = "labyroots";     // This should not be changed, since it coul
 let _myCacheVersion = 1;            // This must be an incremental integer greater than 0
 
 
+// Immediately activating a new service worker (without refreshing the page) can cause issues
+// due to the fact that the new service worker might be working with data fetched by the old one
+// Use this with caution
+let _myImmediatelyActivateNewServiceWorker = false;
+
+
 
 // This is the list of files u want to precache, that means they will be cached on the first load,
 // when the service worker is installing and can't still catch the fetch events
@@ -188,6 +194,10 @@ let _myLogEnabled = false;
 let _myForceTryCacheFirstOnNetworkErrorEnabled = false;
 
 self.addEventListener("install", function (event) {
+    if (_myImmediatelyActivateNewServiceWorker) {
+        self.skipWaiting();
+    }
+
     event.waitUntil(_precacheResources());
 });
 
