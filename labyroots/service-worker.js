@@ -5,7 +5,8 @@ let _NO_FILE = [];
 
 // START SERVICE WORKER SETUP
 
-let _myCacheID = "labyroots-cache-v1";
+let _myCacheName = "labyroots";     // This should not be changed, since it could be used to look for old caches (not implemented yet)
+let _myCacheVersion = 1;            // This must be an incremental integer greater than 0
 
 
 
@@ -104,7 +105,7 @@ let _myPrecacheFiles = [
 
 // Which files should be cached
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myCacheFilesToInclude = _ANY_FILE;
 let _myCacheFilesToExclude = _NO_FILE;
 
@@ -112,7 +113,7 @@ let _myCacheFilesToExclude = _NO_FILE;
 
 // Used to specify if you want to first try the cache or always check the network for updates
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myTryCacheFirstFilesToInclude = _ANY_FILE;
 let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
@@ -121,7 +122,7 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 // If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
 // It's important to note that the updated changes will be available starting from the next page load
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
 let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 
@@ -129,7 +130,7 @@ let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongMoreThan(_myPrecacheFiles, 3));
 let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 
@@ -139,7 +140,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 // that the cache will be tried first by default for these files
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude;
 let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 
@@ -153,7 +154,7 @@ let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 // if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
 // as last resort if the requested url can't be found in any other way
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
@@ -167,12 +168,13 @@ let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = _NO_FILE;
 // I also advise u to enable the cache update in background when caching opaque responses,
 // so to avoid caching a bad opaque response forever
 //
-// The entries can also be regexes, so u can, for example, specify ".*" to include/exclude every file
+// The files can also be regexp
 let _myCacheOpaqueResponseFilesToInclude = _NO_FILE;
 let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
 
 
 
+// Enable some extra logs to better understand what's going on and why things might not be working
 let _myLogEnabled = false;
 
 // END SERVICE WORKER SETUP
@@ -194,14 +196,14 @@ self.addEventListener("fetch", function (event) {
 });
 
 async function _precacheResources() {
-    let cache = await caches.open(_myCacheID);
+    let cache = await caches.open(_getCacheID());
 
     for (let fileToPrecache of _myPrecacheFiles) {
         try {
             await cache.add(fileToPrecache);
         } catch (error) {
             if (_myLogEnabled) {
-                console.error("Can't precache " + fileToPrecache);
+                console.error("Can't precache file: " + fileToPrecache);
             }
         }
     }
@@ -245,6 +247,10 @@ async function _getResource(request) {
             let enableForceTryCacheFirstOnNetworkError = _filterFile(request.url, _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude, _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude);
             if (enableForceTryCacheFirstOnNetworkError) {
                 _myForceTryCacheFirstOnNetworkErrorEnabled = true;
+
+                if (_myLogEnabled) {
+                    console.warn("Force try cache on network error enabled");
+                }
             }
         }
 
@@ -263,6 +269,10 @@ async function _getResource(request) {
             if (getWithoutURLParams) {
                 let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
                 if (responseFromCacheWithoutParams != null) {
+                    if (_myLogEnabled) {
+                        console.warn("Get from cache without url params: " + request.url);
+                    }
+
                     return responseFromCacheWithoutParams;
                 }
             }
@@ -298,6 +308,10 @@ async function _fetchFromNetwork(request) {
         networkResponse = await fetch(request);
     } catch (error) {
         networkResponse = null;
+
+        if (_myLogEnabled) {
+            console.error("Error fetching from the network: " + request.url);
+        }
     }
 
     return networkResponse;
@@ -310,6 +324,10 @@ async function _getFromCache(requestURL) {
         cachedResponse = await caches.match(requestURL);
     } catch (error) {
         cachedResponse = null;
+
+        if (_myLogEnabled) {
+            console.error("Error getting from the cache: " + requestURL);
+        }
     }
 
     return cachedResponse;
@@ -318,10 +336,14 @@ async function _getFromCache(requestURL) {
 async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
-        let cache = await caches.open(_myCacheID);
+        let cache = await caches.open(_getCacheID());
         cache.put(request, clonedResponse);
     } catch (error) {
         // Do nothing
+
+        if (_myLogEnabled) {
+            console.error("Error setting response in the cache: " + request.url);
+        }
     }
 }
 
@@ -337,6 +359,10 @@ function _shouldResponseBeCached(request, response) {
     let shouldResponseBeCached = _filterFile(request.url, _myCacheFilesToInclude, _myCacheFilesToExclude);
     let shouldOpaqueResponseBeCached = _filterFile(request.url, _myCacheOpaqueResponseFilesToInclude, _myCacheOpaqueResponseFilesToExclude);
     return shouldResponseBeCached && (request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response))));
+}
+
+function _getCacheID() {
+    return _myCacheName + "_v" + _myCacheVersion.toFixed(0);
 }
 
 function _filterFile(file, includeList, excludeList) {
