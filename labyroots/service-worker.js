@@ -9,8 +9,13 @@ let _myCacheName = "labyroots";     // This should not be changed, since it coul
 let _myCacheVersion = 1;            // This must be an incremental integer greater than 0
 
 
-// Immediately activating a new service worker (without refreshing the page) can cause issues
-// due to the fact that the new service worker might be working with data fetched by the old one
+
+// Usually a new service worker is activated when there are no more tabs using the old one
+// This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
+//
+// This flag make it so the service worker is immediately activated (without the need to refresh the page), but can cause issues
+// due to the fact that the new service worker might be working with data fetched by the old one in the same session
+//
 // Use this with caution
 let _myImmediatelyActivateNewServiceWorker = false;
 
