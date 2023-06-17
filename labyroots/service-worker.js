@@ -5,26 +5,19 @@ let _NO_FILE = [];
 
 // START SERVICE WORKER SETUP
 
+// BASE SETUP
+
+
+
 let _myCacheName = "labyroots";     // This should not be changed, since it could be used to look for old caches (not implemented yet)
 let _myCacheVersion = 1;            // This must be an incremental integer greater than 0
-
-
-
-// Usually a new service worker is activated when there are no more tabs using the old one
-// This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
-//
-// This flag make it so the service worker is immediately activated (without the need to refresh the page), but can cause issues
-// due to the fact that the new service worker might be working with data fetched by the old one in the same session
-//
-// Use this with caution
-let _myImmediatelyActivateNewServiceWorker = false;
 
 
 
 // This is the list of files u want to precache, that means they will be cached on the first load,
 // when the service worker is installing and can't still catch the fetch events
 //
-// Properly filling this list make it so your app is potentially ready to work offline on first load,
+// Properly filling this list can potentially make it so your app is ready to work offline on first load,
 // otherwise it might require at least a second load, where the service worker will be able to actually catch
 // the fetch events and cache the responses itself
 //
@@ -130,6 +123,10 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
 
 
+// ADVANCED SETUP
+
+
+
 // If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
 // It's important to note that the updated changes will be available starting from the next page load
 //
@@ -185,6 +182,39 @@ let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
 
 
 
+// Delete all the previous caches when a new service worker is activated
+//
+// For this to work properly, the cache name of the new service worker must be the same as the previous ones,
+// otherwise there is no way to know which cache should actually be deleted
+let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
+
+
+
+// Usually a new service worker is activated when there are no more tabs using the old one
+// This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
+//
+// This flag make it so the service worker is immediately activated (without the need to refresh the page), but can cause issues
+// due to the fact that the new service worker might be working with data fetched by the old one in the same session
+//
+// Use this with caution
+//
+// Beside, when enabling this it would probably be better to also trigger a page reload
+// You can add the following js line to your index.html to achieve the page reload on controller change:
+//
+// window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
+//
+// Be aware that this might happen while the user is using your app and not just at the beginning,
+// which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
+// I'm also not sure if this could make the page reload even on the first service worker activation,
+// which basically means when the page is loaded for the first time, but it doesn't seem to be the case from my tests
+//
+// As u can see, handling a new service worker activation is a complex topic! 
+// You might want to look on the internet for solutions that best fit your needs,
+// like, for example, asking the user if they want to reload or not
+let _myImmediatelyActivateNewServiceWorker = false;
+
+
+
 // Enable some extra logs to better understand what's going on and why things might not be working
 let _myLogEnabled = false;
 
@@ -204,6 +234,12 @@ self.addEventListener("install", function (event) {
     }
 
     event.waitUntil(_precacheResources());
+});
+
+self.addEventListener("activate", function (event) {
+    if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
+        event.waitUntil(_deletePreviousCaches())
+    }
 });
 
 self.addEventListener("fetch", function (event) {
@@ -360,6 +396,10 @@ async function _putInCache(request, response) {
             console.error("Error setting response in the cache: " + request.url);
         }
     }
+}
+
+function _deletePreviousCaches() {
+
 }
 
 function _isResponseOk(response) {
