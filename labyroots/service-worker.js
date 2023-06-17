@@ -398,8 +398,13 @@ async function _putInCache(request, response) {
     }
 }
 
-function _deletePreviousCaches() {
-
+async function _deletePreviousCaches() {
+    let cachesID = await caches.keys();
+    for (let cacheID of cachesID) {
+        if (cacheID.startsWith(_getCacheBaseID()) && cacheID != _getCacheID()) {
+            await caches.delete(cacheID);
+        }
+    }
 }
 
 function _isResponseOk(response) {
@@ -416,8 +421,12 @@ function _shouldResponseBeCached(request, response) {
     return shouldResponseBeCached && (request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response))));
 }
 
+function _getCacheBaseID() {
+    return _myCacheName + "_v";
+}
+
 function _getCacheID() {
-    return _myCacheName + "_v" + _myCacheVersion.toFixed(0);
+    return _getCacheBaseID() + _myCacheVersion.toFixed(0);
 }
 
 function _filterFile(file, includeList, excludeList) {
