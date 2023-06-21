@@ -196,8 +196,6 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 // This flag make it so the service worker is immediately activated (without the need to refresh the page), but can cause issues
 // due to the fact that the new service worker might be working with data fetched by the old one in the same session
 //
-// Use this with caution
-//
 // Beside, when enabling this it would probably be better to also trigger a page reload
 // You can add the following js line to your index.html to achieve the page reload on controller change:
 //
@@ -208,10 +206,53 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 // I'm also not sure if this could make the page reload even on the first service worker activation,
 // which basically means when the page is loaded for the first time, but it doesn't seem to be the case from my tests
 //
-// As u can see, handling a new service worker activation is a complex topic! 
+// As u can see, handling a service worker activation is a complex topic!
 // You might want to look on the internet for solutions that best fit your needs,
 // like, for example, asking the user if they want to reload or not
+//
+// Use this with caution
 let _myImmediatelyActivateNewServiceWorker = false;
+
+
+
+// When a page is loaded for the first time, even though the service worker is activated
+// it does not actually starts to control the page until it's loaded again,
+// since a service worker has to take care of a page from the start
+//
+// This make it so that, even on first load, the service worker will take control over the page (as soon as possible)
+//
+// As for @_myImmediatelyActivateNewServiceWorker, this can cause issues
+// due to the fact that the service worker might be fetching the data in a different way compared to not having it,
+// and the page fetched at least a bit of data without the service worker, since it was started as soon as possible, but not
+// from the beginning
+//
+// In general this should not be an issue unless u have a very specific service worker logic,
+// so you should be able to set this to true without worrying too much
+//
+// The advantages of using this are:
+// 1. If the page goes offline on the first load and u need to fetch data, the service worker can already try to use the cache
+// 2. The service worker can already cache some data which might be hard (if not impossible) to precache otherwise
+//    This is kind of useful, but not reliable, so u still have to properly fill the precache file list yourself if u want your app
+//    to work offline even after the first load
+//
+// If u want to be 100% sure, u can always add the same js line used for @_myImmediatelyActivateNewServiceWorker to reload the page
+// when a new service worker takes control of the page, but, in this case, it will reload the page 100% even for the first load,
+// which is what u are trying to achieve anyway with it in this case
+//
+// window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
+//
+// If u don't feel the need to reload the page on first load, but still would like to enable @_myImmediatelyActivateNewServiceWorker,
+// and would like to relaod the page when a new service worker is activated, u need to specify a different js code to reload the page,
+// so to avoid reloading it even for the first load
+//
+// CODE
+//
+// As u can see, again, handling a service worker activation is a complex topic!
+// You might want to look on the internet for solutions that best fit your needs,
+// like, for example, asking the user if they want to reload or not
+//
+// Use this with caution
+let _myTakeControlOfThePageOnFirstLoad = false;
 
 
 
@@ -239,6 +280,10 @@ self.addEventListener("install", function (event) {
 self.addEventListener("activate", function (event) {
     if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
         event.waitUntil(_deletePreviousCaches())
+    }
+
+    if (_myTakeControlOfThePageOnFirstLoad) {
+        self.clients.claim();
     }
 });
 
