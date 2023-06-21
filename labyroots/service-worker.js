@@ -178,14 +178,14 @@ let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
 // but since u can precache the bundle.js / wonderland.min.js anyway without url params,
 // if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
-// as last resort if the requested url can't be found in any other way
+// as a fallback for when the requested url can't be found in any other way
 //
 // The files can also be regexp
-let _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude = [
+let _myGetFromCacheWithoutURLParamsAsFallbackFilesToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
-let _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude = _NO_FILE;
+let _myGetFromCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
 
 
 
@@ -419,7 +419,7 @@ async function _getResource(request) {
 
         if (request.url != null) {
             let requestURLWithoutURLParams = request.url.split("?")[0];
-            let getWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myGetFromCacheWithoutURLParamsAsLastResortFilesToInclude, _myGetFromCacheWithoutURLParamsAsLastResortFilesToExclude);
+            let getWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myGetFromCacheWithoutURLParamsAsFallbackFilesToInclude, _myGetFromCacheWithoutURLParamsAsFallbackFilesToExclude);
             if (getWithoutURLParams) {
                 let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
                 if (responseFromCacheWithoutParams != null) {
