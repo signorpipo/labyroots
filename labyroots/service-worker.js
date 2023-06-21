@@ -193,7 +193,7 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 // Usually a new service worker is activated when there are no more tabs using the old one
 // This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
 //
-// This flag make it so the service worker is immediately activated (without the need to refresh the page), but can cause issues
+// This flag make it so the service worker is immediately (as soon as possible) activated (without the need to refresh the page), but can cause issues
 // due to the fact that the new service worker might be working with data fetched by the old one in the same session
 //
 // Beside, when enabling this it would probably be better to also trigger a page reload
@@ -201,10 +201,12 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 //
 // window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
 //
-// Be aware that this might happen while the user is using your app and not just at the beginning,
+// This js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
+// so to avoid missing the controller change event
+//
+// Be aware that the reload might happen while the user is using your app and not just at the beginning,
 // which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
-// I'm also not sure if this could make the page reload even on the first service worker activation,
-// which basically means when the page is loaded for the first time, but it doesn't seem to be the case from my tests
+// Be also aware that this will make every opened page related to this service worker reload, not just the current focused one!
 //
 // As u can see, handling a service worker activation is a complex topic!
 // You might want to look on the internet for solutions that best fit your needs,
@@ -215,11 +217,12 @@ let _myImmediatelyActivateNewServiceWorker = false;
 
 
 
-// When a page is loaded for the first time, even though the service worker is activated
+// When a page is not controlled (usually on the first load), even though the service worker is activated
 // it does not actually starts to control the page until it's loaded again,
 // since a service worker has to take care of a page from the start
 //
-// This make it so that, even on first load, the service worker will take control over the page (as soon as possible)
+// This make it so that the service worker will immediately (as soon as possible) take control over the page even when
+// it was not being controlled yet (which basically means that it will be controlled even on the first load)
 //
 // As for @_myImmediatelyActivateNewServiceWorker, this can cause issues
 // due to the fact that the service worker might be fetching the data in a different way compared to not having it,
@@ -236,23 +239,32 @@ let _myImmediatelyActivateNewServiceWorker = false;
 //    to work offline even after the first load
 //
 // If u want to be 100% sure, u can always add the same js line used for @_myImmediatelyActivateNewServiceWorker to reload the page
-// when a new service worker takes control of the page, but, in this case, it will reload the page 100% even for the first load,
-// which is what u are trying to achieve anyway with it in this case
+// when a new service worker takes control of the page, but, in this case, it will reload the page 100% even for the very first load,
+// which is annoying but is also what u are trying to achieve with it in this case
 //
 // window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
 //
-// If u don't feel the need to reload the page on first load, but still would like to enable @_myImmediatelyActivateNewServiceWorker,
-// and would like to relaod the page when a new service worker is activated, u need to specify a different js code to reload the page,
-// so to avoid reloading it even for the first load
+// This js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
+// so to avoid missing the controller change event
+//
+// If u don't feel the need to reload the page if it was not initially controlled (and don't want to make the page reload everytime on first load),
+// but still would like to enable @_myImmediatelyActivateNewServiceWorker,
+// and would like to reload the page when a new service worker is activated,
+// u need to specify a different js code to reload the page,
+// so to avoid reloading it when it was not initially controlled
 //
 // CODE
+//
+// Be aware that the reload might happen while the user is using your app and not just at the beginning,
+// which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
+// Be also aware that this will make every opened page related to this service worker reload, not just the current focused one!
 //
 // As u can see, again, handling a service worker activation is a complex topic!
 // You might want to look on the internet for solutions that best fit your needs,
 // like, for example, asking the user if they want to reload or not
 //
 // Use this with caution
-let _myTakeControlOfThePageOnFirstLoad = false;
+let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
 
 
 
@@ -282,7 +294,7 @@ self.addEventListener("activate", function (event) {
         event.waitUntil(_deletePreviousCaches())
     }
 
-    if (_myTakeControlOfThePageOnFirstLoad) {
+    if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
         self.clients.claim();
     }
 });
