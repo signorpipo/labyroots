@@ -3,9 +3,13 @@ let _NO_FILE = [];
 
 
 
+//----------------------------
 // START SERVICE WORKER SETUP
+//----------------------------
 
+//------------
 // BASE SETUP
+//------------
 
 
 
@@ -122,9 +126,9 @@ let _myTryCacheFirstFilesToInclude = _ANY_FILE;
 let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
 
-
+//----------------
 // ADVANCED SETUP
-
+//----------------
 
 
 // If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
@@ -197,11 +201,13 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 // due to the fact that the new service worker might be working with data fetched by the old one in the same session
 //
 // Beside, when enabling this it would probably be better to also trigger a page reload
-// You can add the following js line to your index.html to achieve the page reload on controller change:
+// You can add the following js code to your app to achieve the page reload on controller change:
 //
-// window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
+// window.navigator.serviceWorker?.addEventListener("controllerchange", function () {
+//     window.location.reload();
+// });
 //
-// This js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
+// Note that this js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
 // so to avoid missing the controller change event
 //
 // Be aware that the reload might happen while the user is using your app and not just at the beginning,
@@ -238,14 +244,13 @@ let _myImmediatelyActivateNewServiceWorker = false;
 //    This is kind of useful, but not reliable, so u still have to properly fill the precache file list yourself if u want your app
 //    to work offline even after the first load
 //
-// If u want to be 100% sure, u can always add the same js line used for @_myImmediatelyActivateNewServiceWorker to reload the page
+// If u want to be 100% sure, u can always add the same js code used for @_myImmediatelyActivateNewServiceWorker to reload the page
 // when a new service worker takes control of the page, but, in this case, it will reload the page 100% even for the very first load,
 // which is annoying but is also what u are trying to achieve with it in this case
 //
-// window.navigator.serviceWorker?.addEventListener("controllerchange", function() { window.navigation.reload()});
-//
-// This js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
-// so to avoid missing the controller change event
+// window.navigator.serviceWorker?.addEventListener("controllerchange", function () {
+//     window.location.reload();
+// });
 //
 // If u don't feel the need to reload the page if it was not initially controlled (and don't want to make the page reload everytime on first load),
 // but still would like to enable @_myImmediatelyActivateNewServiceWorker,
@@ -253,7 +258,17 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // u need to specify a different js code to reload the page,
 // so to avoid reloading it when it was not initially controlled
 //
-// CODE
+// let isBeingControlled = window.navigator.serviceWorker?.controller != null;
+// window.navigator.serviceWorker?.addEventListener("controllerchange", function () {
+//     if (isBeingControlled) {
+//         window.location.reload();
+//     } else {
+//         isBeingControlled = true;
+//     }
+// });
+//
+// Note that this js code should be put in your app so that it is executed as soon as possible (for example in the first lines of your index.html),
+// so to avoid missing the controller change event
 //
 // Be aware that the reload might happen while the user is using your app and not just at the beginning,
 // which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
