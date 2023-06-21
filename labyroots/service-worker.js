@@ -135,6 +135,15 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
 
 
+// If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
+// It's important to note that the updated changes will be available starting from the next page load
+//
+// The files can also be regexp
+let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
+let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
+
+
+
 //----------------
 //----------------
 //----------------
@@ -142,15 +151,6 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 //----------------
 //----------------
 //----------------
-
-
-
-// If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
-// It's important to note that the updated changes will be available starting from the next page load
-//
-// The files can also be regexp
-let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
-let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 
 
 
