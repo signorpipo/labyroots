@@ -39,7 +39,13 @@ let _myPrecacheFiles = [
     "index.html",
     "manifest.json",
     "f0.png",
+    "icon512.png",
     "icon192.png",
+    "icon168.png",
+    "icon144.png",
+    "icon96.png",
+    "icon72.png",
+    "icon48.png",
     "vr-button.svg",
     "ar-button.svg",
     "favicon.ico",
@@ -144,6 +150,14 @@ let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 
 
 
+// Delete all the previous caches when a new service worker is activated
+//
+// For this to work properly, the cache name of the new service worker must be the same as the previous ones,
+// otherwise there is no way to know which cache should actually be deleted
+let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
+
+
+
 //----------------
 //----------------
 //----------------
@@ -178,14 +192,27 @@ let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
 // but since u can precache the bundle.js / wonderland.min.js anyway without url params,
 // if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
-// as a fallback for when the requested url can't be found in any other way
+// as a fallback for when the requested url can't be found in almost any other way
 //
 // The files can also be regexp
-let _myGetFromCacheWithoutURLParamsAsFallbackFilesToInclude = [
+let _myTryCacheWithoutURLParamsAsFallbackFilesToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
-let _myGetFromCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
+let _myTryCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
+
+
+
+// If everything else fail, u can try to check previous caches to see if they might have the file u are requesting
+// I do not advise using this, as previous caches may contain data that is not compatible with the updated version,
+// but it might work for some specific files
+//
+// Beside, for this to work u have to disable @_myDeletePreviousCacheOnNewServiceWorkerActivation, 
+// otherwise previous caches will always be deleted, making this useless
+//
+// The files can also be regexp
+let _myTryPreviousCachesAsFallbackFilesToInclude = _NO_FILE;
+let _myTryPreviousCachesAsFallbackFilesToExclude = _NO_FILE;
 
 
 
@@ -197,14 +224,6 @@ let _myGetFromCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
 // The files can also be regexp
 let _myCacheOpaqueResponseFilesToInclude = _NO_FILE;
 let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
-
-
-
-// Delete all the previous caches when a new service worker is activated
-//
-// For this to work properly, the cache name of the new service worker must be the same as the previous ones,
-// otherwise there is no way to know which cache should actually be deleted
-let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 
 
 
@@ -350,11 +369,11 @@ self.addEventListener("fetch", function (event) {
 // Service Worker Functions
 
 async function _precacheResources() {
-    let cache = await caches.open(_getCacheID());
+    let currentCache = await caches.open(_getCacheID());
 
     for (let fileToPrecache of _myPrecacheFiles) {
         try {
-            await cache.add(fileToPrecache);
+            await currentCache.add(fileToPrecache);
         } catch (error) {
             if (_myLogEnabled) {
                 console.error("Can't precache file: " + fileToPrecache);
@@ -409,8 +428,6 @@ async function _getResource(request) {
         }
 
         if (!cacheTried) {
-            cacheTried = true;
-
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
                 return responseFromCache;
@@ -419,8 +436,8 @@ async function _getResource(request) {
 
         if (request.url != null) {
             let requestURLWithoutURLParams = request.url.split("?")[0];
-            let getWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myGetFromCacheWithoutURLParamsAsFallbackFilesToInclude, _myGetFromCacheWithoutURLParamsAsFallbackFilesToExclude);
-            if (getWithoutURLParams) {
+            let tryCacheWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myTryCacheWithoutURLParamsAsFallbackFilesToInclude, _myTryCacheWithoutURLParamsAsFallbackFilesToExclude);
+            if (tryCacheWithoutURLParams) {
                 let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
                 if (responseFromCacheWithoutParams != null) {
                     if (_myLogEnabled) {
@@ -431,6 +448,8 @@ async function _getResource(request) {
                 }
             }
         }
+
+        // CHECK PREVIOUS CACHES (DOUBLE FOR URL WITHOUT PARAMS)
 
         if (responseFromNetwork != null) {
             return responseFromNetwork;
@@ -464,7 +483,7 @@ async function _fetchFromNetwork(request) {
         networkResponse = null;
 
         if (_myLogEnabled) {
-            console.error("Error fetching from the network: " + request.url);
+            console.error("An error occurred when trying to fetch from the network: " + request.url);
         }
     }
 
@@ -475,12 +494,62 @@ async function _getFromCache(requestURL) {
     let cachedResponse = null;
 
     try {
-        cachedResponse = await caches.match(requestURL);
+        let currentCacheID = _getCacheID();
+        let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when getting from it if it has not already been created
+        if (hasCache) {
+            let currentCache = await caches.open(currentCacheID);
+            cachedResponse = await currentCache.match(requestURL);
+        }
     } catch (error) {
         cachedResponse = null;
 
         if (_myLogEnabled) {
-            console.error("Error getting from the cache: " + requestURL);
+            console.error("An error occurred when trying to get from the cache: " + requestURL);
+        }
+    }
+
+    return cachedResponse;
+}
+
+async function _getFromPreviousCaches(requestURL) {
+    let cachedResponse = null;
+
+    try {
+        let cacheIDsToCheck = _getPreviousCacheIDs();
+
+        for (let cacheIDToCheck of cacheIDsToCheck) {
+            let hasCache = false;
+            try {
+                hasCache = await caches.has(cacheIDToCheck);
+            } catch (error) {
+                hasCache = false;
+            }
+
+            if (hasCache) {
+                let cacheToCheck = null;
+                try {
+                    cacheToCheck = await caches.open(cacheIDToCheck);
+                } catch (error) {
+                    cacheToCheck = null;
+                }
+
+                if (cacheToCheck != null) {
+                    try {
+                        cachedResponse = await cacheToCheck.match(requestURL);
+                        if (cachedResponse != null) {
+                            break;
+                        }
+                    } catch (error) {
+                        cachedResponse = null;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        cachedResponse = null;
+
+        if (_myLogEnabled) {
+            console.error("An error occurred when trying to get from all possible caches: " + requestURL);
         }
     }
 
@@ -490,20 +559,20 @@ async function _getFromCache(requestURL) {
 async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
-        let cache = await caches.open(_getCacheID());
-        cache.put(request, clonedResponse);
+        let currentCache = await caches.open(_getCacheID());
+        currentCache.put(request, clonedResponse);
     } catch (error) {
         // Do nothing
 
         if (_myLogEnabled) {
-            console.error("Error setting response in the cache: " + request.url);
+            console.error("An error occurred when trying to put the response in the cache: " + request.url);
         }
     }
 }
 
 async function _deletePreviousCaches() {
-    let cachesID = await caches.keys();
-    for (let cacheID of cachesID) {
+    let cacheIDs = await caches.keys();
+    for (let cacheID of cacheIDs) {
         if (cacheID.startsWith(_getCacheBaseID()) && cacheID != _getCacheID()) {
             await caches.delete(cacheID);
         }
@@ -532,8 +601,18 @@ function _getCacheBaseID() {
     return _myCacheName + "_v";
 }
 
-function _getCacheID() {
-    return _getCacheBaseID() + _myCacheVersion.toFixed(0);
+function _getCacheID(cacheVersion = _myCacheVersion) {
+    return _getCacheBaseID() + cacheVersion.toFixed(0);
+}
+
+function _getPreviousCacheIDs() {
+    let previousCacheIDs = [];
+
+    for (let i = _myCacheVersion - 1; i > 0; i--) {
+        previousCacheIDs.push(_getCacheID(i));
+    }
+
+    return previousCacheIDs;
 }
 
 
