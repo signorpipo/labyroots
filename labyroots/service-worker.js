@@ -4,11 +4,19 @@ let _NO_FILE = [];
 
 
 //----------------------------
+//----------------------------
+//----------------------------
 // START SERVICE WORKER SETUP
+//----------------------------
+//----------------------------
 //----------------------------
 
 //------------
+//------------
+//------------
 // BASE SETUP
+//------------
+//------------
 //------------
 
 
@@ -126,9 +134,15 @@ let _myTryCacheFirstFilesToInclude = _ANY_FILE;
 let _myTryCacheFirstFilesToExclude = _NO_FILE;
 
 
+
+//----------------
+//----------------
 //----------------
 // ADVANCED SETUP
 //----------------
+//----------------
+//----------------
+
 
 
 // If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
@@ -143,7 +157,7 @@ let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The files can also be regexp
-let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongMoreThan(_myPrecacheFiles, 3));
+let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongerThan(_myPrecacheFiles, 3));
 let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 
 
@@ -286,15 +300,28 @@ let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
 // Enable some extra logs to better understand what's going on and why things might not be working
 let _myLogEnabled = false;
 
+
+
+//--------------------------
+//--------------------------
+//--------------------------
 // END SERVICE WORKER SETUP
+//--------------------------
+//--------------------------
+//--------------------------
 
 
 
 
 
 
-// As of now this is not reset on page reload, but only when using a new tab
-let _myForceTryCacheFirstOnNetworkErrorEnabled = false;
+// Service Worker Variables
+
+let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not reset on page reload, but only when using a new tab
+
+
+
+// Service Worker Events
 
 self.addEventListener("install", function (event) {
     if (_myImmediatelyActivateNewServiceWorker) {
@@ -317,6 +344,10 @@ self.addEventListener("activate", function (event) {
 self.addEventListener("fetch", function (event) {
     event.respondWith(_getResource(event.request));
 });
+
+
+
+// Service Worker Functions
 
 async function _precacheResources() {
     let cache = await caches.open(_getCacheID());
@@ -479,6 +510,10 @@ async function _deletePreviousCaches() {
     }
 }
 
+
+
+// Service Worker Utils
+
 function _isResponseOk(response) {
     return response != null && response.status == 200;
 }
@@ -501,6 +536,10 @@ function _getCacheID() {
     return _getCacheBaseID() + _myCacheVersion.toFixed(0);
 }
 
+
+
+// Cauldron Utils
+
 function _filterFile(file, includeList, excludeList) {
     let validFile = false;
     for (let includeFile of includeList) {
@@ -522,7 +561,7 @@ function _filterFile(file, includeList, excludeList) {
     return validFile;
 }
 
-function _getFilesLongMoreThan(files, lengthThreshold) {
+function _getFilesLongerThan(files, lengthThreshold) {
     let newFiles = files.slice(0);
 
     let index = 0;
