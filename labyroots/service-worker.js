@@ -222,7 +222,7 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 //
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
 // but since u can precache the bundle.js / wonderland.min.js anyway without URL params,
-// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL without the URL params,
+// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL ignoring the URL params,
 // as a fallback for when the requested URL can't be found in any other way
 //
 // Beware that using this could make u use an old resource which might not be compatible with the new ones
@@ -234,11 +234,11 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
 //
 // The resources URLs can also be a regex
-let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude = [
+let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
-let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -499,15 +499,15 @@ async function _getResource(request) {
 
         if (request.url != null && request.url.includes("?")) {
             let requestURLWithoutURLParams = request.url.split("?")[0];
-            let tryCacheWithoutURLParams = _shouldResourceURLBeIncluded(requestURLWithoutURLParams, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude);
-            if (tryCacheWithoutURLParams) {
-                let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
-                if (responseFromCacheWithoutParams != null) {
+            let tryCacheIgnoringURLParams = _shouldResourceURLBeIncluded(requestURLWithoutURLParams, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+            if (tryCacheIgnoringURLParams) {
+                let responseFromCacheIgnoringURLParams = await _getFromCache(request.url, true);
+                if (responseFromCacheIgnoringURLParams != null) {
                     if (_myLogEnabled) {
-                        console.warn("Get from cache without URL params: " + request.url);
+                        console.warn("Get from cache ignoring URL params: " + request.url);
                     }
 
-                    return responseFromCacheWithoutParams;
+                    return responseFromCacheIgnoringURLParams;
                 }
             }
         }
@@ -551,7 +551,7 @@ async function _fetchFromNetwork(request) {
     return networkResponse;
 }
 
-async function _getFromCache(requestURL) {
+async function _getFromCache(requestURL, ignoreURLParams = false, ignoreVaryHeader = false) {
     let cachedResponse = null;
 
     try {
@@ -559,7 +559,7 @@ async function _getFromCache(requestURL) {
         let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when opening it if it has not already been created
         if (hasCache) {
             let currentCache = await caches.open(currentCacheID);
-            cachedResponse = await currentCache.match(requestURL);
+            cachedResponse = await currentCache.match(requestURL, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
         }
     } catch (error) {
         cachedResponse = null;
