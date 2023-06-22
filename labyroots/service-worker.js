@@ -1,5 +1,5 @@
-let _ANY_FILE = [".*"];
-let _NO_FILE = [];
+let _ANY_RESOURCE = [".*"];
+let _NO_RESOURCE = [];
 
 
 
@@ -20,37 +20,48 @@ let _NO_FILE = [];
 //------------
 
 
+
 // The service worker name, used, for example, to identify the caches
+//
 // This should not be changed once u have chosen one, since it could be used, for example, to look for previous caches
 let _myServiceWorkerName = "labyroots";
 
+
+
 // U can increment this to specify that this is a new service worker and should replace the previous one
-// It must be an incremental integer greater than 0
 //
 // Normally this automatically happens if there is at least a change to the service worker file, but if u just want it
 // to activate again (for example, to trigger a feature that works on activation) and don't have any other changes to apply on it,
-// u can increment this version number to make it seems it's a new one
+// u can increment this version number to make it seems it's a new oneù
+//
+// It must be an incremental integer greater than 0
 let _myServiceWorkerVersion = 1;
 
+
+
 // The cache version
-// It must be an incremental integer greater than 0
 //
 // U can increment this when the previous cache is no longer valid due to some changes to your app,
 // which might not be compatible anymore with the previous version and could create unpredictable behaviors,
-// since u could get a mix of old (from the cache) and new (from the network) files
+// since u could get a mix of old (from the cache) and new (from the network) resources
+//
+// It must be an incremental integer greater than 0
 let _myCacheVersion = 1;
 
 
 
-// This is the list of files u want to precache, that means they will be cached on the first load,
+// This is the list of the resources u want to precache, that means they will be cached on the first load,
 // when the service worker is installing and can't still catch the fetch events
 //
 // Properly filling this list can potentially make it so your app is ready to work offline on first load,
 // otherwise it might require at least a second load, where the service worker will be able to actually catch
 // the fetch events and cache the responses itself
+// In general, u should precache at least every static resource u have in your app if u want to make it work offline after the first load
 //
-// The file name must match the exact name of the file u want to precache (excluding the base URL)
-let _myPrecacheFiles = [
+// The resources URLs are relative to the service worker location (which means u have to exclude the base URL),
+// and must match the exact name of the resource u want to precache
+// For example, for "http://localhost:8080/assets/wondermelon.png" u have to specify "assets/wondermelon.png"
+let _myResourceURLsToPrecache = [
     "/",
     "index.html",
     "manifest.json",
@@ -141,19 +152,19 @@ let _myPrecacheFiles = [
 
 
 
-// Which files should be cached
+// Which resource should be cached
 //
-// The files can also be regexp
-let _myCacheFilesToInclude = _ANY_FILE;
-let _myCacheFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myCacheResourceURLsToInclude = _ANY_RESOURCE;
+let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
 
 // Used to specify if you want to first try the cache or always check the network for updates
 //
-// The files can also be regexp
-let _myTryCacheFirstFilesToInclude = _ANY_FILE;
-let _myTryCacheFirstFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE;
+let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -164,9 +175,9 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 // with a mix of both
 // If this is the case, it's better to just increase the cache version, which will cache the new version from scratch
 //
-// The files can also be regexp
-let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
-let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myUpdateCacheInBackgroundResourceURLsToInclude = _ANY_RESOURCE;
+let _myUpdateCacheInBackgroundResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -190,36 +201,36 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
-// The files can also be regexp
-let _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude = _replaceSpecialCharacters(_getFilesLongerThan(_myPrecacheFiles, 3));
-let _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _replaceSpecialCharacters(_getResourceURLsLongerThan(_myResourceURLsToPrecache, 3));
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
 
 // If a network error happens on any request, this make it so
-// that the cache will be tried first by default for these files
+// that the cache will be tried first by default for these resources
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
-// The files can also be regexp
-let _myForceTryCacheFirstOnNetworkErrorFilesToInclude = _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude;
-let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude;
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
 
 // This is a bit specific, but, for example, even if with wonderland u can cache the bundle.js file and the wonderland.min.js file,
-// wonderland normally try to fetch it using url params and the time of the deploy (possibly to force a cache reload for a new version)
+// wonderland normally try to fetch it using URL params and the time of the deploy (possibly to force a cache reload for a new version)
 //
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
-// but since u can precache the bundle.js / wonderland.min.js anyway without url params,
-// if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
-// as a fallback for when the requested url can't be found in any other way
+// but since u can precache the bundle.js / wonderland.min.js anyway without URL params,
+// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL without the URL params,
+// as a fallback for when the requested URL can't be found in any other way
 //
-// The files can also be regexp
-let _myTryCacheWithoutURLParamsAsFallbackFilesToInclude = [
+// The resources URLs can also be a regex
+let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
-let _myTryCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
+let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -228,9 +239,9 @@ let _myTryCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
 // I also advise u to enable the cache update in background when caching opaque responses,
 // so to avoid caching a bad opaque response forever
 //
-// The files can also be regexp
-let _myCacheOpaqueResponseFilesToInclude = _NO_FILE;
-let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
+// The resources URLs can also be a regex
+let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
+let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -281,7 +292,7 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // The advantages of using this are:
 // 1. If the page goes offline on the first load and u need to fetch data, the service worker can already try to use the cache
 // 2. The service worker can already cache some data which might be hard (if not impossible) to precache otherwise
-//    This is kind of useful, but not reliable, so u still have to properly fill the precache file list yourself if u want your app
+//    This is kind of useful, but not reliable, so u still have to properly fill the precache resource URL list yourself if u want your app
 //    to work offline even after the first load
 //
 // If u want to be 100% sure, u can always add the same js code used for @_myImmediatelyActivateNewServiceWorker to reload the page
@@ -378,12 +389,12 @@ self.addEventListener("fetch", function (event) {
 async function _precacheResources() {
     let currentCache = await caches.open(_getCacheID());
 
-    for (let fileToPrecache of _myPrecacheFiles) {
+    for (let resourceToPrecache of _myResourceURLsToPrecache) {
         try {
-            await currentCache.add(fileToPrecache);
+            await currentCache.add(resourceToPrecache);
         } catch (error) {
             if (_myLogEnabled) {
-                console.error("Can't precache file: " + fileToPrecache);
+                console.error("Can't precache resource: " + resourceToPrecache);
             }
         }
     }
@@ -392,8 +403,8 @@ async function _precacheResources() {
 async function _getResource(request) {
     let cacheTried = false;
 
-    let tryCacheFirst = _filterFile(request.url, _myTryCacheFirstFilesToInclude, _myTryCacheFirstFilesToExclude);
-    let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _filterFile(request.url, _myForceTryCacheFirstOnNetworkErrorFilesToInclude, _myForceTryCacheFirstOnNetworkErrorFilesToExclude);
+    let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
+    let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
     if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
         cacheTried = true;
@@ -402,7 +413,7 @@ async function _getResource(request) {
         try {
             let responseFromCache = await _getFromCache(request.url);
             if (responseFromCache != null) {
-                let updateCacheInBackground = _filterFile(request.url, _myUpdateCacheInBackgroundFilesToInclude, _myUpdateCacheInBackgroundFilesToExclude);
+                let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
                 if (updateCacheInBackground) {
                     _fetchFromNetworkAndUpdateCache(request);
                 }
@@ -424,7 +435,7 @@ async function _getResource(request) {
         return responseFromNetwork;
     } else {
         if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
-            let enableForceTryCacheFirstOnNetworkError = _filterFile(request.url, _myEnableForceTryCacheFirstOnNetworkErrorFilesToInclude, _myEnableForceTryCacheFirstOnNetworkErrorFilesToExclude);
+            let enableForceTryCacheFirstOnNetworkError = _shouldResourceURLBeIncluded(request.url, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
             if (enableForceTryCacheFirstOnNetworkError) {
                 _myForceTryCacheFirstOnNetworkErrorEnabled = true;
 
@@ -443,12 +454,12 @@ async function _getResource(request) {
 
         if (request.url != null) {
             let requestURLWithoutURLParams = request.url.split("?")[0];
-            let tryCacheWithoutURLParams = _filterFile(requestURLWithoutURLParams, _myTryCacheWithoutURLParamsAsFallbackFilesToInclude, _myTryCacheWithoutURLParamsAsFallbackFilesToExclude);
+            let tryCacheWithoutURLParams = _shouldResourceURLBeIncluded(requestURLWithoutURLParams, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude);
             if (tryCacheWithoutURLParams) {
                 let responseFromCacheWithoutParams = await _getFromCache(requestURLWithoutURLParams);
                 if (responseFromCacheWithoutParams != null) {
                     if (_myLogEnabled) {
-                        console.warn("Get from cache without url params: " + request.url);
+                        console.warn("Get from cache without URL params: " + request.url);
                     }
 
                     return responseFromCacheWithoutParams;
@@ -550,8 +561,8 @@ function _isResponseOpaque(response) {
 }
 
 function _shouldResponseBeCached(request, response) {
-    let shouldResponseBeCached = _filterFile(request.url, _myCacheFilesToInclude, _myCacheFilesToExclude);
-    let shouldOpaqueResponseBeCached = _filterFile(request.url, _myCacheOpaqueResponseFilesToInclude, _myCacheOpaqueResponseFilesToExclude);
+    let shouldResponseBeCached = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
+    let shouldOpaqueResponseBeCached = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
     return shouldResponseBeCached && (request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response))));
 }
 
@@ -567,47 +578,47 @@ function _getCacheID() {
 
 // Cauldron Utils
 
-function _filterFile(file, includeList, excludeList) {
-    let validFile = false;
-    for (let includeFile of includeList) {
-        if (file.match(new RegExp(includeFile)) != null) {
-            validFile = true;
+function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
+    let includeResourseURL = false;
+    for (let includeURL of includeList) {
+        if (resourceURL.match(new RegExp(includeURL)) != null) {
+            includeResourseURL = true;
             break;
         }
     }
 
-    if (validFile) {
-        for (let excludeFile of excludeList) {
-            if (file.match(new RegExp(excludeFile)) != null) {
-                validFile = false;
+    if (includeResourseURL) {
+        for (let excludeURL of excludeList) {
+            if (resourceURL.match(new RegExp(excludeURL)) != null) {
+                includeResourseURL = false;
                 break;
             }
         }
     }
 
-    return validFile;
+    return includeResourseURL;
 }
 
-function _getFilesLongerThan(files, lengthThreshold) {
-    let newFiles = files.slice(0);
+function _getResourceURLsLongerThan(resourceURLs, lengthThreshold) {
+    let newResourceURLs = resourceURLs.slice(0);
 
     let index = 0;
     do {
-        index = newFiles.findIndex((file) => file.length <= lengthThreshold);
+        index = newResourceURLs.findIndex((resourceURL) => resourceURL.length <= lengthThreshold);
 
-        if (index >= 0 && index < newFiles.length) {
-            newFiles.splice(index, 1);
+        if (index >= 0 && index < newResourceURLs.length) {
+            newResourceURLs.splice(index, 1);
         }
     } while (index >= 0);
 
-    return newFiles;
+    return newResourceURLs;
 }
 
-function _replaceSpecialCharacters(files) {
-    for (let i = 0; i < files.length; i++) {
-        files[i] = files[i].replaceAll(".", "\\.");
-        files[i] = files[i].replaceAll(" ", "%20");
+function _replaceSpecialCharacters(resourceURLs) {
+    for (let i = 0; i < resourceURLs.length; i++) {
+        resourceURLs[i] = resourceURLs[i].replaceAll(".", "\\.");
+        resourceURLs[i] = resourceURLs[i].replaceAll(" ", "%20");
     }
 
-    return files;
+    return resourceURLs;
 }
