@@ -20,9 +20,25 @@ let _NO_FILE = [];
 //------------
 
 
+// The service worker name, used, for example, to identify the caches
+// This should not be changed once u have chosen one, since it could be used, for example, to look for previous caches
+let _myServiceWorkerName = "labyroots";
 
-let _myCacheName = "labyroots";     // This should not be changed, since it could be used to look for old caches (not implemented yet)
-let _myCacheVersion = 1;            // This must be an incremental integer greater than 0
+// U can increment this to specify that this is a new service worker and should replace the previous one
+// It must be an incremental integer greater than 0
+//
+// Normally this automatically happens if there is at least a change to the service worker file, but if u just want it
+// to activate again (for example, to trigger a feature that works on activation) and don't have any other changes to apply on it,
+// u can increment this version number to make it seems it's a new one
+let _myServiceWorkerVersion = 1;
+
+// The cache version
+// It must be an incremental integer greater than 0
+//
+// U can increment this when the previous cache is no longer valid due to some changes to your app,
+// which might not be compatible anymore with the previous version and could create unpredictable behaviors,
+// since u could get a mix of old (from the cache) and new (from the network) files
+let _myCacheVersion = 1;
 
 
 
@@ -144,6 +160,10 @@ let _myTryCacheFirstFilesToExclude = _NO_FILE;
 // If the request tries the cache first, this make it so the cache will be updated (even thought the old cached resource is returned)
 // It's important to note that the updated changes will be available starting from the next page load
 //
+// Beware that this should not be used if the new resources might not be compatible with the old ones, since u could end up
+// with a mix of both
+// If this is the case, it's better to just increase the cache version, which will cache the new version from scratch
+//
 // The files can also be regexp
 let _myUpdateCacheInBackgroundFilesToInclude = _ANY_FILE;
 let _myUpdateCacheInBackgroundFilesToExclude = _NO_FILE;
@@ -214,11 +234,11 @@ let _myCacheOpaqueResponseFilesToExclude = _NO_FILE;
 
 
 
-// Usually a new service worker is activated when there are no more tabs using the old one
+// Usually a new service worker is activated when there are no more tabs using the previous one
 // This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
 //
 // This flag make it so the service worker is immediately (as soon as possible) activated (without the need to refresh the page), but can cause issues
-// due to the fact that the new service worker might be working with data fetched by the old one in the same session
+// due to the fact that the new service worker might be working with data fetched by the previous one in the same session
 //
 // Beside, when enabling this it would probably be better to also trigger a page reload
 // You can add the following js code to your app to achieve the page reload on controller change:
@@ -536,7 +556,7 @@ function _shouldResponseBeCached(request, response) {
 }
 
 function _getCacheBaseID() {
-    return _myCacheName + "_v";
+    return _myServiceWorkerName + "_v";
 }
 
 function _getCacheID() {
