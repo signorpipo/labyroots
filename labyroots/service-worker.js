@@ -192,7 +192,7 @@ let _myForceTryCacheFirstOnNetworkErrorFilesToExclude = _NO_FILE;
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
 // but since u can precache the bundle.js / wonderland.min.js anyway without url params,
 // if u put the bundle.js/wonderland.min.js files here, the service worker will try to look in the cache for the requested url without the url params,
-// as a fallback for when the requested url can't be found in almost any other way
+// as a fallback for when the requested url can't be found in any other way
 //
 // The files can also be regexp
 let _myTryCacheWithoutURLParamsAsFallbackFilesToInclude = [
@@ -200,19 +200,6 @@ let _myTryCacheWithoutURLParamsAsFallbackFilesToInclude = [
     "wonderland.min\\.js"
 ];
 let _myTryCacheWithoutURLParamsAsFallbackFilesToExclude = _NO_FILE;
-
-
-
-// If everything else fail, u can try to check previous caches to see if they might have the file u are requesting
-// I do not advise using this, as previous caches may contain data that is not compatible with the updated version,
-// but it might work for some specific files
-//
-// Beside, for this to work u have to disable @_myDeletePreviousCacheOnNewServiceWorkerActivation, 
-// otherwise previous caches will always be deleted, making this useless
-//
-// The files can also be regexp
-let _myTryPreviousCachesAsFallbackFilesToInclude = _NO_FILE;
-let _myTryPreviousCachesAsFallbackFilesToExclude = _NO_FILE;
 
 
 
@@ -449,8 +436,6 @@ async function _getResource(request) {
             }
         }
 
-        // CHECK PREVIOUS CACHES (DOUBLE FOR URL WITHOUT PARAMS)
-
         if (responseFromNetwork != null) {
             return responseFromNetwork;
         } else {
@@ -511,59 +496,12 @@ async function _getFromCache(requestURL) {
     return cachedResponse;
 }
 
-async function _getFromPreviousCaches(requestURL) {
-    let cachedResponse = null;
-
-    try {
-        let cacheIDsToCheck = _getPreviousCacheIDs();
-
-        for (let cacheIDToCheck of cacheIDsToCheck) {
-            let hasCache = false;
-            try {
-                hasCache = await caches.has(cacheIDToCheck);
-            } catch (error) {
-                hasCache = false;
-            }
-
-            if (hasCache) {
-                let cacheToCheck = null;
-                try {
-                    cacheToCheck = await caches.open(cacheIDToCheck);
-                } catch (error) {
-                    cacheToCheck = null;
-                }
-
-                if (cacheToCheck != null) {
-                    try {
-                        cachedResponse = await cacheToCheck.match(requestURL);
-                        if (cachedResponse != null) {
-                            break;
-                        }
-                    } catch (error) {
-                        cachedResponse = null;
-                    }
-                }
-            }
-        }
-    } catch (error) {
-        cachedResponse = null;
-
-        if (_myLogEnabled) {
-            console.error("An error occurred when trying to get from all possible caches: " + requestURL);
-        }
-    }
-
-    return cachedResponse;
-}
-
 async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
         let currentCache = await caches.open(_getCacheID());
         currentCache.put(request, clonedResponse);
     } catch (error) {
-        // Do nothing
-
         if (_myLogEnabled) {
             console.error("An error occurred when trying to put the response in the cache: " + request.url);
         }
@@ -601,18 +539,8 @@ function _getCacheBaseID() {
     return _myCacheName + "_v";
 }
 
-function _getCacheID(cacheVersion = _myCacheVersion) {
-    return _getCacheBaseID() + cacheVersion.toFixed(0);
-}
-
-function _getPreviousCacheIDs() {
-    let previousCacheIDs = [];
-
-    for (let i = _myCacheVersion - 1; i > 0; i--) {
-        previousCacheIDs.push(_getCacheID(i));
-    }
-
-    return previousCacheIDs;
+function _getCacheID() {
+    return _getCacheBaseID() + _myCacheVersion.toFixed(0);
 }
 
 
