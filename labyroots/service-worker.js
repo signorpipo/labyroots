@@ -225,6 +225,14 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL without the URL params,
 // as a fallback for when the requested URL can't be found in any other way
 //
+// Beware that using this could make u use an old resource which might not be compatible with the new ones
+// U should use this only when u know it would not make a difference to use the URL params or if the old resource
+// is still ok to use and better than a network error
+//
+// If u want to use this just to fix the precache issue, but are afraid of the issues related to this feature,
+// it might be better to just specify in the precache resource URL the URL params that u know will be used for that resource,
+// if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
+//
 // The resources URLs can also be a regex
 let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude = [
     "bundle\\.js",
@@ -489,7 +497,7 @@ async function _getResource(request) {
             }
         }
 
-        if (request.url != null) {
+        if (request.url != null && request.url.includes("?")) {
             let requestURLWithoutURLParams = request.url.split("?")[0];
             let tryCacheWithoutURLParams = _shouldResourceURLBeIncluded(requestURLWithoutURLParams, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToInclude, _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude);
             if (tryCacheWithoutURLParams) {
