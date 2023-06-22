@@ -234,6 +234,34 @@ let _myTryCacheWithoutURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// Use this if u:
+// - have updated your app
+// - are trying cache first
+// - do not feel the need to update the cache version since the new update is compatible with the previous version
+// - would like the new resources to be available as soon as possible, without waiting for the cache to be updated in background
+// or
+// - u are not updating the cache in background, which would mean the new resources will never be fetched again
+//
+// This feature makes it so that when the new service worker is installed, these resources will not try the cache first
+// until they have been fetched again from the network with success
+// Basically, this is a way to avoid trying the cache first as long as the resources have not been updated, but still give u
+// the chance to use the cache if the fetch fails, since u are not updating the cache version
+//
+// In general, u should just update the cache version, but if just a few resources have been updated, u don't want
+// to make the user wait for everything to be fetched again, and u want the new resources to be available as soon as possible,
+// u might want to use this
+//
+// This is safe to use as long as the new resources are compatible with the current cached ones
+// Beware that, until u increase the cache version, the included resource URLs should only "grow",
+// because a user might be coming from an even older service worker version which still has the same cache version,
+// and should therefore able to refetch every needed resources, not just the one changed between the current and the very last version
+//
+// The resources URLs can also be a regex
+let _myRefetchFromNetworkResourceURLsToInclude = _NO_RESOURCE;
+let _myRefetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Used to cache opaque responses
 // Caching opaque responses can lead to a number of issues so use this with caution
 // I also advise u to enable the cache update in background when caching opaque responses,
@@ -370,8 +398,10 @@ self.addEventListener("install", function (event) {
 
 self.addEventListener("activate", function (event) {
     if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
-        event.waitUntil(_deletePreviousCaches())
+        event.waitUntil(_deletePreviousCaches());
     }
+
+    event.waitUntil(_clearRefetchFromNetworkChecklist());
 
     if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
         self.clients.claim();
@@ -403,33 +433,40 @@ async function _precacheResources() {
 async function _getResource(request) {
     let cacheTried = false;
 
-    let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
-    let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
+    let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
 
-    if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
-        cacheTried = true;
+    if (!refetchFromNetwork) {
+        let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
+        let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
-        // Try to get the resource from the cache
-        try {
-            let responseFromCache = await _getFromCache(request.url);
-            if (responseFromCache != null) {
-                let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
-                if (updateCacheInBackground) {
-                    _fetchFromNetworkAndUpdateCache(request);
+        if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
+            cacheTried = true;
+
+            // Try to get the resource from the cache
+            try {
+                let responseFromCache = await _getFromCache(request.url);
+                if (responseFromCache != null) {
+                    let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
+                    if (updateCacheInBackground) {
+                        _fetchFromNetworkAndUpdateCache(request);
+                    }
+
+                    return responseFromCache;
                 }
-
-                return responseFromCache;
+            } catch (error) {
+                // Do nothing, possibly get from cache failed so we should go on and try with the network
             }
-        } catch (error) {
-            // Do nothing, possibly get from cache failed so we should go on and try with the network
         }
     }
 
     // Try to get the resource from the network
     let responseFromNetwork = await _fetchFromNetwork(request);
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResponseBeCached(request, responseFromNetwork)) {
+        if (_shouldResourceBeCached(request, responseFromNetwork)) {
             _putInCache(request, responseFromNetwork);
+            if (refetchFromNetwork) {
+                _tickOffFromRefetchChecklist(request.url);
+            }
         }
 
         return responseFromNetwork;
@@ -482,7 +519,7 @@ async function _fetchFromNetworkAndUpdateCache(request) {
     let responseFromNetwork = await _fetchFromNetwork(request);
 
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResponseBeCached(request, responseFromNetwork)) {
+        if (_shouldResourceBeCached(request, responseFromNetwork)) {
             _putInCache(request, responseFromNetwork);
         }
     }
@@ -511,7 +548,7 @@ async function _getFromCache(requestURL) {
 
     try {
         let currentCacheID = _getCacheID();
-        let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when getting from it if it has not already been created
+        let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when opening it if it has not already been created
         if (hasCache) {
             let currentCache = await caches.open(currentCacheID);
             cachedResponse = await currentCache.match(requestURL);
@@ -531,7 +568,7 @@ async function _putInCache(request, response) {
     try {
         let clonedResponse = response.clone();
         let currentCache = await caches.open(_getCacheID());
-        currentCache.put(request, clonedResponse);
+        await currentCache.put(request, clonedResponse);
     } catch (error) {
         if (_myLogEnabled) {
             console.error("An error occurred when trying to put the response in the cache: " + request.url);
@@ -540,11 +577,31 @@ async function _putInCache(request, response) {
 }
 
 async function _deletePreviousCaches() {
-    let cacheIDs = await caches.keys();
-    for (let cacheID of cacheIDs) {
-        if (cacheID.startsWith(_getCacheBaseID()) && cacheID != _getCacheID()) {
-            await caches.delete(cacheID);
+    for (let i = 1; i < _myCacheVersion; i++) {
+        try {
+            await caches.delete(_getCacheID(i));
+        } catch (error) {
+            // Do nothing
         }
+    }
+}
+
+async function _tickOffFromRefetchChecklist(resourceURL) {
+    try {
+        let refetchChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
+        await refetchChecklist.put(new Request(resourceURL), new Response(null));
+    } catch (error) {
+        if (_myLogEnabled) {
+            console.error("An error occurred when trying to put the response in the cache: " + request.url);
+        }
+    }
+}
+
+async function _clearRefetchFromNetworkChecklist() {
+    try {
+        await caches.delete(_getRefetchFromNetworkChecklistID());
+    } catch (error) {
+        // Do nothing
     }
 }
 
@@ -560,18 +617,52 @@ function _isResponseOpaque(response) {
     return response != null && response.status == 0 && response.type.includes("opaque");
 }
 
-function _shouldResponseBeCached(request, response) {
-    let shouldResponseBeCached = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
-    let shouldOpaqueResponseBeCached = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
-    return shouldResponseBeCached && (request.method == "GET" && (_isResponseOk(response) || (shouldOpaqueResponseBeCached && _isResponseOpaque(response))));
+function _shouldResourceBeCached(request, response) {
+    let cacheResource = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
+    let cacheResourceWithOpaqueResponse = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
+    return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponse && _isResponseOpaque(response))));
 }
 
 function _getCacheBaseID() {
-    return _myServiceWorkerName + "_v";
+    return _myServiceWorkerName + "_cache_v";
 }
 
-function _getCacheID() {
-    return _getCacheBaseID() + _myCacheVersion.toFixed(0);
+function _getCacheID(cacheVersion = _myCacheVersion) {
+    return _getCacheBaseID() + cacheVersion.toFixed(0);
+}
+
+async function _shouldResourceBeRefetchedFromNetwork(resourceURL) {
+    let refetchResourceFromNetwork = false;
+
+    try {
+        refetchResourceFromNetwork = _shouldResourceURLBeIncluded(resourceURL, _myRefetchFromNetworkResourceURLsToInclude, _myRefetchFromNetworkResourceURLsToExclude);
+
+        if (refetchResourceFromNetwork) {
+            let refetechChecklistID = _getRefetchFromNetworkChecklistID();
+
+            let hasChecklist = await caches.has(refetechChecklistID); // Avoid creating the checklist when opening it if it has not already been created
+            if (hasChecklist) {
+                let refetchChecklist = await caches.open(refetechChecklistID);
+                let refetchChecklistResult = await refetchChecklist.match(resourceURL);
+
+                if (refetchChecklistResult != null) {
+                    refetchResourceFromNetwork = false; // It has already been ticked off since it is in the checklist "cache"
+                }
+            }
+        }
+    } catch (error) {
+        refetchResourceFromNetwork = false;
+
+        if (_myLogEnabled) {
+            console.error("An error occurred when trying to check if the resource should be refetched: " + request.url);
+        }
+    }
+
+    return refetchResourceFromNetwork;
+}
+
+function _getRefetchFromNetworkChecklistID() {
+    return _myServiceWorkerName + "_refetch_checklist";
 }
 
 
