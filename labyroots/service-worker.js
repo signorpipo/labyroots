@@ -257,9 +257,26 @@ let _myTryCacheIgnoringVaryHeaderResourceURLsToExclude = _NO_RESOURCE;
 // This is the same as @_myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude but as a fallback
 // for when the requested URL can't be found in any other way
 //
+// One of the reasons to use @_myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude instead of the fallback version,
+// is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
+// even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
+//
 // The resources URLs can also be a regex
 let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
 let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// This is the same as @_myTryCacheIgnoringVaryHeaderResourceURLsToInclude but as a fallback
+// for when the requested URL can't be found in any other way
+//
+// One of the reasons to use @_myTryCacheIgnoringVaryHeaderResourceURLsToInclude instead of the fallback version,
+// is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
+// even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
+//
+// The resources URLs can also be a regex
+let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -522,18 +539,16 @@ async function _getResource(request) {
             }
         }
 
-        if (request.url != null && request.url.includes("?")) {
-            let requestURLWithoutURLParams = request.url.split("?")[0];
-            let tryCacheIgnoringURLParams = _shouldResourceURLBeIncluded(requestURLWithoutURLParams, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-            if (tryCacheIgnoringURLParams) {
-                let responseFromCacheIgnoringURLParams = await _getFromCache(request.url, true);
-                if (responseFromCacheIgnoringURLParams != null) {
-                    if (_myLogEnabled) {
-                        console.warn("Get from cache ignoring URL params: " + request.url);
-                    }
-
-                    return responseFromCacheIgnoringURLParams;
+        let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+        let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+        if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
+            let fallbackResponseFromCache = await _getFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+            if (fallbackResponseFromCache != null) {
+                if (_myLogEnabled) {
+                    console.warn("Get from cache using a fallback: " + request.url);
                 }
+
+                return fallbackResponseFromCache;
             }
         }
 
