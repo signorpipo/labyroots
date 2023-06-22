@@ -222,8 +222,7 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 //
 // This make it so that u can't precache those files (even if they will be cached on the second load anyway),
 // but since u can precache the bundle.js / wonderland.min.js anyway without URL params,
-// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL ignoring the URL params,
-// as a fallback for when the requested URL can't be found in any other way
+// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL ignoring the URL params
 //
 // Beware that using this could make u use an old resource which might not be compatible with the new ones
 // U should use this only when u know it would not make a difference to use the URL params or if the old resource
@@ -234,10 +233,32 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = [
+let _myTryCacheIgnoringURLParamsResourceURLsToInclude = [
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
+let _myTryCacheIgnoringURLParamsResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// A vary header is used to specify that the resource might be different based on some factors,
+// like if the resource is being requested from desktop or mobile
+// This could prevent those resources to be retrieved from the cache, since the vary header of the request
+// and the cached resource might not match
+//
+// If u are sure that this does not matter, u can use this to ignore the vary header
+//
+// The resources URLs can also be a regex
+let _myTryCacheIgnoringVaryHeaderResourceURLsToInclude = _NO_RESOURCE;
+let _myTryCacheIgnoringVaryHeaderResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// This is the same as @_myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude but as a fallback
+// for when the requested URL can't be found in any other way
+//
+// The resources URLs can also be a regex
+let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
 let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -452,7 +473,9 @@ async function _getResource(request) {
 
             // Try to get the resource from the cache
             try {
-                let responseFromCache = await _getFromCache(request.url);
+                let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+                let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+                let responseFromCache = await _getFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
                 if (responseFromCache != null) {
                     let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
                     if (updateCacheInBackground) {
@@ -491,7 +514,9 @@ async function _getResource(request) {
         }
 
         if (!cacheTried) {
-            let responseFromCache = await _getFromCache(request.url);
+            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+            let responseFromCache = await _getFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
             if (responseFromCache != null) {
                 return responseFromCache;
             }
