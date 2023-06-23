@@ -61,9 +61,9 @@ let _myCacheVersion = 1;
 // the fetch events and cache the responses itself
 // In general, u should precache at least every static resource u have in your app if u want to make it work offline after the first load
 //
-// The resources URLs are relative to the service worker location (which means u have to exclude the base URL),
-// and must match the exact name of the resource u want to precache
-// For example, for "http://localhost:8080/assets/wondermelon.png" u have to specify "assets/wondermelon.png"
+// The resources URLs can be relative to the service worker location, so, for example,
+// for "https://signor-pipo.itch.io/assets/wondermelon.png" u can just specify "assets/wondermelon.png"
+// The resources URLs can't be a regex in this case, since it needs to know the specific resource to fetch
 let _myResourceURLsToPrecache = [
     "/",
     "index.html",
@@ -147,10 +147,10 @@ let _myResourceURLsToPrecache = [
     "1a12637b-0f5b-48ce-90d8-35460859d122.png",
     "00b6ab52-a892-4c6f-a4d8-f0f0960c876b.png",
     "c973a9dd-ce1c-458b-9b02-97c129d9f321.png",
-    //"ipns/lib.zesty.market/zesty-formats.js",
-    //"ipfs/QmRiTKTFNDbe8tq7xXdWcyXqRAWsKKgbGdiz6wofrCceua",
-    //"subgraphs/name/zestymarket/zesty-market-graph-matic",
-    //"api/v1/space/223"
+    "https://ipfs.io/ipns/libv2.zesty.market/zesty-formats.js",
+    "https://ipfs.io/ipns/libv2.zesty.market/zesty-networking.js",
+    "https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD",
+    "https://zesty-storage-prod.s3.amazonaws.com/images/zesty/zesty-banner-tall-transparent.png"
 ];
 
 
