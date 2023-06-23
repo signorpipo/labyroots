@@ -1,6 +1,9 @@
 let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
+let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice(0, self.location.href.lastIndexOf("/"))) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_HOST = [_escapeRegex(self.location.origin) + ".*"];
+
 
 
 //----------------------------
@@ -202,7 +205,7 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _replaceSpecialCharacters(_getResourceURLsLongerThan(_myResourceURLsToPrecache, 3));
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_HOST;
 let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -212,7 +215,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURC
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The resources URLs can also be a regex
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude;
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_HOST;
 let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -738,26 +741,6 @@ function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
     return includeResourseURL;
 }
 
-function _getResourceURLsLongerThan(resourceURLs, lengthThreshold) {
-    let newResourceURLs = resourceURLs.slice(0);
-
-    let index = 0;
-    do {
-        index = newResourceURLs.findIndex((resourceURL) => resourceURL.length <= lengthThreshold);
-
-        if (index >= 0 && index < newResourceURLs.length) {
-            newResourceURLs.splice(index, 1);
-        }
-    } while (index >= 0);
-
-    return newResourceURLs;
-}
-
-function _replaceSpecialCharacters(resourceURLs) {
-    for (let i = 0; i < resourceURLs.length; i++) {
-        resourceURLs[i] = resourceURLs[i].replaceAll(".", "\\.");
-        resourceURLs[i] = resourceURLs[i].replaceAll(" ", "%20");
-    }
-
-    return resourceURLs;
+function _escapeRegex(regexToEscape) {
+    return regexToEscape.replace(new RegExp("[/\\-\\\\^$*+?.()|[\\]{}]", "g"), "\\$&");
 }
