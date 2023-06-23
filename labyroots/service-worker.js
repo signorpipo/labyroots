@@ -487,15 +487,8 @@ async function _fetch(request) {
     }
 
     // Try to get the resource from the network
-    let responseFromNetwork = await _fetchFromNetwork(request);
+    let responseFromNetwork = await _fetchFromNetworkAndUpdateCache(request, refetchFromNetwork);
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResourceBeCached(request, responseFromNetwork)) {
-            _putInCache(request, responseFromNetwork);
-            if (refetchFromNetwork) {
-                _tickOffFromRefetchChecklist(request.url);
-            }
-        }
-
         return responseFromNetwork;
     } else {
         if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
@@ -553,7 +546,7 @@ async function _precacheResources() {
     for (let resourceURLToPrecache of _myResourceURLsToPrecache) {
         promisesToAwait.push(new Promise(async function (resolve) {
             try {
-                await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), true);
+                await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), false, false);
             } catch (error) {
                 if (_myLogEnabled) {
                     console.error("Failed to fetch resource to precache: " + resourceURLToPrecache);
@@ -567,15 +560,23 @@ async function _precacheResources() {
     await Promise.all(promisesToAwait);
 }
 
-async function _fetchFromNetworkAndUpdateCache(request, awaitPutInCache = false) {
+async function _fetchFromNetworkAndUpdateCache(request, refetchFromNetwork = false, awaitOnlyFetchFromNetwork = true) {
     let responseFromNetwork = await _fetchFromNetwork(request);
 
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
         if (_shouldResourceBeCached(request, responseFromNetwork)) {
-            if (awaitPutInCache) {
+            if (!awaitOnlyFetchFromNetwork) {
                 await _putInCache(request, responseFromNetwork);
             } else {
                 _putInCache(request, responseFromNetwork);
+            }
+
+            if (refetchFromNetwork) {
+                if (!awaitOnlyFetchFromNetwork) {
+                    await _tickOffFromRefetchFromNetworkChecklist(request.url);
+                } else {
+                    _tickOffFromRefetchFromNetworkChecklist(request.url);
+                }
             }
         }
     }
@@ -642,7 +643,7 @@ async function _deletePreviousCaches() {
     }
 }
 
-async function _tickOffFromRefetchChecklist(resourceURL) {
+async function _tickOffFromRefetchFromNetworkChecklist(resourceURL) {
     try {
         let refetchChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
         await refetchChecklist.put(new Request(resourceURL), new Response(null));
