@@ -4,7 +4,8 @@ let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
 let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice(0, self.location.href.lastIndexOf("/"))) + ".*"];
-let _ANY_RESOURCE_FROM_CURRENT_HOST = [_escapeRegex(self.location.origin) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = [_escapeRegex(self.location.origin) + ".*"];
+let _ANY_RESOURCE_WITH_RELATIVE_URL = [new RegExp("^(?!www\\.|http[s]?://|ftp[s]?://|ssh://|[A-Za-z]:\\\\|//)")];
 
 // #endregion Service Worker Constants
 
@@ -198,7 +199,7 @@ let _myLogEnabled = false;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_HOST;
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
 let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -208,7 +209,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURC
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The resources URLs can also be a regex
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_HOST;
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
 let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
