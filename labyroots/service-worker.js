@@ -448,6 +448,8 @@ async function _activate() {
         await _deletePreviousCaches();
     }
 
+    await _copyTempCacheToCurrentCache();
+
     await _deletePreviousRefetchFromNetworkChecklists();
 
     if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
@@ -541,14 +543,22 @@ async function _fetch(request) {
 
 // #region Service Worker Functions
 
-async function _precacheResources() {
+async function _precacheResources(useTempCacheIfAlreadyExists = true) {
     if (_myResourceURLsToPrecache.length == 0) return;
 
-    let cacheAlreadyExists = await caches.has(_getCacheID());
+    let cacheAlreadyExists = false;
     let currentCache = null;
-    if (cacheAlreadyExists) {
-        currentCache = await caches.open(_getCacheID());
+    try {
+        cacheAlreadyExists = await caches.has(_getCacheID());
+        if (cacheAlreadyExists) {
+            currentCache = await caches.open(_getCacheID());
+        }
+    } catch (error) {
+        cacheAlreadyExists = false;
+        currentCache = null;
     }
+
+    let useTempCache = useTempCacheIfAlreadyExists && cacheAlreadyExists;
 
     let promisesToAwait = [];
     for (let resourceURLToPrecache of _myResourceURLsToPrecache) {
@@ -570,7 +580,7 @@ async function _precacheResources() {
                 }
 
                 if (precacheResource) {
-                    await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), refetchFromNetwork, false);
+                    await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), refetchFromNetwork, useTempCache, false);
                 }
             } catch (error) {
                 if (_myLogEnabled) {
@@ -585,15 +595,15 @@ async function _precacheResources() {
     await Promise.all(promisesToAwait);
 }
 
-async function _fetchFromNetworkAndUpdateCache(request, refetchFromNetwork = false, awaitOnlyFetchFromNetwork = true) {
+async function _fetchFromNetworkAndUpdateCache(request, refetchFromNetwork = false, useTempCache = false, awaitOnlyFetchFromNetwork = true) {
     let responseFromNetwork = await _fetchFromNetwork(request);
 
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
         if (_shouldResourceBeCached(request, responseFromNetwork)) {
             if (!awaitOnlyFetchFromNetwork) {
-                await _putInCache(request, responseFromNetwork);
+                await _putInCache(request, responseFromNetwork, useTempCache);
             } else {
-                _putInCache(request, responseFromNetwork);
+                _putInCache(request, responseFromNetwork, useTempCache);
             }
 
             if (refetchFromNetwork) {
@@ -646,10 +656,11 @@ async function _getFromCache(requestURL, ignoreURLParams = false, ignoreVaryHead
     return cachedResponse;
 }
 
-async function _putInCache(request, response) {
+async function _putInCache(request, response, useTempCache = false) {
     try {
         let clonedResponse = response.clone();
-        let currentCache = await caches.open(_getCacheID());
+        let currentCacheID = (useTempCache) ? _getTempCacheID() : _getCacheID();
+        let currentCache = await caches.open(currentCacheID);
         await currentCache.put(request, clonedResponse);
     } catch (error) {
         if (_myLogEnabled) {
@@ -688,6 +699,37 @@ async function _deletePreviousRefetchFromNetworkChecklists() {
         }
     }
 }
+async function _copyTempCacheToCurrentCache() {
+    let currentTempCacheID = _getTempCacheID();
+
+    try {
+        let hasTempCache = await caches.has(currentTempCacheID);
+
+        if (hasTempCache) {
+            let currentTempCache = await caches.open(currentTempCacheID);
+            let currentCache = await caches.open(_getCacheID());
+
+            let currentTempCachedResourceRequests = await currentTempCache.keys();
+            for (let currentTempCachedResourceRequest of currentTempCachedResourceRequests) {
+                let currentTempCachedResource = await currentTempCache.match(currentTempCachedResourceRequest);
+                await currentCache.put(currentTempCachedResourceRequest, currentTempCachedResource);
+
+                console.error(currentTempCachedResourceRequest.url);
+            }
+        }
+    } catch (error) {
+        // Do nothing
+    }
+
+    for (let i = 1; i <= _myServiceWorkerVersion; i++) {
+        try {
+            await caches.delete(_getTempCacheID(i));
+        } catch (error) {
+            // Do nothing
+        }
+    }
+
+}
 
 // #endregion Service Worker Functions
 
@@ -707,6 +749,10 @@ function _shouldResourceBeCached(request, response) {
     let cacheResource = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
     let cacheResourceWithOpaqueResponse = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
     return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponse && _isResponseOpaque(response))));
+}
+
+function _getTempCacheID(cacheVersion = _myCacheVersion) {
+    return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0) + "_temp";
 }
 
 function _getCacheID(cacheVersion = _myCacheVersion) {
