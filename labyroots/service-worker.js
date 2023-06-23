@@ -556,22 +556,21 @@ async function _precacheResources() {
             try {
                 let precacheResource = false;
 
-                if (!cacheAlreadyExists) {
+                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceURLToPrecache, true);
+
+                if (refetchFromNetwork) {
+                    precacheResource = true
+                } else if (!cacheAlreadyExists) {
                     precacheResource = true; // There was no cache so no need to check if u want to refetch or not
                 } else {
                     let resourceAlreadyInCache = await currentCache.match(resourceURLToPrecache) != null;
                     if (!resourceAlreadyInCache) {
                         precacheResource = true;
-                    } else {
-                        let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceURLToPrecache, true);
-                        if (refetchFromNetwork) {
-                            precacheResource = true;
-                        }
                     }
                 }
 
                 if (precacheResource) {
-                    await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), false, false);
+                    await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), refetchFromNetwork, false);
                 }
             } catch (error) {
                 if (_myLogEnabled) {
