@@ -5,14 +5,7 @@ let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice
 let _ANY_RESOURCE_FROM_CURRENT_HOST = [_escapeRegex(self.location.origin) + ".*"];
 
 
-
-//----------------------------
-//----------------------------
-//----------------------------
-// START SERVICE WORKER SETUP
-//----------------------------
-//----------------------------
-//----------------------------
+// #region SERVICE WORKER SETUP
 
 //------------
 //------------
@@ -150,7 +143,8 @@ let _myResourceURLsToPrecache = [
     "https://ipfs.io/ipns/libv2.zesty.market/zesty-formats.js",
     "https://ipfs.io/ipns/libv2.zesty.market/zesty-networking.js",
     "https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD",
-    "https://zesty-storage-prod.s3.amazonaws.com/images/zesty/zesty-banner-tall-transparent.png"
+    "https://zesty-storage-prod.s3.amazonaws.com/images/zesty/zesty-banner-tall-transparent.png",
+    "https://api.zesty.market/api/ad?ad_unit_id=27daa80b-a8f9-4293-85b1-94174f4484ef"
 ];
 
 
@@ -414,15 +408,7 @@ let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
 // Enable some extra logs to better understand what's going on and why things might not be working
 let _myLogEnabled = false;
 
-
-
-//--------------------------
-//--------------------------
-//--------------------------
-// END SERVICE WORKER SETUP
-//--------------------------
-//--------------------------
-//--------------------------
+// #endregion SERVICE WORKER SETUP
 
 
 
@@ -438,48 +424,42 @@ let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not
 // Service Worker Events
 
 self.addEventListener("install", function (event) {
-    if (_myImmediatelyActivateNewServiceWorker) {
-        self.skipWaiting();
-    }
-
-    event.waitUntil(_precacheResources());
+    event.waitUntil(_install());
 });
 
 self.addEventListener("activate", function (event) {
-    if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
-        event.waitUntil(_deletePreviousCaches());
-    }
-
-    event.waitUntil(_clearRefetchFromNetworkChecklist());
-
-    if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
-        self.clients.claim();
-    }
+    event.waitUntil(_activate());
 });
 
 self.addEventListener("fetch", function (event) {
-    event.respondWith(_getResource(event.request));
+    event.respondWith(_fetch(event.request));
 });
 
 
 
 // Service Worker Functions
 
-async function _precacheResources() {
-    let currentCache = await caches.open(_getCacheID());
+async function _install() {
+    if (_myImmediatelyActivateNewServiceWorker) {
+        self.skipWaiting();
+    }
 
-    for (let resourceToPrecache of _myResourceURLsToPrecache) {
-        try {
-            await currentCache.add(resourceToPrecache);
-        } catch (error) {
-            if (_myLogEnabled) {
-                console.error("Can't precache resource: " + resourceToPrecache);
-            }
-        }
+    await _precacheResources();
+}
+
+async function _activate() {
+    if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
+        await _deletePreviousCaches();
+    }
+
+    await _clearRefetchFromNetworkChecklist();
+
+    if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
+        self.clients.claim();
     }
 }
 
-async function _getResource(request) {
+async function _fetch(request) {
     let cacheTried = false;
 
     let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
@@ -566,12 +546,35 @@ async function _getResource(request) {
     }
 }
 
-async function _fetchFromNetworkAndUpdateCache(request) {
+async function _precacheResources() {
+    let promisesToAwait = [];
+    for (let resourceURLToPrecache of _myResourceURLsToPrecache) {
+        promisesToAwait.push(new Promise(async function (resolve) {
+            try {
+                await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), true);
+            } catch (error) {
+                if (_myLogEnabled) {
+                    console.error("Failed to fetch resource to precache: " + resourceURLToPrecache);
+                }
+            }
+
+            resolve();
+        }));
+    }
+
+    await Promise.all(promisesToAwait);
+}
+
+async function _fetchFromNetworkAndUpdateCache(request, awaitPutInCache = false) {
     let responseFromNetwork = await _fetchFromNetwork(request);
 
     if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
         if (_shouldResourceBeCached(request, responseFromNetwork)) {
-            _putInCache(request, responseFromNetwork);
+            if (awaitPutInCache) {
+                await _putInCache(request, responseFromNetwork);
+            } else {
+                _putInCache(request, responseFromNetwork);
+            }
         }
     }
 
