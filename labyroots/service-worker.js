@@ -1,19 +1,18 @@
+// #region Service Worker Constants
+
 let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
 let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice(0, self.location.href.lastIndexOf("/"))) + ".*"];
 let _ANY_RESOURCE_FROM_CURRENT_HOST = [_escapeRegex(self.location.origin) + ".*"];
 
+// #endregion Service Worker Constants
 
-// #region SERVICE WORKER SETUP
 
-//------------
-//------------
-//------------
-// BASE SETUP
-//------------
-//------------
-//------------
+
+// #region Service Worker Setup
+
+// #region BASE SETUP -----------------------------------------------------------------------------------------------------------
 
 
 
@@ -183,13 +182,16 @@ let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 
 
 
-//----------------
-//----------------
-//----------------
-// ADVANCED SETUP
-//----------------
-//----------------
-//----------------
+// Enable some extra logs to better understand what's going on and why things might not be working
+let _myLogEnabled = false;
+
+
+
+// #endregion BASE SETUP --------------------------------------------------------------------------------------------------------
+
+
+
+// #region ADVANCED SETUP -------------------------------------------------------------------------------------------------------
 
 
 
@@ -402,23 +404,24 @@ let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
 
 
 
-// Enable some extra logs to better understand what's going on and why things might not be working
-let _myLogEnabled = false;
+// #endregion ADVANCED SETUP ----------------------------------------------------------------------------------------------------
 
-// #endregion SERVICE WORKER SETUP
-
+// #endregion Service Worker Setup
 
 
 
 
 
-// Service Worker Variables
+
+// #region Service Worker Variables
 
 let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not reset on page reload, but only when using a new tab
 
+// #endregion Service Worker Variables
 
 
-// Service Worker Events
+
+// #region Service Worker Events
 
 self.addEventListener("install", function (event) {
     event.waitUntil(_install());
@@ -539,9 +542,11 @@ async function _fetch(request) {
     }
 }
 
+// #endregion Service Worker Events
 
 
-// Service Worker Functions
+
+// #region Service Worker Functions
 
 async function _precacheResources() {
     let promisesToAwait = [];
@@ -658,9 +663,11 @@ async function _deletePreviousRefetchFromNetworkChecklists() {
     }
 }
 
+// #endregion Service Worker Functions
 
 
-// Service Worker Utils
+
+// #region Service Worker Utils
 
 function _isResponseOk(response) {
     return response != null && response.status == 200;
@@ -714,9 +721,11 @@ function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWork
     return _myServiceWorkerName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
 }
 
+// #endregion Service Worker Utils
 
 
-// Cauldron Utils
+
+// #region Cauldron Utils
 
 function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
     let includeResourseURL = false;
@@ -742,3 +751,5 @@ function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
 function _escapeRegex(regexToEscape) {
     return regexToEscape.replace(new RegExp("[/\\-\\\\^$*+?.()|[\\]{}]", "g"), "\\$&");
 }
+
+// #endregion Cauldron Utils
