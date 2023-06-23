@@ -24,11 +24,8 @@ let _myServiceWorkerName = "labyroots";
 
 
 
-// U can increment this to specify that this is a new service worker and should replace the previous one
-//
-// Normally this automatically happens if there is at least a change to the service worker file, but if u just want it
-// to activate again (for example, to trigger a feature that works on activation) and don't have any other changes to apply on it,
-// u can increment this version number to make it seems it's a new oneù
+// U should increment this everytime u update the service worker, since it is used by some features to not collide
+// with previous service workers
 //
 // It must be an incremental integer greater than 0
 let _myServiceWorkerVersion = 1;
@@ -435,10 +432,6 @@ self.addEventListener("fetch", function (event) {
     event.respondWith(_fetch(event.request));
 });
 
-
-
-// Service Worker Functions
-
 async function _install() {
     if (_myImmediatelyActivateNewServiceWorker) {
         self.skipWaiting();
@@ -452,7 +445,7 @@ async function _activate() {
         await _deletePreviousCaches();
     }
 
-    await _clearRefetchFromNetworkChecklist();
+    await _deletePreviousRefetchFromNetworkChecklists();
 
     if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
         self.clients.claim();
@@ -545,6 +538,10 @@ async function _fetch(request) {
         }
     }
 }
+
+
+
+// Service Worker Functions
 
 async function _precacheResources() {
     let promisesToAwait = [];
@@ -651,11 +648,13 @@ async function _tickOffFromRefetchChecklist(resourceURL) {
     }
 }
 
-async function _clearRefetchFromNetworkChecklist() {
-    try {
-        await caches.delete(_getRefetchFromNetworkChecklistID());
-    } catch (error) {
-        // Do nothing
+async function _deletePreviousRefetchFromNetworkChecklists() {
+    for (let i = 1; i < _myServiceWorkerVersion; i++) {
+        try {
+            await caches.delete(_getRefetchFromNetworkChecklistID(i));
+        } catch (error) {
+            // Do nothing
+        }
     }
 }
 
@@ -677,12 +676,8 @@ function _shouldResourceBeCached(request, response) {
     return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponse && _isResponseOpaque(response))));
 }
 
-function _getCacheBaseID() {
-    return _myServiceWorkerName + "_cache_v";
-}
-
 function _getCacheID(cacheVersion = _myCacheVersion) {
-    return _getCacheBaseID() + cacheVersion.toFixed(0);
+    return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
 }
 
 async function _shouldResourceBeRefetchedFromNetwork(resourceURL) {
@@ -715,8 +710,8 @@ async function _shouldResourceBeRefetchedFromNetwork(resourceURL) {
     return refetchResourceFromNetwork;
 }
 
-function _getRefetchFromNetworkChecklistID() {
-    return _myServiceWorkerName + "_refetch_checklist";
+function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWorkerVersion) {
+    return _myServiceWorkerName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
 }
 
 
