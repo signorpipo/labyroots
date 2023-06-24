@@ -8,7 +8,8 @@ WL.registerComponent('story', {
         this._myResetPhysx = true;
         this._myTimer2 = new PP.Timer(4);
         this._myTimer = new PP.Timer(30);
-        this._myTimerSkipFirstTime = new PP.Timer(12);
+        this._myTimerSkipFirstTime = new PP.Timer(10);
+        this._myTimerSkipFirstTimeVR = new PP.Timer(5);
 
         this._mySteps = [];
         this._myStepDelay = 0.8;
@@ -100,8 +101,15 @@ WL.registerComponent('story', {
                 this._myTimer2.update(dt);
 
                 this._myTimerSkipFirstTime.update(dt);
-                if (this._myTimerSkipFirstTime.isDone()) {
+                if (this._myTimerSkipFirstTime.isJustDone()) {
                     this._myCanSkip = true;
+                }
+
+                if (PP.XRUtils.isSessionActive()) {
+                    this._myTimerSkipFirstTimeVR.update(dt);
+                    if (this._myTimerSkipFirstTimeVR.isJustDone()) {
+                        this._myCanSkip = true;
+                    }
                 }
 
                 if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {

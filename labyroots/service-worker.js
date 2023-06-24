@@ -143,7 +143,7 @@ let _myResourceURLsToPrecache = [
 // Which resource should be cached
 //
 // The resources URLs can also be a regex
-let _myCacheResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
+let _myCacheResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -151,7 +151,7 @@ let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 // Used to specify if you want to first try the cache or always check the network for updates
 //
 // The resources URLs can also be a regex
-let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
+let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -193,7 +193,7 @@ let _myLogEnabled = false;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -203,7 +203,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURC
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The resources URLs can also be a regex
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
