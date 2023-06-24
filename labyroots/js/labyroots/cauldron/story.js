@@ -46,6 +46,8 @@ WL.registerComponent('story', {
                         } else {
                             this._myTimer.start(8);
                         }
+
+                        this._myCanSkip = true;
                     }
 
                     if (Global.myIsMazeverseTime) {

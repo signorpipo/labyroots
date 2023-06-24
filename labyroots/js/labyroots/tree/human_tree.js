@@ -40,7 +40,11 @@ WL.registerComponent('human-tree', {
         if (fruitAmount == 8) {
             fruitAmount = Math.pp_randomInt(0, this._myPoints.length);
         } else if (fruitAmount == 9) {
-            fruitAmount = Math.pp_randomInt(1, this._myPoints.length);
+            if (this._myType == LR.MazeItemType.HUMAN_TREE_4) {
+                fruitAmount = this._myPoints.length;
+            } else {
+                fruitAmount = Math.pp_randomInt(1, this._myPoints.length);
+            }
         } else if (fruitAmount == 7) {
             fruitAmount = Math.pp_randomInt(Global.mySetup.myTreeSetup.myMinHumanFruits, Global.mySetup.myTreeSetup.myMaxHumanFruits);
         }
