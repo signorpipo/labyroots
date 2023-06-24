@@ -315,6 +315,14 @@ let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// The install phase might not have managed to precache every resource due to network errors
+//
+// Use this to check that the resoruces have been precached on the first fetch of the current service worker session
+// If some resources have not been precached, a fetch request will be performed to cache them in background
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
+
+
+
 // Usually a new service worker is activated when there are no more tabs using the previous one
 // This generally happens if the user closes all the tabs or the browser (just refreshing the page does not seem to work)
 //
@@ -415,6 +423,8 @@ let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
 
 // #region Service Worker Variables
 
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = false; // As of now this is not reset on page reload, but only when using a new tab
+
 let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not reset on page reload, but only when using a new tab
 
 // #endregion Service Worker Variables
@@ -458,6 +468,11 @@ async function _activate() {
 }
 
 async function _fetch(request) {
+    if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
+        _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
+        _precacheResources(false); // Do not await for this, just do it in background
+    }
+
     let cacheTried = false;
 
     let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
