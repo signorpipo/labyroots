@@ -5,7 +5,6 @@ let _NO_RESOURCE = [];
 
 let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice(0, self.location.href.lastIndexOf("/"))) + ".*"];
 let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = [_escapeRegex(self.location.origin) + ".*"];
-let _ANY_RESOURCE_WITH_RELATIVE_URL = [new RegExp("^(?!www\\.|http[s]?://|ftp[s]?://|ssh://|[A-Za-z]:\\\\|//)")];
 
 // #endregion Service Worker Constants
 
@@ -563,29 +562,31 @@ async function _precacheResources(useTempCacheIfAlreadyExists = true) {
 
     let promisesToAwait = [];
     for (let resourceURLToPrecache of _myResourceURLsToPrecache) {
+        let resourceCompleteURLToPrecache = new Request(resourceURLToPrecache).url;
+
         promisesToAwait.push(new Promise(async function (resolve) {
             try {
                 let precacheResource = false;
 
-                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceURLToPrecache, true);
+                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceCompleteURLToPrecache, true);
 
                 if (refetchFromNetwork) {
                     precacheResource = true
                 } else if (!cacheAlreadyExists) {
                     precacheResource = true; // There was no cache so no need to check if u want to refetch or not
                 } else {
-                    let resourceAlreadyInCache = await currentCache.match(resourceURLToPrecache) != null;
+                    let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
                     if (!resourceAlreadyInCache) {
                         precacheResource = true;
                     }
                 }
 
                 if (precacheResource) {
-                    await _fetchFromNetworkAndUpdateCache(new Request(resourceURLToPrecache), refetchFromNetwork, useTempCache, false);
+                    await _fetchFromNetworkAndUpdateCache(new Request(resourceCompleteURLToPrecache), refetchFromNetwork, useTempCache, false);
                 }
             } catch (error) {
                 if (_myLogEnabled) {
-                    console.error("Failed to fetch resource to precache: " + resourceURLToPrecache);
+                    console.error("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
                 }
             }
 
