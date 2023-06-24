@@ -101,6 +101,11 @@ WL.registerComponent('big-tree', {
                     Global.myBigTreeDead = true;
                     Global.myStage = 0;
 
+                    Global.mySaveManager.save("win", true, false);
+                    if (Global.myIsMazeverseTime) {
+                        Global.mySaveManager.save("win_mazeverse", true, false);
+                    }
+
                     if (Global.myGoogleAnalytics) {
                         gtag("event", "defeat_mother_tree", {
                             "value": 1

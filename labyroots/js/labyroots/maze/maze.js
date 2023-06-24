@@ -23,6 +23,9 @@ LR.Maze = class Maze {
         this._myGridToUse = mazeSetup.myGrid;
         Global.myIsWeddingTime = false;
         Global.myIsMazeverseTime = false;
+
+        Global.myWinMazeverse = Global.mySaveManager.loadBool("win_mazeverse", false);
+
         if (isMazeverse) {
             this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {

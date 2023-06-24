@@ -74,7 +74,7 @@ WL.registerComponent('player-locomotion', {
                 this._myStartCounter--;
                 if (this._myStartCounter == 0) {
                     if (Global.myIsMazeverseTime) {
-                        if (Math.pp_randomInt(0, 99) == 0) {
+                        if (Math.pp_randomInt(0, 99) == 0 && Global.myWinMazeverse) {
                             //console.error("FLY");
                             this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                             this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;

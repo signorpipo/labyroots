@@ -146,6 +146,12 @@ Global.initializeMaze = function () {
 
     let rowMax = Math.pp_randomPick(26, 30);
     let columnMax = Math.pp_randomPick(26, 30);
+
+    if (!Global.myWinMazeverse) {
+        rowMax = 26;
+        columnMax = 26;
+    }
+
     let rowMin = Math.pp_randomPick(20, 21);
     let columnMin = Math.pp_randomPick(20, 21);
     let rows = Math.pp_randomInt(rowMin, rowMax);
