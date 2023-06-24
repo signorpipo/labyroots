@@ -135,12 +135,7 @@ let _myResourceURLsToPrecache = [
     "3a4b6111-7f99-413e-a55b-789c13cfbdd5.png",
     "1a12637b-0f5b-48ce-90d8-35460859d122.png",
     "00b6ab52-a892-4c6f-a4d8-f0f0960c876b.png",
-    "c973a9dd-ce1c-458b-9b02-97c129d9f321.png",
-    "https://ipfs.io/ipns/libv2.zesty.market/zesty-formats.js",
-    "https://ipfs.io/ipns/libv2.zesty.market/zesty-networking.js",
-    "https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD",
-    "https://zesty-storage-prod.s3.amazonaws.com/images/zesty/zesty-banner-tall-transparent.png",
-    "https://api.zesty.market/api/ad?ad_unit_id=27daa80b-a8f9-4293-85b1-94174f4484ef"
+    "c973a9dd-ce1c-458b-9b02-97c129d9f321.png"
 ];
 
 
@@ -148,7 +143,7 @@ let _myResourceURLsToPrecache = [
 // Which resource should be cached
 //
 // The resources URLs can also be a regex
-let _myCacheResourceURLsToInclude = _ANY_RESOURCE;
+let _myCacheResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
 let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -156,7 +151,7 @@ let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 // Used to specify if you want to first try the cache or always check the network for updates
 //
 // The resources URLs can also be a regex
-let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE;
+let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_ORIGIN;
 let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -316,7 +311,7 @@ let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
 // u can specify them here so that the installation will fail if their precache fails
 //
 // The resources URLs can also be a regex
-let _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude = _NO_RESOURCE;
 let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
 
 
