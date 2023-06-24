@@ -6,6 +6,7 @@ WL.registerComponent('transformation', {
     start: function () {
         this._myStarted = false;
         this._myTransformationTimersSetup = null;
+        this._myFirstTransformationTimersSetup = null;
         this._myTransformationTimer = new PP.Timer(0);
         Global.myStage = 0;
 
@@ -24,6 +25,7 @@ WL.registerComponent('transformation', {
 
         this._myTimeAlive = 0;
         this._myStageTotalTime = 0;
+        this._myFirstStageTotalTime = 0;
 
         this._myResetAxePosition = 0;
 
@@ -33,6 +35,8 @@ WL.registerComponent('transformation', {
         this._myPosition = [0, 0, 0];
 
         this._myIsWedding = false;
+
+        this._myIsFirstLive = true;
     },
     update: function (dt) {
         this._secretMazeCodeUpdate(dt);
@@ -89,10 +93,11 @@ WL.registerComponent('transformation', {
 
             this._myTimeAlive += dt;
 
-            if (!Global.myBigTreeDead || Global.myStage >= this._myTransformationTimersSetup.length - 1) {
+            let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+            if (!Global.myBigTreeDead || Global.myStage >= currentTransformationTimersSetup.length - 1) {
                 this._myTransformationTimer.update(dt);
                 if (this._myTransformationTimer.isDone()) {
-                    if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
+                    if (Global.myStage + 1 >= currentTransformationTimersSetup.length) {
                         Global.myCancelTeleport = 5;
                         if (Global.myPlayerLocomotion.canStop()) {
                             Global.myPlayerLocomotion.setIdle(true);
@@ -159,15 +164,23 @@ WL.registerComponent('transformation', {
 
         this._myStarted = true;
         this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+        this._myFirstTransformationTimersSetup = Global.mySetup.myPlayerSetup.myFirstTransformationTimers;
         if (Global.myIsMazeverseTime) {
             this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
+            this._myFirstTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
         }
 
         if (Global.myFromAbove) {
             this._myTransformationTimersSetup[0] = 1000000;
+            this._myFirstTransformationTimersSetup[0] = 1000000;
         }
+
         for (let timer of this._myTransformationTimersSetup) {
             this._myStageTotalTime += timer;
+        }
+
+        for (let timer of this._myFirstTransformationTimersSetup) {
+            this._myFirstStageTotalTime += timer;
         }
 
         this._resetTransformation();
@@ -197,19 +210,24 @@ WL.registerComponent('transformation', {
     },
     _resetTransformation() {
         Global.myStage = 0;
-        this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
+
+        let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+        this._myTransformationTimer.start(currentTransformationTimersSetup[Global.myStage]);
     },
     _nextStage(noSound = false, eat = false, full = false) {
         Global.myStage = Math.max(Global.myStage + 1, 0);
         let dead = false;
-        if (Global.myStage >= this._myTransformationTimersSetup.length) {
+
+        let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+
+        if (Global.myStage >= currentTransformationTimersSetup.length) {
             PP.myLeftGamepad.pulse(0.5, 0.5);
             PP.myRightGamepad.pulse(0.5, 0.5);
 
             this._death();
             dead = true;
         } else {
-            this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
+            this._myTransformationTimer.start(currentTransformationTimersSetup[Global.myStage]);
 
             if (!noSound && (eat && !full)) {
                 PP.myLeftGamepad.pulse(0.35, 0.25);
@@ -240,7 +258,10 @@ WL.registerComponent('transformation', {
         }
     },
     _death() {
+        let currentStageTotalTime = this._myIsFirstLive ? this._myFirstStageTotalTime : this._myStageTotalTime;
+
         Global.myDeadOnce = true;
+        this._myIsFirstLive = false;
 
         if (Global.myGoogleAnalytics) {
             gtag("event", "death", {
@@ -253,15 +274,15 @@ WL.registerComponent('transformation', {
                 "value": Math.round(this._myTimeAlive)
             });
 
-            if (this._myTimeAlive > this._myStageTotalTime * 3) {
+            if (this._myTimeAlive > currentStageTotalTime * 3) {
                 gtag("event", "survive_bear_grills", {
                     "value": 1
                 });
-            } else if (this._myTimeAlive > this._myStageTotalTime * 2) {
+            } else if (this._myTimeAlive > currentStageTotalTime * 2) {
                 gtag("event", "survive_a_lot", {
                     "value": 1
                 });
-            } else if (this._myTimeAlive > this._myStageTotalTime * 1.1) {
+            } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
                 gtag("event", "survive_more", {
                     "value": 1
                 });
@@ -339,9 +360,10 @@ WL.registerComponent('transformation', {
 
     },
     addStage(full = false) {
-        if (Global.myStage < this._myTransformationTimersSetup.length - 1) {
+        let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+        if (Global.myStage < currentTransformationTimersSetup.length - 1) {
             if (full) {
-                Global.myStage = Math.max(0, this._myTransformationTimersSetup.length - 2);
+                Global.myStage = Math.max(0, currentTransformationTimersSetup.length - 2);
                 this._nextStage(false, true, true);
             } else {
                 this._nextStage(false, true);
