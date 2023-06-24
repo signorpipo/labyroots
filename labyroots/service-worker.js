@@ -647,7 +647,7 @@ function isResponseOpaque(response) {
 function shouldResourceBeCached(request, response) {
     let cacheResource = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
     let cacheResourceWithOpaqueResponse = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
-    return cacheResource && ((isResponseOk(response) || (cacheResourceWithOpaqueResponse && isResponseOpaque(response))));
+    return cacheResource && (request.method == "GET" && (isResponseOk(response) || (cacheResourceWithOpaqueResponse && isResponseOpaque(response))));
 }
 
 // #endregion Service Worker Public Utils
