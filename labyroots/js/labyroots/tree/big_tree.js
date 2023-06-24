@@ -118,6 +118,12 @@ WL.registerComponent('big-tree', {
                             gtag("event", "defeat_mother_tree_mazeverse", {
                                 "value": 1
                             });
+
+                            if (!Global.myWinMazeverse) {
+                                gtag("event", "defeat_mother_tree_mazeverse_first_time", {
+                                    "value": 1
+                                });
+                            }
                         } else {
                             gtag("event", "defeat_mother_tree_normal", {
                                 "value": 1

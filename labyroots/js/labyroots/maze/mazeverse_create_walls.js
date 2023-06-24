@@ -545,7 +545,7 @@ Global.chooseSpecialRoomSetups = function (createWallsResults) {
         createWallsResults.myBigTreeRoomSize = bigTreeSize;
     }
 
-    let createPlayerRoom = Math.pp_randomInt(0, 3) != 0;
+    let createPlayerRoom = Math.pp_randomInt(0, 4) != 0;
     if (createPlayerRoom || !Global.myWinMazeverse) {
         createWallsResults.myPlayerRoomSize = [Math.pp_randomInt(3, 4), Math.pp_randomInt(3, 4)];
     }

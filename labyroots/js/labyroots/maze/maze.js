@@ -43,6 +43,12 @@ LR.Maze = class Maze {
                     gtag("event", "is_mazeverse_maze", {
                         "value": 1
                     });
+
+                    if (!Global.myWinMazeverse) {
+                        gtag("event", "is_mazeverse_maze_no_win", {
+                            "value": 1
+                        });
+                    }
                 }
             }
         } else if (isWedding) {
