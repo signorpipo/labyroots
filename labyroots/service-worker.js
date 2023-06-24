@@ -304,6 +304,23 @@ let _myRefetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// The install phase might not have managed to precache every resource due to network errors
+//
+// Use this to check that the resoruces have been precached on the first fetch of the current service worker session
+// If some resources have not been precached, a fetch request will be performed to cache them in background
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
+
+
+
+// If some resources must be precached for your service worker to work properly,
+// u can specify them here so that the installation will fail if their precache fails
+//
+// The resources URLs can also be a regex
+let _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Used to cache opaque responses
 // Caching opaque responses can lead to a number of issues so use this with caution
 // I also advise u to enable the cache update in background when caching opaque responses,
@@ -312,14 +329,6 @@ let _myRefetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
 // The resources URLs can also be a regex
 let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
 let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// The install phase might not have managed to precache every resource due to network errors
-//
-// Use this to check that the resoruces have been precached on the first fetch of the current service worker session
-// If some resources have not been precached, a fetch request will be performed to cache them in background
-let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
 
 
 
@@ -359,12 +368,12 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // This make it so that the service worker will immediately (as soon as possible) take control over the page even when
 // it was not being controlled yet (which basically means that it will be controlled even on the first load)
 //
-// As for @_myImmediatelyActivateNewServiceWorker, this can cause issues
+// As for @_myImmediatelyActivateNewServiceWorker, this can potentially cause issues
 // due to the fact that the service worker might be fetching the data in a different way compared to not having it,
 // and the page fetched at least a bit of data without the service worker, since it was started as soon as possible, but not
 // from the beginning
 //
-// In general this should not be an issue unless u have a very specific service worker logic,
+// In general, this should not be an issue for the first service worker, unless u have a very specific service worker logic,
 // so you should be able to set this to true without worrying too much
 //
 // The advantages of using this are:
@@ -454,7 +463,7 @@ self.addEventListener("fetch", function (event) {
 async function fetchFromServiceWorker(request) {
     if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
         _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
-        precacheResources(false); // Do not await for this, just do it in background
+        _cacheResourcesToPrecache(false, false); // Do not await for this, just do it in background
     }
 
     let cacheTried = false;
@@ -476,7 +485,7 @@ async function fetchFromServiceWorker(request) {
                 if (responseFromCache != null) {
                     let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
                     if (updateCacheInBackground) {
-                        _fetchFromNetworkAndUpdateCache(request);
+                        _fetchFromNetworkAndPutInCache(request);
                     }
 
                     return responseFromCache;
@@ -488,7 +497,7 @@ async function fetchFromServiceWorker(request) {
     }
 
     // Try to get the resource from the network
-    let responseFromNetwork = await _fetchFromNetworkAndUpdateCache(request, true, refetchFromNetwork);
+    let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(request, true, refetchFromNetwork);
     if (isResponseOk(responseFromNetwork) || isResponseOpaque(responseFromNetwork)) {
         return responseFromNetwork;
     } else {
@@ -536,62 +545,12 @@ async function fetchFromServiceWorker(request) {
     }
 }
 
-async function precacheResources(useTempCacheIfAlreadyExists = true) {
-    if (getResourceURLsToPrecache().length == 0) return;
-
-    let cacheAlreadyExists = false;
-    let currentCache = null;
-    try {
-        cacheAlreadyExists = await caches.has(_getCacheID());
-        if (cacheAlreadyExists) {
-            currentCache = await caches.open(_getCacheID());
-        }
-    } catch (error) {
-        cacheAlreadyExists = false;
-        currentCache = null;
-    }
-
-    let useTempCache = useTempCacheIfAlreadyExists && cacheAlreadyExists;
-
-    let promisesToAwait = [];
-    for (let resourceURLToPrecache of getResourceURLsToPrecache()) {
-        let resourceCompleteURLToPrecache = new Request(resourceURLToPrecache).url;
-
-        promisesToAwait.push(new Promise(async function (resolve) {
-            try {
-                let precacheResource = false;
-
-                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceCompleteURLToPrecache, true);
-
-                if (refetchFromNetwork) {
-                    precacheResource = true
-                } else if (!cacheAlreadyExists) {
-                    precacheResource = true; // There was no cache so no need to check if u want to refetch or not
-                } else {
-                    let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
-                    if (!resourceAlreadyInCache) {
-                        precacheResource = true;
-                    }
-                }
-
-                if (precacheResource) {
-                    await _fetchFromNetworkAndUpdateCache(new Request(resourceCompleteURLToPrecache), false, refetchFromNetwork, useTempCache);
-                }
-            } catch (error) {
-                if (_myLogEnabled) {
-                    console.error("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
-                }
-            }
-
-            resolve();
-        }));
-    }
-
-    await Promise.all(promisesToAwait);
+async function cacheResourcesToPrecache(rejectOnPrecacheFail = false) {
+    return await _cacheResourcesToPrecache(rejectOnPrecacheFail, false);
 }
 
-async function fetchFromNetworkAndUpdateCache(request, awaitOnlyFetchFromNetwork = true) {
-    return await _fetchFromNetworkAndUpdateCache(request, awaitOnlyFetchFromNetwork);
+async function fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false) {
+    return await _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork);
 }
 
 async function fetchFromNetwork(request) {
@@ -707,7 +666,7 @@ async function _install() {
         self.skipWaiting();
     }
 
-    await precacheResources();
+    await _cacheResourcesToPrecache();
 }
 
 async function _activate() {
@@ -724,15 +683,86 @@ async function _activate() {
     }
 }
 
-async function _fetchFromNetworkAndUpdateCache(request, awaitOnlyFetchFromNetwork = true, refetchFromNetwork = false, useTempCache = false) {
+async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCacheIfAlreadyExists = true) {
+    if (getResourceURLsToPrecache().length == 0) return;
+
+    let cacheAlreadyExists = false;
+    let currentCache = null;
+    try {
+        cacheAlreadyExists = await caches.has(_getCacheID());
+        if (cacheAlreadyExists) {
+            currentCache = await caches.open(_getCacheID());
+        }
+    } catch (error) {
+        cacheAlreadyExists = false;
+        currentCache = null;
+    }
+
+    let useTempCache = useTempCacheIfAlreadyExists && cacheAlreadyExists;
+
+    let promisesToAwait = [];
+    for (let resourceURLToPrecache of getResourceURLsToPrecache()) {
+        let resourceCompleteURLToPrecache = new Request(resourceURLToPrecache).url;
+
+        promisesToAwait.push(new Promise(async function (resolve, reject) {
+            let resourceHasBeenPrecached = false;
+
+            try {
+                let resourceHaveToBeCached = false;
+
+                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceCompleteURLToPrecache, true);
+
+                if (refetchFromNetwork) {
+                    resourceHaveToBeCached = true
+                } else if (!cacheAlreadyExists) {
+                    resourceHaveToBeCached = true; // There was no cache so no need to check if u want to refetch or not
+                } else {
+                    let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
+                    if (!resourceAlreadyInCache) {
+                        resourceHaveToBeCached = true;
+                    }
+                }
+
+                if (resourceHaveToBeCached) {
+                    let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(new Request(resourceCompleteURLToPrecache), false, refetchFromNetwork, useTempCache);
+                    resourceHasBeenPrecached = responseHasBeenCached;
+                } else {
+                    resourceHasBeenPrecached = true; // The resource has been already precached
+                }
+            } catch (error) {
+                if (_myLogEnabled) {
+                    console.error("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
+                }
+            }
+
+            if (resourceHasBeenPrecached || !rejectOnPrecacheFail) {
+                resolve();
+            } else {
+                let rejectServiceWorkerOnPrecacheFail = _shouldResourceURLBeIncluded(resourceCompleteURLToPrecache, _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude, _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude);
+
+                if (!rejectServiceWorkerOnPrecacheFail) {
+                    resolve();
+                } else {
+                    reject();
+                }
+            }
+        }));
+    }
+
+    await Promise.all(promisesToAwait);
+}
+
+async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false, refetchFromNetwork = false, useTempCache = false) {
     let responseFromNetwork = await fetchFromNetwork(request);
+    let responseHasBeenCached = false;
 
     if (isResponseOk(responseFromNetwork) || isResponseOpaque(responseFromNetwork)) {
         if (shouldResourceBeCached(request, responseFromNetwork)) {
             if (!awaitOnlyFetchFromNetwork) {
-                await _putInCache(request, responseFromNetwork, useTempCache);
+                responseHasBeenCached = await _putInCache(request, responseFromNetwork, useTempCache);
             } else {
                 _putInCache(request, responseFromNetwork, useTempCache);
+                responseHasBeenCached = null; // Not awaiting so we can't know
             }
 
             if (refetchFromNetwork) {
@@ -745,20 +775,27 @@ async function _fetchFromNetworkAndUpdateCache(request, awaitOnlyFetchFromNetwor
         }
     }
 
-    return responseFromNetwork;
+    return [responseFromNetwork, responseHasBeenCached];
 }
 
 async function _putInCache(request, response, useTempCache = false) {
+    let putInCacheSucceeded = false;
+
     try {
         let clonedResponse = response.clone();
         let currentCacheID = (useTempCache) ? _getTempCacheID() : _getCacheID();
         let currentCache = await caches.open(currentCacheID);
         await currentCache.put(request, clonedResponse);
+        putInCacheSucceeded = true;
     } catch (error) {
+        putInCacheSucceeded = false;
+
         if (_myLogEnabled) {
             console.error("An error occurred when trying to put the response in the cache: " + request.url);
         }
     }
+
+    return putInCacheSucceeded;
 }
 
 async function _deletePreviousCaches() {
