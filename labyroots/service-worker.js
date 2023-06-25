@@ -570,7 +570,7 @@ async function fetchFromServiceWorker(request) {
         if (responseFromNetwork != null) {
             return responseFromNetwork;
         } else {
-            return new Response("Invalid response for " + request.url + "\nRequest: " + request, {
+            return new Response("Invalid response for " + request.url, {
                 status: 404,
                 headers: { "Content-Type": "text/plain" },
             });
