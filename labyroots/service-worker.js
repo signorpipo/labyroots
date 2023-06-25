@@ -140,7 +140,8 @@ let _myResourceURLsToPrecache = [
 
 
 
-// Which resource should be cached
+// Which resources should be cached
+// Note that, as of now, only requests made with a GET method can be cached
 //
 // The resources URLs can also be a regex
 let _myCacheResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
@@ -459,6 +460,10 @@ async function fetchFromServiceWorker(request) {
     if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
         _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
         _cacheResourcesToPrecache(false, false); // Do not await for this, just do it in background
+    }
+
+    if(!_shouldHandleRequest(request)){
+        return fetch(request);
     }
 
     let cacheTried = false;
@@ -864,6 +869,10 @@ function _getTempCacheID(cacheVersion = _myCacheVersion) {
 
 function _getCacheID(cacheVersion = _myCacheVersion) {
     return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
+}
+
+function _shouldHandleRequest(request){
+    return request != null && request.url != null && request.method != null && request.method == "GET";
 }
 
 async function _shouldResourceBeRefetchedFromNetwork(resourceURL, skipChecklistCheck = false) {
