@@ -191,6 +191,15 @@ let _myLogEnabled = false;
 
 
 
+// Enable this to allow HEAD request to fetch from cache
+//
+// Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
+// and will return that response
+// This means that the the returned response will actually have a body, even though HEAD request should not have it
+let _myAllowHEADRequestsToFetchFromCache = false;
+
+
+
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
@@ -462,7 +471,7 @@ async function fetchFromServiceWorker(request) {
         _cacheResourcesToPrecache(false, false); // Do not await for this, just do it in background
     }
 
-    if(!_shouldHandleRequest(request)){
+    if (!_shouldHandleRequest(request)) {
         return fetch(request);
     }
 
@@ -871,8 +880,9 @@ function _getCacheID(cacheVersion = _myCacheVersion) {
     return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
 }
 
-function _shouldHandleRequest(request){
-    return request != null && request.url != null && request.method != null && request.method == "GET";
+function _shouldHandleRequest(request) {
+    return request != null && request.url != null && request.method != null &&
+        (request.method == "GET" || (_myAllowHEADRequestsToFetchFromCache && request.method == "HEAD"));
 }
 
 async function _shouldResourceBeRefetchedFromNetwork(resourceURL, skipChecklistCheck = false) {
