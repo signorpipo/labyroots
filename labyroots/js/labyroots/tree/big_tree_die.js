@@ -43,13 +43,12 @@ LR.BigTreeDie = class BigTreeDie {
                     if (this._myCounter == 2) {
                         this._myTimer.start(tempoBase + 0.5);
                     }
-                } else {
+                } else if (Global.mySecretWall != null) {
                     let wallPosition = Global.mySecretWall.pp_getPosition();
                     this._mySecretWallDie.setPosition(wallPosition.vec3_add([0, 1.5, 0]));
-                    if (!Global.myIsMazeverseTime) {
-                        this._mySecretWallDie.play();
-                        Global.mySecretWall.pp_setActive(false);
-                    }
+
+                    this._mySecretWallDie.play();
+                    Global.mySecretWall.pp_setActive(false);
 
                     PP.myLeftGamepad.pulse(0.75, 0.75);
                     PP.myRightGamepad.pulse(0.75, 0.75);
