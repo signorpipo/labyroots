@@ -793,17 +793,18 @@ async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork
         if (shouldResourceBeCached(request, responseFromNetwork)) {
             if (!awaitOnlyFetchFromNetwork) {
                 responseHasBeenCached = await _putInCache(request, responseFromNetwork, useTempCache);
-            } else {
-                _putInCache(request, responseFromNetwork, useTempCache);
-                responseHasBeenCached = null; // Not awaiting so we can't know
-            }
 
-            if (refetchFromNetwork) {
-                if (!awaitOnlyFetchFromNetwork) {
+                if (refetchFromNetwork) {
                     await _tickOffFromRefetchFromNetworkChecklist(request.url);
-                } else {
-                    _tickOffFromRefetchFromNetworkChecklist(request.url);
                 }
+            } else {
+                _putInCache(request, responseFromNetwork, useTempCache).then(function (putInCacheSucceeded) {
+                    if (putInCacheSucceeded && refetchFromNetwork) {
+                        _tickOffFromRefetchFromNetworkChecklist(request.url);
+                    }
+                });
+
+                responseHasBeenCached = null; // Not awaiting so we can't know
             }
         }
     }
