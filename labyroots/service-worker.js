@@ -165,7 +165,7 @@ let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 // If this is the case, it's better to just increase the cache version, which will cache the new version from scratch
 //
 // The resources URLs can also be a regex
-let _myUpdateCacheInBackgroundResourceURLsToInclude = _ANY_RESOURCE;
+let _myUpdateCacheInBackgroundResourceURLsToInclude = _NO_RESOURCE;
 let _myUpdateCacheInBackgroundResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -188,15 +188,6 @@ let _myLogEnabled = false;
 
 
 // #region ADVANCED SETUP -------------------------------------------------------------------------------------------------------
-
-
-
-// Enable this to allow HEAD request to fetch from cache
-//
-// Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
-// and will return that response
-// This means that the the returned response will actually have a body, even though HEAD request should not have it
-let _myAllowHEADRequestsToFetchFromCache = false;
 
 
 
@@ -290,7 +281,7 @@ let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 // - u are not updating the cache in background, which would mean the new resources will never be fetched again
 //
 // This feature makes it so that when the new service worker is installed, these resources will not try the cache first
-// until they have been fetched again from the network with success
+// until they have been fetched again from the network and cached with success
 // Basically, this is a way to avoid trying the cache first as long as the resources have not been updated, but still give u
 // the chance to use the cache if the fetch fails, since u are not updating the cache version
 //
@@ -306,14 +297,6 @@ let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 // The resources URLs can also be a regex
 let _myRefetchFromNetworkResourceURLsToInclude = _NO_RESOURCE;
 let _myRefetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// The install phase might not have managed to precache every resource due to network errors
-//
-// Use this to check that the resoruces have been precached on the first fetch of the current service worker session
-// If some resources have not been precached, a fetch request will be performed to cache them in background
-let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
 
 
 
@@ -334,6 +317,41 @@ let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
 // The resources URLs can also be a regex
 let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
 let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// The install phase might not have managed to precache every resource due to network errors
+//
+// Use this to check that the resoruces have been precached on the first fetch of the current service worker session
+// If some resources have not been precached, a fetch request will be performed to cache them in background
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
+
+
+
+// Enable this to allow HEAD request to fetch from cache
+//
+// Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
+// and will return that response
+// This means that the the returned response will actually have a body, even though HEAD request should not have it
+let _myAllowHEADRequestsToFetchFromCache = false;
+
+
+
+// Enable this to allow HEAD request to update the cache in background after fetching from the cache
+//
+// Normally, only when a GET request fetches from the cache it will trigger a cache update in background,
+// if @_myUpdateCacheInBackgroundResourceURLsToInclude is enabled for that resource
+// This make it so that cached resources will be updated in background even for HEAD requests
+//
+// Note that the GET request to update the cache in background is created from the HEAD one through the following js code
+//
+// new Request(headRequest, { method: "GET" })
+//
+// This should be safe, but it could potentially create a slightly different GET request,
+// which could create issues if cached
+// 
+// Use this with caution
+let _myAllowHEADRequestsToUpdateCacheInBackground = false;
 
 
 
@@ -492,9 +510,15 @@ async function fetchFromServiceWorker(request) {
                 let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
                 let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
                 if (responseFromCache != null) {
-                    let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
-                    if (updateCacheInBackground) {
-                        _fetchFromNetworkAndPutInCache(request);
+                    if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
+                        let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
+                        if (updateCacheInBackground) {
+                            if (request.method == "GET") {
+                                _fetchFromNetworkAndPutInCache(request);
+                            } else if (request.method == "HEAD") {
+                                _fetchFromNetworkAndPutInCache(new Request(request, { method: "GET" }));
+                            }
+                        }
                     }
 
                     return responseFromCache;
@@ -546,7 +570,7 @@ async function fetchFromServiceWorker(request) {
         if (responseFromNetwork != null) {
             return responseFromNetwork;
         } else {
-            return new Response("Invalid response for " + request.url, {
+            return new Response("Invalid response for " + request.url + "\nRequest: " + request, {
                 status: 404,
                 headers: { "Content-Type": "text/plain" },
             });
