@@ -900,11 +900,13 @@ async function _copyTempCacheToCurrentCache() {
         // Do nothing
     }
 
-    for (let i = 1; i <= _myServiceWorkerVersion; i++) {
-        try {
-            await caches.delete(_getTempCacheID(i));
-        } catch (error) {
-            // Do nothing
+    for (let serviceWorkerVersion = 1; serviceWorkerVersion <= _myServiceWorkerVersion; serviceWorkerVersion++) {
+        for (let cacheVersion = 1; cacheVersion <= _myCacheVersion; cacheVersion++) {
+            try {
+                await caches.delete(_getTempCacheID(serviceWorkerVersion, cacheVersion));
+            } catch (error) {
+                // Do nothing
+            }
         }
     }
 }
@@ -915,12 +917,12 @@ async function _copyTempCacheToCurrentCache() {
 
 // #region Service Worker Private Utils
 
-function _getTempCacheID(cacheVersion = _myCacheVersion) {
-    return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0) + "_temp";
-}
-
 function _getCacheID(cacheVersion = _myCacheVersion) {
     return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
+}
+
+function _getTempCacheID(serviceWorkerVersion = _myServiceWorkerVersion, cacheVersion = _myCacheVersion) {
+    return _getCacheID(cacheVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
 function _shouldHandleRequest(request) {
