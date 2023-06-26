@@ -3,8 +3,8 @@
 let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
-let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(_getCurrentLocation()) + ".*"];
-let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = [_escapeRegex(_getCurrentOrigin()) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegex(_getCurrentLocation()) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegex(_getCurrentOrigin()) + ".*"];
 
 let _LOCALHOST = ["localhost"];
 let _NO_LOCATION = [];
@@ -207,7 +207,7 @@ let _myLogEnabled = false;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
 let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -217,7 +217,7 @@ let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURC
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The resources URLs can also be a regex
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
 let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -285,6 +285,17 @@ let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// Used to cache opaque responses
+// Caching opaque responses can lead to a number of issues so use this with caution
+// I also advise u to enable the cache update in background when caching opaque responses,
+// so to avoid caching a bad opaque response forever
+//
+// The resources URLs can also be a regex
+let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
+let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Use this if u:
 // - have updated your app
 // - are trying cache first
@@ -319,17 +330,6 @@ let _myRefetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
 // The resources URLs can also be a regex
 let _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude = _NO_RESOURCE;
 let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// Used to cache opaque responses
-// Caching opaque responses can lead to a number of issues so use this with caution
-// I also advise u to enable the cache update in background when caching opaque responses,
-// so to avoid caching a bad opaque response forever
-//
-// The resources URLs can also be a regex
-let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
-let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -506,7 +506,7 @@ async function fetchFromServiceWorker(request) {
         return fetch(request);
     }
 
-    let cacheTried = false;
+    let cacheAlreadyTried = false;
 
     let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
 
@@ -515,7 +515,7 @@ async function fetchFromServiceWorker(request) {
         let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
         if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
-            cacheTried = true;
+            cacheAlreadyTried = true;
 
             // Try to get the resource from the cache
             try {
@@ -558,7 +558,7 @@ async function fetchFromServiceWorker(request) {
             }
         }
 
-        if (!cacheTried) {
+        if (!cacheAlreadyTried) {
             let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
             let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
             let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
