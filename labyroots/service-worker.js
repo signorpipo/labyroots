@@ -3,8 +3,11 @@
 let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
-let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(self.location.href.slice(0, self.location.href.lastIndexOf("/"))) + ".*"];
-let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = [_escapeRegex(self.location.origin) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_LOCATION = [_escapeRegex(_getCurrentLocation()) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = [_escapeRegex(_getCurrentOrigin()) + ".*"];
+
+let _LOCALHOST = ["localhost"];
+let _NO_LOCATION = [];
 
 // #endregion Service Worker Constants
 
@@ -175,6 +178,16 @@ let _myUpdateCacheInBackgroundResourceURLsToExclude = _NO_RESOURCE;
 // For this to work properly, the cache name of the new service worker must be the same as the previous ones,
 // otherwise there is no way to know which cache should actually be deleted
 let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
+
+
+
+// If a service worker is being installed in one of these locations, it will be rejected
+//
+// This is especially useful to avoid using a service worker on development locations like "localhost"
+//
+// The locations URLs can also be a regex
+let _myRejectServiceWorkerLocationURLsToInclude = _NO_LOCATION;
+let _myRejectServiceWorkerLocationURLsToExclude = _NO_LOCATION;
 
 
 
@@ -695,6 +708,11 @@ function shouldResourceBeCached(request, response) {
 // #region Service Worker Private Functions
 
 async function _install() {
+    let rejectServiceWorker = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myRejectServiceWorkerLocationURLsToInclude, _myRejectServiceWorkerLocationURLsToExclude);
+    if (rejectServiceWorker) {
+        throw new Error("The service worker is not allowed on current location: " + _getCurrentLocation());
+    }
+
     if (_myImmediatelyActivateNewServiceWorker) {
         self.skipWaiting();
     }
@@ -969,6 +987,14 @@ function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
     }
 
     return includeResourseURL;
+}
+
+function _getCurrentLocation() {
+    return self.location.href.slice(0, self.location.href.lastIndexOf("/"));
+}
+
+function _getCurrentOrigin() {
+    return self.location.origin;
 }
 
 function _escapeRegex(regexToEscape) {
