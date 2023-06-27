@@ -771,14 +771,15 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCac
                     resourceHaveToBeCached = true; // There was no cache so no need to check if u want to refetch or not
                 } else {
                     let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
-                    let resourceAlreadyInTempCache = false;
+                    if (!resourceAlreadyInCache) {
+                        let resourceAlreadyInTempCache = false;
+                        if (useTempCache && currentTempCache != null) {
+                            resourceAlreadyInTempCache = await currentTempCache.match(resourceCompleteURLToPrecache) != null;
+                        }
 
-                    if (useTempCache && currentTempCache != null) {
-                        resourceAlreadyInTempCache = await currentTempCache.match(resourceCompleteURLToPrecache) != null;
-                    }
-
-                    if (!resourceAlreadyInCache && !resourceAlreadyInTempCache) {
-                        resourceHaveToBeCached = true;
+                        if (!resourceAlreadyInTempCache) {
+                            resourceHaveToBeCached = true;
+                        }
                     }
                 }
 
