@@ -607,7 +607,7 @@ async function fetchFromNetwork(request) {
     return networkResponse;
 }
 
-async function fetchFromCache(requestURL, ignoreURLParams = false, ignoreVaryHeader = false) {
+async function fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
     let responseFromCache = null;
 
     try {
@@ -615,21 +615,21 @@ async function fetchFromCache(requestURL, ignoreURLParams = false, ignoreVaryHea
         let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when opening it if it has not already been created
         if (hasCache) {
             let currentCache = await caches.open(currentCacheID);
-            responseFromCache = await currentCache.match(requestURL, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
+            responseFromCache = await currentCache.match(resourceURL, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
         }
     } catch (error) {
         responseFromCache = null;
 
         if (_myLogEnabled) {
-            console.error("An error occurred when trying to get from the cache: " + requestURL);
+            console.error("An error occurred when trying to get from the cache: " + resourceURL);
         }
     }
 
     return responseFromCache;
 }
 
-async function hasInCache(requestURL, ignoreURLParams = false, ignoreVaryHeader = false) {
-    let responseFromCache = await fetchFromCache(requestURL, ignoreURLParams, ignoreVaryHeader);
+async function hasInCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
+    let responseFromCache = await fetchFromCache(resourceURL, ignoreURLParams, ignoreVaryHeader);
     return responseFromCache != null;
 }
 
@@ -741,6 +741,18 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCac
 
     let useTempCache = useTempCacheIfAlreadyExists && cacheAlreadyExists;
 
+    let currentTempCache = null;
+    if (useTempCache) {
+        try {
+            let tempCacheAlreadyExists = await caches.has(_getTempCacheID());
+            if (tempCacheAlreadyExists) {
+                currentTempCache = await caches.open(_getTempCacheID());
+            }
+        } catch (error) {
+            currentTempCache = null;
+        }
+    }
+
     let promisesToAwait = [];
     for (let resourceURLToPrecache of getResourceURLsToPrecache()) {
         let resourceCompleteURLToPrecache = new Request(resourceURLToPrecache).url;
@@ -751,7 +763,7 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCac
             try {
                 let resourceHaveToBeCached = false;
 
-                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceCompleteURLToPrecache, true);
+                let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(resourceCompleteURLToPrecache);
 
                 if (refetchFromNetwork) {
                     resourceHaveToBeCached = true
@@ -759,7 +771,13 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCac
                     resourceHaveToBeCached = true; // There was no cache so no need to check if u want to refetch or not
                 } else {
                     let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
-                    if (!resourceAlreadyInCache) {
+                    let resourceAlreadyInTempCache = false;
+
+                    if (useTempCache && currentTempCache != null) {
+                        resourceAlreadyInTempCache = await currentTempCache.match(resourceCompleteURLToPrecache) != null;
+                    }
+
+                    if (!resourceAlreadyInCache && !resourceAlreadyInTempCache) {
                         resourceHaveToBeCached = true;
                     }
                 }
@@ -950,13 +968,13 @@ function _isRefetchFromNetworkChecklistID(refetchFromNetworkChecklistID) {
     return refetchFromNetworkChecklistID.match(matchRefetchFromNetworkChecklistID) != null;
 }
 
-async function _shouldResourceBeRefetchedFromNetwork(resourceURL, skipChecklistCheck = false) {
+async function _shouldResourceBeRefetchedFromNetwork(resourceURL) {
     let refetchResourceFromNetwork = false;
 
     try {
         refetchResourceFromNetwork = _shouldResourceURLBeIncluded(resourceURL, _myRefetchFromNetworkResourceURLsToInclude, _myRefetchFromNetworkResourceURLsToExclude);
 
-        if (refetchResourceFromNetwork && !skipChecklistCheck) {
+        if (refetchResourceFromNetwork) {
             let refetechChecklistID = _getRefetchFromNetworkChecklistID();
 
             let hasChecklist = await caches.has(refetechChecklistID); // Avoid creating the checklist when opening it if it has not already been created
