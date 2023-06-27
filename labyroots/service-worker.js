@@ -3,8 +3,8 @@
 let _ANY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
-let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegex(_getCurrentLocation()) + ".*"];
-let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegex(_getCurrentOrigin()) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*"];
+let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegexSpecialCharacters(_getCurrentOrigin()) + ".*"];
 
 let _LOCALHOST = ["localhost"];
 let _NO_LOCATION = [];
@@ -170,14 +170,6 @@ let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 // The resources URLs can also be a regex
 let _myUpdateCacheInBackgroundResourceURLsToInclude = _NO_RESOURCE;
 let _myUpdateCacheInBackgroundResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// Delete all the previous caches when a new service worker is activated
-//
-// For this to work properly, the cache name of the new service worker must be the same as the previous ones,
-// otherwise there is no way to know which cache should actually be deleted
-let _myDeletePreviousCacheOnNewServiceWorkerActivation = true;
 
 
 
@@ -721,11 +713,9 @@ async function _install() {
 }
 
 async function _activate() {
-    if (_myDeletePreviousCacheOnNewServiceWorkerActivation) {
-        await _deletePreviousCaches();
-    }
-
     await _copyTempCacheToCurrentCache();
+
+    await _deletePreviousCaches();
 
     await _deletePreviousRefetchFromNetworkChecklists();
 
@@ -851,9 +841,14 @@ async function _putInCache(request, response, useTempCache = false) {
 }
 
 async function _deletePreviousCaches() {
-    for (let i = 1; i < _myCacheVersion; i++) {
+    let cachesIDs = await caches.keys();
+    let currentCacheID = _getCacheID();
+
+    for (let cacheID of cachesIDs) {
         try {
-            await caches.delete(_getCacheID(i));
+            if (_isCacheID(cacheID) && cacheID != currentCacheID) {
+                await caches.delete(cacheID);
+            }
         } catch (error) {
             // Do nothing
         }
@@ -872,9 +867,14 @@ async function _tickOffFromRefetchFromNetworkChecklist(resourceURL) {
 }
 
 async function _deletePreviousRefetchFromNetworkChecklists() {
-    for (let i = 1; i < _myServiceWorkerVersion; i++) {
+    let cachesIDs = await caches.keys();
+    let currentRefetchFromNetworkChecklistID = _getRefetchFromNetworkChecklistID();
+
+    for (let cacheID of cachesIDs) {
         try {
-            await caches.delete(_getRefetchFromNetworkChecklistID(i));
+            if (_isRefetchFromNetworkChecklistID(cacheID) && cacheID != currentRefetchFromNetworkChecklistID) {
+                await caches.delete(cacheID);
+            }
         } catch (error) {
             // Do nothing
         }
@@ -900,13 +900,14 @@ async function _copyTempCacheToCurrentCache() {
         // Do nothing
     }
 
-    for (let serviceWorkerVersion = 1; serviceWorkerVersion <= _myServiceWorkerVersion; serviceWorkerVersion++) {
-        for (let cacheVersion = 1; cacheVersion <= _myCacheVersion; cacheVersion++) {
-            try {
-                await caches.delete(_getTempCacheID(serviceWorkerVersion, cacheVersion));
-            } catch (error) {
-                // Do nothing
+    let cachesIDs = await caches.keys();
+    for (let cacheID of cachesIDs) {
+        try {
+            if (_isTempCacheID(cacheID)) {
+                await caches.delete(cacheID);
             }
+        } catch (error) {
+            // Do nothing
         }
     }
 }
@@ -917,6 +918,11 @@ async function _copyTempCacheToCurrentCache() {
 
 // #region Service Worker Private Utils
 
+function _shouldHandleRequest(request) {
+    return request != null && request.url != null && request.method != null &&
+        (request.method == "GET" || (_myAllowHEADRequestsToFetchFromCache && request.method == "HEAD"));
+}
+
 function _getCacheID(cacheVersion = _myCacheVersion) {
     return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
 }
@@ -925,9 +931,23 @@ function _getTempCacheID(serviceWorkerVersion = _myServiceWorkerVersion, cacheVe
     return _getCacheID(cacheVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
-function _shouldHandleRequest(request) {
-    return request != null && request.url != null && request.method != null &&
-        (request.method == "GET" || (_myAllowHEADRequestsToFetchFromCache && request.method == "HEAD"));
+function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWorkerVersion) {
+    return _myServiceWorkerName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
+}
+
+function _isCacheID(cacheID) {
+    let matchCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_cache_v\\d+$");
+    return cacheID.match(matchCacheID) != null;
+}
+
+function _isTempCacheID(tempCacheID) {
+    let matchTempCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_cache_v\\d+_temp_v\\d+$");
+    return tempCacheID.match(matchTempCacheID) != null;
+}
+
+function _isRefetchFromNetworkChecklistID(refetchFromNetworkChecklistID) {
+    let matchRefetchFromNetworkChecklistID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_refetch_checklist_v\\d+$");
+    return refetchFromNetworkChecklistID.match(matchRefetchFromNetworkChecklistID) != null;
 }
 
 async function _shouldResourceBeRefetchedFromNetwork(resourceURL, skipChecklistCheck = false) {
@@ -960,10 +980,6 @@ async function _shouldResourceBeRefetchedFromNetwork(resourceURL, skipChecklistC
     return refetchResourceFromNetwork;
 }
 
-function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWorkerVersion) {
-    return _myServiceWorkerName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
-}
-
 // #endregion Service Worker Private Utils
 
 
@@ -973,7 +989,7 @@ function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWork
 function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
     let includeResourseURL = false;
     for (let includeURL of includeList) {
-        if (resourceURL.match(new RegExp(includeURL)) != null) {
+        if (resourceURL.match(includeURL) != null) {
             includeResourseURL = true;
             break;
         }
@@ -981,7 +997,7 @@ function _shouldResourceURLBeIncluded(resourceURL, includeList, excludeList) {
 
     if (includeResourseURL) {
         for (let excludeURL of excludeList) {
-            if (resourceURL.match(new RegExp(excludeURL)) != null) {
+            if (resourceURL.match(excludeURL) != null) {
                 includeResourseURL = false;
                 break;
             }
@@ -999,8 +1015,9 @@ function _getCurrentOrigin() {
     return self.location.origin;
 }
 
-function _escapeRegex(regexToEscape) {
-    return regexToEscape.replace(new RegExp("[/\\-\\\\^$*+?.()|[\\]{}]", "g"), "\\$&");
+function _escapeRegexSpecialCharacters(regexToEscape) {
+    let escapeSpecialCharacters = new RegExp("[/\\-\\\\^$*+?.()|[\\]{}]", "g");
+    return regexToEscape.replace(escapeSpecialCharacters, "\\$&");
 }
 
 // #endregion Cauldron Private Utils
