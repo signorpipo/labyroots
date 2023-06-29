@@ -18910,48 +18910,57 @@
           this.myMinAngleToFlyForwardDown = 90;
           this.myMinAngleToFlyRightUp = 90;
           this.myMinAngleToFlyRightDown = 90;
+          this.myAdjustForwardWhenCloseToUp = true;
+          this.myAdjustRightWhenCloseToUp = true;
+          this.myAdjustForwardWhenCloseToUpAngleThreshold = 10;
+          this.myAdjustRightWhenCloseToUpAngleThreshold = 10;
+          this.myInvertForwardWhenUpsideDown = false;
+          this.myInvertRightWhenUpsideDown = false;
+          this.myAdjustLastValidFlatForwardOverConversionReferenceRotation = true;
+          this.myAdjustLastValidFlatRightOverConversionReferenceRotation = true;
         }
       };
       PP.Direction2DTo3DConverter = class Direction2DTo3DConverter {
         constructor(params = new PP.Direction2DTo3DConverterParams()) {
           this._myParams = params;
-          this._myIsFlyingForward = this._myParams.myStartFlyingForward;
-          this._myIsFlyingRight = this._myParams.myStartFlyingRight;
+          this._myFlyingForward = this._myParams.myStartFlyingForward;
+          this._myFlyingRight = this._myParams.myStartFlyingRight;
+          this._myLastConvertRotationQuat = PP.quat_create();
+          this._myLastConvertRotationQuatValid = false;
           this._myLastValidFlatForward = PP.vec3_create();
           this._myLastValidFlatRight = PP.vec3_create();
-          this._myMinAngleToBeValid = 5;
         }
         convert(direction2D, conversionTransform, direction3DUp = null, outDirection3D = PP.vec3_create()) {
           return this.convertTransform(direction2D, conversionTransform, direction3DUp, outDirection3D);
         }
         isFlying() {
-          return this._myIsFlyingForward || this._myIsFlyingRight;
+          return this._myFlyingForward || this._myFlyingRight;
         }
         isFlyingForward() {
-          return this._myIsFlyingForward;
+          return this._myFlyingForward;
         }
         isFlyingRight() {
-          return this._myIsFlyingRight;
+          return this._myFlyingRight;
         }
         startFlying() {
-          this._myIsFlyingForward = true;
-          this._myIsFlyingRight = true;
+          this._myFlyingForward = true;
+          this._myFlyingRight = true;
         }
         startFlyingForward() {
-          this._myIsFlyingForward = true;
+          this._myFlyingForward = true;
         }
         startFlyingRight() {
-          this._myIsFlyingRight = true;
+          this._myFlyingRight = true;
         }
         stopFlying() {
-          this._myIsFlyingForward = false;
-          this._myIsFlyingRight = false;
+          this._myFlyingForward = false;
+          this._myFlyingRight = false;
         }
         stopFlyingForward() {
-          this._myIsFlyingForward = false;
+          this._myFlyingForward = false;
         }
         stopFlyingRight() {
-          this._myIsFlyingRight = false;
+          this._myFlyingRight = false;
         }
         resetFly() {
           this.resetFlyForward();
@@ -18963,7 +18972,6 @@
           } else {
             this.stopFlyingForward();
           }
-          this._myLastValidFlatForward.vec3_zero();
         }
         resetFlyRight() {
           if (this._myParams.myStartFlyingRight) {
@@ -18971,9 +18979,22 @@
           } else {
             this.stopFlyingRight();
           }
+        }
+        resetLastValidFlatDirections() {
+          this._myLastValidFlatForward.vec3_zero();
           this._myLastValidFlatRight.vec3_zero();
         }
-        convertForward(direction2D, forward, direction3DUp = null, outDirection3D = PP.vec3_create()) {
+        resetLastValidFlatForward() {
+          this._myLastValidFlatForward.vec3_zero();
+        }
+        resetLastValidFlatRight() {
+          this._myLastValidFlatRight.vec3_zero();
+        }
+        resetLastConvertTransform() {
+          this._myLastConvertRotationQuatValid = false;
+          this._myLastConvertRotationQuat.quat_identity();
+        }
+        convertForward(direction2D, conversionForward, direction3DUp = null, outDirection3D = PP.vec3_create()) {
         }
         convertTransform(direction2D, conversionTransform, direction3DUp = null, outDirection3D = PP.vec3_create()) {
           return this.convertTransformMatrix(direction2D, conversionTransform, direction3DUp, outDirection3D);
@@ -18987,9 +19008,9 @@
       };
       PP.Direction2DTo3DConverter.prototype.convertForward = function() {
         let rotationQuat = PP.quat_create();
-        return function convertForward(direction2D, forward, direction3DUp = null, outDirection3D = PP.vec3_create()) {
+        return function convertForward(direction2D, conversionForward, direction3DUp = null, outDirection3D = PP.vec3_create()) {
           rotationQuat.quat_identity();
-          rotationQuat.quat_setForward(forward, direction3DUp);
+          rotationQuat.quat_setForward(conversionForward, direction3DUp);
           return this.convertRotationQuat(direction2D, rotationQuat, direction3DUp, outDirection3D);
         };
       }();
@@ -19010,10 +19031,28 @@
       PP.Direction2DTo3DConverter.prototype.convertRotationQuat = function() {
         let forward = PP.vec3_create();
         let right = PP.vec3_create();
+        let up = PP.vec3_create();
         let direction3DUpNegate = PP.vec3_create();
         let forwardScaled = PP.vec3_create();
         let rightScaled = PP.vec3_create();
+        let rotationToNewConvertPivoted = PP.quat_create();
         return function convertRotationQuat(direction2D, conversionRotationQuat, direction3DUp = null, outDirection3D = PP.vec3_create()) {
+          outDirection3D.vec3_zero();
+          if (this._myParams.myAdjustLastValidFlatForwardOverConversionReferenceRotation || this._myParams.myAdjustLastValidFlatRightOverConversionReferenceRotation) {
+            if (direction3DUp != null) {
+              if (this._myLastConvertRotationQuatValid) {
+                rotationToNewConvertPivoted = this._myLastConvertRotationQuat.quat_rotationToQuat(conversionRotationQuat, rotationToNewConvertPivoted).quat_getTwist(direction3DUp, rotationToNewConvertPivoted);
+                if (Math.pp_angleClamp(rotationToNewConvertPivoted.quat_getAngle(), true) > Math.PP_EPSILON_DEGREES) {
+                  if (this._myParams.myAdjustLastValidFlatForwardOverConversionReferenceRotation) {
+                    this._myLastValidFlatForward.vec3_rotateQuat(rotationToNewConvertPivoted, this._myLastValidFlatForward);
+                  }
+                  if (this._myParams.myAdjustLastValidFlatRightOverConversionReferenceRotation) {
+                    this._myLastValidFlatRight.vec3_rotateQuat(rotationToNewConvertPivoted, this._myLastValidFlatRight);
+                  }
+                }
+              }
+            }
+          }
           if (direction2D.vec2_isZero()) {
             let resetFlyForward = this._myParams.myAutoUpdateFlyForward && this._myParams.myResetFlyForwardWhenZero;
             if (resetFlyForward) {
@@ -19023,64 +19062,70 @@
             if (resetFlyRight) {
               this.resetFlyRight();
             }
-            outDirection3D.vec3_zero();
-            return outDirection3D;
           } else {
-            if (direction2D[0] == 0) {
-              this._myLastValidFlatRight.vec3_zero();
-            }
-            if (direction2D[1] == 0) {
-              this._myLastValidFlatForward.vec3_zero();
-            }
-          }
-          forward = conversionRotationQuat.quat_getForward(forward);
-          right = conversionRotationQuat.quat_getRight(right);
-          if (direction3DUp != null) {
-            direction3DUpNegate = direction3DUp.vec3_negate(direction3DUpNegate);
-            if (this._myParams.myAutoUpdateFlyForward) {
-              let angleForwardWithDirectionUp = forward.vec3_angle(direction3DUp);
-              this._myIsFlyingForward = this._myIsFlyingForward || (angleForwardWithDirectionUp < 90 - this._myParams.myMinAngleToFlyForwardUp || angleForwardWithDirectionUp > 90 + this._myParams.myMinAngleToFlyForwardDown);
-            }
-            if (this._myParams.myAutoUpdateFlyRight) {
-              let angleRightWithDirectionUp = right.vec3_angle(direction3DUp);
-              this._myIsFlyingRight = this._myIsFlyingRight || (angleRightWithDirectionUp < 90 - this._myParams.myMinAngleToFlyRightUp || angleRightWithDirectionUp > 90 + this._myParams.myMinAngleToFlyRightDown);
-            }
-            if (!this._myIsFlyingForward) {
-              if (!this._myLastValidFlatForward.vec3_isZero(1e-6) && (forward.vec3_angle(direction3DUp) < this._myMinAngleToBeValid || forward.vec3_angle(direction3DUpNegate) < this._myMinAngleToBeValid)) {
-                if (forward.vec3_isConcordant(this._myLastValidFlatForward)) {
+            forward = conversionRotationQuat.quat_getForward(forward);
+            right = conversionRotationQuat.quat_getRight(right);
+            up = conversionRotationQuat.quat_getUp(up);
+            if (direction3DUp != null) {
+              let upsideDown = !direction3DUp.vec3_isConcordant(up);
+              direction3DUpNegate = direction3DUp.vec3_negate(direction3DUpNegate);
+              if (this._myParams.myAutoUpdateFlyForward) {
+                let angleForwardWithDirectionUp = forward.vec3_angle(direction3DUp);
+                this._myFlyingForward = this._myFlyingForward || (angleForwardWithDirectionUp < 90 - this._myParams.myMinAngleToFlyForwardUp || angleForwardWithDirectionUp > 90 + this._myParams.myMinAngleToFlyForwardDown);
+              }
+              if (this._myParams.myAutoUpdateFlyRight) {
+                let angleRightWithDirectionUp = right.vec3_angle(direction3DUp);
+                this._myFlyingRight = this._myFlyingRight || (angleRightWithDirectionUp < 90 - this._myParams.myMinAngleToFlyRightUp || angleRightWithDirectionUp > 90 + this._myParams.myMinAngleToFlyRightDown);
+              }
+              if (!this._myFlyingForward) {
+                if (this._myParams.myAdjustForwardWhenCloseToUp && !this._myLastValidFlatForward.vec3_isZero(Math.PP_EPSILON) && (forward.vec3_angle(direction3DUp) < this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold || forward.vec3_angle(direction3DUpNegate) < this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold)) {
                   forward.pp_copy(this._myLastValidFlatForward);
-                } else {
-                  forward = this._myLastValidFlatForward.vec3_negate(forward);
+                } else if (upsideDown && this._myParams.myInvertForwardWhenUpsideDown) {
+                  forward.vec3_negate(forward);
+                }
+                forward = forward.vec3_removeComponentAlongAxis(direction3DUp, forward);
+                forward.vec3_normalize(forward);
+                if (forward.vec3_isZero(Math.PP_EPSILON)) {
+                  if (!this._myLastValidFlatForward.vec3_isZero(Math.PP_EPSILON)) {
+                    forward.pp_copy(this._myLastValidFlatForward);
+                  } else {
+                    forward.vec3_set(0, 0, 1);
+                  }
                 }
               }
-              forward = forward.vec3_removeComponentAlongAxis(direction3DUp, forward);
-              forward.vec3_normalize(forward);
-            }
-            if (!this._myIsFlyingRight) {
-              if (!this._myLastValidFlatRight.vec3_isZero(1e-6) && (right.vec3_angle(direction3DUp) < this._myMinAngleToBeValid || right.vec3_angle(direction3DUpNegate) < this._myMinAngleToBeValid)) {
-                if (right.vec3_isConcordant(this._myLastValidFlatRight)) {
+              if (!this._myFlyingRight) {
+                if (this._myParams.myAdjustRightWhenCloseToUp && !this._myLastValidFlatRight.vec3_isZero(Math.PP_EPSILON) && (right.vec3_angle(direction3DUp) < this._myParams.myAdjustRightWhenCloseToUpAngleThreshold || right.vec3_angle(direction3DUpNegate) < this._myParams.myAdjustRightWhenCloseToUpAngleThreshold)) {
                   right.pp_copy(this._myLastValidFlatRight);
-                } else {
-                  right = this._myLastValidFlatRight.vec3_negate(right);
+                } else if (upsideDown && this._myParams.myInvertRightWhenUpsideDown) {
+                  right.vec3_negate(right);
+                }
+                right = right.vec3_removeComponentAlongAxis(direction3DUp, right);
+                right.vec3_normalize(right);
+                if (right.vec3_isZero(Math.PP_EPSILON)) {
+                  if (!this._myLastValidFlatRight.vec3_isZero(Math.PP_EPSILON)) {
+                    right.pp_copy(this._myLastValidFlatRight);
+                  } else {
+                    right.vec3_set(-1, 0, 0);
+                  }
                 }
               }
-              right = right.vec3_removeComponentAlongAxis(direction3DUp, right);
-              right.vec3_normalize(right);
+              if (forward.vec3_angle(direction3DUp) >= this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold && forward.vec3_angle(direction3DUpNegate) >= this._myParams.myAdjustForwardWhenCloseToUpAngleThreshold || direction2D[1] != 0 && this._myLastValidFlatForward.vec3_isZero(Math.PP_EPSILON)) {
+                this._myLastValidFlatForward = forward.vec3_removeComponentAlongAxis(direction3DUp, this._myLastValidFlatForward);
+                this._myLastValidFlatForward.vec3_normalize(this._myLastValidFlatForward);
+              }
+              if (right.vec3_angle(direction3DUp) >= this._myParams.myAdjustRightWhenCloseToUpAngleThreshold && right.vec3_angle(direction3DUpNegate) >= this._myParams.myAdjustRightWhenCloseToUpAngleThreshold || direction2D[0] != 0 && this._myLastValidFlatRight.vec3_isZero(Math.PP_EPSILON)) {
+                this._myLastValidFlatRight = right.vec3_removeComponentAlongAxis(direction3DUp, this._myLastValidFlatRight);
+                this._myLastValidFlatRight.vec3_normalize(this._myLastValidFlatRight);
+              }
             }
-            if (forward.vec3_angle(direction3DUp) > this._myMinAngleToBeValid && forward.vec3_angle(direction3DUpNegate) > this._myMinAngleToBeValid || direction2D[1] != 0 && this._myLastValidFlatForward.vec3_isZero(1e-6)) {
-              this._myLastValidFlatForward = forward.vec3_removeComponentAlongAxis(direction3DUp, this._myLastValidFlatForward);
-              this._myLastValidFlatForward.vec3_normalize(this._myLastValidFlatForward);
+            outDirection3D = right.vec3_scale(direction2D[0], rightScaled).vec3_add(forward.vec3_scale(direction2D[1], forwardScaled), outDirection3D);
+            if (direction3DUp != null && !this._myFlyingForward && !this._myFlyingRight) {
+              outDirection3D = outDirection3D.vec3_removeComponentAlongAxis(direction3DUp, outDirection3D);
             }
-            if (right.vec3_angle(direction3DUp) > this._myMinAngleToBeValid && right.vec3_angle(direction3DUpNegate) > this._myMinAngleToBeValid || direction2D[0] != 0 && this._myLastValidFlatRight.vec3_isZero(1e-6)) {
-              this._myLastValidFlatRight = right.vec3_removeComponentAlongAxis(direction3DUp, this._myLastValidFlatRight);
-              this._myLastValidFlatRight.vec3_normalize(this._myLastValidFlatRight);
-            }
+            outDirection3D.vec3_normalize(outDirection3D);
           }
-          outDirection3D = right.vec3_scale(direction2D[0], rightScaled).vec3_add(forward.vec3_scale(direction2D[1], forwardScaled), outDirection3D);
-          if (direction3DUp != null && !this._myIsFlyingForward && !this._myIsFlyingRight) {
-            outDirection3D = outDirection3D.vec3_removeComponentAlongAxis(direction3DUp, outDirection3D);
-          }
-          outDirection3D.vec3_normalize(outDirection3D);
+          this._myLastConvertRotationQuat.quat_copy(conversionRotationQuat);
+          this._myLastConvertRotationQuatValid = true;
           return outDirection3D;
         };
       }();
@@ -38880,7 +38925,7 @@
               this._myStartCounter--;
               if (this._myStartCounter == 0) {
                 if (Global.myIsMazeverseTime) {
-                  if (Math.pp_randomInt(0, 99) == 0) {
+                  if (Math.pp_randomInt(0, 99) == 0 && Global.myWinMazeverse) {
                     this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                     this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
                     if (Global.myGoogleAnalytics) {
@@ -40948,6 +40993,7 @@
           directionConverterNonVRParams.myMinAngleToFlyForwardDown = this._myParams.myMinAngleToFlyDownNonVR;
           directionConverterNonVRParams.myMinAngleToFlyRightUp = this._myParams.myMinAngleToFlyRight;
           directionConverterNonVRParams.myMinAngleToFlyRightDown = this._myParams.myMinAngleToFlyRight;
+          directionConverterNonVRParams.myInvertForwardWhenUpsideDown = true;
           let directionConverterVRParams = new PP.Direction2DTo3DConverterParams();
           directionConverterVRParams.myAutoUpdateFlyForward = this._myParams.myFlyEnabled;
           directionConverterVRParams.myAutoUpdateFlyRight = this._myParams.myFlyEnabled;
@@ -40955,6 +41001,7 @@
           directionConverterVRParams.myMinAngleToFlyForwardDown = this._myParams.myMinAngleToFlyDownVR;
           directionConverterVRParams.myMinAngleToFlyRightUp = this._myParams.myMinAngleToFlyRight;
           directionConverterVRParams.myMinAngleToFlyRightDown = this._myParams.myMinAngleToFlyRight;
+          directionConverterVRParams.myInvertForwardWhenUpsideDown = true;
           this._myDirectionConverterNonVR = new PP.Direction2DTo3DConverter(directionConverterNonVRParams);
           this._myDirectionConverterVR = new PP.Direction2DTo3DConverter(directionConverterVRParams);
           this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;
@@ -42135,6 +42182,7 @@
           this._myGridToUse = mazeSetup.myGrid;
           Global.myIsWeddingTime = false;
           Global.myIsMazeverseTime = false;
+          Global.myWinMazeverse = Global.mySaveManager.loadBool("win_mazeverse", false);
           if (isMazeverse) {
             this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {
@@ -42150,6 +42198,11 @@
                 gtag("event", "is_mazeverse_maze", {
                   "value": 1
                 });
+                if (!Global.myWinMazeverse) {
+                  gtag("event", "is_mazeverse_maze_no_win", {
+                    "value": 1
+                  });
+                }
               }
             }
           } else if (isWedding) {
@@ -42580,6 +42633,10 @@
         let maze = [];
         let rowMax = Math.pp_randomPick(26, 30);
         let columnMax = Math.pp_randomPick(26, 30);
+        if (!Global.myWinMazeverse) {
+          rowMax = 26;
+          columnMax = 26;
+        }
         let rowMin = Math.pp_randomPick(20, 21);
         let columnMin = Math.pp_randomPick(20, 21);
         let rows = Math.pp_randomInt(rowMin, rowMax);
@@ -43093,8 +43150,8 @@
           bigTreeSize[1] = randomSizes[(first + 1) % 2];
           createWallsResults.myBigTreeRoomSize = bigTreeSize;
         }
-        let createPlayerRoom = Math.pp_randomInt(0, 3) != 0;
-        if (createPlayerRoom) {
+        let createPlayerRoom = Math.pp_randomInt(0, 4) != 0;
+        if (createPlayerRoom || !Global.myWinMazeverse) {
           createWallsResults.myPlayerRoomSize = [Math.pp_randomInt(3, 4), Math.pp_randomInt(3, 4)];
         }
         let specialRoom = Math.pp_randomInt(0, 2) == 0;
@@ -43602,9 +43659,11 @@
         start: function() {
           this._myStarted = false;
           this._myResetPhysx = true;
+          this._myResetActive = false;
           this._myTimer2 = new PP.Timer(4);
           this._myTimer = new PP.Timer(30);
-          this._myTimerSkipFirstTime = new PP.Timer(12);
+          this._myTimerSkipFirstTime = new PP.Timer(10);
+          this._myTimerSkipFirstTimeVR = new PP.Timer(5);
           this._mySteps = [];
           this._myStepDelay = 0.8;
           this._myStepTimer = new PP.Timer(0.1);
@@ -43612,8 +43671,12 @@
           this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
           this._mySkip = false;
           this._myCanSkip = false;
+          this._mySessionActive = false;
+          this._myPhysXResetCompleted = false;
         },
         update: function(dt) {
+          if (Global.myReady)
+            return;
           if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2) {
             if (this._myCanSkip) {
               this._mySkip = true;
@@ -43622,7 +43685,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 23;
+                let currentVersion = 24;
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
@@ -43632,12 +43695,14 @@
                   } else {
                     this._myTimer.start(8);
                   }
+                  this._myCanSkip = true;
                 }
                 if (Global.myIsMazeverseTime) {
                   Global.mySky.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                   Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                 }
                 Global.mySaveManager.save("is_wedding", false, false);
+                this._mySessionActive = PP.XRUtils.isSessionActive();
               }
             }
           } else {
@@ -43650,6 +43715,7 @@
               for (let physx of physxs) {
                 physx.active = true;
               }
+              this._myPhysXResetCompleted = true;
             }
             if (this._myResetPhysx) {
               this._myResetPhysx = false;
@@ -43663,22 +43729,34 @@
                 physx.active = false;
               }
             }
-            if (this._myTimer.isRunning()) {
-              this._myStepTimer.update(dt);
-              if (this._myStepTimer.isDone()) {
-                let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
-                this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
-                let player = this._mySteps[0];
-                player.setPosition(Global.myPlayer.getPositionReal());
-                player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
-                player.play();
+            this._myStepTimer.update(dt);
+            if (this._myStepTimer.isDone()) {
+              let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
+              this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
+              let player = this._mySteps[0];
+              player.setPosition(Global.myPlayer.getPositionReal());
+              player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
+              player.play();
+            }
+            this._myTimer.update(dt);
+            this._myTimer2.update(dt);
+            if (!this._mySessionActive && PP.XRUtils.isSessionActive()) {
+              this._mySessionActive = true;
+              if (this._myTimer.getTimeLeft() < 6) {
+                this._myTimer.start(6);
               }
-              this._myTimer.update(dt);
-              this._myTimer2.update(dt);
-              this._myTimerSkipFirstTime.update(dt);
-              if (this._myTimerSkipFirstTime.isDone()) {
+            }
+            this._myTimerSkipFirstTime.update(dt);
+            if (this._myTimerSkipFirstTime.isJustDone()) {
+              this._myCanSkip = true;
+            }
+            if (PP.XRUtils.isSessionActive()) {
+              this._myTimerSkipFirstTimeVR.update(dt);
+              if (this._myTimerSkipFirstTimeVR.isJustDone()) {
                 this._myCanSkip = true;
               }
+            }
+            if (this._myPhysXResetCompleted) {
               if (this._myTimer.isDone() || this._myCanSkip && this._myTimer2.isDone() && this._mySkip) {
                 if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                   if (Global.myGoogleAnalytics) {
@@ -44232,7 +44310,7 @@
               }.bind(this);
               Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
             } else {
-              Global.windowOpen("https://app.zesty.market/space/11457541-0720-4287-a2a7-e3adfe7426a9", onSuccess, onError);
+              Global.windowOpen("https://www.zesty.market", onSuccess, onError);
             }
           }
         }
@@ -46020,6 +46098,7 @@
         start: function() {
           this._myStarted = false;
           this._myTransformationTimersSetup = null;
+          this._myFirstTransformationTimersSetup = null;
           this._myTransformationTimer = new PP.Timer(0);
           Global.myStage = 0;
           this._myLastFreeCell = null;
@@ -46032,11 +46111,14 @@
           this._myEnd = 0;
           this._myTimeAlive = 0;
           this._myStageTotalTime = 0;
+          this._myFirstStageTotalTime = 0;
           this._myResetAxePosition = 0;
           this._myRepeatHealSound = 0;
           this._myRepeatHealSoundTimer = new PP.Timer(0.4);
           this._myPosition = [0, 0, 0];
           this._myIsWedding = false;
+          this._myIsMazeverse = false;
+          this._myIsFirstLive = true;
         },
         update: function(dt) {
           this._secretMazeCodeUpdate(dt);
@@ -46073,10 +46155,11 @@
               }
             }
             this._myTimeAlive += dt;
-            if (!Global.myBigTreeDead || Global.myStage >= this._myTransformationTimersSetup.length - 1) {
+            let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+            if (!Global.myBigTreeDead || Global.myStage >= currentTransformationTimersSetup.length - 1) {
               this._myTransformationTimer.update(dt);
               if (this._myTransformationTimer.isDone()) {
-                if (Global.myStage + 1 >= this._myTransformationTimersSetup.length) {
+                if (Global.myStage + 1 >= currentTransformationTimersSetup.length) {
                   Global.myCancelTeleport = 5;
                   if (Global.myPlayerLocomotion.canStop()) {
                     Global.myPlayerLocomotion.setIdle(true);
@@ -46131,14 +46214,20 @@
           this._myAudioHeal2 = PP.myAudioManager.createAudioPlayer(AudioID.HEAL2);
           this._myStarted = true;
           this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myTransformationTimers;
+          this._myFirstTransformationTimersSetup = Global.mySetup.myPlayerSetup.myFirstTransformationTimers;
           if (Global.myIsMazeverseTime) {
             this._myTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
+            this._myFirstTransformationTimersSetup = Global.mySetup.myPlayerSetup.myMazeverseTransformationTimers;
           }
           if (Global.myFromAbove) {
             this._myTransformationTimersSetup[0] = 1e6;
+            this._myFirstTransformationTimersSetup[0] = 1e6;
           }
           for (let timer of this._myTransformationTimersSetup) {
             this._myStageTotalTime += timer;
+          }
+          for (let timer of this._myFirstTransformationTimersSetup) {
+            this._myFirstStageTotalTime += timer;
           }
           this._resetTransformation();
           this._myObjectToIgnore.pp_copy(Global.myPlayer.getMovementCollisionCheckParams().myHorizontalObjectsToIgnore);
@@ -46162,18 +46251,20 @@
         },
         _resetTransformation() {
           Global.myStage = 0;
-          this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
+          let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+          this._myTransformationTimer.start(currentTransformationTimersSetup[Global.myStage]);
         },
         _nextStage(noSound = false, eat = false, full = false) {
           Global.myStage = Math.max(Global.myStage + 1, 0);
           let dead = false;
-          if (Global.myStage >= this._myTransformationTimersSetup.length) {
+          let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+          if (Global.myStage >= currentTransformationTimersSetup.length) {
             PP.myLeftGamepad.pulse(0.5, 0.5);
             PP.myRightGamepad.pulse(0.5, 0.5);
             this._death();
             dead = true;
           } else {
-            this._myTransformationTimer.start(this._myTransformationTimersSetup[Global.myStage]);
+            this._myTransformationTimer.start(currentTransformationTimersSetup[Global.myStage]);
             if (!noSound && (eat && !full)) {
               PP.myLeftGamepad.pulse(0.35, 0.25);
               PP.myRightGamepad.pulse(0.35, 0.25);
@@ -46198,7 +46289,9 @@
           }
         },
         _death() {
+          let currentStageTotalTime = this._myIsFirstLive ? this._myFirstStageTotalTime : this._myStageTotalTime;
           Global.myDeadOnce = true;
+          this._myIsFirstLive = false;
           if (Global.myGoogleAnalytics) {
             gtag("event", "death", {
               "value": 1
@@ -46208,15 +46301,15 @@
             gtag("event", "survive_for_seconds", {
               "value": Math.round(this._myTimeAlive)
             });
-            if (this._myTimeAlive > this._myStageTotalTime * 3) {
+            if (this._myTimeAlive > currentStageTotalTime * 3) {
               gtag("event", "survive_bear_grills", {
                 "value": 1
               });
-            } else if (this._myTimeAlive > this._myStageTotalTime * 2) {
+            } else if (this._myTimeAlive > currentStageTotalTime * 2) {
               gtag("event", "survive_a_lot", {
                 "value": 1
               });
-            } else if (this._myTimeAlive > this._myStageTotalTime * 1.1) {
+            } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
               gtag("event", "survive_more", {
                 "value": 1
               });
@@ -46275,9 +46368,10 @@
           }
         },
         addStage(full = false) {
-          if (Global.myStage < this._myTransformationTimersSetup.length - 1) {
+          let currentTransformationTimersSetup = this._myIsFirstLive ? this._myFirstTransformationTimersSetup : this._myTransformationTimersSetup;
+          if (Global.myStage < currentTransformationTimersSetup.length - 1) {
             if (full) {
-              Global.myStage = Math.max(0, this._myTransformationTimersSetup.length - 2);
+              Global.myStage = Math.max(0, currentTransformationTimersSetup.length - 2);
               this._nextStage(false, true, true);
             } else {
               this._nextStage(false, true);
@@ -46343,7 +46437,7 @@
               } else {
                 if (this._myIsWedding) {
                   url = url + "/?wedding=1";
-                } else {
+                } else if (this._myIsMazeverse) {
                   if (!Global.myIsMazeverseTime) {
                     url = url + "/?mazeverse=1";
                   }
@@ -46363,18 +46457,19 @@
                     gtag("event", "secret_code_wedding_success", {
                       "value": 1
                     });
-                  } else {
+                  } else if (this._myIsMazeverse) {
                     gtag("event", "secret_code_mazeverse_success", {
                       "value": 1
                     });
                   }
                 }
+                this._myIsWedding = false;
+                this._myIsMazeverse = false;
               }.bind(this);
               let onError = function() {
                 this._myChange = 10;
               }.bind(this);
               Global.windowOpen(url, onSuccess, onError);
-              this._myIsWedding = false;
             }
           }
           if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
@@ -46390,6 +46485,7 @@
                 this._myEnd = 1;
                 this._myChange = 1;
                 this._myIsWedding = false;
+                this._myIsMazeverse = true;
               }
             }
           } else {
@@ -46407,6 +46503,7 @@
                 Global.mySaveManager.save("is_wedding", true, false);
                 this._myEnd = 1;
                 this._myChange = 1;
+                this._myIsMazeverse = false;
                 this._myIsWedding = true;
               }
             }
@@ -47301,6 +47398,16 @@
               if (this._myHit == 0) {
                 Global.myBigTreeDead = true;
                 Global.myStage = 0;
+                let isFirstWin = !Global.mySaveManager.loadBool("win_normal_maze", false);
+                if (isFirstWin && !Global.myIsMazeverseTime) {
+                  Global.mySaveManager.save("is_mazeverse", true, false);
+                }
+                Global.mySaveManager.save("win", true, false);
+                if (Global.myIsMazeverseTime) {
+                  Global.mySaveManager.save("win_mazeverse", true, false);
+                } else {
+                  Global.mySaveManager.save("win_normal_maze", true, false);
+                }
                 if (Global.myGoogleAnalytics) {
                   gtag("event", "defeat_mother_tree", {
                     "value": 1
@@ -47311,6 +47418,11 @@
                     gtag("event", "defeat_mother_tree_mazeverse", {
                       "value": 1
                     });
+                    if (!Global.myWinMazeverse) {
+                      gtag("event", "defeat_mother_tree_mazeverse_first_time", {
+                        "value": 1
+                      });
+                    }
                   } else {
                     gtag("event", "defeat_mother_tree_normal", {
                       "value": 1
@@ -47401,7 +47513,11 @@
           if (fruitAmount == 8) {
             fruitAmount = Math.pp_randomInt(0, this._myPoints.length);
           } else if (fruitAmount == 9) {
-            fruitAmount = Math.pp_randomInt(1, this._myPoints.length);
+            if (this._myType == LR.MazeItemType.HUMAN_TREE_4) {
+              fruitAmount = this._myPoints.length;
+            } else {
+              fruitAmount = Math.pp_randomInt(1, this._myPoints.length);
+            }
           } else if (fruitAmount == 7) {
             fruitAmount = Math.pp_randomInt(Global.mySetup.myTreeSetup.myMinHumanFruits, Global.mySetup.myTreeSetup.myMaxHumanFruits);
           }
@@ -47502,13 +47618,11 @@
                 if (this._myCounter == 2) {
                   this._myTimer.start(tempoBase + 0.5);
                 }
-              } else {
+              } else if (Global.mySecretWall != null) {
                 let wallPosition = Global.mySecretWall.pp_getPosition();
                 this._mySecretWallDie.setPosition(wallPosition.vec3_add([0, 1.5, 0]));
-                if (!Global.myIsMazeverseTime) {
-                  this._mySecretWallDie.play();
-                  Global.mySecretWall.pp_setActive(false);
-                }
+                this._mySecretWallDie.play();
+                Global.mySecretWall.pp_setActive(false);
                 PP.myLeftGamepad.pulse(0.75, 0.75);
                 PP.myRightGamepad.pulse(0.75, 0.75);
               }
