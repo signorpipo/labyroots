@@ -231,6 +231,7 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 //
 // The resources URLs can also be a regex
 let _myTryCacheIgnoringURLParamsResourceURLsToInclude = [
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "/\\?",
     "bundle\\.js",
     "wonderland.min\\.js"
 ];
@@ -445,7 +446,7 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // like, for example, asking the user if they want to reload or not
 //
 // Use this with caution
-let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
+let _myImmediatelyTakeControlOfThePageWhenNotControlled = true;
 
 
 
