@@ -15,6 +15,7 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         directionConverterNonVRParams.myMinAngleToFlyForwardDown = this._myParams.myMinAngleToFlyDownNonVR;
         directionConverterNonVRParams.myMinAngleToFlyRightUp = this._myParams.myMinAngleToFlyRight;
         directionConverterNonVRParams.myMinAngleToFlyRightDown = this._myParams.myMinAngleToFlyRight;
+        directionConverterNonVRParams.myInvertForwardWhenUpsideDown = true;
 
         let directionConverterVRParams = new PP.Direction2DTo3DConverterParams();
         directionConverterVRParams.myAutoUpdateFlyForward = this._myParams.myFlyEnabled;
@@ -23,6 +24,7 @@ CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends Play
         directionConverterVRParams.myMinAngleToFlyForwardDown = this._myParams.myMinAngleToFlyDownVR;
         directionConverterVRParams.myMinAngleToFlyRightUp = this._myParams.myMinAngleToFlyRight;
         directionConverterVRParams.myMinAngleToFlyRightDown = this._myParams.myMinAngleToFlyRight;
+        directionConverterVRParams.myInvertForwardWhenUpsideDown = true;
 
         this._myDirectionConverterNonVR = new PP.Direction2DTo3DConverter(directionConverterNonVRParams);
         this._myDirectionConverterVR = new PP.Direction2DTo3DConverter(directionConverterVRParams);
