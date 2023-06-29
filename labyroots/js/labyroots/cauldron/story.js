@@ -6,6 +6,7 @@ WL.registerComponent('story', {
     start: function () {
         this._myStarted = false;
         this._myResetPhysx = true;
+        this._myResetActive = false;
         this._myTimer2 = new PP.Timer(4);
         this._myTimer = new PP.Timer(30);
         this._myTimerSkipFirstTime = new PP.Timer(10);
@@ -19,8 +20,14 @@ WL.registerComponent('story', {
 
         this._mySkip = false;
         this._myCanSkip = false;
+
+        this._mySessionActive = false;
+
+        this._myPhysXResetCompleted = false;
     },
     update: function (dt) {
+        if (Global.myReady) return;
+
         if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 ||
             PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myMultiplePressEndCount >= 2 || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).myMultiplePressEndCount >= 2 ||
             PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).myMultiplePressEndCount >= 2 || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).myMultiplePressEndCount >= 2 ||
@@ -57,6 +64,8 @@ WL.registerComponent('story', {
 
                     Global.mySaveManager.save("is_wedding", false, false);
                     //Global.mySaveManager.save("is_mazeverse", false, false); keep mazeverse until switch
+
+                    this._mySessionActive = PP.XRUtils.isSessionActive();
                 }
             }
         } else {
@@ -70,6 +79,8 @@ WL.registerComponent('story', {
                 for (let physx of physxs) {
                     physx.active = true;
                 }
+
+                this._myPhysXResetCompleted = true;
             }
 
             if (this._myResetPhysx) {
@@ -86,34 +97,43 @@ WL.registerComponent('story', {
                     physx.active = false;
                 }
             }
-            if (this._myTimer.isRunning()) {
 
-                this._myStepTimer.update(dt);
-                if (this._myStepTimer.isDone()) {
-                    let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
-                    this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
 
-                    let player = this._mySteps[0];
-                    player.setPosition(Global.myPlayer.getPositionReal());
-                    player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
-                    player.play();
+            this._myStepTimer.update(dt);
+            if (this._myStepTimer.isDone()) {
+                let delay = Math.pp_lerp(this._myStepDelay * 2, this._myStepDelay, 0.75);
+                this._myStepTimer.start(Math.pp_random(delay - 0.1, delay + 0.05));
+
+                let player = this._mySteps[0];
+                player.setPosition(Global.myPlayer.getPositionReal());
+                player.setPitch(Math.pp_random(1 - 0.35, 1 + 0.15));
+                player.play();
+            }
+
+            this._myTimer.update(dt);
+            this._myTimer2.update(dt);
+
+            if (!this._mySessionActive && PP.XRUtils.isSessionActive()) {
+                this._mySessionActive = true;
+
+                if (this._myTimer.getTimeLeft() < 6) {
+                    this._myTimer.start(6);
                 }
+            }
 
-                this._myTimer.update(dt);
-                this._myTimer2.update(dt);
+            this._myTimerSkipFirstTime.update(dt);
+            if (this._myTimerSkipFirstTime.isJustDone()) {
+                this._myCanSkip = true;
+            }
 
-                this._myTimerSkipFirstTime.update(dt);
-                if (this._myTimerSkipFirstTime.isJustDone()) {
+            if (PP.XRUtils.isSessionActive()) {
+                this._myTimerSkipFirstTimeVR.update(dt);
+                if (this._myTimerSkipFirstTimeVR.isJustDone()) {
                     this._myCanSkip = true;
                 }
+            }
 
-                if (PP.XRUtils.isSessionActive()) {
-                    this._myTimerSkipFirstTimeVR.update(dt);
-                    if (this._myTimerSkipFirstTimeVR.isJustDone()) {
-                        this._myCanSkip = true;
-                    }
-                }
-
+            if (this._myPhysXResetCompleted) {
                 if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {
                     if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
                         if (Global.myGoogleAnalytics) {
