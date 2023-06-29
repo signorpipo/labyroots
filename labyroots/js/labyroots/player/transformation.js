@@ -35,6 +35,7 @@ WL.registerComponent('transformation', {
         this._myPosition = [0, 0, 0];
 
         this._myIsWedding = false;
+        this._myIsMazeverse = false;
 
         this._myIsFirstLive = true;
     },
@@ -441,7 +442,7 @@ WL.registerComponent('transformation', {
                 } else {
                     if (this._myIsWedding) {
                         url = url + "/?wedding=1";
-                    } else {
+                    } else if (this._myIsMazeverse) {
                         if (!Global.myIsMazeverseTime) {
                             url = url + "/?mazeverse=1";
                         }
@@ -464,12 +465,15 @@ WL.registerComponent('transformation', {
                             gtag("event", "secret_code_wedding_success", {
                                 "value": 1
                             });
-                        } else {
+                        } else if (this._myIsMazeverse) {
                             gtag("event", "secret_code_mazeverse_success", {
                                 "value": 1
                             });
                         }
                     }
+
+                    this._myIsWedding = false;
+                    this._myIsMazeverse = false;
                 }.bind(this);
 
                 let onError = function () {
@@ -477,8 +481,6 @@ WL.registerComponent('transformation', {
                 }.bind(this);
 
                 Global.windowOpen(url, onSuccess, onError);
-
-                this._myIsWedding = false;
             }
         }
 
@@ -498,6 +500,7 @@ WL.registerComponent('transformation', {
                     this._myEnd = 1;
                     this._myChange = 1;
                     this._myIsWedding = false;
+                    this._myIsMazeverse = true;
                 }
             }
         } else {
@@ -520,6 +523,7 @@ WL.registerComponent('transformation', {
 
                     this._myEnd = 1;
                     this._myChange = 1;
+                    this._myIsMazeverse = false;
                     this._myIsWedding = true;
                 }
             }
