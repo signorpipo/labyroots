@@ -6,7 +6,7 @@ let _NO_RESOURCE = [];
 let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*"];
 let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegexSpecialCharacters(_getCurrentOrigin()) + ".*"];
 
-let _LOCALHOST = ["localhost"];
+let _LOCALHOST = ["localhost:8080"];
 let _NO_LOCATION = [];
 
 // #endregion Service Worker Constants
@@ -19,10 +19,12 @@ let _NO_LOCATION = [];
 
 
 
-// The service worker name, used, for example, to identify the caches
+// The app name, used, for example, to identify the caches
 //
-// This should not be changed once u have chosen one, since it could be used, for example, to look for previous caches
-let _myServiceWorkerName = "labyroots";
+// This should not be changed after u have released your app, since it could be used, for example, to look for previous caches
+// It's not an issue if u change it, it will just not be able to clean previous caches or use them,
+// since it will basically behave like a completely new service worker
+let _myAppName = "labyroots";
 
 
 
@@ -30,7 +32,7 @@ let _myServiceWorkerName = "labyroots";
 // with previous service workers
 //
 // It must be an incremental integer greater than 0
-let _myServiceWorkerVersion = 1;
+let _myServiceWorkerVersion = 2;
 
 
 
@@ -41,12 +43,12 @@ let _myServiceWorkerVersion = 1;
 // since u could get a mix of old (from the cache) and new (from the network) resources
 //
 // It must be an incremental integer greater than 0
-let _myCacheVersion = 1;
+let _myCacheVersion = 2;
 
 
 
 // This is the list of the resources u want to precache, that means they will be cached on the first load,
-// when the service worker is installing and can't still catch the fetch events
+// when the service worker is installing and can't catch the fetch events yet
 //
 // Properly filling this list can potentially make it so your app is ready to work offline on first load,
 // otherwise it might require at least a second load, where the service worker will be able to actually catch
@@ -58,6 +60,7 @@ let _myCacheVersion = 1;
 // The resources URLs can't be a regex in this case, since it needs to know the specific resource to fetch
 let _myResourceURLsToPrecache = [
     "/",
+    "index.html",
     "manifest.json",
     "f0.png",
     "icon512.png",
@@ -174,7 +177,7 @@ let _myUpdateCacheInBackgroundResourceURLsToExclude = _NO_RESOURCE;
 // This is especially useful to avoid using a service worker on development locations like "localhost"
 //
 // The locations URLs can also be a regex
-let _myRejectServiceWorkerLocationURLsToInclude = _NO_LOCATION;
+let _myRejectServiceWorkerLocationURLsToInclude = _LOCALHOST;
 let _myRejectServiceWorkerLocationURLsToExclude = _NO_LOCATION;
 
 
@@ -226,11 +229,7 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringURLParamsResourceURLsToInclude = [
-    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "/\\?",
-    "bundle\\.js",
-    "wonderland.min\\.js"
-];
+let _myTryCacheIgnoringURLParamsResourceURLsToInclude = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "/\\?"];
 let _myTryCacheIgnoringURLParamsResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -625,17 +624,13 @@ async function fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHe
     return responseFromCache;
 }
 
-async function hasInCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
-    let responseFromCache = await fetchFromCache(resourceURL, ignoreURLParams, ignoreVaryHeader);
-    return responseFromCache != null;
-}
-
 async function putInCache(request, response) {
     return await _putInCache(request, response);
 }
 
-function getResourceURLsToPrecache() {
-    return _myResourceURLsToPrecache;
+async function hasInCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
+    let responseFromCache = await fetchFromCache(resourceURL, ignoreURLParams, ignoreVaryHeader);
+    return responseFromCache != null;
 }
 
 async function hasInCacheAllResourcesToPrecache(ignoreURLParams = false, ignoreVaryHeader = false) {
@@ -670,6 +665,10 @@ async function hasInCacheAllResourcesToPrecache(ignoreURLParams = false, ignoreV
     return allResourcesToPreacheAreCached;
 }
 
+function getResourceURLsToPrecache() {
+    return _myResourceURLsToPrecache;
+}
+
 // #endregion Service Worker Public Functions
 
 
@@ -699,7 +698,7 @@ function shouldResourceBeCached(request, response) {
 async function _install() {
     let rejectServiceWorker = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myRejectServiceWorkerLocationURLsToInclude, _myRejectServiceWorkerLocationURLsToExclude);
     if (rejectServiceWorker) {
-        throw new Error("The service worker is not allowed on current location: " + _getCurrentLocation());
+        throw new Error("The service worker is not allowed to be installed on the current location: " + _getCurrentLocation());
     }
 
     if (_myImmediatelyActivateNewServiceWorker) {
@@ -765,7 +764,7 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFail = true, useTempCac
                 if (refetchFromNetwork) {
                     resourceHaveToBeCached = true
                 } else if (!cacheAlreadyExists) {
-                    resourceHaveToBeCached = true; // There was no cache so no need to check if u want to refetch or not
+                    resourceHaveToBeCached = true;
                 } else {
                     let resourceAlreadyInCache = await currentCache.match(resourceCompleteURLToPrecache) != null;
                     if (!resourceAlreadyInCache) {
@@ -896,6 +895,7 @@ async function _deletePreviousRefetchFromNetworkChecklists() {
         }
     }
 }
+
 async function _copyTempCacheToCurrentCache() {
     let currentTempCacheID = _getTempCacheID();
 
@@ -940,7 +940,7 @@ function _shouldHandleRequest(request) {
 }
 
 function _getCacheID(cacheVersion = _myCacheVersion) {
-    return _myServiceWorkerName + "_cache_v" + cacheVersion.toFixed(0);
+    return _myAppName + "_cache_v" + cacheVersion.toFixed(0);
 }
 
 function _getTempCacheID(serviceWorkerVersion = _myServiceWorkerVersion, cacheVersion = _myCacheVersion) {
@@ -948,21 +948,21 @@ function _getTempCacheID(serviceWorkerVersion = _myServiceWorkerVersion, cacheVe
 }
 
 function _getRefetchFromNetworkChecklistID(serviceWorkerVersion = _myServiceWorkerVersion) {
-    return _myServiceWorkerName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
+    return _myAppName + "_refetch_checklist_v" + serviceWorkerVersion.toFixed(0);
 }
 
 function _isCacheID(cacheID) {
-    let matchCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_cache_v\\d+$");
+    let matchCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myAppName) + "_cache_v\\d+$");
     return cacheID.match(matchCacheID) != null;
 }
 
 function _isTempCacheID(tempCacheID) {
-    let matchTempCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_cache_v\\d+_temp_v\\d+$");
+    let matchTempCacheID = new RegExp("^" + _escapeRegexSpecialCharacters(_myAppName) + "_cache_v\\d+_temp_v\\d+$");
     return tempCacheID.match(matchTempCacheID) != null;
 }
 
 function _isRefetchFromNetworkChecklistID(refetchFromNetworkChecklistID) {
-    let matchRefetchFromNetworkChecklistID = new RegExp("^" + _escapeRegexSpecialCharacters(_myServiceWorkerName) + "_refetch_checklist_v\\d+$");
+    let matchRefetchFromNetworkChecklistID = new RegExp("^" + _escapeRegexSpecialCharacters(_myAppName) + "_refetch_checklist_v\\d+$");
     return refetchFromNetworkChecklistID.match(matchRefetchFromNetworkChecklistID) != null;
 }
 
