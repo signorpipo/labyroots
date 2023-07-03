@@ -24187,7 +24187,8 @@
                 0,
                 9,
                 5
-            ]
+            ],
+            "customIndexHtml": true
         },
         "rendering": {
             "clearColor": [
