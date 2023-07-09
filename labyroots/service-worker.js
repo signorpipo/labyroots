@@ -490,6 +490,20 @@ let _myShareTempDataBetweenServiceWorkers = false;
 
 
 
+// #region Known Issues
+//
+// - If a service worker only partially manage to cache the data (both during precache or normal fetch phase),
+//   and u update both your app and the service worker, in a way to clean the cache, while the new service worker install itself,
+//   the old service worker might start to use the new data while serving some of the old one too, mixing the 2 versions.
+//   As soon as the new service worker is activated the app will be fixed, so it's not permanent, but in the meantime u could have errors
+//   in your app due to this.
+//   If u always fetch first from the network, it should not be an issue, but if u try the cache first, then u can have this.
+//   You should not worry too much about this tho, since it should not be a real issue happening often, and eventually fix itself.
+//
+// #endregion Known Issues
+
+
+
 
 
 
