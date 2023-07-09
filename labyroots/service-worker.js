@@ -936,11 +936,10 @@ async function _putInCache(request, response, useTempCache = false) {
 
 async function _deletePreviousCaches() {
     let cachesIDs = await caches.keys();
-    let currentCacheID = _getCacheID();
 
     for (let cacheID of cachesIDs) {
         try {
-            if (_isCacheID(cacheID) && cacheID != currentCacheID) {
+            if (_shouldDeleteCacheID(cacheID)) {
                 await caches.delete(cacheID);
             }
         } catch (error) {
@@ -963,11 +962,10 @@ async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefet
 
 async function _deletePreviousRefetchFromNetworkChecklists() {
     let cachesIDs = await caches.keys();
-    let currentRefetchFromNetworkChecklistID = _getRefetchFromNetworkChecklistID();
 
     for (let cacheID of cachesIDs) {
         try {
-            if (_isRefetchFromNetworkChecklistID(cacheID) && cacheID != currentRefetchFromNetworkChecklistID) {
+            if (_shouldDeleteRefetchFromNetworkChecklistID(cacheID)) {
                 await caches.delete(cacheID);
             }
         } catch (error) {
@@ -1089,6 +1087,38 @@ function _isTempRefetchFromNetworkChecklistID(tempRefetchFromNetworkChecklistID)
     return tempRefetchFromNetworkChecklistID.match(matchRefetchFromNetworkChecklistID) != null;
 }
 
+function _shouldDeleteCacheID(cacheID) {
+    let deleteCacheID = false;
+
+    let validCacheID = _isCacheID(cacheID);
+    if (validCacheID) {
+        let cacheIDWithoutAppName = cacheID.replace(new RegExp("^" + _escapeRegexSpecialCharacters(_myAppName)), "");
+
+        let versions = cacheIDWithoutAppName.match(new RegExp("(?<=_v)\\d+(?=_|$)", "g"));
+
+        deleteCacheID = parseInt(versions[0]) < _myCacheVersion;
+    }
+
+    return deleteCacheID;
+}
+
+function _shouldDeleteRefetchFromNetworkChecklistID(refetchFromNetworkChecklistID) {
+    let deleteRefetchFromNetworkChecklistID = false;
+
+    let validRefetchFromNetworkChecklistID = _isRefetchFromNetworkChecklistID(refetchFromNetworkChecklistID);
+    if (validRefetchFromNetworkChecklistID) {
+        let refetchFromNetworkChecklistIDWithoutAppName = refetchFromNetworkChecklistID.replace(new RegExp("^" + _escapeRegexSpecialCharacters(_myAppName)), "");
+
+        let versions = refetchFromNetworkChecklistIDWithoutAppName.match(new RegExp("(?<=_v)\\d+(?=_|$)", "g"));
+
+        deleteRefetchFromNetworkChecklistID =
+            parseInt(versions[0]) < _myCacheVersion ||
+            (parseInt(versions[0]) == _myCacheVersion && parseInt(versions[1]) < _myRefetchFromNetworkVersion);
+    }
+
+    return deleteRefetchFromNetworkChecklistID;
+}
+
 function _shouldDeleteTempCacheID(tempCacheID) {
     let deleteTempCacheID = false;
 
@@ -1099,8 +1129,8 @@ function _shouldDeleteTempCacheID(tempCacheID) {
         let versions = tempCacheIDWithoutAppName.match(new RegExp("(?<=_v)\\d+(?=_|$)", "g"));
 
         deleteTempCacheID =
-            versions[0] < _myCacheVersion ||
-            (versions[0] == _myCacheVersion && versions[1] <= _myServiceWorkerVersion);
+            parseInt(versions[0]) < _myCacheVersion ||
+            (parseInt(versions[0]) == _myCacheVersion && parseInt(versions[1]) <= _myServiceWorkerVersion);
     }
 
     return deleteTempCacheID;
@@ -1116,9 +1146,9 @@ function _shouldDeleteTempRefetchFromNetworkChecklistID(tempRefetchFromNetworkCh
         let versions = tempRefetchFromNetworkChecklistIDWithoutAppName.match(new RegExp("(?<=_v)\\d+(?=_|$)", "g"));
 
         deleteTempRefetchFromNetworkChecklistID =
-            versions[0] < _myCacheVersion ||
-            (versions[0] == _myCacheVersion && versions[1] < _myRefetchFromNetworkVersion) ||
-            (versions[0] == _myCacheVersion && versions[1] == _myRefetchFromNetworkVersion && versions[2] <= _myServiceWorkerVersion);
+            parseInt(versions[0]) < _myCacheVersion ||
+            (parseInt(versions[0]) == _myCacheVersion && parseInt(versions[1]) < _myRefetchFromNetworkVersion) ||
+            (parseInt(versions[0]) == _myCacheVersion && parseInt(versions[1]) == _myRefetchFromNetworkVersion && parseInt(versions[2]) <= _myServiceWorkerVersion);
     }
 
     return deleteTempRefetchFromNetworkChecklistID;
