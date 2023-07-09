@@ -195,6 +195,14 @@ let _myLogEnabled = false;
 
 
 
+// Which resources can be fetched from the cache
+//
+// The resources URLs can also be a regex
+let _myAllowFetchFromCacheResourceURLsToInclude = _ANY_RESOURCE;
+let _myAllowFetchFromCacheResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
@@ -550,8 +558,9 @@ async function fetchFromServiceWorker(request) {
     let cacheAlreadyTried = false;
 
     let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
+    let allowFetchFromCache = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromCacheResourceURLsToInclude, _myAllowFetchFromCacheResourceURLsToExclude);
 
-    if (!refetchFromNetwork) {
+    if (!refetchFromNetwork && allowFetchFromCache) {
         let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
         let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
@@ -599,25 +608,27 @@ async function fetchFromServiceWorker(request) {
             }
         }
 
-        if (!cacheAlreadyTried) {
-            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-            let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
-            if (responseFromCache != null) {
-                return responseFromCache;
-            }
-        }
-
-        let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-        let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
-        if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
-            let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
-            if (fallbackResponseFromCache != null) {
-                if (_myLogEnabled) {
-                    console.warn("Get from cache using a fallback: " + request.url);
+        if (allowFetchFromCache) {
+            if (!cacheAlreadyTried) {
+                let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+                let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+                let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+                if (responseFromCache != null) {
+                    return responseFromCache;
                 }
+            }
 
-                return fallbackResponseFromCache;
+            let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+            let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+            if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
+                let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                if (fallbackResponseFromCache != null) {
+                    if (_myLogEnabled) {
+                        console.warn("Get from cache using a fallback: " + request.url);
+                    }
+
+                    return fallbackResponseFromCache;
+                }
             }
         }
 
