@@ -460,7 +460,27 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // like, for example, asking the user if they want to reload or not
 //
 // Use this with caution
-let _myImmediatelyTakeControlOfThePageWhenNotControlled = true;
+let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
+
+
+
+// Normally, every service worker (defined by its version) works on its own temp data, for example when
+// installing or activating
+// This make it so there is no collision between service workers
+//
+// The downside is that, if u keep updating the service worker, a user might find themselves having to get every resource from scratch,
+// because the new service worker can't resume from where the previous service worker left
+// Enabling this make this possible, at least when the temp data is actually compatible (for example the cache version is the same),
+// which will result in avoiding getting from the network some precache resource which was already being partially fetched by a previous service worker
+//
+// In general, I don't think it should cause too many issues, but I'm not sure about the actual flow of service workers regarding the
+// installation and activation phases, and there might be issues if 2 service workers are installing at the same time, or one is activating
+// while another is installing, and they share temp data
+//
+// This is actually useful only if u are updating your service worker very often, otherwise it's not worth the risk
+//
+// Use this with caution
+let _myShareTempDataBetweenServiceWorkers = false;
 
 
 
@@ -1001,6 +1021,7 @@ function _getCacheID(cacheVersion = _myCacheVersion) {
 }
 
 function _getTempCacheID(cacheVersion = _myCacheVersion, serviceWorkerVersion = _myServiceWorkerVersion) {
+    serviceWorkerVersion = (_myShareTempDataBetweenServiceWorkers) ? 0 : serviceWorkerVersion;
     return _getCacheID(cacheVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
@@ -1009,6 +1030,7 @@ function _getRefetchFromNetworkChecklistID(cacheVersion = _myCacheVersion, refet
 }
 
 function _getTempRefetchFromNetworkChecklistID(cacheVersion = _myCacheVersion, refetchFromNetworkVersion = _myRefetchFromNetworkVersion, serviceWorkerVersion = _myServiceWorkerVersion) {
+    serviceWorkerVersion = (_myShareTempDataBetweenServiceWorkers) ? 0 : serviceWorkerVersion;
     return _getRefetchFromNetworkChecklistID(cacheVersion, refetchFromNetworkVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
