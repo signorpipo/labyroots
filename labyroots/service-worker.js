@@ -195,6 +195,14 @@ let _myLogEnabled = false;
 
 
 
+// Which resources can be fetched from the cache
+//
+// The resources URLs can also be a regex
+let _myAllowFetchFromCacheResourceURLsToInclude = _ANY_RESOURCE;
+let _myAllowFetchFromCacheResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
@@ -494,11 +502,21 @@ let _myShareTempDataBetweenServiceWorkers = false;
 //
 // - If a service worker only partially manage to cache the data (both during precache or normal fetch phase),
 //   and u update both your app and the service worker, in a way to clean the cache, while the new service worker install itself,
-//   the old service worker might start to use the new data while serving some of the old one too, mixing the 2 versions.
+//   the old service worker might start to use the new data while serving some of the old one too, mixing the 2 versions
 //   As soon as the new service worker is activated the app will be fixed, so it's not permanent, but in the meantime u could have errors
-//   in your app due to this.
-//   If u always fetch first from the network, it should not be an issue, but if u try the cache first, then u can have this.
-//   You should not worry too much about this tho, since it should not be a real issue happening often, and eventually fix itself.
+//   in your app due to this
+
+//   If u always fetch first from the network, it should not be an issue, but if u try the cache first, then u can have this
+//   You should not worry too much about this tho, since it should not be a real issue happening often, and eventually fix itself
+//
+//   The easiest way to avoid having this, if u are really worried about it, is to have an empty @_myResourceURLsToPrecache list,
+//   so to complete the install as fast as possible, enable @_myImmediatelyActivateNewServiceWorker
+//   and reload the page when the service worker change
+//   This will basically switch to the new service worker as soon as possible, therefore fetching the new version of your app
+//
+//   If u instead care about precaching, an idea would be to find out that a new service worker is trying to install inside your app code,
+//   and prevent using it until the installation has been completed, but I think this would be an overkill unless it's really important, for example
+//   for a multiplayer experience where a glitch could give an advantage
 //
 // #endregion Known Issues
 
@@ -550,8 +568,9 @@ async function fetchFromServiceWorker(request) {
     let cacheAlreadyTried = false;
 
     let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
+    let allowFetchFromCache = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromCacheResourceURLsToInclude, _myAllowFetchFromCacheResourceURLsToExclude);
 
-    if (!refetchFromNetwork) {
+    if (!refetchFromNetwork && allowFetchFromCache) {
         let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
         let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
@@ -599,25 +618,27 @@ async function fetchFromServiceWorker(request) {
             }
         }
 
-        if (!cacheAlreadyTried) {
-            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-            let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
-            if (responseFromCache != null) {
-                return responseFromCache;
-            }
-        }
-
-        let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-        let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
-        if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
-            let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
-            if (fallbackResponseFromCache != null) {
-                if (_myLogEnabled) {
-                    console.warn("Get from cache using a fallback: " + request.url);
+        if (allowFetchFromCache) {
+            if (!cacheAlreadyTried) {
+                let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+                let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+                let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+                if (responseFromCache != null) {
+                    return responseFromCache;
                 }
+            }
 
-                return fallbackResponseFromCache;
+            let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+            let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+            if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
+                let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                if (fallbackResponseFromCache != null) {
+                    if (_myLogEnabled) {
+                        console.warn("Get from cache using a fallback: " + request.url);
+                    }
+
+                    return fallbackResponseFromCache;
+                }
             }
         }
 
