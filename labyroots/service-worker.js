@@ -545,7 +545,6 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   I honestly think this would be an overkill unless it's really important, for example for a multiplayer experience where a glitch could give an advantage
 //
 //   // This should be done before window.navigator.serviceWorker.register
-//   // This is just an example to give u an idea of how to achieve this and might not be 100% reliable (even though it should be)
 //   window.navigator.serviceWorker?.getRegistration().then(function (registration) {
 //      if(registration != null) {
 //          registration.addEventListener("updatefound", function () {
@@ -561,7 +560,7 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   on reload u will get the new data immediately, while the new service worker is installing
 //
 //   // This should be done before window.navigator.serviceWorker.register
-//   // This is just an example to give u an idea of how to achieve this and might not be 100% reliable (even though it should be)
+//   // I'm not 100% sure about the behavior of the unregister function, so use this with caution, even though it seems to work
 //   window.navigator.serviceWorker?.getRegistration().then(function (registration) {
 //      if(registration != null) {
 //          registration.addEventListener("updatefound", function () {
