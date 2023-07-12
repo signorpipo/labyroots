@@ -578,7 +578,7 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   there will be no risk that they will be cached again later on
 //
 //   A thing to note is that u might think that if u always fetch first from the network, or update the cache in background,
-//   u should not have this issue, but this is wrong
+//   u should not have this issue, but this is not correct
 //   For example, even if u always fetch from network first and u might manage to fetch new resources,
 //   u might also fail to fetch some of them (due to network issue for example), fallbacking to the cache,
 //   resulting in a mix of old and new resources
