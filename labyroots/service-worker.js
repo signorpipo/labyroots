@@ -6,8 +6,9 @@ let _NO_RESOURCE = [];
 let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*"];
 let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegexSpecialCharacters(_getCurrentOrigin()) + ".*"];
 
-let _LOCALHOST = ["localhost:8080"];
+let _ANY_LOCATION = [".*"];
 let _NO_LOCATION = [];
+let _LOCALHOST = ["localhost:8080"];
 
 // #endregion Service Worker Constants
 
@@ -183,7 +184,10 @@ let _myRejectServiceWorkerLocationURLsToExclude = _NO_LOCATION;
 
 
 // Enable some extra logs to better understand what's going on and why things might not be working
-let _myLogEnabled = false;
+//
+// The resources URLs can also be a regex
+let _myLogEnabledLocationURLsToInclude = _LOCALHOST;
+let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
 
 
 
@@ -679,7 +683,8 @@ async function fetchFromServiceWorker(request) {
             if (enableForceTryCacheFirstOnNetworkError) {
                 _myForceTryCacheFirstOnNetworkErrorEnabled = true;
 
-                if (_myLogEnabled) {
+                let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                if (logEnabled) {
                     console.warn("Force try cache on network error enabled");
                 }
             }
@@ -700,7 +705,8 @@ async function fetchFromServiceWorker(request) {
             if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
                 let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
                 if (fallbackResponseFromCache != null) {
-                    if (_myLogEnabled) {
+                    let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                    if (logEnabled) {
                         console.warn("Get from cache using a fallback: " + request.url);
                     }
 
@@ -736,7 +742,8 @@ async function fetchFromNetwork(request) {
     } catch (error) {
         networkResponse = null;
 
-        if (_myLogEnabled) {
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
             console.error("An error occurred when trying to fetch from the network: " + request.url);
         }
     }
@@ -757,7 +764,8 @@ async function fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHe
     } catch (error) {
         responseFromCache = null;
 
-        if (_myLogEnabled) {
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
             console.error("An error occurred when trying to get from the cache: " + resourceURL);
         }
     }
@@ -937,7 +945,8 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
                     resourceHasBeenPrecached = true; // The resource has been already precached
                 }
             } catch (error) {
-                if (_myLogEnabled) {
+                let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                if (logEnabled) {
                     console.error("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
                 }
             }
@@ -998,7 +1007,8 @@ async function _putInCache(request, response, useTempCache = false) {
     } catch (error) {
         putInCacheSucceeded = false;
 
-        if (_myLogEnabled) {
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
             console.error("An error occurred when trying to put the response in the cache: " + request.url);
         }
     }
@@ -1026,7 +1036,8 @@ async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefet
         let refetchChecklist = await caches.open(refetechChecklistID);
         await refetchChecklist.put(new Request(resourceURL), new Response(null));
     } catch (error) {
-        if (_myLogEnabled) {
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
             console.error("An error occurred when trying to put the response in the cache: " + request.url);
         }
     }
@@ -1262,7 +1273,8 @@ async function _shouldResourceBeRefetchedFromNetwork(resourceURL, checkTempRefet
     } catch (error) {
         refetchResourceFromNetwork = false;
 
-        if (_myLogEnabled) {
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
             console.error("An error occurred when trying to check if the resource should be refetched: " + request.url);
         }
     }
