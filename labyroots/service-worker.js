@@ -649,26 +649,22 @@ async function fetchFromServiceWorker(request) {
             cacheAlreadyTried = true;
 
             // Try to get the resource from the cache
-            try {
-                let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-                let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-                let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
-                if (responseFromCache != null) {
-                    if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
-                        let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
-                        if (updateCacheInBackground) {
-                            if (request.method == "GET") {
-                                _fetchFromNetworkAndPutInCache(request);
-                            } else if (request.method == "HEAD") {
-                                _fetchFromNetworkAndPutInCache(new Request(request, { method: "GET" }));
-                            }
+            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+            let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+            if (responseFromCache != null) {
+                if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
+                    let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
+                    if (updateCacheInBackground) {
+                        if (request.method == "GET") {
+                            _fetchFromNetworkAndPutInCache(request);
+                        } else if (request.method == "HEAD") {
+                            _fetchFromNetworkAndPutInCache(new Request(request, { method: "GET" }));
                         }
                     }
-
-                    return responseFromCache;
                 }
-            } catch (error) {
-                // Do nothing, possibly get from cache failed so we should go on and try with the network
+
+                return responseFromCache;
             }
         }
     }
