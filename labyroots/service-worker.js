@@ -871,16 +871,25 @@ async function _install() {
 }
 
 async function _activate() {
-    await _copyTempCacheToCurrentCache();
+    try {
+        await _copyTempCacheToCurrentCache();
 
-    await _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkChecklist();
+        await _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkChecklist();
 
-    await _deletePreviousCaches();
+        await _deletePreviousCaches();
 
-    await _deletePreviousRefetchFromNetworkChecklists();
+        await _deletePreviousRefetchFromNetworkChecklists();
 
-    if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
-        self.clients.claim();
+        if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
+            self.clients.claim();
+        }
+    } catch (error) {
+        await self.registration.unregister();
+
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
+            console.error("An error occurred while activating the service worker");
+        }
     }
 }
 
