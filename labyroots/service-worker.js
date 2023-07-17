@@ -627,111 +627,130 @@ self.addEventListener("fetch", function (event) {
 // #region Service Worker Public Functions
 
 async function fetchFromServiceWorker(request) {
-    if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
-        _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
-        _cacheResourcesToPrecache(false, false, false); // Do not await for this, just do it in background
-    }
-
-    if (!_shouldHandleRequest(request)) {
-        return fetch(request);
-    }
-
-    let cacheAlreadyTried = false;
-
-    let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
-    let allowFetchFromCache = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromCacheResourceURLsToInclude, _myAllowFetchFromCacheResourceURLsToExclude);
-
-    if (!refetchFromNetwork && allowFetchFromCache) {
-        let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
-        let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
-
-        if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
-            cacheAlreadyTried = true;
-
-            // Try to get the resource from the cache
-            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-            let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
-            if (responseFromCache != null) {
-                if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
-                    let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
-                    if (updateCacheInBackground) {
-                        if (request.method == "GET") {
-                            _fetchFromNetworkAndPutInCache(request);
-                        } else if (request.method == "HEAD") {
-                            _fetchFromNetworkAndPutInCache(new Request(request, { method: "GET" }));
-                        }
-                    }
-                }
-
-                return responseFromCache;
-            }
-        }
-    }
-
-    // Try to get the resource from the network
-    let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(request, true, refetchFromNetwork);
-    if (isResponseOk(responseFromNetwork) || isResponseOpaque(responseFromNetwork)) {
-        return responseFromNetwork;
-    } else {
-        if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
-            let enableForceTryCacheFirstOnNetworkError = _shouldResourceURLBeIncluded(request.url, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
-            if (enableForceTryCacheFirstOnNetworkError) {
-                _myForceTryCacheFirstOnNetworkErrorEnabled = true;
-
-                let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
-                if (logEnabled) {
-                    console.warn("Force try cache on network error enabled");
-                }
-            }
+    try {
+        if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
+            _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
+            _cacheResourcesToPrecache(false, false, false); // Do not await for this, just do it in background
         }
 
-        if (allowFetchFromCache) {
-            if (!cacheAlreadyTried) {
+        if (!_shouldHandleRequest(request)) {
+            return fetch(request);
+        }
+
+        let cacheAlreadyTried = false;
+
+        let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
+        let allowFetchFromCache = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromCacheResourceURLsToInclude, _myAllowFetchFromCacheResourceURLsToExclude);
+
+        if (!refetchFromNetwork && allowFetchFromCache) {
+            let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
+            let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
+
+            if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
+                cacheAlreadyTried = true;
+
+                // Try to get the resource from the cache
                 let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
                 let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
                 let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
                 if (responseFromCache != null) {
-                    return responseFromCache;
-                }
-            }
-
-            let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-            let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
-            if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
-                let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
-                if (fallbackResponseFromCache != null) {
-                    let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
-                    if (logEnabled) {
-                        console.warn("Get from cache using a fallback: " + request.url);
+                    if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
+                        let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
+                        if (updateCacheInBackground) {
+                            if (request.method == "GET") {
+                                _fetchFromNetworkAndPutInCache(request);
+                            } else if (request.method == "HEAD") {
+                                _fetchFromNetworkAndPutInCache(new Request(request, { method: "GET" }));
+                            }
+                        }
                     }
 
-                    return fallbackResponseFromCache;
+                    return responseFromCache;
                 }
             }
         }
 
-        // If everything else fail, return the response from the network
-        return responseFromNetwork;
+        // Try to get the resource from the network
+        let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(request, true, refetchFromNetwork);
+        if (isResponseOk(responseFromNetwork) || isResponseOpaque(responseFromNetwork)) {
+            return responseFromNetwork;
+        } else {
+            if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
+                let enableForceTryCacheFirstOnNetworkError = _shouldResourceURLBeIncluded(request.url, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
+                if (enableForceTryCacheFirstOnNetworkError) {
+                    _myForceTryCacheFirstOnNetworkErrorEnabled = true;
+
+                    let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                    if (logEnabled) {
+                        console.warn("Force try cache on network error enabled");
+                    }
+                }
+            }
+
+            if (allowFetchFromCache) {
+                if (!cacheAlreadyTried) {
+                    let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+                    let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+                    let responseFromCache = await fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+                    if (responseFromCache != null) {
+                        return responseFromCache;
+                    }
+                }
+
+                let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+                let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+                if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
+                    let fallbackResponseFromCache = await fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                    if (fallbackResponseFromCache != null) {
+                        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                        if (logEnabled) {
+                            console.warn("Get from cache using a fallback: " + request.url);
+                        }
+
+                        return fallbackResponseFromCache;
+                    }
+                }
+            }
+
+            // If everything else fail, return the response from the network
+            return responseFromNetwork;
+        }
+    } catch (error) {
+        let errorMessage = "An error occurred while trying to fetch from the service worker: " + request.url + "\n\n" + error;
+        let responseFromServiceWorker = new Response(errorMessage, {
+            status: 500,
+            headers: { "Content-Type": "text/plain" }
+        });
+
+        try {
+            let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+            if (logEnabled) {
+                console.error(errorMessage);
+            }
+        } catch (error) {
+            // Do nothing
+        }
+
+        return responseFromServiceWorker;
     }
 }
 
 async function cacheResourcesToPrecache(allowRejectOnPrecacheFail = false) {
-    return await _cacheResourcesToPrecache(allowRejectOnPrecacheFail, false, false);
+    return _cacheResourcesToPrecache(allowRejectOnPrecacheFail, false, false);
 }
 
 async function fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false) {
-    return await _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork);
+    return _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork);
 }
 
 async function fetchFromNetwork(request) {
-    let networkResponse = null;
+    let responseFromNetwork = null;
 
     try {
-        networkResponse = await fetch(request);
+        responseFromNetwork = await fetch(request);
     } catch (error) {
         let errorMessage = "An error occurred while trying to fetch from the network: " + request.url + "\n\n" + error;
-        networkResponse = new Response(errorMessage, {
+        responseFromNetwork = new Response(errorMessage, {
             status: 500,
             headers: { "Content-Type": "text/plain" }
         });
@@ -742,7 +761,7 @@ async function fetchFromNetwork(request) {
         }
     }
 
-    return networkResponse;
+    return responseFromNetwork;
 }
 
 async function fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
@@ -768,7 +787,7 @@ async function fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHe
 }
 
 async function putInCache(request, response) {
-    return await _putInCache(request, response);
+    return _putInCache(request, response);
 }
 
 async function hasInCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
