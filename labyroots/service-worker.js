@@ -882,6 +882,7 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
     let currentTempCache = null;
     if (useTemps) {
         if (installPhase && !_myInstallationShouldRecoverFromLastAttempt) {
+            // Explicitly not try catching this to make install fail if it can't be deleted
             await caches.delete(_getTempCacheID());
             await caches.delete(_getTempRefetchFromNetworkChecklistID());
         }
@@ -1011,16 +1012,20 @@ async function _putInCache(request, response, useTempCache = false) {
 }
 
 async function _deletePreviousCaches() {
-    let cachesIDs = await caches.keys();
+    try {
+        let cachesIDs = await caches.keys();
 
-    for (let cacheID of cachesIDs) {
-        try {
-            if (_shouldDeleteCacheID(cacheID)) {
-                await caches.delete(cacheID);
+        for (let cacheID of cachesIDs) {
+            try {
+                if (_shouldDeleteCacheID(cacheID)) {
+                    await caches.delete(cacheID);
+                }
+            } catch (error) {
+                // Do nothing
             }
-        } catch (error) {
-            // Do nothing
         }
+    } catch (error) {
+        // Do nothing
     }
 }
 
@@ -1038,16 +1043,20 @@ async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefet
 }
 
 async function _deletePreviousRefetchFromNetworkChecklists() {
-    let cachesIDs = await caches.keys();
+    try {
+        let cachesIDs = await caches.keys();
 
-    for (let cacheID of cachesIDs) {
-        try {
-            if (_shouldDeleteRefetchFromNetworkChecklistID(cacheID)) {
-                await caches.delete(cacheID);
+        for (let cacheID of cachesIDs) {
+            try {
+                if (_shouldDeleteRefetchFromNetworkChecklistID(cacheID)) {
+                    await caches.delete(cacheID);
+                }
+            } catch (error) {
+                // Do nothing
             }
-        } catch (error) {
-            // Do nothing
         }
+    } catch (error) {
+        // Do nothing
     }
 }
 
@@ -1071,15 +1080,19 @@ async function _copyTempCacheToCurrentCache() {
         // Do nothing
     }
 
-    let cachesIDs = await caches.keys();
-    for (let cacheID of cachesIDs) {
-        try {
-            if (_shouldDeleteTempCacheID(cacheID)) {
-                await caches.delete(cacheID);
+    try {
+        let cachesIDs = await caches.keys();
+        for (let cacheID of cachesIDs) {
+            try {
+                if (_shouldDeleteTempCacheID(cacheID)) {
+                    await caches.delete(cacheID);
+                }
+            } catch (error) {
+                // Do nothing
             }
-        } catch (error) {
-            // Do nothing
         }
+    } catch (error) {
+        // Do nothing
     }
 }
 
@@ -1103,15 +1116,19 @@ async function _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkCh
         // Do nothing
     }
 
-    let cachesIDs = await caches.keys();
-    for (let cacheID of cachesIDs) {
-        try {
-            if (_shouldDeleteTempRefetchFromNetworkChecklistID(cacheID)) {
-                await caches.delete(cacheID);
+    try {
+        let cachesIDs = await caches.keys();
+        for (let cacheID of cachesIDs) {
+            try {
+                if (_shouldDeleteTempRefetchFromNetworkChecklistID(cacheID)) {
+                    await caches.delete(cacheID);
+                }
+            } catch (error) {
+                // Do nothing
             }
-        } catch (error) {
-            // Do nothing
         }
+    } catch (error) {
+        // Do nothing
     }
 }
 
