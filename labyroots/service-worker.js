@@ -911,8 +911,18 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
     if (useTemps) {
         if (installPhase && !_myInstallationShouldRecoverFromLastAttempt) {
             // Explicitly not try catching this to make install fail if it can't be deleted
-            await caches.delete(_getTempCacheID());
-            await caches.delete(_getTempRefetchFromNetworkChecklistID());
+
+            let tempCacheID = _getTempCacheID();
+            let tempCacheExists = await caches.has(tempCacheID);
+            let tempCacheDeleted = await caches.delete(tempCacheID);
+
+            let tempRefetchFromNetworkChecklistID = _getTempRefetchFromNetworkChecklistID();
+            let tempRefetchFromNetworkChecklistExists = await caches.has(tempRefetchFromNetworkChecklistID);
+            let tempRefetchFromNetworkChecklistDeleted = await caches.delete(tempRefetchFromNetworkChecklistID);
+
+            if ((tempCacheExists && !tempCacheDeleted) || (tempRefetchFromNetworkChecklistExists && !tempRefetchFromNetworkChecklistDeleted)) {
+                throw new Error("An error occured while trying to delete the temporary data during the installation phase");
+            }
         }
 
         try {
