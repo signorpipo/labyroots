@@ -415,7 +415,10 @@ let _myAllowHEADRequestsToUpdateCacheInBackground = false;
 // due to the fact that the new service worker might be working with data fetched by the previous one in the same session
 //
 // Beside, when enabling this it would probably be better to also trigger a page reload
-// You can add the following js code to your app to achieve the page reload on controller change:
+// To do this, the easiest way is to enable @_myReloadAllClientsOnServiceWorkerActivation
+//
+// If you instead want to have more control over the reload, for example to show a confirm dialog warning the user
+// that the page will be reloaded, you can add the following js code to your app:
 //
 // window.navigator.serviceWorker?.addEventListener("controllerchange", function () {
 //     window.location.reload();
@@ -436,6 +439,16 @@ let _myAllowHEADRequestsToUpdateCacheInBackground = false;
 //
 // Use this with caution
 let _myImmediatelyActivateNewServiceWorker = false;
+
+// Normally, a service worker can activate itself only when there is no client left currently using the old one
+// This means that it's not important to use this normally, because it would not do anything
+//
+// This is mostly useful when used in combo with @_myImmediatelyActivateNewServiceWorker since it will make it so
+// the clients are reloaded when the new service worker is activated
+//
+// U might also enable this anyway just to be sure that every time a new service worker is activated every clients is reloaded,
+// but do this only if u know what u are doing
+let _myReloadAllClientsOnServiceWorkerActivation = false;
 
 
 
@@ -539,13 +552,12 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   updating your app every other day, and also eventually fix itself
 //
 //   The easiest way to avoid having this, if u are really worried about it, is to have an empty @_myResourceURLsToPrecache list,
-//   so to complete the install as fast as possible, enable @_myImmediatelyActivateNewServiceWorker
-//   and reload the page when the service worker change
+//   so to complete the install as fast as possible, and enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllClientsOnServiceWorkerActivation
 //   This will basically switch to the new service worker as soon as possible, therefore fetching the new version of your app
 //
 //   If u instead care about precaching, an idea would be to find out that a new service worker is trying to install inside your app code,
 //   and "block" your app (possibly displaying a banner saying that the new version is been downloaded) until the installation has been completed
-//   U should also enable @_myImmediatelyActivateNewServiceWorker and reload the page when the controller change
+//   U should also enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllClientsOnServiceWorkerActivation
 //   I honestly think this would be an overkill unless it's really important, for example for a multiplayer experience where a glitch could give an advantage
 //
 //   // This should be done before window.navigator.serviceWorker.register
@@ -554,7 +566,7 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //          registration.addEventListener("updatefound", function () {
 //              // Block your app, when the new service worker will finish install the controller change event
 //              // will then make your page reload
-//              // See @_myImmediatelyActivateNewServiceWorker doc for more info about that
+//              // See @_myImmediatelyActivateNewServiceWorker to see how u can reload the page on controller change
 //          });
 //      }
 //   });
@@ -880,6 +892,11 @@ async function _activate() {
 
         await _deletePreviousRefetchFromNetworkChecklists();
 
+        if (_myReloadAllClientsOnServiceWorkerActivation) {
+            let clients = await self.clients.matchAll();
+            clients.forEach(client => client.navigate(client.url));
+        }
+
         if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
             self.clients.claim();
         }
@@ -1107,21 +1124,17 @@ async function _deletePreviousRefetchFromNetworkChecklists() {
 async function _copyTempCacheToCurrentCache() {
     let currentTempCacheID = _getTempCacheID();
 
-    try {
-        let hasTempCache = await caches.has(currentTempCacheID);
+    let hasTempCache = await caches.has(currentTempCacheID);
 
-        if (hasTempCache) {
-            let currentTempCache = await caches.open(currentTempCacheID);
-            let currentCache = await caches.open(_getCacheID());
+    if (hasTempCache) {
+        let currentTempCache = await caches.open(currentTempCacheID);
+        let currentCache = await caches.open(_getCacheID());
 
-            let currentTempCachedResourceRequests = await currentTempCache.keys();
-            for (let currentTempCachedResourceRequest of currentTempCachedResourceRequests) {
-                let currentTempCachedResource = await currentTempCache.match(currentTempCachedResourceRequest);
-                await currentCache.put(currentTempCachedResourceRequest, currentTempCachedResource);
-            }
+        let currentTempCachedResourceRequests = await currentTempCache.keys();
+        for (let currentTempCachedResourceRequest of currentTempCachedResourceRequests) {
+            let currentTempCachedResource = await currentTempCache.match(currentTempCachedResourceRequest);
+            await currentCache.put(currentTempCachedResourceRequest, currentTempCachedResource);
         }
-    } catch (error) {
-        // Do nothing
     }
 
     try {
@@ -1143,21 +1156,17 @@ async function _copyTempCacheToCurrentCache() {
 async function _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkChecklist() {
     let currentTempRefetchFromNetworkChecklistID = _getTempRefetchFromNetworkChecklistID();
 
-    try {
-        let hasTempRefetchFromNetworkChecklist = await caches.has(currentTempRefetchFromNetworkChecklistID);
+    let hasTempRefetchFromNetworkChecklist = await caches.has(currentTempRefetchFromNetworkChecklistID);
 
-        if (hasTempRefetchFromNetworkChecklist) {
-            let currentTempRefetchFromNetworkChecklist = await caches.open(currentTempRefetchFromNetworkChecklistID);
-            let currentRefetchFromNetworkChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
+    if (hasTempRefetchFromNetworkChecklist) {
+        let currentTempRefetchFromNetworkChecklist = await caches.open(currentTempRefetchFromNetworkChecklistID);
+        let currentRefetchFromNetworkChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
 
-            let currentTempRefetchFromNetworkChecklistResourceRequests = await currentTempRefetchFromNetworkChecklist.keys();
-            for (let currentTempRefetchFromNetworkChecklistResourceRequest of currentTempRefetchFromNetworkChecklistResourceRequests) {
-                let currentTempRefetchFromNetworkChecklistResource = await currentTempRefetchFromNetworkChecklist.match(currentTempRefetchFromNetworkChecklistResourceRequest);
-                await currentRefetchFromNetworkChecklist.put(currentTempRefetchFromNetworkChecklistResourceRequest, currentTempRefetchFromNetworkChecklistResource);
-            }
+        let currentTempRefetchFromNetworkChecklistResourceRequests = await currentTempRefetchFromNetworkChecklist.keys();
+        for (let currentTempRefetchFromNetworkChecklistResourceRequest of currentTempRefetchFromNetworkChecklistResourceRequests) {
+            let currentTempRefetchFromNetworkChecklistResource = await currentTempRefetchFromNetworkChecklist.match(currentTempRefetchFromNetworkChecklistResourceRequest);
+            await currentRefetchFromNetworkChecklist.put(currentTempRefetchFromNetworkChecklistResourceRequest, currentTempRefetchFromNetworkChecklistResource);
         }
-    } catch (error) {
-        // Do nothing
     }
 
     try {
