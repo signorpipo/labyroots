@@ -904,6 +904,15 @@ async function _activate() {
         // #WARNING This should unregister the current service worker and reload all the clients, but I'm not
         // 100% this will actually make sure that this service worker will not be used
         // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
+        //
+        // It also seems to be a bug in the service worker itself
+        // It is easy to repro, u just have to open two tabs controlled by the same service worker, open the inspector,
+        // unregister the service worker and just reload one of the page
+        // Even if the service worker was tagged as deleted, it seems that, since a page was still controlled by it,
+        // when the other page is reloaded the service worker is "resurrected", which should not happen for what I can understand
+        //
+        // By reloading all clients at the same time this seems to not happen, but I'm not sure if a slight delay in the reloads could
+        // make this bug happen anyway
 
         let clients = await self.clients.matchAll();
         await self.registration.unregister();
