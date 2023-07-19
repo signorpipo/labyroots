@@ -884,7 +884,13 @@ async function _activate() {
             self.clients.claim();
         }
     } catch (error) {
+        // #WARNING This should unregister the current service worker and reload all the clients, but I'm not
+        // 100% this will actually make sure that this service worker will not be used
+        // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
+
+        let clients = await self.clients.matchAll();
         await self.registration.unregister();
+        clients.forEach(client => client.navigate(client.url));
 
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
