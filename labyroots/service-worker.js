@@ -906,7 +906,7 @@ async function _activate() {
         // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
         //
         // It also seems to be a bug in the service worker itself
-        // It is easy to repro, u just have to open two tabs controlled by the same service worker, open the inspector,
+        // It is easy to repro on Chrome, u just have to open two tabs controlled by the same service worker, open the inspector,
         // unregister the service worker and just reload one of the page
         // Even if the service worker was tagged as deleted, it seems that, since a page was still controlled by it,
         // when the other page is reloaded the service worker is "resurrected", which should not happen for what I can understand
