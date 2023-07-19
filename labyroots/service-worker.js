@@ -1134,6 +1134,7 @@ async function _copyTempCacheToCurrentCache() {
     let currentTempCacheID = _getTempCacheID();
 
     let hasTempCache = await caches.has(currentTempCacheID);
+
     if (hasTempCache) {
         let currentTempCache = await caches.open(currentTempCacheID);
         let currentCache = await caches.open(_getCacheID());
@@ -1165,6 +1166,7 @@ async function _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkCh
     let currentTempRefetchFromNetworkChecklistID = _getTempRefetchFromNetworkChecklistID();
 
     let hasTempRefetchFromNetworkChecklist = await caches.has(currentTempRefetchFromNetworkChecklistID);
+
     if (hasTempRefetchFromNetworkChecklist) {
         let currentTempRefetchFromNetworkChecklist = await caches.open(currentTempRefetchFromNetworkChecklistID);
         let currentRefetchFromNetworkChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
