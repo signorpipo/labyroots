@@ -610,10 +610,14 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   });
 //
 //   Yet another solution would be to disable @_myInstallationShouldRecoverFromLastAttempt (or at least disable @_myShareInstallationTemporaryDataBetweenServiceWorkers),
-//   and enable @_myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude on any resource
-//   This will make it so that only when all the precached resources have been precached during the same session the service worker is activated
-//   If all the cachable resources (or at least the core ones) are in the precache list, u can then be safe that no collision will happen because
-//   there will be no risk that they will be cached again later on
+//   and enable @_myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude on every resource, then disable @_myAllowFetchFromCacheResourceURLsToInclude for every resource
+//   that has been precached, so that there is no way they will be fetched again, and, as last, enable @_myRejectServiceWorkerOnActivationFail, so that only when
+//   even the activation phase is properly completed the service worker can actually start
+//   This will make it so that, only when all the precached resources have been precached during the same session, the service worker is activated
+//   If all the cachable resources (or at least the core ones) are in the precache list, and the fetch from network is disabled for those resources,
+//   then your app will not be updated until a new service worker is activated
+//   This will make your app basically feel like an offline app that needs to be installed more than a web page, even though, if the service worker fails
+//   your app will still be able to run by fetching from the network, but of course every resource will be the latest one in that case
 //
 //   A thing to note is that u might think that if u always fetch first from the network, or update the cache in background,
 //   u should not have this issue, but this is not correct
@@ -622,6 +626,19 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   resulting in a mix of old and new resources
 //   This means that, if u want to be sure to not have this issue, even when u are using these kinds of setups u have to use one of the above solutions,
 //   or another one that better fits your needs
+//
+//   I'm also not sure if the browser own cache can also mess up with this and serve an older resource when fetching it from network
+//   I don't know how u could handle this case or if it is even something to worry about, but the issue here is that even when installing a new service worker
+//   and precaching the new resources, if a resource is fetched from the browser cache the service worker will think it's the latest one, even though it's not,
+//   leading to a mix of old and new resources
+//   It seems like the service worker fetch actually bypass the browser cache, so it should not be an issue, but I'm not 100% sure about it
+//   Beside, I don't know if there could also be other things intercepting your network request, like the service hosting your app,
+//   which could use their own cache to serve you the resources u are trying to fetch
+//   I'm not sure if this is even possible, but if it was, this would mean that, even if the service worker can actually 
+//   bypass the browser cache, something else might give u a cached resource anyway
+//
+//   As u can see, this is a complex issue, so if for u this is really important I advise u to also do your own research on this topic,
+//   and use this more as a starting point than an actual complete solution to your problem
 //
 // #endregion Known Issues
 
