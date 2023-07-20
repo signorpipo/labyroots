@@ -199,6 +199,16 @@ let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
 
 
 
+// Which resources can be fetched from the network
+// Usually u should always allow every resource, but can be useful if u want to use a resource
+// only if it was precached
+//
+// The resources URLs can also be a regex
+let _myAllowFetchFromNetworkResourceURLsToInclude = _ANY_RESOURCE;
+let _myAllowFetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Which resources can be fetched from the cache
 //
 // The resources URLs can also be a regex
@@ -767,11 +777,16 @@ async function fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork 
     return _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork);
 }
 
-async function fetchFromNetwork(request) {
+async function fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null) {
     let responseFromNetwork = null;
 
     try {
-        responseFromNetwork = await fetch(request);
+        let fetchFromNetworkAllowed = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromNetworkResourceURLsToInclude, _myAllowFetchFromNetworkResourceURLsToExclude);
+        if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
+            responseFromNetwork = await fetch(request);
+        } else {
+            throw new Error("Fetch from network is not allowed: " + request.url);
+        }
     } catch (error) {
         let errorMessage = "An error occurred while trying to fetch from the network: " + request.url + "\n\n" + error;
         responseFromNetwork = new Response(errorMessage, {
@@ -1018,7 +1033,7 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
                 }
 
                 if (resourceHaveToBeCached) {
-                    let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(new Request(resourceCompleteURLToPrecache), false, refetchFromNetwork, useTemps);
+                    let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(new Request(resourceCompleteURLToPrecache), false, refetchFromNetwork, useTemps, installPhase);
                     resourceHasBeenPrecached = responseHasBeenCached;
                 } else {
                     resourceHasBeenPrecached = true; // The resource has been already precached
@@ -1047,8 +1062,8 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
     await Promise.all(promisesToAwait);
 }
 
-async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false, refetchFromNetwork = false, useTemps = false) {
-    let responseFromNetwork = await fetchFromNetwork(request);
+async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false, refetchFromNetwork = false, useTemps = false, fetchFromNetworkAllowedOverride = null) {
+    let responseFromNetwork = await fetchFromNetwork(request, fetchFromNetworkAllowedOverride);
     let responseHasBeenCached = false;
 
     if (isResponseOk(responseFromNetwork) || isResponseOpaque(responseFromNetwork)) {
