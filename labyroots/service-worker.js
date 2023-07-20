@@ -352,6 +352,18 @@ let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// If the activation phase fail, normally the service worker is activated anyway
+//
+// Usually it's not an issue, but since the precached resources are actually made available during the activation phase,
+// if it fails u might not have those resources precached
+// This should not be an issue, since they will be cached anyway the first time they are fetched normally by your app,
+// but if it's important that everything is properly precached, u can enable this to reject the service worker if an error happens
+//
+// Note that it should be very unlikely that the activation phase fails, but I can't say for sure it is impossible
+let _myRejectServiceWorkerOnActivationFail = false;
+
+
+
 // The install phase might not have managed to precache every resource due to network errors
 //
 // Use this to check that the resoruces have been precached on the first fetch of the current service worker session
@@ -901,26 +913,28 @@ async function _activate() {
             self.clients.claim();
         }
     } catch (error) {
-        // #WARNING This should unregister the current service worker and reload all the clients, but I'm not
-        // 100% this will actually make sure that this service worker will not be used
-        // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
-        //
-        // It also seems to be a bug in the service worker itself
-        // It is easy to repro on Chrome, u just have to open two tabs controlled by the same service worker, open the inspector,
-        // unregister the service worker and just reload one of the page
-        // Even if the service worker was tagged as deleted, it seems that, since a page was still controlled by it,
-        // when the other page is reloaded the service worker is "resurrected", which should not happen for what I can understand
-        //
-        // By reloading all clients at the same time this seems to not happen, but I'm not sure if a slight delay in the reloads could
-        // make this bug happen anyway
+        if (_myRejectServiceWorkerOnActivationFail) {
+            // #WARNING This should unregister the current service worker and reload all the clients, but I'm not
+            // 100% this will actually make sure that this service worker will not be used
+            // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
+            //
+            // It also seems to be a bug in the service worker itself
+            // It is easy to repro on Chrome, u just have to open two tabs controlled by the same service worker, open the inspector,
+            // unregister the service worker and just reload one of the page
+            // Even if the service worker was tagged as deleted, it seems that, since a page was still controlled by it,
+            // when the other page is reloaded the service worker is "resurrected", which should not happen for what I can understand
+            //
+            // By reloading all clients at the same time this seems to not happen, but I'm not sure if a slight delay in the reloads could
+            // make this bug happen anyway
 
-        let clients = await self.clients.matchAll();
-        await self.registration.unregister();
-        clients.forEach(client => client.navigate(client.url));
+            let clients = await self.clients.matchAll();
+            await self.registration.unregister();
+            clients.forEach(client => client.navigate(client.url));
 
-        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
-        if (logEnabled) {
-            console.error("An error occurred while activating the service worker");
+            let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+            if (logEnabled) {
+                console.error("An error occurred while activating the service worker");
+            }
         }
     }
 }
@@ -1133,15 +1147,27 @@ async function _deletePreviousRefetchFromNetworkChecklists() {
 async function _copyTempCacheToCurrentCache() {
     let currentTempCacheID = _getTempCacheID();
 
-    let hasTempCache = await caches.has(currentTempCacheID);
-    if (hasTempCache) {
-        let currentTempCache = await caches.open(currentTempCacheID);
-        let currentCache = await caches.open(_getCacheID());
+    try {
+        let hasTempCache = await caches.has(currentTempCacheID);
+        if (hasTempCache) {
+            let currentTempCache = await caches.open(currentTempCacheID);
+            let currentCache = await caches.open(_getCacheID());
 
-        let currentTempCachedResourceRequests = await currentTempCache.keys();
-        for (let currentTempCachedResourceRequest of currentTempCachedResourceRequests) {
-            let currentTempCachedResource = await currentTempCache.match(currentTempCachedResourceRequest);
-            await currentCache.put(currentTempCachedResourceRequest, currentTempCachedResource);
+            let currentTempCachedResourceRequests = await currentTempCache.keys();
+            for (let currentTempCachedResourceRequest of currentTempCachedResourceRequests) {
+                try {
+                    let currentTempCachedResource = await currentTempCache.match(currentTempCachedResourceRequest);
+                    await currentCache.put(currentTempCachedResourceRequest, currentTempCachedResource);
+                } catch (error) {
+                    if (_myRejectServiceWorkerOnActivationFail) {
+                        throw error;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        if (_myRejectServiceWorkerOnActivationFail) {
+            throw error;
         }
     }
 
@@ -1164,15 +1190,27 @@ async function _copyTempCacheToCurrentCache() {
 async function _copyTempRefetchFromNetworkChecklistToCurrentRefetchFromNetworkChecklist() {
     let currentTempRefetchFromNetworkChecklistID = _getTempRefetchFromNetworkChecklistID();
 
-    let hasTempRefetchFromNetworkChecklist = await caches.has(currentTempRefetchFromNetworkChecklistID);
-    if (hasTempRefetchFromNetworkChecklist) {
-        let currentTempRefetchFromNetworkChecklist = await caches.open(currentTempRefetchFromNetworkChecklistID);
-        let currentRefetchFromNetworkChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
+    try {
+        let hasTempRefetchFromNetworkChecklist = await caches.has(currentTempRefetchFromNetworkChecklistID);
+        if (hasTempRefetchFromNetworkChecklist) {
+            let currentTempRefetchFromNetworkChecklist = await caches.open(currentTempRefetchFromNetworkChecklistID);
+            let currentRefetchFromNetworkChecklist = await caches.open(_getRefetchFromNetworkChecklistID());
 
-        let currentTempRefetchFromNetworkChecklistResourceRequests = await currentTempRefetchFromNetworkChecklist.keys();
-        for (let currentTempRefetchFromNetworkChecklistResourceRequest of currentTempRefetchFromNetworkChecklistResourceRequests) {
-            let currentTempRefetchFromNetworkChecklistResource = await currentTempRefetchFromNetworkChecklist.match(currentTempRefetchFromNetworkChecklistResourceRequest);
-            await currentRefetchFromNetworkChecklist.put(currentTempRefetchFromNetworkChecklistResourceRequest, currentTempRefetchFromNetworkChecklistResource);
+            let currentTempRefetchFromNetworkChecklistResourceRequests = await currentTempRefetchFromNetworkChecklist.keys();
+            for (let currentTempRefetchFromNetworkChecklistResourceRequest of currentTempRefetchFromNetworkChecklistResourceRequests) {
+                try {
+                    let currentTempRefetchFromNetworkChecklistResource = await currentTempRefetchFromNetworkChecklist.match(currentTempRefetchFromNetworkChecklistResourceRequest);
+                    await currentRefetchFromNetworkChecklist.put(currentTempRefetchFromNetworkChecklistResourceRequest, currentTempRefetchFromNetworkChecklistResource);
+                } catch (error) {
+                    if (_myRejectServiceWorkerOnActivationFail) {
+                        throw error;
+                    }
+                }
+            }
+        }
+    } catch (error) {
+        if (_myRejectServiceWorkerOnActivationFail) {
+            throw error;
         }
     }
 
