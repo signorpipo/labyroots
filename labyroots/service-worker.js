@@ -437,7 +437,7 @@ let _myAllowHEADRequestsToUpdateCacheInBackground = false;
 // due to the fact that the new service worker might be working with data fetched by the previous one in the same session
 //
 // Beside, when enabling this it would probably be better to also trigger a page reload
-// To do this, the easiest way is to enable @_myReloadAllClientsOnServiceWorkerActivation
+// To do this, the easiest way is to enable @_myReloadAllPagesOnServiceWorkerActivation
 //
 // If you instead want to have more control over the reload, for example to show a confirm dialog warning the user
 // that the page will be reloaded, you can add the following js code to your app:
@@ -462,15 +462,17 @@ let _myAllowHEADRequestsToUpdateCacheInBackground = false;
 // Use this with caution
 let _myImmediatelyActivateNewServiceWorker = false;
 
-// Normally, a service worker can activate itself only when there is no client left currently using the old one
+// Normally, a service worker can activate itself only when there is no page left currently using the old one
 // This means that it's not important to use this normally, because it would not do anything
 //
 // This is mostly useful when used in combo with @_myImmediatelyActivateNewServiceWorker since it will make it so
-// the clients are reloaded when the new service worker is activated
+// the pages are reloaded when the new service worker is activated
 //
-// U might also enable this anyway just to be sure that every time a new service worker is activated every clients is reloaded,
+// U might also enable this anyway just to be sure that every time a new service worker is activated every page is reloaded,
 // but do this only if u know what u are doing
-let _myReloadAllClientsOnServiceWorkerActivation = false;
+//
+// Note that this will only make the page reload if it was already controlled by a service worker
+let _myReloadAllPagesOnServiceWorkerActivation = false;
 
 
 
@@ -478,20 +480,23 @@ let _myReloadAllClientsOnServiceWorkerActivation = false;
 // it does not actually starts to control the page until it's loaded again,
 // since a service worker has to take care of a page from the start
 //
-// This make it so that the service worker will immediately (as soon as possible) take control over the page even when
-// it was not being controlled yet (which basically means that it will be controlled even on the first load)
+// This make it so that the service worker will immediately (as soon as possible) take control over the pages,
+// even when they were not being controlled yet (which basically means that they will be controlled even on the first load)
+//
+// There might also be another edge case where one of the pages might have an older service worker controlling it,
+// which should only happen if u manually unregister it on a page and reload it, but the others are not reloaded
+// This will make the new service worker control those pages too
+// This might not be intended, and u might only would like to do this only for uncontrolled pages, 
+// but sadly I don't know if there is a way to achieve that, and this is just an edge case which should be very unlikely to happen
 //
 // As for @_myImmediatelyActivateNewServiceWorker, this can potentially cause issues
 // due to the fact that the service worker might be fetching the data in a different way compared to not having it,
 // and the page fetched at least a bit of data without the service worker, since it was started as soon as possible, but not
 // from the beginning
 //
-// In general, this should not be an issue for the first service worker, unless u have a very specific service worker logic,
-// so you should be able to set this to true without worrying too much
-//
 // The advantages of using this are:
 // 1. If the page goes offline on the first load and u need to fetch data, the service worker can already try to use the cache
-// 2. The service worker can already cache some data which might be hard (if not impossible) to precache otherwise
+// 2. The service worker can already cache some data on first load, which might be hard (if not impossible) to precache otherwise
 //    This is kind of useful, but not reliable, so u still have to properly fill the precache resource URL list yourself if u want your app
 //    to work offline even after the first load
 //
@@ -532,7 +537,16 @@ let _myReloadAllClientsOnServiceWorkerActivation = false;
 // like, for example, asking the user if they want to reload or not
 //
 // Use this with caution
-let _myImmediatelyTakeControlOfThePageWhenNotControlled = false;
+let _myImmediatelyTakeControlOfAllPages = false;
+
+// This will reload every page that the service worker will start to control due to @_myImmediatelyTakeControlOfAllPages
+//
+// The reason why there is not just one variable for this, that is @_myReloadAllPagesOnServiceWorkerActivation, is because this way
+// u can decide if u want to reload even pages that were not previously controlled by any service worker or not
+//
+// This is due to the fact that @_myReloadAllPagesOnServiceWorkerActivation can only reload pages already controlled, while
+// this flag let you also reload the pages that will be controlled thanks to @ _myImmediatelyTakeControlOfAllPages
+let _myReloadAllPagesAfterImmediatelyTakingControlOfThem = false;
 
 
 
@@ -574,12 +588,12 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   updating your app every other day, and also eventually fix itself
 //
 //   The easiest way to avoid having this, if u are really worried about it, is to have an empty @_myResourceURLsToPrecache list,
-//   so to complete the install as fast as possible, and enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllClientsOnServiceWorkerActivation
+//   so to complete the install as fast as possible, and enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllPagesOnServiceWorkerActivation
 //   This will basically switch to the new service worker as soon as possible, therefore fetching the new version of your app
 //
 //   If u instead care about precaching, an idea would be to find out that a new service worker is trying to install inside your app code,
 //   and "block" your app (possibly displaying a banner saying that the new version is been downloaded) until the installation has been completed
-//   U should also enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllClientsOnServiceWorkerActivation
+//   U should also enable @_myImmediatelyActivateNewServiceWorker and @_myReloadAllPagesOnServiceWorkerActivation
 //   I honestly think this would be an overkill unless it's really important, for example for a multiplayer experience where a glitch could give an advantage
 //
 //   // This should be done before window.navigator.serviceWorker.register
@@ -588,7 +602,7 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //          registration.addEventListener("updatefound", function () {
 //              // Block your app, when the new service worker will finish install the controller change event
 //              // will then make your page reload
-//              // See @_myImmediatelyActivateNewServiceWorker to see how u can reload the page on controller change
+//              // Check @_myImmediatelyActivateNewServiceWorker to see how u can reload the page on controller change
 //          });
 //      }
 //   });
@@ -619,6 +633,12 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   This will make your app basically feel like an offline app that needs to be installed more than a web page, even though, if the service worker fails
 //   your app will still be able to run by fetching from the network, but of course every resource will be the latest one in that case
 //
+//   As last, if u want to make your app work only when controlled by a service worker, u can check that
+//   window.navigator.serviceWorker?.controller != null, and display a dialog saying your app is installing otherwise
+//   U will also have to enable @_myImmediatelyTakeControlOfAllPages, and either enable @_myReloadAllPagesAfterImmediatelyTakingControlOfThem,
+//   or reload on controller change yourself (check @_myImmediatelyActivateNewServiceWorker to see how u can reload the page on controller change)
+//   This way your app will actually work only when controlled
+//   
 //   A thing to note is that u might think that if u always fetch first from the network, or update the cache in background,
 //   u should not have this issue, but this is not correct
 //   For example, even if u always fetch from network first and u might manage to fetch new resources,
@@ -936,17 +956,22 @@ async function _activate() {
 
         await _deletePreviousRefetchFromNetworkChecklists();
 
-        if (_myReloadAllClientsOnServiceWorkerActivation) {
+        if (_myReloadAllPagesOnServiceWorkerActivation) {
             let clients = await self.clients.matchAll();
             clients.forEach(client => client.navigate(client.url));
         }
 
-        if (_myImmediatelyTakeControlOfThePageWhenNotControlled) {
+        if (_myImmediatelyTakeControlOfAllPages) {
             self.clients.claim();
+
+            if (_myReloadAllPagesAfterImmediatelyTakingControlOfThem) {
+                let clients = await self.clients.matchAll();
+                clients.forEach(client => client.navigate(client.url));
+            }
         }
     } catch (error) {
         if (_myRejectServiceWorkerOnActivationFail) {
-            // #WARNING This should unregister the current service worker and reload all the clients, but I'm not
+            // #WARNING This should unregister the current service worker and reload all the pages, but I'm not
             // 100% this will actually make sure that this service worker will not be used
             // Sadly, I've not found a more reliable way to remove the service worker during the activation phase
             //
@@ -956,7 +981,7 @@ async function _activate() {
             // Even if the service worker was tagged as deleted, it seems that, since a page was still controlled by it,
             // when the other page is reloaded the service worker is "resurrected", which should not happen for what I can understand
             //
-            // By reloading all clients at the same time this seems to not happen, but I'm not sure if a slight delay in the reloads could
+            // By reloading all the pages at the same time this seems to not happen, but I'm not sure if a slight delay in the reloads could
             // make this bug happen anyway
 
             let clients = await self.clients.matchAll();
