@@ -356,6 +356,11 @@ let _myRefetchFromNetworkVersion = 1;
 // If some resources must be precached for your service worker to work properly,
 // u can specify them here so that the installation will fail if their precache fails
 //
+// When using this u should also enable @_myRejectServiceWorkerOnActivationFail, since a failure in the activation phase
+// might mean that the resources u needed to be precached might not be available
+// It is not automatically done since enabling it will make all the pages reload if the activation fails, and u might prefer
+// to have a "precache error" than a page reload
+//
 // The resources URLs can also be a regex
 let _myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude = _NO_RESOURCE;
 let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
@@ -370,6 +375,9 @@ let _myRejectServiceWorkerOnPrecacheFailResourceURLsToExclude = _NO_RESOURCE;
 // but if it's important that everything is properly precached, u can enable this to reject the service worker if an error happens
 //
 // Note that it should be very unlikely that the activation phase fails, but I can't say for sure it is impossible
+//
+// Another thing to note is that this will make every pages reload, because it's the only way I've found to actually reject
+// the service worker on activation, which would control the page anyway otherwise
 let _myRejectServiceWorkerOnActivationFail = false;
 
 
@@ -1095,7 +1103,7 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
                 if (!rejectServiceWorkerOnPrecacheFail) {
                     resolve();
                 } else {
-                    reject();
+                    reject("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
                 }
             }
         }));
