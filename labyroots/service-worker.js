@@ -316,6 +316,39 @@ let _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// Enable this to allow HEAD request to be handled by the service worker
+//
+// Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
+// and will return that response
+// This means that the the returned response will actually have a body, even though HEAD request should not have it
+//
+// The resources URLs can also be a regex
+let _myHandleHEADRequestsResourceURLsToInclude = _NO_RESOURCE;
+let _myHandleHEADRequestsResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// Enable this to allow HEAD request to update the cache in background after fetching from the cache
+//
+// Normally, only when a GET request fetches from the cache it will trigger a cache update in background,
+// if @_myUpdateCacheInBackgroundResourceURLsToInclude is enabled for that resource
+// This make it so that cached resources will be updated in background even for HEAD requests
+//
+// Note that the GET request to update the cache in background is created from the HEAD one through the following js code
+//
+// new Request(headRequest, { method: "GET" })
+//
+// This should be safe, but it could potentially create a slightly different GET request,
+// which could create issues if cached
+//
+// Use this with caution
+//
+// The resources URLs can also be a regex
+let _myUpdateCacheInBackgroundAllowedForHEADRequestsResourceURLsToInclude = _NO_RESOURCE;
+let _myUpdateCacheInBackgroundAllowedForHEADRequestsResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Use this if u:
 // - have updated your app
 // - are trying cache first
@@ -418,36 +451,6 @@ let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
 // If that can happen (and is not considered a bug), than this would prevent getting a mix of old and new resources
 // Otherwise there is honestly no point in setting this to false
 let _myRecoverInstallationFromLastAttempt = true;
-
-
-
-// Enable this to allow HEAD request to be handled by the service worker
-//
-// Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
-// and will return that response
-// This means that the the returned response will actually have a body, even though HEAD request should not have it
-//
-// The resources URLs can also be a regex
-let _myHandleHEADRequestsResourceURLsToInclude = _NO_RESOURCE;
-let _myHandleHEADRequestsResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// Enable this to allow HEAD request to update the cache in background after fetching from the cache
-//
-// Normally, only when a GET request fetches from the cache it will trigger a cache update in background,
-// if @_myUpdateCacheInBackgroundResourceURLsToInclude is enabled for that resource
-// This make it so that cached resources will be updated in background even for HEAD requests
-//
-// Note that the GET request to update the cache in background is created from the HEAD one through the following js code
-//
-// new Request(headRequest, { method: "GET" })
-//
-// This should be safe, but it could potentially create a slightly different GET request,
-// which could create issues if cached
-// 
-// Use this with caution
-let _myUpdateCacheInBackgroundAllowedForHEADRequests = false;
 
 
 
@@ -838,9 +841,10 @@ async function _fetchFromServiceWorker(request) {
                 let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
                 let responseFromCache = await _fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
                 if (responseFromCache != null) {
-                    if (request.method == "GET" || (_myUpdateCacheInBackgroundAllowedForHEADRequests && request.method == "HEAD")) {
-                        let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
-                        if (updateCacheInBackground) {
+                    let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
+                    if (updateCacheInBackground) {
+                        let updateCacheInBackgroundAllowedForHEADRequests = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundAllowedForHEADRequestsResourceURLsToInclude, _myUpdateCacheInBackgroundAllowedForHEADRequestsResourceURLsToExclude);
+                        if (request.method == "GET" || (request.method == "HEAD" && updateCacheInBackgroundAllowedForHEADRequests)) {
                             if (request.method == "GET") {
                                 _fetchFromNetworkAndPutInCache(request);
                             } else if (request.method == "HEAD") {
