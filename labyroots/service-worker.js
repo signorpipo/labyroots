@@ -185,6 +185,8 @@ let _myRejectServiceWorkerLocationURLsToExclude = _NO_LOCATION;
 
 // Enable some extra logs to better understand what's going on and why things might not be working
 //
+// Note that some of the logs, in particular the ones that just log once, will be logged anyway
+//
 // The resources URLs can also be a regex
 let _myLogEnabledLocationURLsToInclude = _LOCALHOST;
 let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
@@ -1028,10 +1030,7 @@ async function _activate() {
             await self.registration.unregister();
             clients.forEach(client => client.navigate(client.url));
 
-            let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
-            if (logEnabled) {
-                console.error("An error occurred while activating the service worker");
-            }
+            console.error("An error occurred while activating the service worker");
         }
     }
 }
