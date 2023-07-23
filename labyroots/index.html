@@ -90,22 +90,28 @@
     <link rel="apple-touch-icon" href="homescreen192.png">
 
     <script>
-        if ("serviceWorker" in navigator) {
-            navigator.serviceWorker.register("service-worker.js")
-                .then(reg => console.log("Service worker registered!", reg))
-                .catch(err => console.log("Unable to register service worker!", err));
-        }
+        window.navigator.serviceWorker?.register("service-worker.js");
+    </script>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+
+        gtag("js", new Date());
+        gtag("config", "G-MMJPQVRVQD");
+
     </script>
 
     <script src="wonderland.min.js"></script>
     <script type="module">
         function loadScript(scriptURL) {
-            return new Promise((res, rej) => {
-                const s = document.createElement("script");
-                s.onload = () => res(s);
-                s.onerror = rej;
-                s.src = scriptURL;
-                document.body.appendChild(s);
+            return new Promise((resolve, reject) => {
+                let script = document.createElement("script");
+                script.onload = () => resolve(script);
+                script.onerror = reject;
+                script.src = scriptURL;
+                document.body.appendChild(script);
             });
         }
 
@@ -113,29 +119,20 @@
             try {
                 await WL.loadRuntime("WonderlandRuntime-physx");
                 WL.onXRSupported.push((type, supported) => {
-                    const button = document.getElementById(type + "-button");
+                    let button = document.getElementById(type + "-button");
                     if (button) button.dataset.supported = supported;
                 });
 
-                const bundle = await loadScript("labyroots-bundle.js");
+                let bundle = await loadScript("labyroots-bundle.js");
                 bundle.id = "bundle";
 
                 WL.scene.load("labyroots.bin");
-            } catch (e) {
-                console.error(e);
+            } catch (error) {
+                console.error(error);
             }
         }
+
         init();
-    </script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag("js", new Date());
-
-        gtag("config", "G-MMJPQVRVQD");
-
     </script>
 </head>
 
