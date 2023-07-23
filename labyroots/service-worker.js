@@ -1,12 +1,12 @@
 // #region Service Worker Constants
 
-let _ANY_RESOURCE = [".*"];
+let _EVERY_RESOURCE = [".*"];
 let _NO_RESOURCE = [];
 
-let _ANY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*"];
-let _ANY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegexSpecialCharacters(_getCurrentOrigin()) + ".*"];
+let _EVERY_RESOURCE_FROM_CURRENT_LOCATION = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*"];
+let _EVERY_RESOURCE_FROM_CURRENT_ORIGIN = ["^" + _escapeRegexSpecialCharacters(_getCurrentOrigin()) + ".*"];
 
-let _ANY_LOCATION = [".*"];
+let _EVERY_LOCATION = [".*"];
 let _NO_LOCATION = [];
 let _LOCALHOST = ["localhost:8080"];
 
@@ -147,7 +147,7 @@ let _myResourceURLsToPrecache = [
 // Note that, as of now, only requests made with a GET method can be cached
 //
 // The resources URLs can also be a regex
-let _myCacheResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myCacheResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -155,7 +155,7 @@ let _myCacheResourceURLsToExclude = _NO_RESOURCE;
 // Used to specify if you want to first try the cache or always check the network for updates
 //
 // The resources URLs can also be a regex
-let _myTryCacheFirstResourceURLsToInclude = _ANY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myTryCacheFirstResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
 let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -206,7 +206,7 @@ let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
 // only if it was precached
 //
 // The resources URLs can also be a regex
-let _myAllowFetchFromNetworkResourceURLsToInclude = _ANY_RESOURCE;
+let _myAllowFetchFromNetworkResourceURLsToInclude = _EVERY_RESOURCE;
 let _myAllowFetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
 
 
@@ -214,7 +214,7 @@ let _myAllowFetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
 // Which resources can be fetched from the cache
 //
 // The resources URLs can also be a regex
-let _myAllowFetchFromCacheResourceURLsToInclude = _ANY_RESOURCE;
+let _myAllowFetchFromCacheResourceURLsToInclude = _EVERY_RESOURCE;
 let _myAllowFetchFromCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
