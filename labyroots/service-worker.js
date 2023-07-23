@@ -426,7 +426,10 @@ let _myRecoverInstallationFromLastAttempt = true;
 // Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
 // and will return that response
 // This means that the the returned response will actually have a body, even though HEAD request should not have it
-let _myHandleHEADRequests = false;
+//
+// The resources URLs can also be a regex
+let _myHandleHEADRequestsResourceURLsToInclude = _NO_RESOURCE;
+let _myHandleHEADRequestsResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -1280,8 +1283,9 @@ function _shouldResourceBeCached(request, response) {
 }
 
 function _shouldHandleRequest(request) {
+    let handleHEADRequest = _shouldResourceURLBeIncluded(request.url, _myHandleHEADRequestsResourceURLsToInclude, _myHandleHEADRequestsResourceURLsToExclude);
     return request != null && request.url != null && request.method != null &&
-        (request.method == "GET" || (_myHandleHEADRequests && request.method == "HEAD"));
+        (request.method == "GET" || (handleHEADRequest && request.method == "HEAD"));
 }
 
 function _getCacheID(cacheVersion = _myCacheVersion) {
