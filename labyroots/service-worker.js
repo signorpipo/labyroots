@@ -642,10 +642,42 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //   your app will still be able to run by fetching from the network, but of course every resource will be the latest one in that case
 //
 //   As last, if u want to make your app work only when controlled by a service worker, u can check that
-//   window.navigator.serviceWorker?.controller != null, and display a dialog saying your app is installing otherwise
+//   window.navigator.serviceWorker?.controller != null, and display a dialog saying your app is installing otherwise, preventing your
+//   app from being used in the meantime
 //   U will also have to enable @_myImmediatelyTakeControlOfAllPages, and either enable @_myReloadAllPagesAfterImmediatelyTakingControlOfThem,
 //   or reload on controller change yourself (check @_myImmediatelyActivateNewServiceWorker to see how u can reload the page on controller change)
-//   This way your app will actually work only when controlled
+//   Since the installation might fail, u should also check every X seconds if the registration does actually contain a controller,
+//   and display that the installation failed otherwise
+//
+//   let serviceWorkerInstallResults = { installing: false, installFailed: window.navigator.serviceWorker == null };
+//
+//   window.navigator.serviceWorker?.register("service-worker.js").then(function () {
+//       serviceWorkerInstallResults.installing = true;
+//   }).catch(function () {
+//       serviceWorkerInstallResults.installFailed = true;
+//   });
+//
+//   ...
+//
+//   // Every X seconds perform these checks
+//
+//   window.navigator.serviceWorker?.getRegistration().then(function (registration) {
+//       if (serviceWorkerInstallResults.installing) {
+//           if (registration != null) {
+//               serviceWorkerInstallResults.installFailed = true;
+//           }
+//       }
+//   });
+//
+//   if (serviceWorkerInstallResults.installFailed) {
+//       // Display a dialog saying the installation failed and reload or whatever u prefer
+//   } else if (window.navigator.serviceWorker?.controller == null) {
+//       // Display a dialog saying the installation is in progress
+//   } else {
+//       // Display a dialog saying the app has been installed and reload the page or whatever u prefer
+//   }
+//
+//   As always, this is just an example to give u an idea on how to achieve that, and u might have to adjust this to your needs
 //   
 //   A thing to note is that u might think that if u always fetch first from the network, or update the cache in background,
 //   u should not have this issue, but this is not correct
