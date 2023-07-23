@@ -21,6 +21,8 @@ let _LOCALHOST = ["localhost:8080"];
 
 
 // The app name, used, for example, to identify the caches
+// When using the Wonderland Engine, u should keep this in sync with the project name found in the Project Settings,
+// or manually adjust the bundle.js and .bin file name found in @_myResourceURLsToPrecache
 //
 // This should not be changed after u have released your app, since it could be used, for example, to look for previous caches
 // It's not an issue if u change it, it will just not be able to clean previous caches or use them,
@@ -261,7 +263,13 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringURLParamsResourceURLsToInclude = ["^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "/\\?"];
+let _myTryCacheIgnoringURLParamsResourceURLsToInclude = [
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "\\/$",
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "\\/\\?",
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + "\\/index\\.html",
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*bundle\\.js",
+    "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*wonderland.min\\.js"
+];
 let _myTryCacheIgnoringURLParamsResourceURLsToExclude = _NO_RESOURCE;
 
 
