@@ -143,12 +143,12 @@ let _myResourceURLsToPrecache = [
 
 
 
-// Which resources should be cached
+// Which resources can be cached
 // Note that, as of now, only requests made with a GET method can be cached
 //
 // The resources URLs can also be a regex
-let _myCacheResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
-let _myCacheResourceURLsToExclude = _NO_RESOURCE;
+let _myPutInCacheResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myPutInCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -206,16 +206,24 @@ let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
 // only if it was precached
 //
 // The resources URLs can also be a regex
-let _myAllowFetchFromNetworkResourceURLsToInclude = _EVERY_RESOURCE;
-let _myAllowFetchFromNetworkResourceURLsToExclude = _NO_RESOURCE;
+let _myFetchFromNetworkAllowedResourceURLsToInclude = _EVERY_RESOURCE;
+let _myFetchFromNetworkAllowedResourceURLsToExclude = _NO_RESOURCE;
 
 
 
 // Which resources can be fetched from the cache
 //
+// Usually, this should just include every resource, since u can control the ones that are cached with @_myPutInCacheResourceURLsToInclude
+// There are some cases where u might want to use this anyway
+// For example, if u want to update the service worker to avoid fetching a specific resource, but do not want to update the cache version,
+// since the resources have not been updated, u can use this to avoid fetching that specific resource,
+// which could have been already cached by a previous service worker
+//
+// If u, at some point, update the cache version, u can remove the resource URL from here and exclude it directly from the cached ones
+//
 // The resources URLs can also be a regex
-let _myAllowFetchFromCacheResourceURLsToInclude = _EVERY_RESOURCE;
-let _myAllowFetchFromCacheResourceURLsToExclude = _NO_RESOURCE;
+let _myFetchFromCacheAllowedResourceURLsToInclude = _EVERY_RESOURCE;
+let _myFetchFromCacheAllowedResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -303,8 +311,8 @@ let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 // so to avoid caching a bad opaque response forever
 //
 // The resources URLs can also be a regex
-let _myCacheOpaqueResponseResourceURLsToInclude = _NO_RESOURCE;
-let _myCacheOpaqueResponseResourceURLsToExclude = _NO_RESOURCE;
+let _myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude = _NO_RESOURCE;
+let _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -409,16 +417,16 @@ let _myCheckResourcesHaveBeenPrecachedOnFirstFetch = false;
 // and if the previous one installation is actually aborted if a new one is found, or if the previous one can manage to complete
 // If that can happen (and is not considered a bug), than this would prevent getting a mix of old and new resources
 // Otherwise there is honestly no point in setting this to false
-let _myInstallationShouldRecoverFromLastAttempt = true;
+let _myRecoverInstallationFromLastAttempt = true;
 
 
 
-// Enable this to allow HEAD request to fetch from cache
+// Enable this to allow HEAD request to be handled by the service worker
 //
 // Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
 // and will return that response
 // This means that the the returned response will actually have a body, even though HEAD request should not have it
-let _myAllowHEADRequestsToFetchFromCache = false;
+let _myHandleHEADRequests = false;
 
 
 
@@ -436,7 +444,7 @@ let _myAllowHEADRequestsToFetchFromCache = false;
 // which could create issues if cached
 // 
 // Use this with caution
-let _myAllowHEADRequestsToUpdateCacheInBackground = false;
+let _myUpdateCacheInBackgroundAllowedForHEADRequests = false;
 
 
 
@@ -576,7 +584,7 @@ let _myReloadAllPagesAfterImmediatelyTakingControlOfThem = false;
 // This is actually useful only if u are updating your service worker very often, otherwise it's not worth the risk
 //
 // Use this with caution
-let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
+let _myInstallationTemporaryDataSharingEnabled = false;
 
 
 
@@ -633,8 +641,8 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 //      }
 //   });
 //
-//   Yet another solution would be to disable @_myInstallationShouldRecoverFromLastAttempt (or at least disable @_myShareInstallationTemporaryDataBetweenServiceWorkers),
-//   and enable @_myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude on every resource, then disable @_myAllowFetchFromCacheResourceURLsToInclude for every resource
+//   Yet another solution would be to disable @_myRecoverInstallationFromLastAttempt (or at least disable @_myInstallationTemporaryDataSharingEnabled),
+//   and enable @_myRejectServiceWorkerOnPrecacheFailResourceURLsToInclude on every resource, then disable @_myFetchFromCacheAllowedResourceURLsToInclude for every resource
 //   that has been precached, so that there is no way they will be fetched again, and, as last, enable @_myRejectServiceWorkerOnActivationFail, so that only when
 //   even the activation phase is properly completed the service worker can actually start
 //   This will make it so that, only when all the precached resources have been precached during the same session, the service worker is activated
@@ -711,7 +719,7 @@ let _myShareInstallationTemporaryDataBetweenServiceWorkers = false;
 
 // #region Service Worker Variables
 
-let _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = false; // As of now this is not reset on page reload, but only when using a new tab
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetchPerformed = false; // As of now this is not reset on page reload, but only when using a new tab
 
 let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not reset on page reload, but only when using a new tab
 
@@ -801,8 +809,8 @@ async function _activate() {
 
 async function _fetchFromServiceWorker(request) {
     try {
-        if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed) {
-            _myCheckResourcesHaveBeenPrecachedOnFirstFetchAlreadyPerformed = true;
+        if (_myCheckResourcesHaveBeenPrecachedOnFirstFetch && !_myCheckResourcesHaveBeenPrecachedOnFirstFetchPerformed) {
+            _myCheckResourcesHaveBeenPrecachedOnFirstFetchPerformed = true;
             _cacheResourcesToPrecache(false, false, false); // Do not await for this, just do it in background
         }
 
@@ -813,9 +821,9 @@ async function _fetchFromServiceWorker(request) {
         let cacheAlreadyTried = false;
 
         let refetchFromNetwork = await _shouldResourceBeRefetchedFromNetwork(request.url);
-        let allowFetchFromCache = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromCacheResourceURLsToInclude, _myAllowFetchFromCacheResourceURLsToExclude);
+        let fetchFromCacheAllowed = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheAllowedResourceURLsToInclude, _myFetchFromCacheAllowedResourceURLsToExclude);
 
-        if (!refetchFromNetwork && allowFetchFromCache) {
+        if (!refetchFromNetwork && fetchFromCacheAllowed) {
             let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
             let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
 
@@ -827,7 +835,7 @@ async function _fetchFromServiceWorker(request) {
                 let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
                 let responseFromCache = await _fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
                 if (responseFromCache != null) {
-                    if (request.method == "GET" || (_myAllowHEADRequestsToUpdateCacheInBackground && request.method == "HEAD")) {
+                    if (request.method == "GET" || (_myUpdateCacheInBackgroundAllowedForHEADRequests && request.method == "HEAD")) {
                         let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
                         if (updateCacheInBackground) {
                             if (request.method == "GET") {
@@ -860,7 +868,7 @@ async function _fetchFromServiceWorker(request) {
                 }
             }
 
-            if (allowFetchFromCache) {
+            if (fetchFromCacheAllowed) {
                 if (!cacheAlreadyTried) {
                     let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
                     let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
@@ -939,7 +947,7 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
     let responseFromNetwork = null;
 
     try {
-        let fetchFromNetworkAllowed = _shouldResourceURLBeIncluded(request.url, _myAllowFetchFromNetworkResourceURLsToInclude, _myAllowFetchFromNetworkResourceURLsToExclude);
+        let fetchFromNetworkAllowed = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkAllowedResourceURLsToInclude, _myFetchFromNetworkAllowedResourceURLsToExclude);
         if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
             responseFromNetwork = await fetch(request);
         } else {
@@ -1020,7 +1028,7 @@ async function _cacheResourcesToPrecache(allowRejectOnPrecacheFail = true, useTe
 
     let currentTempCache = null;
     if (useTemps) {
-        if (installPhase && !_myInstallationShouldRecoverFromLastAttempt) {
+        if (installPhase && !_myRecoverInstallationFromLastAttempt) {
             // Explicitly not try catching this to make install fail if it can't be deleted
 
             let tempCacheID = _getTempCacheID();
@@ -1266,14 +1274,14 @@ function _isResponseOpaque(response) {
 }
 
 function _shouldResourceBeCached(request, response) {
-    let cacheResource = _shouldResourceURLBeIncluded(request.url, _myCacheResourceURLsToInclude, _myCacheResourceURLsToExclude);
-    let cacheResourceWithOpaqueResponse = _shouldResourceURLBeIncluded(request.url, _myCacheOpaqueResponseResourceURLsToInclude, _myCacheOpaqueResponseResourceURLsToExclude);
-    return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponse && _isResponseOpaque(response))));
+    let cacheResource = _shouldResourceURLBeIncluded(request.url, _myPutInCacheResourceURLsToInclude, _myPutInCacheResourceURLsToExclude);
+    let cacheResourceWithOpaqueResponseAllowed = _shouldResourceURLBeIncluded(request.url, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude);
+    return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponseAllowed && _isResponseOpaque(response))));
 }
 
 function _shouldHandleRequest(request) {
     return request != null && request.url != null && request.method != null &&
-        (request.method == "GET" || (_myAllowHEADRequestsToFetchFromCache && request.method == "HEAD"));
+        (request.method == "GET" || (_myHandleHEADRequests && request.method == "HEAD"));
 }
 
 function _getCacheID(cacheVersion = _myCacheVersion) {
@@ -1281,7 +1289,7 @@ function _getCacheID(cacheVersion = _myCacheVersion) {
 }
 
 function _getTempCacheID(cacheVersion = _myCacheVersion, serviceWorkerVersion = _myServiceWorkerVersion) {
-    serviceWorkerVersion = (_myShareInstallationTemporaryDataBetweenServiceWorkers && _myInstallationShouldRecoverFromLastAttempt) ? 0 : serviceWorkerVersion;
+    serviceWorkerVersion = (_myInstallationTemporaryDataSharingEnabled && _myRecoverInstallationFromLastAttempt) ? 0 : serviceWorkerVersion;
     return _getCacheID(cacheVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
@@ -1290,7 +1298,7 @@ function _getRefetchFromNetworkChecklistID(cacheVersion = _myCacheVersion, refet
 }
 
 function _getTempRefetchFromNetworkChecklistID(cacheVersion = _myCacheVersion, refetchFromNetworkVersion = _myRefetchFromNetworkVersion, serviceWorkerVersion = _myServiceWorkerVersion) {
-    serviceWorkerVersion = (_myShareInstallationTemporaryDataBetweenServiceWorkers && _myInstallationShouldRecoverFromLastAttempt) ? 0 : serviceWorkerVersion;
+    serviceWorkerVersion = (_myInstallationTemporaryDataSharingEnabled && _myRecoverInstallationFromLastAttempt) ? 0 : serviceWorkerVersion;
     return _getRefetchFromNetworkChecklistID(cacheVersion, refetchFromNetworkVersion) + "_temp_v" + serviceWorkerVersion.toFixed(0);
 }
 
