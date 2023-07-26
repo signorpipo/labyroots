@@ -322,6 +322,31 @@ let _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// When an opaque response is received for a given URL, and that URL is not allowed to
+// be put in cache as an opaque response (see @_myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude),
+// u can delete that URL from the cache through this setting
+//
+// The reason behind this is that, if an opaque response is received, and u don't want to cache it, u might keep in the cache
+// an old value received when the response was not opaque, but use the opaque response in your app, which might be a successful response, just opaque
+//
+// Imagine using @_myTryCacheFirstResourceURLsToInclude, the OK response will basically block the opaque response from the moment that it's cached
+// By enabling this, every time a response is opaque, u are basically invalidating the corresponding cached resource, because it might not be up to date anymore
+// and might cause more issues than what is worth
+//
+// By default, this setting is enabled on all resources, so that there is no risk in keeping in the cache an outdated value when a new valid one is being used,
+// but if u prefer to just do this for resources that tries the cache first, since the other ones will always use the network response anyway,
+// u can assign @_myTryCacheFirstResourceURLsToInclude to this setting
+//
+// I'm not an expert regarding opaque responses, but I guess that it's unusual for a response to be opaque for a fetch request and not opaque for another, 
+// but, if it happens, this can make u feel safe, while if it's not a real case, 
+// this will just not do anything, since either u allow opaque responses to be cached (not deleting them) or not (so nothing to delete anyway)
+//
+// The resources URLs can also be a regex
+let _myDeleteFromCacheOnOpaqueResponsesResourceURLsToInclude = _EVERY_RESOURCE;
+let _myDeleteFromCacheOnOpaqueResponsesResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Enable this to allow HEAD request to be handled by the service worker
 //
 // Note that HEAD requests are NOT cached, they will just check if there is a cached response that was made with a GET,
@@ -950,6 +975,13 @@ async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork
 
                 responseHasBeenCached = null; // Not awaiting so we can't know
             }
+        } else if (_shouldDeleteFromCacheDueToOpaqueResponse(request, responseFromNetwork)) {
+            // #TODO Check if the url ignore url params and stuff and also delete them in case
+            if (!awaitOnlyFetchFromNetwork) {
+                await _deleteFromCache(request);
+            } else {
+                _deleteFromCache(request);
+            }
         }
     }
 
@@ -1023,6 +1055,16 @@ async function _putInCache(request, response, useTempCache = false) {
     }
 
     return putInCacheSucceeded;
+}
+
+async function _deleteFromCache(request, useTempCache = false) {
+    try {
+        let currentCacheID = (useTempCache) ? _getTempCacheID() : _getCacheID();
+        let currentCache = await caches.open(currentCacheID);
+        await currentCache.delete(request);
+    } catch (error) {
+        // Do nothing
+    }
 }
 
 async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefetchFromNetworkChecklist = false) {
@@ -1283,13 +1325,19 @@ function _isResponseOk(response) {
 }
 
 function _isResponseOpaque(response) {
-    return response != null && response.status == 0 && response.type.includes("opaque");
+    return response != null && response.status == 0 && response.type != null && response.type.includes("opaque");
 }
 
 function _shouldResourceBeCached(request, response) {
     let cacheResource = _shouldResourceURLBeIncluded(request.url, _myPutInCacheResourceURLsToInclude, _myPutInCacheResourceURLsToExclude);
     let cacheResourceWithOpaqueResponseAllowed = _shouldResourceURLBeIncluded(request.url, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude);
     return cacheResource && (request.method == "GET" && (_isResponseOk(response) || (cacheResourceWithOpaqueResponseAllowed && _isResponseOpaque(response))));
+}
+
+function _shouldDeleteFromCacheDueToOpaqueResponse(request, response) {
+    let cacheResource = _shouldResourceURLBeIncluded(request.url, _myPutInCacheResourceURLsToInclude, _myPutInCacheResourceURLsToExclude);
+    let cacheResourceWithOpaqueResponseAllowed = _shouldResourceURLBeIncluded(request.url, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude);
+    return cacheResource && request.method == "GET" && !_isResponseOk(response) && _isResponseOpaque(response) && !cacheResourceWithOpaqueResponseAllowed;
 }
 
 function _shouldHandleRequest(request) {
