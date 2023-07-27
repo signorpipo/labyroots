@@ -187,8 +187,6 @@ let _myRejectServiceWorkerLocationURLsToExclude = _NO_LOCATION;
 
 // Enable some extra logs to better understand what's going on and why things might not be working
 //
-// Note that some of the logs, in particular the ones that just log once, will be logged anyway
-//
 // The resources URLs can also be a regex
 let _myLogEnabledLocationURLsToInclude = _LOCALHOST;
 let _myLogEnabledLocationURLsToExclude = _NO_LOCATION;
@@ -839,7 +837,11 @@ async function _activate() {
             await self.registration.unregister();
             clients.forEach(client => client.navigate(client.url));
 
-            console.error("An error occurred while activating the service worker");
+            let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+            if (logEnabled) {
+                console.error("An error occurred while activating the service worker");
+                console.error(error);
+            }
         }
     }
 }
@@ -935,8 +937,8 @@ async function _fetchFromServiceWorker(request) {
             return responseFromNetwork;
         }
     } catch (error) {
-        let errorMessage = "An error occurred while trying to fetch from the service worker: " + request?.url + "\n\n" + error;
-        let responseFromServiceWorker = new Response(errorMessage, {
+        let errorMessage = "An error occurred while trying to fetch from the service worker: " + request?.url;
+        let responseFromServiceWorker = new Response(errorMessage + "\n\n" + error, {
             status: 500,
             headers: { "Content-Type": "text/plain" }
         });
@@ -945,8 +947,9 @@ async function _fetchFromServiceWorker(request) {
             let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
             if (logEnabled) {
                 console.error(errorMessage);
+                console.error(error);
             }
-        } catch (error) {
+        } catch (anotherError) {
             // Do nothing
         }
 
@@ -956,8 +959,8 @@ async function _fetchFromServiceWorker(request) {
 
 async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork = false, refetchFromNetwork = false, useTemps = false, fetchFromNetworkAllowedOverride = null) {
     let responseFromNetwork = await _fetchFromNetwork(request, fetchFromNetworkAllowedOverride);
-    let responseHasBeenCached = false;
 
+    let responseHasBeenCached = false;
     if (awaitOnlyFetchFromNetwork) {
         _postFetchFromNetwork(request, responseFromNetwork, refetchFromNetwork, useTemps);
         responseHasBeenCached = null;
@@ -979,8 +982,8 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
             throw new Error("Fetch from network is not allowed: " + request.url);
         }
     } catch (error) {
-        let errorMessage = "An error occurred while trying to fetch from the network: " + request.url + "\n\n" + error;
-        responseFromNetwork = new Response(errorMessage, {
+        let errorMessage = "An error occurred while trying to fetch from the network: " + request.url;
+        responseFromNetwork = new Response(errorMessage + "\n\n" + error, {
             status: 500,
             headers: { "Content-Type": "text/plain" }
         });
@@ -988,6 +991,7 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error(errorMessage);
+            console.error(error);
         }
     }
 
@@ -1033,6 +1037,7 @@ async function _fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryH
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error("An error occurred while trying to get from the cache: " + resourceURL);
+            console.error(error);
         }
     }
 
@@ -1054,6 +1059,7 @@ async function _putInCache(request, response, useTempCache = false) {
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error("An error occurred while trying to put the response in the cache: " + request.url);
+            console.error(error);
         }
     }
 
@@ -1073,6 +1079,7 @@ async function _deleteFromCache(request, ignoreURLParams = false, ignoreVaryHead
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error("An error occurred while trying to delete the resource from the cache: " + request.url);
+            console.error(error);
         }
     }
 
@@ -1088,6 +1095,7 @@ async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefet
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error("An error occurred while trying to put the response in the cache: " + request.url);
+            console.error(error);
         }
     }
 }
@@ -1180,6 +1188,7 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFailed = false, useTemp
                 let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
                 if (logEnabled) {
                     console.error("Failed to fetch resource to precache: " + resourceCompleteURLToPrecache);
+                    console.error(error);
                 }
             }
 
@@ -1506,6 +1515,7 @@ async function _shouldResourceBeRefetchedFromNetwork(resourceURL, checkTempRefet
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
             console.error("An error occurred while trying to check if the resource should be refetched: " + request.url);
+            console.error(error);
         }
     }
 
