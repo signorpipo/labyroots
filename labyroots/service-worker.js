@@ -958,31 +958,11 @@ async function _fetchFromNetworkAndPutInCache(request, awaitOnlyFetchFromNetwork
     let responseFromNetwork = await _fetchFromNetwork(request, fetchFromNetworkAllowedOverride);
     let responseHasBeenCached = false;
 
-    if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
-        if (_shouldResourceBeCached(request, responseFromNetwork)) {
-            if (!awaitOnlyFetchFromNetwork) {
-                responseHasBeenCached = await _putInCache(request, responseFromNetwork, useTemps);
-
-                if (refetchFromNetwork) {
-                    await _tickOffFromRefetchFromNetworkChecklist(request.url, useTemps);
-                }
-            } else {
-                _putInCache(request, responseFromNetwork, useTemps).then(function (putInCacheSucceeded) {
-                    if (putInCacheSucceeded && refetchFromNetwork) {
-                        _tickOffFromRefetchFromNetworkChecklist(request.url, useTemps);
-                    }
-                });
-
-                responseHasBeenCached = null; // Not awaiting so we can't know
-            }
-        } else if (_shouldDeleteFromCacheDueToOpaqueResponse(request, responseFromNetwork)) {
-            // #TODO Check if the url ignore url params and stuff and also delete them in case
-            if (!awaitOnlyFetchFromNetwork) {
-                await _deleteFromCache(request);
-            } else {
-                _deleteFromCache(request);
-            }
-        }
+    if (awaitOnlyFetchFromNetwork) {
+        _postFetchFromNetwork(request, responseFromNetwork, refetchFromNetwork, useTemps);
+        responseHasBeenCached = null;
+    } else {
+        responseHasBeenCached = await _postFetchFromNetwork(request, responseFromNetwork, refetchFromNetwork, useTemps);
     }
 
     return [responseFromNetwork, responseHasBeenCached];
@@ -1012,6 +992,29 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
     }
 
     return responseFromNetwork;
+}
+
+async function _postFetchFromNetwork(request, responseFromNetwork, refetchFromNetwork = false, useTemps = false) {
+    let responseHasBeenCached = false;
+
+    if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
+        if (_shouldResourceBeCached(request, responseFromNetwork)) {
+            responseHasBeenCached = await _putInCache(request, responseFromNetwork, useTemps);
+
+            if (responseHasBeenCached && refetchFromNetwork) {
+                await _tickOffFromRefetchFromNetworkChecklist(request.url, useTemps);
+            }
+        } else if (_shouldDeleteFromCacheDueToOpaqueResponse(request, responseFromNetwork)) {
+            let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
+            let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
+            let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+            let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+
+            await _deleteFromCache(request, ignoreURLParams || ignoreURLParamsAsFallback, ignoreVaryHeader || ignoreVaryHeaderAsFallback);
+        }
+    }
+
+    return responseHasBeenCached;
 }
 
 async function _fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
@@ -1057,14 +1060,23 @@ async function _putInCache(request, response, useTempCache = false) {
     return putInCacheSucceeded;
 }
 
-async function _deleteFromCache(request, useTempCache = false) {
+async function _deleteFromCache(request, ignoreURLParams = false, ignoreVaryHeader = false, useTempCache = false) {
+    let deleteFromCacheSucceeded = false;
+
     try {
         let currentCacheID = (useTempCache) ? _getTempCacheID() : _getCacheID();
         let currentCache = await caches.open(currentCacheID);
-        await currentCache.delete(request);
+        deleteFromCacheSucceeded = await currentCache.delete(request, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
     } catch (error) {
-        // Do nothing
+        deleteFromCacheSucceeded = false;
+
+        let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+        if (logEnabled) {
+            console.error("An error occurred while trying to delete the resource from the cache: " + request.url);
+        }
     }
+
+    return deleteFromCacheSucceeded;
 }
 
 async function _tickOffFromRefetchFromNetworkChecklist(resourceURL, useTempRefetchFromNetworkChecklist = false) {
@@ -1160,7 +1172,7 @@ async function _cacheResourcesToPrecache(rejectOnPrecacheFailed = false, useTemp
 
                 if (resourceHaveToBeCached) {
                     let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(new Request(resourceCompleteURLToPrecache), false, refetchFromNetwork, useTemps, installPhase);
-                    resourceHasBeenPrecached = responseHasBeenCached;
+                    resourceHasBeenPrecached = responseHasBeenCached != null && responseHasBeenCached;
                 } else {
                     resourceHasBeenPrecached = true; // The resource has been already precached
                 }
@@ -1335,9 +1347,10 @@ function _shouldResourceBeCached(request, response) {
 }
 
 function _shouldDeleteFromCacheDueToOpaqueResponse(request, response) {
+    let deleteFromCache = _shouldResourceURLBeIncluded(request.url, _myDeleteFromCacheOnOpaqueResponsesResourceURLsToInclude, _myDeleteFromCacheOnOpaqueResponsesResourceURLsToExclude);
     let cacheResource = _shouldResourceURLBeIncluded(request.url, _myPutInCacheResourceURLsToInclude, _myPutInCacheResourceURLsToExclude);
     let cacheResourceWithOpaqueResponseAllowed = _shouldResourceURLBeIncluded(request.url, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToInclude, _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude);
-    return cacheResource && request.method == "GET" && !_isResponseOk(response) && _isResponseOpaque(response) && !cacheResourceWithOpaqueResponseAllowed;
+    return deleteFromCache && cacheResource && request.method == "GET" && !_isResponseOk(response) && _isResponseOpaque(response) && !cacheResourceWithOpaqueResponseAllowed;
 }
 
 function _shouldHandleRequest(request) {
