@@ -251,25 +251,35 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
 
-// This is a bit specific, but, for example, even if with wonderland u can cache the bundle.js file and the wonderland.min.js file,
-// wonderland normally try to fetch it using URL params and the time of the deploy (possibly to force a cache reload for a new version)
+// When u use URL params to fetch a resource, it is cached using the URL params too
+// This means that if the URL params change, u will not be able to use the cached resource but need to fetch from network
 //
-// This make it so that u can't precache those files (even if they will be cached on the second load anyway),
-// but since u can precache the bundle.js / wonderland.min.js anyway without URL params,
-// if u put the bundle.js/wonderland.min.js URLs here, the service worker will try to look in the cache for the requested URL ignoring the URL params
+// This normally is what u want, because the URL params might be used from the server to give u a different resource based on them
 //
-// This can also be useful when u use URL params on the base URL to give parameters to the app, and not really to fetch a different resource
+// Sometimes though this could be used for other reasons, for example they can be used on the index URL to give parameters to the app,
+// and not really to fetch a different resource
 // Like doing "https://signor-pipo.itch.io/?useWondermelon=true" to specify that a certain feature should be turned on
-// If only "https://signor-pipo.itch.io/" is cached, when u ask for the above URL the cache will fail, unless u use this feature to ignore the URL params
-// In this specific case u can use _IGNORE_INDEX_URL_PARAMS to specify that only the index URL should be allowed to ignore them
+// If only "https://signor-pipo.itch.io/" is cached, when u ask for the above URL, the cache will fail
+// U can turn on this feature to ignore the URL params when checking the cache
+// In this specific case u can use @_IGNORE_INDEX_URL_PARAMS to specify that only the index URL should be allowed to ignore them
 //
-// Beware that using this could make u use an old resource which might not be compatible with the new ones
+// Note that the, being a fallback solution, the service worker will first try to see if it can find an exact match including the URL params,
+// and only tries ignoring them if that fails
+// This means that u might be able to find an exact match for your resource, even though an updated version could already have been cached,
+// even though with different URL params
+// Sadly this is the best solution as of now, due to the #IGNORE_URL_PARAMS_ISSUE
+//
+// When using the Wonderland Engine, u can also add the following URLs to be able to easily precache the wonderland.min.js file and the 
+// bundle.js file, which are using the deploy timestamp as URL params to prevent caching, and would require u to always update
+// the precache list with that timestamp as URL param
+//
+// "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*wonderland\\.min\\.js"
+// "^" + _escapeRegexSpecialCharacters(_getCurrentLocation()) + ".*bundle\\.js"
+//
+// Beware that using this feature could make u use an old resource which might not be compatible with the new ones,
+// due to the fact that u are ignoring the URL params
 // U should use this only when u know it would not make a difference to use the URL params or if the old resource
 // is still ok to use and better than a network error
-//
-// If u want to use this just to fix the precache issue, but are afraid of the issues related to this feature,
-// it might be better to just specify in the precache resource URL the URL params that u know will be used for that resource,
-// if that is possible to know (for bundle.s / wonderland.min.js u just have to check out the index.html file)
 //
 // The resources URLs can also be a regex
 let _myTryCacheIgnoringURLParamsResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
@@ -638,7 +648,15 @@ let _myInstallationTemporaryDataSharingEnabled = false;
 
 // #region Known Issues
 //
-// - If a service worker only partially manage to cache the data (both during precache or normal fetch phase),
+// - #IGNORE_URL_PARAMS_ISSUE
+//   From my tests, it seems that the current APIs to fetch from the cache ignoring the URL params does not fetch the most recently cached resource
+//   This is an issue since there is no way to actually get the most recent one if u want to ignore the URL params, and most often than not it will
+//   just return the cached resource for the first URL that has been cached (with the same resource URL excluding the URL params that is)
+//   This is why, for now, the ignore URL params feature can only be used as a fallback, otherwise, used as the first way to fetch from cache, it would be too
+//   unpredictable, since it does not either give u the exact match nor the most updated, but basically a random one
+//
+// - #APP_UPDATE_CAN_LEAD_TO_MIXED_VERSION_ISSUE
+//   If a service worker only partially manage to cache the data(both during precache or normal fetch phase),
 //   and u update both your app and the service worker (to clean the current cache and build a new one),
 //   while the new service worker install itself the current service worker might start to use the new data while serving
 //   some of the current cached one too, mixing the 2 versions
