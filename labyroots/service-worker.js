@@ -160,11 +160,11 @@ let _myPutInCacheResourceURLsToExclude = _NO_RESOURCE;
 
 
 
-// Used to specify if you want to first try the cache or always check the network for updates
+// Used to specify if you want to first try to fetch from the cache or always fetch from the network for updates
 //
 // The resources URLs can also be a regex
-let _myTryCacheFirstResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
-let _myTryCacheFirstResourceURLsToExclude = _NO_RESOURCE;
+let _myTryFetchFromCacheFirstResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myTryFetchFromCacheFirstResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -236,8 +236,8 @@ let _myFetchFromCacheAllowedResourceURLsToExclude = _NO_RESOURCE;
 // If a network error happens on any request, this enables the force try cache first on network error feature
 //
 // The resources URLs can also be a regex
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
-let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
+let _myEnableForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
+let _myEnableForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -246,8 +246,8 @@ let _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURC
 // Useful as a fallback to avoid waiting for all the requests to fail and instead starting to use the cache
 //
 // The resources URLs can also be a regex
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
-let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
+let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToInclude = _NO_RESOURCE;
+let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -282,8 +282,8 @@ let _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESOURCE;
 // is still ok to use and better than a network error
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringURLParamsResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
-let _myTryCacheIgnoringURLParamsResourceURLsToExclude = _NO_RESOURCE;
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -295,34 +295,34 @@ let _myTryCacheIgnoringURLParamsResourceURLsToExclude = _NO_RESOURCE;
 // If u are sure that this does not matter, u can use this to ignore the vary header
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringVaryHeaderResourceURLsToInclude = _NO_RESOURCE;
-let _myTryCacheIgnoringVaryHeaderResourceURLsToExclude = _NO_RESOURCE;
+let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
-// This is the same as @_myTryCacheIgnoringURLParamsResourceURLsToInclude but as a fallback
+// This is the same as @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude but as a fallback
 // for when the requested URL can't be found in any other way
 //
-// One of the reasons to use @_myTryCacheIgnoringURLParamsResourceURLsToInclude instead of the fallback version,
+// One of the reasons to use @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude instead of the fallback version,
 // is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
 // even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
-let _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
-// This is the same as @_myTryCacheIgnoringVaryHeaderResourceURLsToInclude but as a fallback
+// This is the same as @_myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude but as a fallback
 // for when the requested URL can't be found in any other way
 //
-// One of the reasons to use @_myTryCacheIgnoringVaryHeaderResourceURLsToInclude instead of the fallback version,
+// One of the reasons to use @_myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude instead of the fallback version,
 // is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
 // even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
 //
 // The resources URLs can also be a regex
-let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
-let _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
@@ -344,13 +344,13 @@ let _myPutInCacheAllowedForOpaqueResponsesResourceURLsToExclude = _NO_RESOURCE;
 // The reason behind this is that, if an opaque response is received, and u don't want to cache it, u might keep in the cache
 // an old value received when the response was not opaque, but use the opaque response in your app, which might be a successful response, just opaque
 //
-// Imagine using @_myTryCacheFirstResourceURLsToInclude, the OK response will basically block the opaque response from the moment that it's cached
+// Imagine using @_myTryFetchFromCacheFirstResourceURLsToInclude, the OK response will basically block the opaque response from the moment that it's cached
 // By enabling this, every time a response is opaque, u are basically invalidating the corresponding cached resource, because it might not be up to date anymore
 // and might cause more issues than what is worth
 //
 // By default, this setting is enabled on all resources, so that there is no risk in keeping in the cache an outdated value when a new valid one is being used,
 // but if u prefer to just do this for resources that tries the cache first, since the other ones will always use the network response anyway,
-// u can assign @_myTryCacheFirstResourceURLsToInclude to this setting
+// u can assign @_myTryFetchFromCacheFirstResourceURLsToInclude to this setting
 //
 // I'm not an expert regarding opaque responses, but I guess that it's unusual for a response to be opaque for a fetch request and not opaque for another, 
 // but, if it happens, this can make u feel safe, while if it's not a real case, 
@@ -779,9 +779,9 @@ let _myInstallationTemporaryDataSharingEnabled = false;
 
 // #region Service Worker Variables
 
-let _myCheckResourcesHaveBeenPrecachedOnFirstFetchPerformed = false; // As of now this is not reset on page reload, but only when using a new tab
+let _myCheckResourcesHaveBeenPrecachedOnFirstFetchPerformed = false; // This is reset only when all the tabs are closed, reloading them is not enough
 
-let _myForceTryCacheFirstOnNetworkErrorEnabled = false; // As of now this is not reset on page reload, but only when using a new tab
+let _myForceTryFetchFromCacheFirstOnNetworkErrorEnabled = false; // This is reset only when all the tabs are closed, reloading them is not enough
 
 // #endregion Service Worker Variables
 
@@ -888,16 +888,28 @@ async function _fetchFromServiceWorker(request) {
         let fetchFromCacheAllowed = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheAllowedResourceURLsToInclude, _myFetchFromCacheAllowedResourceURLsToExclude);
 
         if (!refetchFromNetwork && fetchFromCacheAllowed) {
-            let tryCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryCacheFirstResourceURLsToInclude, _myTryCacheFirstResourceURLsToExclude);
-            let forceTryCacheFirstOnNetworkError = _myForceTryCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
+            let tryFetchFromCacheFirst = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstResourceURLsToInclude, _myTryFetchFromCacheFirstResourceURLsToExclude);
+            let forceTryFetchFromCacheFirstOnNetworkError = _myForceTryFetchFromCacheFirstOnNetworkErrorEnabled && _shouldResourceURLBeIncluded(request.url, _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToInclude, _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude);
 
-            if (tryCacheFirst || forceTryCacheFirstOnNetworkError) {
+            if (tryFetchFromCacheFirst || forceTryFetchFromCacheFirstOnNetworkError) {
                 cacheAlreadyTried = true;
 
-                // Try to get the resource from the cache
-                let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-                let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-                let responseFromCache = await _fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+                let responseFromCache = await _fetchFromCache(request.url);
+
+                if (responseFromCache == null) {
+                    let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude);
+                    let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+                    if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
+                        responseFromCache = await _fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                        if (responseFromCache != null) {
+                            let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
+                            if (logEnabled) {
+                                console.warn("Try fetch from cache first using a fallback: " + request.url);
+                            }
+                        }
+                    }
+                }
+
                 if (responseFromCache != null) {
                     let updateCacheInBackground = _shouldResourceURLBeIncluded(request.url, _myUpdateCacheInBackgroundResourceURLsToInclude, _myUpdateCacheInBackgroundResourceURLsToExclude);
                     if (updateCacheInBackground) {
@@ -916,15 +928,14 @@ async function _fetchFromServiceWorker(request) {
             }
         }
 
-        // Try to get the resource from the network
         let [responseFromNetwork, responseHasBeenCached] = await _fetchFromNetworkAndPutInCache(request, true, refetchFromNetwork);
         if (_isResponseOk(responseFromNetwork) || _isResponseOpaque(responseFromNetwork)) {
             return responseFromNetwork;
         } else {
-            if (!_myForceTryCacheFirstOnNetworkErrorEnabled) {
-                let enableForceTryCacheFirstOnNetworkError = _shouldResourceURLBeIncluded(request.url, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToInclude, _myEnableForceTryCacheFirstOnNetworkErrorResourceURLsToExclude);
-                if (enableForceTryCacheFirstOnNetworkError) {
-                    _myForceTryCacheFirstOnNetworkErrorEnabled = true;
+            if (!_myForceTryFetchFromCacheFirstOnNetworkErrorEnabled) {
+                let enableForceTryFetchFromCacheFirstOnNetworkError = _shouldResourceURLBeIncluded(request.url, _myEnableForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToInclude, _myEnableForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude);
+                if (enableForceTryFetchFromCacheFirstOnNetworkError) {
+                    _myForceTryFetchFromCacheFirstOnNetworkErrorEnabled = true;
 
                     let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
                     if (logEnabled) {
@@ -935,22 +946,20 @@ async function _fetchFromServiceWorker(request) {
 
             if (fetchFromCacheAllowed) {
                 if (!cacheAlreadyTried) {
-                    let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-                    let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-                    let responseFromCache = await _fetchFromCache(request.url, ignoreURLParams, ignoreVaryHeader);
+                    let responseFromCache = await _fetchFromCache(request.url);
                     if (responseFromCache != null) {
                         return responseFromCache;
                     }
                 }
 
-                let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-                let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+                let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+                let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
                 if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
                     let fallbackResponseFromCache = await _fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
                     if (fallbackResponseFromCache != null) {
                         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
                         if (logEnabled) {
-                            console.warn("Get from cache using a fallback: " + request.url);
+                            console.warn("Fetch from cache using a fallback: " + request.url);
                         }
 
                         return fallbackResponseFromCache;
@@ -1033,12 +1042,12 @@ async function _postFetchFromNetwork(request, responseFromNetwork, refetchFromNe
             await _tickOffFromRefetchFromNetworkChecklist(request.url, useTemps);
         }
     } else if (_shouldDeleteFromCacheDueToOpaqueResponse(request, responseFromNetwork)) {
-        let ignoreURLParams = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsResourceURLsToInclude, _myTryCacheIgnoringURLParamsResourceURLsToExclude);
-        let ignoreVaryHeader = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderResourceURLsToExclude);
-        let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
-        let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+        let ignoreURLParamsTryFirstAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude);
+        let ignoreVaryHeaderTryFirstAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
+        let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
+        let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
 
-        await _deleteFromCache(request, ignoreURLParams || ignoreURLParamsAsFallback, ignoreVaryHeader || ignoreVaryHeaderAsFallback);
+        await _deleteFromCache(request, ignoreURLParamsTryFirstAsFallback || ignoreURLParamsAsFallback, ignoreVaryHeaderTryFirstAsFallback || ignoreVaryHeaderAsFallback);
     }
 
     return responseHasBeenCached;
