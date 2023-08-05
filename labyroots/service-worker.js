@@ -269,7 +269,7 @@ let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESO
 // even though with different URL params
 // Sadly this is the best solution as of now, due to the #IGNORE_URL_PARAMS_ISSUE
 //
-// Also note that this solution only works when fetching from the cache after trying to fetch from the network
+// Also note that this feature only works when fetching from the cache after trying to fetch from the network
 // Use @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude if u want to ignore them when trying to fetch from the cache first
 //
 // When using the Wonderland Engine, u can also add the following URLs to be able to easily precache the wonderland.min.js file and the
@@ -290,6 +290,15 @@ let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESO
 
 
 
+// This is the same as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude,
+// but it is used when trying to fetch from cache first
+//
+// The resources URLs can also be a regex
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // This is the same as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude but for the vary header
 //
 // A vary header is used to specify that the resource might be different based on some factors,
@@ -305,15 +314,6 @@ let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESO
 // The resources URLs can also be a regex
 let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
 let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// This is the same as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude,
-// but it is used when trying to fetch from cache first
-//
-// The resources URLs can also be a regex
-let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
-let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
