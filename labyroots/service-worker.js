@@ -269,7 +269,10 @@ let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESO
 // even though with different URL params
 // Sadly this is the best solution as of now, due to the #IGNORE_URL_PARAMS_ISSUE
 //
-// When using the Wonderland Engine, u can also add the following URLs to be able to easily precache the wonderland.min.js file and the 
+// Also note that this solution only works when fetching from the cache after trying to fetch from the network
+// Use @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude if u want to ignore them when trying to fetch from the cache first
+//
+// When using the Wonderland Engine, u can also add the following URLs to be able to easily precache the wonderland.min.js file and the
 // bundle.js file, which are using the deploy timestamp as URL params to prevent caching, and would require u to always update
 // the precache list with that timestamp as URL param
 //
@@ -282,11 +285,13 @@ let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESO
 // is still ok to use and better than a network error
 //
 // The resources URLs can also be a regex
-let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
-let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
+// This is the same as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude but for the vary header
+//
 // A vary header is used to specify that the resource might be different based on some factors,
 // like if the resource is being requested from desktop or mobile
 // This could prevent those resources to be retrieved from the cache, since the vary header of the request
@@ -294,38 +299,30 @@ let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = 
 //
 // If u are sure that this does not matter, u can use this to ignore the vary header
 //
-// It suffers from the same problem as @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude,
+// It suffers from the same problem as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude,
 // which is explained at #IGNORE_VARY_HEADER_ISSUE
-//
-// The resources URLs can also be a regex
-let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
-let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// This is the same as @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude but as a fallback
-// for when the requested URL can't be found in any other way
-//
-// One of the reasons to use @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude instead of the fallback version,
-// is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
-// even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
-//
-// The resources URLs can also be a regex
-let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude = _NO_RESOURCE;
-let _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
-
-
-
-// This is the same as @_myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude but as a fallback
-// for when the requested URL can't be found in any other way
-//
-// One of the reasons to use @_myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude instead of the fallback version,
-// is that if u use it as fallback u first have to wait for the fetch to fail, while otherwise it can get it from the cache "instantly",
-// even though it is unsafer, due to not even checking if a properly matching version could be fetched from the network
 //
 // The resources URLs can also be a regex
 let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
 let _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// This is the same as @_myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude,
+// but it is used when trying to fetch from cache first
+//
+// The resources URLs can also be a regex
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude = _IGNORE_INDEX_URL_PARAMS;
+let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = _NO_RESOURCE;
+
+
+
+// This is the same as @_myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude,
+// but it is used when trying to fetch from cache first
+//
+// The resources URLs can also be a regex
+let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
+let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
 
 
 
