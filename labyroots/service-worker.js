@@ -294,6 +294,9 @@ let _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude = 
 //
 // If u are sure that this does not matter, u can use this to ignore the vary header
 //
+// It suffers from the same problem as @_myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude,
+// which is explained at #IGNORE_VARY_HEADER_ISSUE
+//
 // The resources URLs can also be a regex
 let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude = _NO_RESOURCE;
 let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude = _NO_RESOURCE;
@@ -654,6 +657,14 @@ let _myInstallationTemporaryDataSharingEnabled = false;
 //   just return the cached resource for the first URL that has been cached (with the same resource URL excluding the URL params that is)
 //   This is why, for now, the ignore URL params feature can only be used as a fallback, otherwise, used as the first way to fetch from cache, it would be too
 //   unpredictable, since it does not either give u the exact match nor the most updated, but basically a random one
+//
+//   A possible solution would be to create a feature to delete the resource from the cache ignoring URL params before putting it in the cache
+//   This would basically only store the last fetched resource, not keeping every other one whith the same base URL but different URL params
+//   The issue with this solution is that u will never be able to cache every different resource based on the specific URL params, but at least u will
+//   always fetch the most updated one
+//
+// - #IGNORE_VARY_HEADER_ISSUE
+//   It is exactly the same issue as #IGNORE_URL_PARAMS_ISSUE, just for vary header instead of URL params
 //
 // - #APP_UPDATE_CAN_LEAD_TO_MIXED_VERSION_ISSUE
 //   If a service worker only partially manage to cache the data(both during precache or normal fetch phase),
