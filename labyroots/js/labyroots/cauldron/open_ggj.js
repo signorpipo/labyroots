@@ -25,15 +25,7 @@ WL.registerComponent('open-ggj', {
         if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                if (WL.xrSession) {
-                    WL.xrSession.end();
-                }
-
                 let onSuccess = function () {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
-
                     Global.myUnmute = true;
                     Howler.mute(true);
 
@@ -46,11 +38,7 @@ WL.registerComponent('open-ggj', {
                     });
                 }.bind(this);
 
-                let onError = function () {
-                    this._myChange = 10;
-                }.bind(this);
-
-                Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4", onSuccess, onError);
+                PP.XRUtils.openLinkPersistent("https://globalgamejam.org/2023/games/labyroots-4", true, true, 15, onSuccess);
             }
         }
     },

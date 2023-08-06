@@ -56,17 +56,9 @@ WL.registerComponent('open-zesty', {
         try {
             let zesty = WL.scene.pp_getComponent("zesty-banner");
             if (zesty != null) {
-                if (WL.xrSession) {
-                    WL.xrSession.end();
-                }
-
                 Global.myZestyComponent = zesty;
 
                 let onSuccess = function () {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
-
                     Global.myUnmute = true;
                     Howler.mute(true);
 
@@ -79,10 +71,6 @@ WL.registerComponent('open-zesty', {
                     });
                 }.bind(this);
 
-                let onError = function () {
-                    this._myChange = 10;
-                }.bind(this);
-
                 if (zesty.banner != null && zesty.banner.url != null) {
                     let onZestySuccess = function () {
                         onSuccess();
@@ -93,9 +81,10 @@ WL.registerComponent('open-zesty', {
                             // Do nothing
                         }
                     }.bind(this);
-                    Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
+
+                    PP.XRUtils.openLinkPersistent(zesty.banner.url, true, true, 15, onZestySuccess);
                 } else {
-                    Global.windowOpen("https://www.zesty.market", onSuccess, onError);
+                    PP.XRUtils.openLinkPersistent("https://www.zesty.market", true, true, 15, onSuccess);
                 }
             }
         } catch (error) {

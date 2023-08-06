@@ -415,10 +415,6 @@ WL.registerComponent('transformation', {
         if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                if (WL.xrSession) {
-                    WL.xrSession.end();
-                }
-
                 let url = window.location.origin;
 
                 if (window.location != window.parent.location) {
@@ -443,10 +439,6 @@ WL.registerComponent('transformation', {
                 }
 
                 let onSuccess = function () {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
-
                     Global.myUnmute = true;
                     Howler.mute(true);
                     if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
@@ -467,11 +459,7 @@ WL.registerComponent('transformation', {
                     this._myIsMazeverse = false;
                 }.bind(this);
 
-                let onError = function () {
-                    this._myChange = 10;
-                }.bind(this);
-
-                Global.windowOpen(url, onSuccess, onError);
+                PP.XRUtils.openLinkPersistent(url, true, true, 15, onSuccess);
             }
         }
 

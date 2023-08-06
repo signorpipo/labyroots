@@ -113,15 +113,7 @@ WL.registerComponent('wondermelon', {
         if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-                if (WL.xrSession) {
-                    WL.xrSession.end();
-                }
-
                 let onSuccess = function () {
-                    if (WL.xrSession) {
-                        WL.xrSession.end();
-                    }
-
                     Global.myUnmute = true;
                     Howler.mute(true);
 
@@ -136,11 +128,7 @@ WL.registerComponent('wondermelon', {
                     this.active = false;
                 }.bind(this);
 
-                let onError = function () {
-                    this._myChange = 10;
-                }.bind(this);
-
-                Global.windowOpen("https://signor-pipo.itch.io", onSuccess, onError);
+                PP.XRUtils.openLinkPersistent("https://signor-pipo.itch.io", true, true, 15, onSuccess);
             }
         }
     }
