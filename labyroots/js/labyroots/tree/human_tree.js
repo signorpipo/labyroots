@@ -73,34 +73,26 @@ WL.registerComponent('human-tree', {
 
             if (this._myHit == 0) {
                 if (this._myType != 90) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "defeat_human_tree", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "defeat_human_tree", {
+                        "value": 1
+                    });
                 } else {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "defeat_bride_tree", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "defeat_bride_tree", {
+                        "value": 1
+                    });
 
                     Global.myBigTreeDead = true;
                     Global.myStage = 0;
                 }
             } else {
                 if (this._myType != 90) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "human_tree_hit", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "human_tree_hit", {
+                        "value": 1
+                    });
                 } else {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "bride_tree_hit", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "bride_tree_hit", {
+                        "value": 1
+                    });
                 }
             }
         }

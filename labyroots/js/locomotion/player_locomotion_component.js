@@ -79,11 +79,9 @@ WL.registerComponent('player-locomotion', {
                             this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                             this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
 
-                            if (Global.myGoogleAnalytics) {
-                                gtag("event", "debug_movement_enabled", {
-                                    "value": 1
-                                });
-                            }
+                            Global.sendAnalytics("event", "debug_movement_enabled", {
+                                "value": 1
+                            });
                         }
                     }
 

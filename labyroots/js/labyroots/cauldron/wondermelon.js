@@ -36,11 +36,9 @@ WL.registerComponent('wondermelon', {
             if (this._myGrabbable != null) {
                 if (this._myGrabbable.isGrabbed()) {
                     if (!this._myGathered) {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "collect_wondermelon", {
-                                "value": 1
-                            });
-                        }
+                        Global.sendAnalytics("event", "collect_wondermelon", {
+                            "value": 1
+                        });
                     }
 
                     this._myGathered = true;
@@ -84,11 +82,9 @@ WL.registerComponent('wondermelon', {
             this._myEnd = 90;
             this._myChange = 1;
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "open_wondermelon", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "open_wondermelon", {
+                "value": 1
+            });
 
             this._myUsed = true;
 
@@ -133,11 +129,9 @@ WL.registerComponent('wondermelon', {
                         Global.myAxe._myGrabbable.release();
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "open_wondermelon_success", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "open_wondermelon_success", {
+                        "value": 1
+                    });
 
                     this.active = false;
                 }.bind(this);

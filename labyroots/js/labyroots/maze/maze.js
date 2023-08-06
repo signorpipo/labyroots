@@ -31,41 +31,33 @@ LR.Maze = class Maze {
             if (this._myGridToUse == null) {
                 this._myGridToUse = mazeSetup.myGrid;
 
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "mazeverse_maze_failed", {
-                        "value": 1
-                    });
-                }
+                Global.sendAnalytics("event", "mazeverse_maze_failed", {
+                    "value": 1
+                });
             } else {
                 Global.myIsMazeverseTime = true;
 
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "is_mazeverse_maze", {
+                Global.sendAnalytics("event", "is_mazeverse_maze", {
+                    "value": 1
+                });
+
+                if (!Global.myWinMazeverse) {
+                    Global.sendAnalytics("event", "is_mazeverse_maze_no_win", {
                         "value": 1
                     });
-
-                    if (!Global.myWinMazeverse) {
-                        gtag("event", "is_mazeverse_maze_no_win", {
-                            "value": 1
-                        });
-                    }
                 }
             }
         } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "is_wedding_maze", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "is_wedding_maze", {
+                "value": 1
+            });
         } else {
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "is_normal_maze", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "is_normal_maze", {
+                "value": 1
+            });
         }
 
         this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);

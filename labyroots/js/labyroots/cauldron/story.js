@@ -136,40 +136,30 @@ WL.registerComponent('story', {
             if (this._myPhysXResetCompleted) {
                 if (this._myTimer.isDone() || (this._myCanSkip && this._myTimer2.isDone() && this._mySkip)) {
                     if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "intro_skipped", {
-                                "value": 1
-                            });
-                        }
+                        Global.sendAnalytics("event", "intro_skipped", {
+                            "value": 1
+                        });
 
                         if (this._myTimerSkipFirstTime.isDone()) {
-                            if (Global.myGoogleAnalytics) {
-                                gtag("event", "intro_skipped_late", {
-                                    "value": 1
-                                });
-                            }
-                        }
-                    } else {
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "intro_watched", {
+                            Global.sendAnalytics("event", "intro_skipped_late", {
                                 "value": 1
                             });
                         }
-                    }
-
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "intro_done", {
+                    } else {
+                        Global.sendAnalytics("event", "intro_watched", {
                             "value": 1
                         });
                     }
 
+                    Global.sendAnalytics("event", "intro_done", {
+                        "value": 1
+                    });
+
                     PP.CAUtils.getUser(function (user) {
                         if (user != null && user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
-                            if (Global.myGoogleAnalytics) {
-                                gtag("event", "playing_signed_in", {
-                                    "value": 1
-                                });
-                            }
+                            Global.sendAnalytics("event", "playing_signed_in", {
+                                "value": 1
+                            });
                         }
                     }, null, false);
 

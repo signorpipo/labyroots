@@ -104,11 +104,9 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                     if (!Global.myDebugMoveUsed) {
                         Global.myDebugMoveUsed = true;
 
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "debug_movement_used", {
-                                "value": 1
-                            });
-                        }
+                        Global.sendAnalytics("event", "debug_movement_used", {
+                            "value": 1
+                        });
                     }
                 }
 
@@ -131,11 +129,9 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
                 if (!Global.myDebugFlyUsed) {
                     Global.myDebugFlyUsed = true;
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "debug_fly_used", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "debug_fly_used", {
+                        "value": 1
+                    });
                 }
 
                 let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
@@ -180,23 +176,19 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
 
                 this._myTimeMoving += dt;
                 if (this._myTimeMovingStepIndex < this._myTimeMovingStep.length && this._myTimeMoving > this._myTimeMovingStep[this._myTimeMovingStepIndex] * 60) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
+                        "value": 1
+                    });
                     this._myTimeMovingStepIndex++;
                 }
 
                 if (this._myNonVRPlayingTimer.isRunning()) {
                     this._myNonVRPlayingTimer.update(dt);
                     if (this._myNonVRPlayingTimer.isDone()) {
-                        if (Global.myGoogleAnalytics) {
-                            if (!Global.mySessionStarted) {
-                                gtag("event", "moving_non_vr", {
-                                    "value": 1
-                                });
-                            }
+                        if (!Global.mySessionStarted) {
+                            Global.sendAnalytics("event", "moving_non_vr", {
+                                "value": 1
+                            });
                         }
                     }
                 }

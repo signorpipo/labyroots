@@ -25,11 +25,9 @@ WL.registerComponent('root-wall', {
             // suono
 
             if (this._myHit == 0) {
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "defeat_root_wall", {
-                        "value": 1
-                    });
-                }
+                Global.sendAnalytics("event", "defeat_root_wall", {
+                    "value": 1
+                });
             }
         }
 

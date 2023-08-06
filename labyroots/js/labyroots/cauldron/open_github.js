@@ -41,11 +41,9 @@ WL.registerComponent('open-github', {
                         Global.myAxe._myGrabbable.release();
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "open_github_success", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "open_github_success", {
+                        "value": 1
+                    });
                 }.bind(this);
 
                 let onError = function () {
@@ -68,11 +66,9 @@ WL.registerComponent('open-github', {
         this._myEnd = 60;
         this._myChange = 1;
 
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "open_github", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "open_github", {
+            "value": 1
+        });
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);

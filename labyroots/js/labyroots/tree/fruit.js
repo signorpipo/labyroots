@@ -55,11 +55,9 @@ WL.registerComponent('fruit', {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
                 if (!this._myGathered) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "collect_fruit", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "collect_fruit", {
+                        "value": 1
+                    });
                 }
 
                 this._myGathered = true;
@@ -67,11 +65,10 @@ WL.registerComponent('fruit', {
 
                 this._myTimeGrabbed += dt;
                 if (this._myTimeGrabbedStepIndex < this._myTimeGrabbedStep.length && this._myTimeGrabbed > this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex]) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "fruit_grab_for_" + this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex] + "_seconds", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "fruit_grab_for_" + this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex] + "_seconds", {
+                        "value": 1
+                    });
+
                     this._myTimeGrabbedStepIndex++;
                 }
             } else {
@@ -95,11 +92,9 @@ WL.registerComponent('fruit', {
     activateEffect() {
         if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
 
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "eat_fruit", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "eat_fruit", {
+                "value": 1
+            });
 
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
@@ -115,17 +110,13 @@ Global.myFruitRandomPowers = [];
 
 decreaseStage = function (full) {
     if (full) {
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_perfect", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "eat_fruit_perfect", {
+            "value": 1
+        });
     } else {
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_good", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "eat_fruit_good", {
+            "value": 1
+        });
     }
 
     Global.myTransformation.removeStage(full);
@@ -133,17 +124,13 @@ decreaseStage = function (full) {
 
 increaseStage = function (full) {
     if (full) {
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_evil", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "eat_fruit_evil", {
+            "value": 1
+        });
     } else {
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_bad", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "eat_fruit_bad", {
+            "value": 1
+        });
     }
 
     Global.myTransformation.addStage(full);

@@ -24,11 +24,9 @@ WL.registerComponent('secret-zone-check', {
                     if (distanceFromPlayer <= this._myCell.myCellSize) {
                         this._myReached = true;
 
-                        if (Global.myGoogleAnalytics) {
-                            gtag("event", "enter_secret_zone", {
-                                "value": 1
-                            });
-                        }
+                        Global.sendAnalytics("event", "enter_secret_zone", {
+                            "value": 1
+                        });
                     }
                 }
             }

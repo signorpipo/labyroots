@@ -114,35 +114,29 @@ WL.registerComponent('big-tree', {
                         Global.mySaveManager.save("win_normal_maze", true, false);
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "defeat_mother_tree", {
+                    Global.sendAnalytics("event", "defeat_mother_tree", {
+                        "value": 1
+                    });
+
+                    if (Global.myIsMazeverseTime) {
+                        Global.sendAnalytics("event", "defeat_mother_tree_mazeverse", {
+                            "value": 1
+                        });
+
+                        if (!Global.myWinMazeverse) {
+                            Global.sendAnalytics("event", "defeat_mother_tree_mazeverse_first_time", {
+                                "value": 1
+                            });
+                        }
+                    } else {
+                        Global.sendAnalytics("event", "defeat_mother_tree_normal", {
                             "value": 1
                         });
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        if (Global.myIsMazeverseTime) {
-                            gtag("event", "defeat_mother_tree_mazeverse", {
-                                "value": 1
-                            });
-
-                            if (!Global.myWinMazeverse) {
-                                gtag("event", "defeat_mother_tree_mazeverse_first_time", {
-                                    "value": 1
-                                });
-                            }
-                        } else {
-                            gtag("event", "defeat_mother_tree_normal", {
-                                "value": 1
-                            });
-                        }
-                    }
-
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "defeat_mother_tree_seconds", {
-                            "value": Math.round(this._myTimeToWin)
-                        });
-                    }
+                    Global.sendAnalytics("event", "defeat_mother_tree_seconds", {
+                        "value": Math.round(this._myTimeToWin)
+                    });
 
                     if (!Global.myIsMazeverseTime) {
                         let score = Math.floor(this._myTimeToWin * 1000);
@@ -154,19 +148,15 @@ WL.registerComponent('big-tree', {
                         });
                     }
                 } else {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "mother_tree_hit", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "mother_tree_hit", {
+                        "value": 1
+                    });
                 }
             }
         } else {
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "mother_tree_hit_invincible", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "mother_tree_hit_invincible", {
+                "value": 1
+            });
         }
 
         return hitted;

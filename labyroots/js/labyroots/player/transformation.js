@@ -126,19 +126,15 @@ WL.registerComponent('transformation', {
                     this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
                     this._myAudioPrendi.play();
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "secret_code_human_tree_success", {
-                            "value": 1
-                        });
-                    }
-                }
-                this._myLastFreeCell = oldLast;
-
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "secret_code_human_tree", {
+                    Global.sendAnalytics("event", "secret_code_human_tree_success", {
                         "value": 1
                     });
                 }
+                this._myLastFreeCell = oldLast;
+
+                Global.sendAnalytics("event", "secret_code_human_tree", {
+                    "value": 1
+                });
             }
         }
     },
@@ -264,31 +260,28 @@ WL.registerComponent('transformation', {
         Global.myDeadOnce = true;
         this._myIsFirstLive = false;
 
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "death", {
+        Global.sendAnalytics("event", "death", {
+            "value": 1
+        });
+
+        Global.sendAnalytics("event", "survive_for_seconds", {
+            "value": Math.round(this._myTimeAlive)
+        });
+
+        if (this._myTimeAlive > currentStageTotalTime * 3) {
+            Global.sendAnalytics("event", "survive_bear_grills", {
+                "value": 1
+            });
+        } else if (this._myTimeAlive > currentStageTotalTime * 2) {
+            Global.sendAnalytics("event", "survive_a_lot", {
+                "value": 1
+            });
+        } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
+            Global.sendAnalytics("event", "survive_more", {
                 "value": 1
             });
         }
 
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "survive_for_seconds", {
-                "value": Math.round(this._myTimeAlive)
-            });
-
-            if (this._myTimeAlive > currentStageTotalTime * 3) {
-                gtag("event", "survive_bear_grills", {
-                    "value": 1
-                });
-            } else if (this._myTimeAlive > currentStageTotalTime * 2) {
-                gtag("event", "survive_a_lot", {
-                    "value": 1
-                });
-            } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
-                gtag("event", "survive_more", {
-                    "value": 1
-                });
-            }
-        }
         this._myTimeAlive = 0;
 
         this._spawnTree();
@@ -460,16 +453,14 @@ WL.registerComponent('transformation', {
                         Global.myAxe._myGrabbable.release();
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        if (this._myIsWedding) {
-                            gtag("event", "secret_code_wedding_success", {
-                                "value": 1
-                            });
-                        } else if (this._myIsMazeverse) {
-                            gtag("event", "secret_code_mazeverse_success", {
-                                "value": 1
-                            });
-                        }
+                    if (this._myIsWedding) {
+                        Global.sendAnalytics("event", "secret_code_wedding_success", {
+                            "value": 1
+                        });
+                    } else if (this._myIsMazeverse) {
+                        Global.sendAnalytics("event", "secret_code_mazeverse_success", {
+                            "value": 1
+                        });
                     }
 
                     this._myIsWedding = false;
@@ -489,11 +480,9 @@ WL.registerComponent('transformation', {
             if (this._myMazeverseTimer.isRunning()) {
                 this._myMazeverseTimer.update(dt);
                 if (this._myMazeverseTimer.isDone()) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "secret_code_mazeverse", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "secret_code_mazeverse", {
+                        "value": 1
+                    });
 
                     Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
 
@@ -513,11 +502,9 @@ WL.registerComponent('transformation', {
             if (this._myWeddingTimer.isRunning()) {
                 this._myWeddingTimer.update(dt);
                 if (this._myWeddingTimer.isDone()) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "secret_code_wedding", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "secret_code_wedding", {
+                        "value": 1
+                    });
 
                     Global.mySaveManager.save("is_wedding", true, false);
 

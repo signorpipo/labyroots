@@ -2,7 +2,7 @@ WL.registerComponent("labyroots-gateway", {
     _myFromAbove: { type: WL.Type.Bool, default: false }
 }, {
     init: function () {
-        Global.myGoogleAnalytics = window.gtag != null;
+        Global.myAnalyticsEnabled = true;
         Global.myFromAbove = this._myFromAbove;
     },
     start: function () {
@@ -82,11 +82,9 @@ WL.registerComponent("labyroots-gateway", {
                 if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd() ||
                     PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd()) {
                     this._myButtonPressed = true;
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "button_pressed", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "button_pressed", {
+                        "value": 1
+                    });
                 }
             }
         }
@@ -96,11 +94,9 @@ WL.registerComponent("labyroots-gateway", {
                 this._myTimePlayingVR += dt;
 
                 if (this._myTimePlayingVRStepIndex < this._myTimePlayingVRStep.length && this._myTimePlayingVR > this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] * 60) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
+                        "value": 1
+                    });
                     this._myTimePlayingVRStepIndex++;
                 }
             }
@@ -117,19 +113,15 @@ WL.registerComponent("labyroots-gateway", {
         Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup, this.object);
     },
     _onXRSessionStart() {
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "enter_vr", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "enter_vr", {
+            "value": 1
+        });
 
         let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
         if (isFirstEnterVR) {
-            if (Global.myGoogleAnalytics) {
-                gtag("event", "enter_vr_first_time", {
-                    "value": 1
-                });
-            }
+            Global.sendAnalytics("event", "enter_vr_first_time", {
+                "value": 1
+            });
         }
 
         Global.mySaveManager.save("is_first_enter_vr", false, false);
@@ -151,9 +143,22 @@ Global = {
     myFruits: [],
     myAxeProto: null,
     myFollowAxe: null,
-    myFromAbove: false
+    myFromAbove: false,
+    myAnalyticsEnabled: false
 };
 
 Global.mySessionStarted = false;
+
+Global.sendAnalytics = function sendAnalytics(...args) {
+    try {
+        if (Global.myAnalyticsEnabled) {
+            if (window.gtag != null) {
+                window.gtag(...args);
+            }
+        }
+    } catch (error) {
+        // Do nothing
+    }
+}
 
 LR = {};

@@ -40,11 +40,9 @@ PP.AudioPlayer = class AudioPlayer {
                 refDistance: this._myAudioSetup.myReferenceDistance,
                 preload: this._myAudioSetup.myPreload,
                 onloaderror: function () {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "audio_load_error", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "audio_load_error", {
+                        "value": 1
+                    });
                 }
             });
 

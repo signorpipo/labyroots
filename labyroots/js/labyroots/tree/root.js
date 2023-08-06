@@ -54,63 +54,59 @@ WL.registerComponent('root', {
                     tree.rootDie();
                 }
 
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "defeat_root", {
+                Global.sendAnalytics("event", "defeat_root", {
+                    "value": 1
+                });
+
+                Global.sendAnalytics("event", "defeat_root_" + Global.myRootsDefeated, {
+                    "value": 1
+                });
+
+                if (this._myAxeSpawnRoot) {
+                    Global.sendAnalytics("event", "defeat_root_axe_spawn", {
                         "value": 1
                     });
 
-                    gtag("event", "defeat_root_" + Global.myRootsDefeated, {
+                    Global.sendAnalytics("event", "defeat_root_axe_spawn_" + Global.myRootsDefeated, {
+                        "value": 1
+                    });
+                } else {
+                    Global.sendAnalytics("event", "defeat_root_normal", {
                         "value": 1
                     });
 
-                    if (this._myAxeSpawnRoot) {
-                        gtag("event", "defeat_root_axe_spawn", {
-                            "value": 1
-                        });
-
-                        gtag("event", "defeat_root_axe_spawn_" + Global.myRootsDefeated, {
-                            "value": 1
-                        });
-                    } else {
-                        gtag("event", "defeat_root_normal", {
-                            "value": 1
-                        });
-
-                        gtag("event", "defeat_root_normal_" + Global.myRootsDefeated, {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "defeat_root_normal_" + Global.myRootsDefeated, {
+                        "value": 1
+                    });
                 }
             } else {
                 this._myPhases[1].pp_setActive(true);
 
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "root_hit", {
+                Global.sendAnalytics("event", "root_hit", {
+                    "value": 1
+                });
+
+                let rootHit = Global.myRootsDefeated + 1;
+                Global.sendAnalytics("event", "root_hit_" + rootHit, {
+                    "value": 1
+                });
+
+                if (this._myAxeSpawnRoot) {
+                    Global.sendAnalytics("event", "root_hit_axe_spawn", {
                         "value": 1
                     });
 
-                    let rootHit = Global.myRootsDefeated + 1;
-                    gtag("event", "root_hit_" + rootHit, {
+                    Global.sendAnalytics("event", "root_hit_axe_spawn_" + rootHit, {
+                        "value": 1
+                    });
+                } else {
+                    Global.sendAnalytics("event", "root_hit_normal", {
                         "value": 1
                     });
 
-                    if (this._myAxeSpawnRoot) {
-                        gtag("event", "root_hit_axe_spawn", {
-                            "value": 1
-                        });
-
-                        gtag("event", "root_hit_axe_spawn_" + rootHit, {
-                            "value": 1
-                        });
-                    } else {
-                        gtag("event", "root_hit_normal", {
-                            "value": 1
-                        });
-
-                        gtag("event", "root_hit_normal_" + rootHit, {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "root_hit_normal_" + rootHit, {
+                        "value": 1
+                    });
                 }
             }
         }

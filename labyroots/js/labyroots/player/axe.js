@@ -86,20 +86,18 @@ WL.registerComponent('axe', {
         if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
                 if (!this._myCollected) {
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "collect_axe", {
+                    Global.sendAnalytics("event", "collect_axe", {
+                        "value": 1
+                    });
+
+                    if (Global.myDeadOnce) {
+                        Global.sendAnalytics("event", "collect_axe_after_death", {
                             "value": 1
                         });
-
-                        if (Global.myDeadOnce) {
-                            gtag("event", "collect_axe_after_death", {
-                                "value": 1
-                            });
-                        } else {
-                            gtag("event", "collect_axe_before_death", {
-                                "value": 1
-                            });
-                        }
+                    } else {
+                        Global.sendAnalytics("event", "collect_axe_before_death", {
+                            "value": 1
+                        });
                     }
                 }
                 this._myCollected = true;

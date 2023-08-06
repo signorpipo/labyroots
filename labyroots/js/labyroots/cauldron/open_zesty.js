@@ -41,11 +41,9 @@ WL.registerComponent('open-zesty', {
         this._myEnd = 90;
         this._myChange = 1;
 
-        if (Global.myGoogleAnalytics) {
-            gtag("event", "open_zesty", {
-                "value": 1
-            });
-        }
+        Global.sendAnalytics("event", "open_zesty", {
+            "value": 1
+        });
     },
     pp_clone(targetObject) {
         let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -76,11 +74,9 @@ WL.registerComponent('open-zesty', {
                         Global.myAxe._myGrabbable.release();
                     }
 
-                    if (Global.myGoogleAnalytics) {
-                        gtag("event", "open_zesty_success", {
-                            "value": 1
-                        });
-                    }
+                    Global.sendAnalytics("event", "open_zesty_success", {
+                        "value": 1
+                    });
                 }.bind(this);
 
                 let onError = function () {
