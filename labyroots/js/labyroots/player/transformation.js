@@ -547,7 +547,7 @@ Global.windowOpen = function (urlString, successCallback, errorCallback) {
                     if (WL.xrSession) {
                         WL.xrSession.end();
                     }
-                }, 750);
+                }, 500);
             }
         } else {
             if (errorCallback != null) {
