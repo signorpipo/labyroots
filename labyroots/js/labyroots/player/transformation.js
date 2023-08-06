@@ -555,6 +555,12 @@ Global.windowOpen = function (urlString, successCallback, errorCallback) {
         if (result != null) {
             if (successCallback != null) {
                 successCallback();
+
+                setTimeout(function () {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
+                }, 750);
             }
         } else {
             if (errorCallback != null) {
