@@ -55,46 +55,55 @@ WL.registerComponent('open-zesty', {
     result(result) {
     },
     openZestyUrl() {
-        let zesty = WL.scene.pp_getComponent("zesty-banner");
-        if (zesty != null) {
-            if (WL.xrSession) {
-                WL.xrSession.end();
-            }
-
-            Global.myZestyComponent = zesty;
-
-            let onSuccess = function () {
+        try {
+            let zesty = WL.scene.pp_getComponent("zesty-banner");
+            if (zesty != null) {
                 if (WL.xrSession) {
                     WL.xrSession.end();
                 }
 
-                Global.myUnmute = true;
-                Howler.mute(true);
+                Global.myZestyComponent = zesty;
 
-                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                    Global.myAxe._myGrabbable.release();
-                }
+                let onSuccess = function () {
+                    if (WL.xrSession) {
+                        WL.xrSession.end();
+                    }
 
-                if (Global.myGoogleAnalytics) {
-                    gtag("event", "open_zesty_success", {
-                        "value": 1
-                    });
-                }
-            }.bind(this);
+                    Global.myUnmute = true;
+                    Howler.mute(true);
 
-            let onError = function () {
-                this._myChange = 10;
-            }.bind(this);
+                    if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                        Global.myAxe._myGrabbable.release();
+                    }
 
-            if (zesty.banner != null) {
-                let onZestySuccess = function () {
-                    onSuccess();
-                    zesty.executeClick();
+                    if (Global.myGoogleAnalytics) {
+                        gtag("event", "open_zesty_success", {
+                            "value": 1
+                        });
+                    }
                 }.bind(this);
-                Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
-            } else {
-                Global.windowOpen("https://www.zesty.market", onSuccess, onError);
+
+                let onError = function () {
+                    this._myChange = 10;
+                }.bind(this);
+
+                if (zesty.banner != null && zesty.banner.url != null) {
+                    let onZestySuccess = function () {
+                        onSuccess();
+
+                        try {
+                            zesty.executeClick();
+                        } catch (error) {
+                            // Do nothing
+                        }
+                    }.bind(this);
+                    Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
+                } else {
+                    Global.windowOpen("https://www.zesty.market", onSuccess, onError);
+                }
             }
+        } catch (error) {
+            // Do nothing
         }
     }
 });
