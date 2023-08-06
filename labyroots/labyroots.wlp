@@ -24063,29 +24063,6 @@
             },
             "castShadows": false
         },
-        "7a753214-907d-4260-92e1-0b67e30a7e28": {
-            "link": {
-                "name": "Phong Opaque Textured",
-                "file": "default"
-            },
-            "features": {
-                "ALPHA_MASKED": false,
-                "WITH_FOG": false,
-                "WITH_EMISSIVE": false,
-                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
-                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
-            },
-            "doubleSided": true,
-            "name": "Phong Opaque Textured Blend",
-            "blending": true,
-            "blendSrcRgb": "source alpha",
-            "blendSrcAlpha": "source alpha",
-            "blendDestRgb": "one minus source alpha",
-            "blendDestAlpha": "one minus source alpha",
-            "blendEqAlpha": "max",
-            "sampleAlphaToCoverage": true,
-            "castShadows": false
-        },
         "f1c49d36-d61e-4cbf-8da6-ab2888168337": {
             "link": {
                 "name": "Phong Opaque Textured",
@@ -24117,6 +24094,29 @@
             "doubleSided": false,
             "castShadows": false,
             "name": "Phong Opaque Textured Floor"
+        },
+        "7a753214-907d-4260-92e1-0b67e30a7e28": {
+            "link": {
+                "name": "Phong Opaque Textured",
+                "file": "default"
+            },
+            "features": {
+                "ALPHA_MASKED": false,
+                "WITH_FOG": false,
+                "WITH_EMISSIVE": false,
+                "SHADOW_NORMAL_OFFSET_UV_ONLY": false,
+                "SHADOW_NORMAL_OFFSET_SLOPE_SCALE": false
+            },
+            "doubleSided": true,
+            "name": "Phong Opaque Textured Zesty",
+            "blending": true,
+            "blendSrcRgb": "source alpha",
+            "blendSrcAlpha": "source alpha",
+            "blendDestRgb": "one minus source alpha",
+            "blendDestAlpha": "one minus source alpha",
+            "blendEqAlpha": "max",
+            "sampleAlphaToCoverage": false,
+            "castShadows": false
         },
         "150": {
             "link": {
