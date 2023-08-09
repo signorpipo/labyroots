@@ -38,7 +38,7 @@ WL.registerComponent('open-ggj', {
                     });
                 }.bind(this);
 
-                PP.XRUtils.openLinkPersistent("https://globalgamejam.org/2023/games/labyroots-4", true, true, 15, onSuccess);
+                PP.XRUtils.openLink("https://globalgamejam.org/2023/games/labyroots-4", true, true, true, true, onSuccess);
             }
         }
     },

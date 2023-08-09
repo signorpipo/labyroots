@@ -9,13 +9,7 @@ PP.XRUtils = {
     isReferenceSpaceLocalFloor: function () {
         return !["local", "viewer"].includes(WebXR.refSpace);
     },
-    openLink(url, newTab = true, exitXRSession = true, onSuccessCallback = null, onFailureCallback = null) {
-        if (exitXRSession) {
-            if (WL.xrSession) {
-                WL.xrSession.end();
-            }
-        }
-
+    openLink(url, newTab = true, exitXRSessionBeforeOpen = true, exitXRSessionOnSuccess = true, tryOpenLinkOnClickOnFailure = false, onSuccessCallback = null, onFailureCallback = null) {
         let element = document.createElement("a");
 
         element.style.display = "none";
@@ -31,6 +25,64 @@ PP.XRUtils = {
             let result = window.open(url, targetPage);
 
             if (result != null) {
+                if (!exitXRSessionBeforeOpen && exitXRSessionOnSuccess) {
+                    if (WL.xrSession) {
+                        try {
+                            WL.xrSession.end();
+                        } catch (error) {
+                            // Do nothing
+                        }
+                    }
+                }
+
+                if (onSuccessCallback != null) {
+                    onSuccessCallback();
+                }
+            } else {
+                if (tryOpenLinkOnClickOnFailure) {
+                    setTimeout(function () {
+                        PP.XRUtils.openLinkOnClick(url, newTab, exitXRSessionOnSuccess, onSuccessCallback, onFailureCallback);
+                    }, 100);
+                } else if (onFailureCallback != null) {
+                    onFailureCallback();
+                }
+            }
+        });
+
+        if (exitXRSessionBeforeOpen) {
+            if (WL.xrSession) {
+                try {
+                    WL.xrSession.end();
+                } catch (error) {
+                    // Do nothing
+                }
+            }
+        }
+
+        element.click();
+
+        document.body.removeChild(element);
+    },
+    openLinkOnClick(url, newTab = true, exitXRSessionOnSuccess = true, onSuccessCallback = null, onFailureCallback = null) {
+        document.addEventListener("click", function () {
+            let targetPage = undefined;
+            if (newTab) {
+                targetPage = "_blank";
+            }
+
+            let result = window.open(url, targetPage);
+
+            if (result != null) {
+                if (exitXRSessionOnSuccess) {
+                    if (WL.xrSession) {
+                        try {
+                            WL.xrSession.end();
+                        } catch (error) {
+                            // Do nothing
+                        }
+                    }
+                }
+
                 if (onSuccessCallback != null) {
                     onSuccessCallback();
                 }
@@ -39,28 +91,6 @@ PP.XRUtils = {
                     onFailureCallback();
                 }
             }
-        });
-
-        element.click();
-
-        document.body.removeChild(element);
-    },
-    openLinkPersistent(url, newTab = true, exitXRSession = true, timeOutSeconds = null, onSuccessCallback = null, onFailureCallback = null) {
-        let totalSeconds = 0;
-        let secondsTillNextAttempt = 0.5;
-        let onPersistentFailureCallback = function (...args) {
-            if (timeOutSeconds != null && totalSeconds >= timeOutSeconds) {
-                if (onFailureCallback != null) {
-                    onFailureCallback(...args);
-                }
-            } else {
-                totalSeconds += secondsTillNextAttempt;
-                setTimeout(function () {
-                    PP.XRUtils.openLink(url, newTab, exitXRSession, onSuccessCallback, onPersistentFailureCallback);
-                }, secondsTillNextAttempt * 1000);
-            }
-        };
-
-        PP.XRUtils.openLink(url, newTab, exitXRSession, onSuccessCallback, onPersistentFailureCallback);
+        }, { once: true });
     }
 };

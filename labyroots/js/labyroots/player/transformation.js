@@ -459,7 +459,7 @@ WL.registerComponent('transformation', {
                     this._myIsMazeverse = false;
                 }.bind(this);
 
-                PP.XRUtils.openLinkPersistent(url, true, true, 15, onSuccess);
+                PP.XRUtils.openLink(url, true, true, true, true, onSuccess);
             }
         }
 

@@ -82,9 +82,9 @@ WL.registerComponent('open-zesty', {
                         }
                     }.bind(this);
 
-                    PP.XRUtils.openLinkPersistent(zesty.banner.url, true, true, 15, onZestySuccess);
+                    PP.XRUtils.openLink(zesty.banner.url, true, true, true, true, onZestySuccess);
                 } else {
-                    PP.XRUtils.openLinkPersistent("https://www.zesty.market", true, true, 15, onSuccess);
+                    PP.XRUtils.openLink("https://www.zesty.market", true, true, true, true, onSuccess);
                 }
             }
         } catch (error) {

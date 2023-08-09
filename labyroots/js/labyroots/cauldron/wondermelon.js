@@ -128,7 +128,7 @@ WL.registerComponent('wondermelon', {
                     this.active = false;
                 }.bind(this);
 
-                PP.XRUtils.openLinkPersistent("https://signor-pipo.itch.io", true, true, 15, onSuccess);
+                PP.XRUtils.openLink("https://signor-pipo.itch.io", true, true, true, true, onSuccess);
             }
         }
     }

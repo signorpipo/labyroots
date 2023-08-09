@@ -38,7 +38,7 @@ WL.registerComponent('open-github', {
                     });
                 }.bind(this);
 
-                PP.XRUtils.openLinkPersistent("https://github.com/SignorPipo/labyroots", true, true, 15, onSuccess);
+                PP.XRUtils.openLink("https://github.com/SignorPipo/labyroots", true, true, true, true, onSuccess);
             }
         }
     },
