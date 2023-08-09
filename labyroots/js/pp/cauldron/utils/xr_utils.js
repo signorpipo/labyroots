@@ -20,6 +20,8 @@ PP.XRUtils = {
             let targetPage = undefined;
             if (newTab) {
                 targetPage = "_blank";
+            } else {
+                targetPage = "_top";
             }
 
             let result = window.open(url, targetPage);
@@ -68,6 +70,8 @@ PP.XRUtils = {
             let targetPage = undefined;
             if (newTab) {
                 targetPage = "_blank";
+            } else {
+                targetPage = "_top";
             }
 
             let result = window.open(url, targetPage);
