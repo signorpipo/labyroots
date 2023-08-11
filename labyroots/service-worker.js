@@ -70,7 +70,6 @@ let _myCacheVersion = 4;
 let _myResourceURLsToPrecache = [
     "/",
     "index.html",
-    "f0.png",
     "wonderland.min.js",
     //"WonderlandRuntime-physx.wasm",
     //"WonderlandRuntime-physx.js",
@@ -82,6 +81,7 @@ let _myResourceURLsToPrecache = [
     //"WonderlandRuntime-physx-simd-threads.wasm",
     //"WonderlandRuntime-physx-simd-threads.js",
     //"WonderlandRuntime-physx-simd-threads.worker.js",
+    "f0.png",
     "labyroots-bundle.js",
     "labyroots.bin",
     "favicon.ico",
