@@ -3,7 +3,11 @@
 
 <head>
     <link rel="preload" href="labyroots-bundle.js" as="script">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon192.png">
+
     <title>LabyRoots</title>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="white">
@@ -81,16 +85,9 @@
     </style>
 
     <script>
-        var Module = {
-            webxr_framebuffer_scale_factor: 1.000
-        };
-    </script>
-
-    <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="homescreen192.png">
-
-    <script>
-        window.navigator.serviceWorker?.register("service-worker.js");
+        if (navigator.serviceWorker != null) {
+            navigator.serviceWorker.register("service-worker.js");
+        }
     </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-MMJPQVRVQD"></script>
@@ -100,7 +97,12 @@
 
         gtag("js", new Date());
         gtag("config", "G-MMJPQVRVQD");
+    </script>
 
+    <script>
+        var Module = {
+            webxr_framebuffer_scale_factor: 1.000
+        };
     </script>
 
     <script src="wonderland.min.js"></script>
@@ -120,7 +122,9 @@
                 await WL.loadRuntime("WonderlandRuntime-physx");
                 WL.onXRSupported.push((type, supported) => {
                     let button = document.getElementById(type + "-button");
-                    if (button) button.dataset.supported = supported;
+                    if (button != null) {
+                        button.dataset.supported = supported;
+                    }
                 });
 
                 let bundle = await loadScript("labyroots-bundle.js");
