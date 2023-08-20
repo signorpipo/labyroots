@@ -62,7 +62,7 @@ PP.CAUtils = {
                         let error = {};
                         error.reason = "Get leaderboard failed";
                         error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                        callbackOnError(error, result);
+                        callbackOnError(error, null);
                     }
                 }
             } else {
@@ -124,7 +124,7 @@ PP.CAUtils = {
                                 let error = {};
                                 error.reason = "Get leaderboard failed";
                                 error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                                callbackOnError(error, result);
+                                callbackOnError(error, null);
                             }
                         }
                     },
@@ -136,7 +136,7 @@ PP.CAUtils = {
                             let error = {};
                             error.reason = "Searching for around player but the user can't be retrieved";
                             error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                            callbackOnError(error, result);
+                            callbackOnError(error, null);
                         }
                     },
                     false);
@@ -161,7 +161,7 @@ PP.CAUtils = {
                 let error = {};
                 error.reason = "Dummy server not initialized";
                 error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-                callbackOnError(error);
+                callbackOnError(error, null);
             }
         }
     },
@@ -201,7 +201,7 @@ PP.CAUtils = {
                     let error = {};
                     error.reason = "Submit score failed";
                     error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                    callbackOnError(error, result);
+                    callbackOnError(error, null);
                 }
             }
         } else {
@@ -224,7 +224,7 @@ PP.CAUtils = {
                 let error = {};
                 error.reason = "Dummy server not initialized";
                 error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-                callbackOnError(error);
+                callbackOnError(error, null);
             }
         }
     },
@@ -266,7 +266,7 @@ PP.CAUtils = {
                     let error = {};
                     error.reason = "Get user failed";
                     error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                    callbackOnError(error, result);
+                    callbackOnError(error, null);
                 }
             }
         } else {
@@ -289,7 +289,7 @@ PP.CAUtils = {
                 let error = {};
                 error.reason = "Dummy server not initialized";
                 error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-                callbackOnError(error);
+                callbackOnError(error, null);
             }
         }
     },

@@ -61,9 +61,10 @@ PP.XRUtils = {
             }
         }
 
-        element.click();
-
-        document.body.removeChild(element);
+        setTimeout(function () {
+            element.click();
+            document.body.removeChild(element);
+        }, 100);
     },
     openLinkOnClick(url, newTab = true, exitXRSessionOnSuccess = true, onSuccessCallback = null, onFailureCallback = null) {
         document.addEventListener("click", function () {
