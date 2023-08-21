@@ -13906,11 +13906,9 @@
               refDistance: this._myAudioSetup.myReferenceDistance,
               preload: this._myAudioSetup.myPreload,
               onloaderror: function() {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "audio_load_error", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "audio_load_error", {
+                  "value": 1
+                });
               }
             });
             this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
@@ -15017,8 +15015,8 @@
             let failed = false;
             for (let id of this._myIDsToCommit) {
               if (this._mySaveCache.has(id)) {
-                let result2 = this._commitSave(id, true);
-                failed = failed || result2;
+                let result = this._commitSave(id, true);
+                failed = failed || result;
               }
             }
             this._myIDsToCommit = [];
@@ -16344,20 +16342,20 @@
           return PP.ColorUtils.color255To1(hsv);
         },
         color255To1(color) {
-          let result2 = color.pp_clone();
-          for (let i = 0; i < result2.length; i++) {
-            result2[i] /= 255;
-            result2[i] = Math.pp_clamp(result2[i], 0, 1);
+          let result = color.pp_clone();
+          for (let i = 0; i < result.length; i++) {
+            result[i] /= 255;
+            result[i] = Math.pp_clamp(result[i], 0, 1);
           }
-          return result2;
+          return result;
         },
         color1To255(color) {
-          let result2 = color.pp_clone();
-          for (let i = 0; i < result2.length; i++) {
-            result2[i] = Math.round(result2[i] * 255);
-            result2[i] = Math.pp_clamp(result2[i], 0, 255);
+          let result = color.pp_clone();
+          for (let i = 0; i < result.length; i++) {
+            result[i] = Math.round(result[i] * 255);
+            result[i] = Math.pp_clamp(result[i], 0, 255);
           }
-          return result2;
+          return result;
         }
       };
     }
@@ -16766,6 +16764,81 @@
         },
         isReferenceSpaceLocalFloor: function() {
           return !["local", "viewer"].includes(WebXR.refSpace);
+        },
+        openLink(url, newTab = true, exitXRSessionBeforeOpen = true, exitXRSessionOnSuccess = true, tryOpenLinkOnClickOnFailure = false, onSuccessCallback = null, onFailureCallback = null) {
+          let element = document.createElement("a");
+          element.style.display = "none";
+          document.body.appendChild(element);
+          element.addEventListener("click", function() {
+            let targetPage = void 0;
+            if (newTab) {
+              targetPage = "_blank";
+            } else {
+              targetPage = "_top";
+            }
+            let result = window.open(url, targetPage);
+            if (result != null) {
+              if (!exitXRSessionBeforeOpen && exitXRSessionOnSuccess) {
+                if (WL.xrSession) {
+                  try {
+                    WL.xrSession.end();
+                  } catch (error) {
+                  }
+                }
+              }
+              if (onSuccessCallback != null) {
+                onSuccessCallback();
+              }
+            } else {
+              if (tryOpenLinkOnClickOnFailure) {
+                setTimeout(function() {
+                  PP.XRUtils.openLinkOnClick(url, newTab, exitXRSessionOnSuccess, onSuccessCallback, onFailureCallback);
+                }, 100);
+              } else if (onFailureCallback != null) {
+                onFailureCallback();
+              }
+            }
+          });
+          if (exitXRSessionBeforeOpen) {
+            if (WL.xrSession) {
+              try {
+                WL.xrSession.end();
+              } catch (error) {
+              }
+            }
+          }
+          setTimeout(function() {
+            element.click();
+            document.body.removeChild(element);
+          }, 100);
+        },
+        openLinkOnClick(url, newTab = true, exitXRSessionOnSuccess = true, onSuccessCallback = null, onFailureCallback = null) {
+          document.addEventListener("click", function() {
+            let targetPage = void 0;
+            if (newTab) {
+              targetPage = "_blank";
+            } else {
+              targetPage = "_top";
+            }
+            let result = window.open(url, targetPage);
+            if (result != null) {
+              if (exitXRSessionOnSuccess) {
+                if (WL.xrSession) {
+                  try {
+                    WL.xrSession.end();
+                  } catch (error) {
+                  }
+                }
+              }
+              if (onSuccessCallback != null) {
+                onSuccessCallback();
+              }
+            } else {
+              if (onFailureCallback != null) {
+                onFailureCallback();
+              }
+            }
+          }, { once: true });
         }
       };
     }
@@ -16929,7 +17002,7 @@
           }
           return removedHit;
         }
-        copy(result2) {
+        copy(result) {
         }
       };
       PP.RaycastHit = class RaycastHit {
@@ -16966,31 +17039,31 @@
           currentElement.copy(elementToCopy);
           return currentElement;
         };
-        return function copy8(result2) {
-          if (result2.myRaycastSetup == null) {
+        return function copy8(result) {
+          if (result.myRaycastSetup == null) {
             this.myRaycastSetup = null;
           } else {
             if (this.myRaycastSetup == null) {
               this.myRaycastSetup = new PP.RaycastSetup();
             }
-            this.myRaycastSetup.copy(result2.myRaycastSetup);
+            this.myRaycastSetup.copy(result.myRaycastSetup);
           }
-          if (this.myHits.length > result2.myHits.length) {
+          if (this.myHits.length > result.myHits.length) {
             if (this._myUnusedHits == null) {
               this._myUnusedHits = [];
             }
-            for (let i = 0; i < this.myHits.length - result2.myHits.length; i++) {
+            for (let i = 0; i < this.myHits.length - result.myHits.length; i++) {
               this._myUnusedHits.push(this.myHits.pop());
             }
-          } else if (this.myHits.length < result2.myHits.length) {
+          } else if (this.myHits.length < result.myHits.length) {
             if (this._myUnusedHits != null) {
-              let length7 = Math.min(this._myUnusedHits.length, result2.myHits.length - this.myHits.length);
+              let length7 = Math.min(this._myUnusedHits.length, result.myHits.length - this.myHits.length);
               for (let i = 0; i < length7; i++) {
                 this.myHits.push(this._myUnusedHits.pop());
               }
             }
           }
-          this.myHits.pp_copy(result2.myHits, copyHitCallback);
+          this.myHits.pp_copy(result.myHits, copyHitCallback);
         };
       }();
       Object.defineProperty(PP.RaycastResults.prototype, "copy", { enumerable: false });
@@ -18339,8 +18412,8 @@
         get myRaycastResults() {
           return this._myRaycastResults;
         }
-        set myRaycastResults(result2) {
-          this._myRaycastResults.copy(result2);
+        set myRaycastResults(result) {
+          this._myRaycastResults.copy(result);
         }
       };
       PP.VisualRaycast = class VisualRaycast {
@@ -25301,78 +25374,100 @@
         getLeaderboard: function(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
           if (PP.CAUtils.isSDKAvailable()) {
             if (!isAroundPlayer) {
-              casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result2) {
-                if (result2.leaderboard) {
-                  if (callbackOnDone) {
-                    callbackOnDone(result2.leaderboard);
-                  }
-                } else {
-                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                    PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                  } else if (callbackOnError) {
-                    let error = {};
-                    error.reason = "Get leaderboard failed";
-                    error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                    callbackOnError(error, result2);
-                  }
-                }
-              }).catch(function(result2) {
-                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                  PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                } else if (callbackOnError) {
-                  let error = {};
-                  error.reason = "Get leaderboard failed";
-                  error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                  callbackOnError(error, result2);
-                }
-              });
-            } else {
-              PP.CAUtils.getUser(
-                function(user) {
-                  let userName = user.displayName;
-                  casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result2) {
-                    if (result2.leaderboard) {
-                      let userValid = false;
-                      for (let value of result2.leaderboard) {
-                        if (value.displayName == userName && value.score != 0) {
-                          userValid = true;
-                          break;
-                        }
-                      }
-                      if (userValid) {
-                        if (callbackOnDone) {
-                          callbackOnDone(result2.leaderboard);
-                        }
-                      } else {
-                        if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                          PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                        } else if (callbackOnError) {
-                          let error = {};
-                          error.reason = "Searching for around player but the user has not submitted a score yet";
-                          error.type = PP.CAUtils.ErrorType.USER_HAS_NO_SCORE;
-                          callbackOnError(error, result2);
-                        }
-                      }
-                    } else {
-                      if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                        PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                      } else if (callbackOnError) {
-                        let error = {};
-                        error.reason = "Get leaderboard failed";
-                        error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                        callbackOnError(error, result2);
-                      }
+              try {
+                casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result) {
+                  if (result.leaderboard) {
+                    if (callbackOnDone) {
+                      callbackOnDone(result.leaderboard);
                     }
-                  }).catch(function(result2) {
+                  } else {
                     if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                       PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
                     } else if (callbackOnError) {
                       let error = {};
                       error.reason = "Get leaderboard failed";
                       error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                      callbackOnError(error, result2);
+                      callbackOnError(error, result);
                     }
-                  });
+                  }
+                }).catch(function(result) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                    PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                  } else if (callbackOnError) {
+                    let error = {};
+                    error.reason = "Get leaderboard failed";
+                    error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                    callbackOnError(error, result);
+                  }
+                });
+              } catch (error) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                  PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                } else if (callbackOnError) {
+                  let error2 = {};
+                  error2.reason = "Get leaderboard failed";
+                  error2.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                  callbackOnError(error2, null);
+                }
+              }
+            } else {
+              PP.CAUtils.getUser(
+                function(user) {
+                  let userName = user.displayName;
+                  try {
+                    casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result) {
+                      if (result.leaderboard) {
+                        let userValid = false;
+                        for (let value of result.leaderboard) {
+                          if (value.displayName == userName && value.score != 0) {
+                            userValid = true;
+                            break;
+                          }
+                        }
+                        if (userValid) {
+                          if (callbackOnDone) {
+                            callbackOnDone(result.leaderboard);
+                          }
+                        } else {
+                          if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                            PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                          } else if (callbackOnError) {
+                            let error = {};
+                            error.reason = "Searching for around player but the user has not submitted a score yet";
+                            error.type = PP.CAUtils.ErrorType.USER_HAS_NO_SCORE;
+                            callbackOnError(error, result);
+                          }
+                        }
+                      } else {
+                        if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                          PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                        } else if (callbackOnError) {
+                          let error = {};
+                          error.reason = "Get leaderboard failed";
+                          error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                          callbackOnError(error, result);
+                        }
+                      }
+                    }).catch(function(result) {
+                      if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                        PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                      } else if (callbackOnError) {
+                        let error = {};
+                        error.reason = "Get leaderboard failed";
+                        error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                        callbackOnError(error, result);
+                      }
+                    });
+                  } catch (error) {
+                    if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                      PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+                    } else if (callbackOnError) {
+                      let error2 = {};
+                      error2.reason = "Get leaderboard failed";
+                      error2.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                      callbackOnError(error2, null);
+                    }
+                  }
                 },
                 function() {
                   if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
@@ -25381,7 +25476,7 @@
                     let error = {};
                     error.reason = "Searching for around player but the user can't be retrieved";
                     error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                    callbackOnError(error, result);
+                    callbackOnError(error, null);
                   }
                 },
                 false
@@ -25406,35 +25501,46 @@
               let error = {};
               error.reason = "Dummy server not initialized";
               error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error);
+              callbackOnError(error, null);
             }
           }
         },
         submitScore: function(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
           if (PP.CAUtils.isSDKAvailable()) {
-            casdk.submitScore(leaderboardID, scoreToSubmit).then(function(result2) {
-              if (result2.error) {
+            try {
+              casdk.submitScore(leaderboardID, scoreToSubmit).then(function(result) {
+                if (result.error) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                    PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
+                  } else if (callbackOnError) {
+                    let error = {};
+                    error.reason = "Submit score failed";
+                    error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                    callbackOnError(error, result);
+                  }
+                } else {
+                  callbackOnDone();
+                }
+              }).catch(function(result) {
                 if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                   PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
                 } else if (callbackOnError) {
                   let error = {};
                   error.reason = "Submit score failed";
                   error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                  callbackOnError(error, result2);
+                  callbackOnError(error, result);
                 }
-              } else {
-                callbackOnDone();
-              }
-            }).catch(function(result2) {
+              });
+            } catch (error) {
               if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                 PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
               } else if (callbackOnError) {
-                let error = {};
-                error.reason = "Submit score failed";
-                error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                callbackOnError(error, result2);
+                let error2 = {};
+                error2.reason = "Submit score failed";
+                error2.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                callbackOnError(error2, null);
               }
-            });
+            }
           } else {
             if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
               PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
@@ -25454,37 +25560,48 @@
               let error = {};
               error.reason = "Dummy server not initialized";
               error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error);
+              callbackOnError(error, null);
             }
           }
         },
         getUser: function(callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
           if (PP.CAUtils.isSDKAvailable()) {
-            casdk.getUser().then(function(result2) {
-              if (result2.user) {
-                if (callbackOnDone) {
-                  callbackOnDone(result2.user);
+            try {
+              casdk.getUser().then(function(result) {
+                if (result.user) {
+                  if (callbackOnDone) {
+                    callbackOnDone(result.user);
+                  }
+                } else {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
+                    PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
+                  } else if (callbackOnError) {
+                    let error = {};
+                    error.reason = "Get user failed";
+                    error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                    callbackOnError(error, result);
+                  }
                 }
-              } else {
+              }).catch(function(result) {
                 if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                   PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
                 } else if (callbackOnError) {
                   let error = {};
                   error.reason = "Get user failed";
                   error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                  callbackOnError(error, result2);
+                  callbackOnError(error, result);
                 }
-              }
-            }).catch(function(result2) {
+              });
+            } catch (error) {
               if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
                 PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
               } else if (callbackOnError) {
-                let error = {};
-                error.reason = "Get user failed";
-                error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                callbackOnError(error, result2);
+                let error2 = {};
+                error2.reason = "Get user failed";
+                error2.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                callbackOnError(error2, null);
               }
-            });
+            }
           } else {
             if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
               PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
@@ -25504,7 +25621,7 @@
               let error = {};
               error.reason = "Dummy server not initialized";
               error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error);
+              callbackOnError(error, null);
             }
           }
         },
@@ -38928,11 +39045,9 @@
                   if (Math.pp_randomInt(0, 99) == 0 && Global.myWinMazeverse) {
                     this._myPlayerLocomotion._myParams.myFlyEnabled = true;
                     this._myPlayerLocomotion._myPlayerLocomotionSmooth._myParams.myFlyEnabled = true;
-                    if (Global.myGoogleAnalytics) {
-                      gtag("event", "debug_movement_enabled", {
-                        "value": 1
-                      });
-                    }
+                    Global.sendAnalytics("event", "debug_movement_enabled", {
+                      "value": 1
+                    });
                   }
                 }
                 Global.myPlayerLocomotion = this._myPlayerLocomotion;
@@ -40839,19 +40954,15 @@
           this._myPlayerTransformManager.update(dt);
           if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressEnd(2)) {
             if (this._myLocomotionMovementFSM.isInState("smooth") && this._myPlayerLocomotionSmooth.canStop()) {
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "switch_teleport", {
-                  "value": 1
-                });
-              }
+              Global.sendAnalytics("event", "switch_teleport", {
+                "value": 1
+              });
               this._myLocomotionMovementFSM.perform("next");
             } else if (this._myLocomotionMovementFSM.isInState("teleport") && this._myPlayerLocomotionTeleport.canStop()) {
               this._myLocomotionMovementFSM.perform("next");
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "switch_smooth", {
-                  "value": 1
-                });
-              }
+              Global.sendAnalytics("event", "switch_smooth", {
+                "value": 1
+              });
             }
           }
           if (this._myPlayerHeadManager.isSynced()) {
@@ -41060,11 +41171,9 @@
                 speed = 20;
                 if (!Global.myDebugMoveUsed) {
                   Global.myDebugMoveUsed = true;
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "debug_movement_used", {
-                      "value": 1
-                    });
-                  }
+                  Global.sendAnalytics("event", "debug_movement_used", {
+                    "value": 1
+                  });
                 }
               }
               headMovement = direction.vec3_scale(speed * dt, headMovement);
@@ -41083,11 +41192,9 @@
             if (PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressed()) {
               if (!Global.myDebugFlyUsed) {
                 Global.myDebugFlyUsed = true;
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "debug_fly_used", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "debug_fly_used", {
+                  "value": 1
+                });
               }
               let speed = Math.pp_lerp(0, this._myParams.myMaxSpeed, 1);
               if (this._myParams.myFlyEnabled && PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.SELECT).isPressed()) {
@@ -41125,22 +41232,18 @@
             if (horizontalMovement && this._myLocomotionRuntimeParams.myCollisionRuntimeParams.myFixedMovement.vec3_length() > 1e-5) {
               this._myTimeMoving += dt;
               if (this._myTimeMovingStepIndex < this._myTimeMovingStep.length && this._myTimeMoving > this._myTimeMovingStep[this._myTimeMovingStepIndex] * 60) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "moving_for_" + this._myTimeMovingStep[this._myTimeMovingStepIndex] + "_minutes_" + (Global.mySessionStarted ? "vr" : "non_vr"), {
+                  "value": 1
+                });
                 this._myTimeMovingStepIndex++;
               }
               if (this._myNonVRPlayingTimer.isRunning()) {
                 this._myNonVRPlayingTimer.update(dt);
                 if (this._myNonVRPlayingTimer.isDone()) {
-                  if (Global.myGoogleAnalytics) {
-                    if (!Global.mySessionStarted) {
-                      gtag("event", "moving_non_vr", {
-                        "value": 1
-                      });
-                    }
+                  if (!Global.mySessionStarted) {
+                    Global.sendAnalytics("event", "moving_non_vr", {
+                      "value": 1
+                    });
                   }
                 }
               }
@@ -41961,7 +42064,7 @@
         _myFromAbove: { type: WL.Type.Bool, default: false }
       }, {
         init: function() {
-          Global.myGoogleAnalytics = window.gtag != null;
+          Global.myAnalyticsEnabled = true;
           Global.myFromAbove = this._myFromAbove;
         },
         start: function() {
@@ -42026,11 +42129,9 @@
             if (!this._myButtonPressed) {
               if (PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd() || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SELECT).isPressEnd() || PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressEnd()) {
                 this._myButtonPressed = true;
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "button_pressed", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "button_pressed", {
+                  "value": 1
+                });
               }
             }
           }
@@ -42038,11 +42139,9 @@
             if (PP.XRUtils.isSessionActive()) {
               this._myTimePlayingVR += dt;
               if (this._myTimePlayingVRStepIndex < this._myTimePlayingVRStep.length && this._myTimePlayingVR > this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] * 60) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "playing_for_" + this._myTimePlayingVRStep[this._myTimePlayingVRStepIndex] + "_minutes_vr", {
+                  "value": 1
+                });
                 this._myTimePlayingVRStepIndex++;
               }
             }
@@ -42059,18 +42158,14 @@
           Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup, this.object);
         },
         _onXRSessionStart() {
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "enter_vr", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "enter_vr", {
+            "value": 1
+          });
           let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
           if (isFirstEnterVR) {
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "enter_vr_first_time", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "enter_vr_first_time", {
+              "value": 1
+            });
           }
           Global.mySaveManager.save("is_first_enter_vr", false, false);
           Global.mySessionStarted = true;
@@ -42089,9 +42184,20 @@
         myFruits: [],
         myAxeProto: null,
         myFollowAxe: null,
-        myFromAbove: false
+        myFromAbove: false,
+        myAnalyticsEnabled: false
       };
       Global.mySessionStarted = false;
+      Global.sendAnalytics = function sendAnalytics(...args) {
+        try {
+          if (Global.myAnalyticsEnabled) {
+            if (window.gtag != null) {
+              window.gtag(...args);
+            }
+          }
+        } catch (error) {
+        }
+      };
       LR = {};
     }
   });
@@ -42187,38 +42293,30 @@
             this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {
               this._myGridToUse = mazeSetup.myGrid;
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "mazeverse_maze_failed", {
-                  "value": 1
-                });
-              }
+              Global.sendAnalytics("event", "mazeverse_maze_failed", {
+                "value": 1
+              });
             } else {
               Global.myIsMazeverseTime = true;
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "is_mazeverse_maze", {
+              Global.sendAnalytics("event", "is_mazeverse_maze", {
+                "value": 1
+              });
+              if (!Global.myWinMazeverse) {
+                Global.sendAnalytics("event", "is_mazeverse_maze_no_win", {
                   "value": 1
                 });
-                if (!Global.myWinMazeverse) {
-                  gtag("event", "is_mazeverse_maze_no_win", {
-                    "value": 1
-                  });
-                }
               }
             }
           } else if (isWedding) {
             this._myGridToUse = mazeSetup.mySecretGrid;
             Global.myIsWeddingTime = true;
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "is_wedding_maze", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "is_wedding_maze", {
+              "value": 1
+            });
           } else {
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "is_normal_maze", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "is_normal_maze", {
+              "value": 1
+            });
           }
           this._myTopLeftPosition = this.computeTopLeftPosition(mazeSetup);
           let grid = this._myGridToUse;
@@ -43759,37 +43857,27 @@
             if (this._myPhysXResetCompleted) {
               if (this._myTimer.isDone() || this._myCanSkip && this._myTimer2.isDone() && this._mySkip) {
                 if (this._mySkip && this._myTimer2.isDone() && this._myCanSkip) {
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "intro_skipped", {
+                  Global.sendAnalytics("event", "intro_skipped", {
+                    "value": 1
+                  });
+                  if (this._myTimerSkipFirstTime.isDone()) {
+                    Global.sendAnalytics("event", "intro_skipped_late", {
                       "value": 1
                     });
-                  }
-                  if (this._myTimerSkipFirstTime.isDone()) {
-                    if (Global.myGoogleAnalytics) {
-                      gtag("event", "intro_skipped_late", {
-                        "value": 1
-                      });
-                    }
                   }
                 } else {
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "intro_watched", {
-                      "value": 1
-                    });
-                  }
-                }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "intro_done", {
+                  Global.sendAnalytics("event", "intro_watched", {
                     "value": 1
                   });
                 }
+                Global.sendAnalytics("event", "intro_done", {
+                  "value": 1
+                });
                 PP.CAUtils.getUser(function(user) {
                   if (user != null && user.displayName != null && user.displayName.length != null && user.displayName.length > 0) {
-                    if (Global.myGoogleAnalytics) {
-                      gtag("event", "playing_signed_in", {
-                        "value": 1
-                      });
-                    }
+                    Global.sendAnalytics("event", "playing_signed_in", {
+                      "value": 1
+                    });
                   }
                 }, null, false);
                 this._myTimer.reset();
@@ -44099,28 +44187,17 @@
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              if (WL.xrSession) {
-                WL.xrSession.end();
-              }
               let onSuccess = function() {
-                if (WL.xrSession) {
-                  WL.xrSession.end();
-                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "open_ggj_success", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "open_ggj_success", {
+                  "value": 1
+                });
               }.bind(this);
-              let onError = function() {
-                this._myChange = 10;
-              }.bind(this);
-              Global.windowOpen("https://globalgamejam.org/2023/games/labyroots-4", onSuccess, onError);
+              PP.XRUtils.openLink("https://globalgamejam.org/2023/games/labyroots-4", true, true, true, true, onSuccess);
             }
           }
         },
@@ -44134,11 +44211,9 @@
         open() {
           this._myEnd = 90;
           this._myChange = 1;
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "open_ggj", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "open_ggj", {
+            "value": 1
+          });
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -44175,28 +44250,17 @@
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              if (WL.xrSession) {
-                WL.xrSession.end();
-              }
               let onSuccess = function() {
-                if (WL.xrSession) {
-                  WL.xrSession.end();
-                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "open_github_success", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "open_github_success", {
+                  "value": 1
+                });
               }.bind(this);
-              let onError = function() {
-                this._myChange = 10;
-              }.bind(this);
-              Global.windowOpen("https://github.com/SignorPipo/labyroots", onSuccess, onError);
+              PP.XRUtils.openLink("https://github.com/SignorPipo/labyroots", true, true, true, true, onSuccess);
             }
           }
         },
@@ -44210,11 +44274,9 @@
         open() {
           this._myEnd = 60;
           this._myChange = 1;
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "open_github", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "open_github", {
+            "value": 1
+          });
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
@@ -44265,53 +44327,46 @@
         open() {
           this._myEnd = 90;
           this._myChange = 1;
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "open_zesty", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "open_zesty", {
+            "value": 1
+          });
         },
         pp_clone(targetObject) {
           let clonedComponent = targetObject.pp_addComponent(this.type);
           clonedComponent.active = this.active;
           return clonedComponent;
         },
-        result(result2) {
+        result(result) {
         },
         openZestyUrl() {
-          let zesty = WL.scene.pp_getComponent("zesty-banner");
-          if (zesty != null) {
-            if (WL.xrSession) {
-              WL.xrSession.end();
-            }
-            Global.myZestyComponent = zesty;
-            let onSuccess = function() {
-              if (WL.xrSession) {
-                WL.xrSession.end();
-              }
-              Global.myUnmute = true;
-              Howler.mute(true);
-              if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
-                Global.myAxe._myGrabbable.release();
-              }
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "open_zesty_success", {
+          try {
+            let zesty = WL.scene.pp_getComponent("zesty-banner");
+            if (zesty != null) {
+              Global.myZestyComponent = zesty;
+              let onSuccess = function() {
+                Global.myUnmute = true;
+                Howler.mute(true);
+                if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
+                  Global.myAxe._myGrabbable.release();
+                }
+                Global.sendAnalytics("event", "open_zesty_success", {
                   "value": 1
                 });
-              }
-            }.bind(this);
-            let onError = function() {
-              this._myChange = 10;
-            }.bind(this);
-            if (zesty.banner != null) {
-              let onZestySuccess = function() {
-                onSuccess();
-                zesty.executeClick();
               }.bind(this);
-              Global.windowOpen(zesty.banner.url, onZestySuccess, onError);
-            } else {
-              Global.windowOpen("https://www.zesty.market", onSuccess, onError);
+              if (zesty.banner != null && zesty.banner.url != null) {
+                let onZestySuccess = function() {
+                  onSuccess();
+                  try {
+                    zesty.executeClick();
+                  } catch (error) {
+                  }
+                }.bind(this);
+                PP.XRUtils.openLink(zesty.banner.url, true, true, true, true, onZestySuccess);
+              } else {
+                PP.XRUtils.openLink("https://www.zesty.market", true, true, true, true, onSuccess);
+              }
             }
+          } catch (error) {
           }
         }
       });
@@ -45205,11 +45260,9 @@
                   let setMesh = this._myToSet.pp_getComponent("mesh");
                   if (setMesh && setMesh.material.diffuseTexture._id == 0 && WL.scene.pp_getComponent("zesty-banner").banner == null) {
                     setMesh.material.diffuseTexture = myMesh.material.diffuseTexture;
-                    if (Global.myGoogleAnalytics) {
-                      gtag("event", "zesty_load_fail", {
-                        "value": 1
-                      });
-                    }
+                    Global.sendAnalytics("event", "zesty_load_fail", {
+                      "value": 1
+                    });
                   }
                 }
               }
@@ -45244,11 +45297,9 @@
                 let distanceFromPlayer = Global.myPlayer.getPosition(this._myPosition).vec3_removeComponentAlongAxis(this._myUp, this._myPosition).vec3_distance(this._myCell.myCellPosition.vec3_removeComponentAlongAxis(this._myUp));
                 if (distanceFromPlayer <= this._myCell.myCellSize) {
                   this._myReached = true;
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "enter_secret_zone", {
-                      "value": 1
-                    });
-                  }
+                  Global.sendAnalytics("event", "enter_secret_zone", {
+                    "value": 1
+                  });
                 }
               }
             }
@@ -45649,210 +45700,208 @@
           if (!this._myStarted) {
             if (Global.myReady) {
               this._myStarted = true;
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "button_pressed", {
+              Global.sendAnalytics("event", "button_pressed", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "enter_vr", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_ggj_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_ggj", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_github_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_github", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_zesty", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "open_zesty_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "enter_secret_zone", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "zesty_load_fail", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "intro_skipped", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "intro_watched", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "playing_signed_in", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "is_wedding_maze", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "is_mazeverse_maze", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "is_normal_maze", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "collect_axe", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "collect_axe_after_death", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "collect_axe_before_death", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_wedding_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_human_tree_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_human_tree", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_wedding", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_mazeverse", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "secret_code_mazeverse_success", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "death", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "survive_for_seconds", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "survive_bear_grills", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "survive_a_lot", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "survive_more", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_mother_tree", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_mother_tree_seconds", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "collect_fruit", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "eat_fruit", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "eat_fruit_perfect", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "eat_fruit_good", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "eat_fruit_evil", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "eat_fruit_bad", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_human_tree", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_bride_tree", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_root_wall", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_root", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "switch_teleport", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "switch_smooth", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "moving_non_vr", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "audio_load_error", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_root_axe_spawn", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_root_normal", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "mother_tree_hit_invincible", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "mother_tree_hit", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "root_hit_normal", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "root_hit_axe_spawn", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "root_hit", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "intro_done", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "enter_vr_first_time", {
+                "value": 1
+              });
+              let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
+              for (let timeMovingStep of timeMovingSteps) {
+                Global.sendAnalytics("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
                   "value": 1
                 });
-                gtag("event", "enter_vr", {
+                Global.sendAnalytics("event", "moving_for_" + timeMovingStep + "_minutes_vr", {
                   "value": 1
                 });
-                gtag("event", "open_ggj_success", {
+                Global.sendAnalytics("event", "moving_for_" + timeMovingStep + "_minutes_non_vr", {
                   "value": 1
                 });
-                gtag("event", "open_ggj", {
+              }
+              let timeGrabbedSteps = [5, 10, 15, 30];
+              for (let timeGrabbedStep of timeGrabbedSteps) {
+                Global.sendAnalytics("event", "fruit_grab_for_" + timeGrabbedStep + "_seconds", {
                   "value": 1
                 });
-                gtag("event", "open_github_success", {
+              }
+              for (let i = 0; i <= 4; i++) {
+                Global.sendAnalytics("event", "root_hit_normal_" + i, {
                   "value": 1
                 });
-                gtag("event", "open_github", {
+                Global.sendAnalytics("event", "root_hit_axe_spawn_" + i, {
                   "value": 1
                 });
-                gtag("event", "open_zesty", {
+                Global.sendAnalytics("event", "root_hit_" + i, {
                   "value": 1
                 });
-                gtag("event", "open_zesty_success", {
+                Global.sendAnalytics("event", "defeat_root_axe_spawn_" + i, {
                   "value": 1
                 });
-                gtag("event", "enter_secret_zone", {
+                Global.sendAnalytics("event", "defeat_root_normal_" + i, {
                   "value": 1
                 });
-                gtag("event", "zesty_load_fail", {
+                Global.sendAnalytics("event", "defeat_root_" + i, {
                   "value": 1
                 });
-                gtag("event", "intro_skipped", {
-                  "value": 1
-                });
-                gtag("event", "intro_watched", {
-                  "value": 1
-                });
-                gtag("event", "playing_signed_in", {
-                  "value": 1
-                });
-                gtag("event", "is_wedding_maze", {
-                  "value": 1
-                });
-                gtag("event", "is_mazeverse_maze", {
-                  "value": 1
-                });
-                gtag("event", "is_normal_maze", {
-                  "value": 1
-                });
-                gtag("event", "collect_axe", {
-                  "value": 1
-                });
-                gtag("event", "collect_axe_after_death", {
-                  "value": 1
-                });
-                gtag("event", "collect_axe_before_death", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_wedding_success", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_human_tree_success", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_human_tree", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_wedding", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_mazeverse", {
-                  "value": 1
-                });
-                gtag("event", "secret_code_mazeverse_success", {
-                  "value": 1
-                });
-                gtag("event", "death", {
-                  "value": 1
-                });
-                gtag("event", "survive_for_seconds", {
-                  "value": 1
-                });
-                gtag("event", "survive_bear_grills", {
-                  "value": 1
-                });
-                gtag("event", "survive_a_lot", {
-                  "value": 1
-                });
-                gtag("event", "survive_more", {
-                  "value": 1
-                });
-                gtag("event", "defeat_mother_tree", {
-                  "value": 1
-                });
-                gtag("event", "defeat_mother_tree_seconds", {
-                  "value": 1
-                });
-                gtag("event", "collect_fruit", {
-                  "value": 1
-                });
-                gtag("event", "eat_fruit", {
-                  "value": 1
-                });
-                gtag("event", "eat_fruit_perfect", {
-                  "value": 1
-                });
-                gtag("event", "eat_fruit_good", {
-                  "value": 1
-                });
-                gtag("event", "eat_fruit_evil", {
-                  "value": 1
-                });
-                gtag("event", "eat_fruit_bad", {
-                  "value": 1
-                });
-                gtag("event", "defeat_human_tree", {
-                  "value": 1
-                });
-                gtag("event", "defeat_bride_tree", {
-                  "value": 1
-                });
-                gtag("event", "defeat_root_wall", {
-                  "value": 1
-                });
-                gtag("event", "defeat_root", {
-                  "value": 1
-                });
-                gtag("event", "switch_teleport", {
-                  "value": 1
-                });
-                gtag("event", "switch_smooth", {
-                  "value": 1
-                });
-                gtag("event", "moving_non_vr", {
-                  "value": 1
-                });
-                gtag("event", "audio_load_error", {
-                  "value": 1
-                });
-                gtag("event", "defeat_root_axe_spawn", {
-                  "value": 1
-                });
-                gtag("event", "defeat_root_normal", {
-                  "value": 1
-                });
-                gtag("event", "mother_tree_hit_invincible", {
-                  "value": 1
-                });
-                gtag("event", "mother_tree_hit", {
-                  "value": 1
-                });
-                gtag("event", "root_hit_normal", {
-                  "value": 1
-                });
-                gtag("event", "root_hit_axe_spawn", {
-                  "value": 1
-                });
-                gtag("event", "root_hit", {
-                  "value": 1
-                });
-                gtag("event", "intro_done", {
-                  "value": 1
-                });
-                gtag("event", "enter_vr_first_time", {
-                  "value": 1
-                });
-                let timeMovingSteps = [1, 2, 3, 5, 10, 20, 30, 60];
-                for (let timeMovingStep of timeMovingSteps) {
-                  gtag("event", "playing_for_" + timeMovingStep + "_minutes_vr", {
-                    "value": 1
-                  });
-                  gtag("event", "moving_for_" + timeMovingStep + "_minutes_vr", {
-                    "value": 1
-                  });
-                  gtag("event", "moving_for_" + timeMovingStep + "_minutes_non_vr", {
-                    "value": 1
-                  });
-                }
-                let timeGrabbedSteps = [5, 10, 15, 30];
-                for (let timeGrabbedStep of timeGrabbedSteps) {
-                  gtag("event", "fruit_grab_for_" + timeGrabbedStep + "_seconds", {
-                    "value": 1
-                  });
-                }
-                for (let i = 0; i <= 4; i++) {
-                  gtag("event", "root_hit_normal_" + i, {
-                    "value": 1
-                  });
-                  gtag("event", "root_hit_axe_spawn_" + i, {
-                    "value": 1
-                  });
-                  gtag("event", "root_hit_" + i, {
-                    "value": 1
-                  });
-                  gtag("event", "defeat_root_axe_spawn_" + i, {
-                    "value": 1
-                  });
-                  gtag("event", "defeat_root_normal_" + i, {
-                    "value": 1
-                  });
-                  gtag("event", "defeat_root_" + i, {
-                    "value": 1
-                  });
-                }
               }
             }
           }
@@ -45928,11 +45977,9 @@
             if (this._myGrabbable != null) {
               if (this._myGrabbable.isGrabbed()) {
                 if (!this._myGathered) {
-                  if (Global.myGoogleAnalytics) {
-                    gtag("event", "collect_wondermelon", {
-                      "value": 1
-                    });
-                  }
+                  Global.sendAnalytics("event", "collect_wondermelon", {
+                    "value": 1
+                  });
                 }
                 this._myGathered = true;
                 this._myIsGrabbed = true;
@@ -45969,11 +46016,9 @@
           if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
             this._myEnd = 90;
             this._myChange = 1;
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "open_wondermelon", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "open_wondermelon", {
+              "value": 1
+            });
             this._myUsed = true;
             this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
             this._myAudioMangia.play();
@@ -45995,29 +46040,18 @@
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              if (WL.xrSession) {
-                WL.xrSession.end();
-              }
               let onSuccess = function() {
-                if (WL.xrSession) {
-                  WL.xrSession.end();
-                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "open_wondermelon_success", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "open_wondermelon_success", {
+                  "value": 1
+                });
                 this.active = false;
               }.bind(this);
-              let onError = function() {
-                this._myChange = 10;
-              }.bind(this);
-              Global.windowOpen("https://signor-pipo.itch.io", onSuccess, onError);
+              PP.XRUtils.openLink("https://signor-pipo.itch.io", true, true, true, true, onSuccess);
             }
           }
         }
@@ -46181,18 +46215,14 @@
                 this._myAudioPrendi.setPosition(this._myLastFreeCell.myCellPosition.vec3_add([0, 1, 0]));
                 this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
                 this._myAudioPrendi.play();
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "secret_code_human_tree_success", {
-                    "value": 1
-                  });
-                }
-              }
-              this._myLastFreeCell = oldLast;
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "secret_code_human_tree", {
+                Global.sendAnalytics("event", "secret_code_human_tree_success", {
                   "value": 1
                 });
               }
+              this._myLastFreeCell = oldLast;
+              Global.sendAnalytics("event", "secret_code_human_tree", {
+                "value": 1
+              });
             }
           }
         },
@@ -46292,28 +46322,24 @@
           let currentStageTotalTime = this._myIsFirstLive ? this._myFirstStageTotalTime : this._myStageTotalTime;
           Global.myDeadOnce = true;
           this._myIsFirstLive = false;
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "death", {
+          Global.sendAnalytics("event", "death", {
+            "value": 1
+          });
+          Global.sendAnalytics("event", "survive_for_seconds", {
+            "value": Math.round(this._myTimeAlive)
+          });
+          if (this._myTimeAlive > currentStageTotalTime * 3) {
+            Global.sendAnalytics("event", "survive_bear_grills", {
               "value": 1
             });
-          }
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "survive_for_seconds", {
-              "value": Math.round(this._myTimeAlive)
+          } else if (this._myTimeAlive > currentStageTotalTime * 2) {
+            Global.sendAnalytics("event", "survive_a_lot", {
+              "value": 1
             });
-            if (this._myTimeAlive > currentStageTotalTime * 3) {
-              gtag("event", "survive_bear_grills", {
-                "value": 1
-              });
-            } else if (this._myTimeAlive > currentStageTotalTime * 2) {
-              gtag("event", "survive_a_lot", {
-                "value": 1
-              });
-            } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
-              gtag("event", "survive_more", {
-                "value": 1
-              });
-            }
+          } else if (this._myTimeAlive > currentStageTotalTime * 1.1) {
+            Global.sendAnalytics("event", "survive_more", {
+              "value": 1
+            });
           }
           this._myTimeAlive = 0;
           this._spawnTree();
@@ -46420,9 +46446,6 @@
           if (this._myEnd == 0 && this._myChange > 0) {
             this._myChange--;
             if (this._myChange == 0) {
-              if (WL.xrSession) {
-                WL.xrSession.end();
-              }
               let url = window.location.origin;
               if (window.location != window.parent.location) {
                 url = "https://heyvr.io/game/labyroots";
@@ -46444,43 +46467,33 @@
                 }
               }
               let onSuccess = function() {
-                if (WL.xrSession) {
-                  WL.xrSession.end();
-                }
                 Global.myUnmute = true;
                 Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
-                if (Global.myGoogleAnalytics) {
-                  if (this._myIsWedding) {
-                    gtag("event", "secret_code_wedding_success", {
-                      "value": 1
-                    });
-                  } else if (this._myIsMazeverse) {
-                    gtag("event", "secret_code_mazeverse_success", {
-                      "value": 1
-                    });
-                  }
+                if (this._myIsWedding) {
+                  Global.sendAnalytics("event", "secret_code_wedding_success", {
+                    "value": 1
+                  });
+                } else if (this._myIsMazeverse) {
+                  Global.sendAnalytics("event", "secret_code_mazeverse_success", {
+                    "value": 1
+                  });
                 }
                 this._myIsWedding = false;
                 this._myIsMazeverse = false;
               }.bind(this);
-              let onError = function() {
-                this._myChange = 10;
-              }.bind(this);
-              Global.windowOpen(url, onSuccess, onError);
+              PP.XRUtils.openLink(url, true, true, true, true, onSuccess);
             }
           }
           if (this._myChange == 0 && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (this._myMazeverseTimer.isRunning()) {
               this._myMazeverseTimer.update(dt);
               if (this._myMazeverseTimer.isDone()) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "secret_code_mazeverse", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "secret_code_mazeverse", {
+                  "value": 1
+                });
                 Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
                 this._myEnd = 1;
                 this._myChange = 1;
@@ -46495,11 +46508,9 @@
             if (this._myWeddingTimer.isRunning()) {
               this._myWeddingTimer.update(dt);
               if (this._myWeddingTimer.isDone()) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "secret_code_wedding", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "secret_code_wedding", {
+                  "value": 1
+                });
                 Global.mySaveManager.save("is_wedding", true, false);
                 this._myEnd = 1;
                 this._myChange = 1;
@@ -46517,16 +46528,21 @@
       Global.myDeadOnce = false;
       Global.myWindowOpenResult = false;
       Global.windowOpen = function(urlString, successCallback, errorCallback) {
-        let result2 = true;
+        let result = true;
         let element = document.createElement("a");
         element.style.display = "none";
         document.body.appendChild(element);
         element.addEventListener("click", function() {
-          let result3 = window.open(urlString, "_blank");
-          if (result3 != null) {
+          let result2 = window.open(urlString, "_blank");
+          if (result2 != null) {
             if (successCallback != null) {
               successCallback();
             }
+            setTimeout(function() {
+              if (WL.xrSession) {
+                WL.xrSession.end();
+              }
+            }, 500);
           } else {
             if (errorCallback != null) {
               errorCallback();
@@ -46535,7 +46551,7 @@
         });
         element.click();
         document.body.removeChild(element);
-        return result2;
+        return result;
       };
       Global.myDebugMoveUsed = false;
       Global.myDebugFlyUsed = false;
@@ -46758,19 +46774,17 @@
           if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
               if (!this._myCollected) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "collect_axe", {
+                Global.sendAnalytics("event", "collect_axe", {
+                  "value": 1
+                });
+                if (Global.myDeadOnce) {
+                  Global.sendAnalytics("event", "collect_axe_after_death", {
                     "value": 1
                   });
-                  if (Global.myDeadOnce) {
-                    gtag("event", "collect_axe_after_death", {
-                      "value": 1
-                    });
-                  } else {
-                    gtag("event", "collect_axe_before_death", {
-                      "value": 1
-                    });
-                  }
+                } else {
+                  Global.sendAnalytics("event", "collect_axe_before_death", {
+                    "value": 1
+                  });
                 }
               }
               this._myCollected = true;
@@ -47066,21 +47080,17 @@
           if (this._myGrabbable != null) {
             if (this._myGrabbable.isGrabbed()) {
               if (!this._myGathered) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "collect_fruit", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "collect_fruit", {
+                  "value": 1
+                });
               }
               this._myGathered = true;
               this._myIsGrabbed = true;
               this._myTimeGrabbed += dt;
               if (this._myTimeGrabbedStepIndex < this._myTimeGrabbedStep.length && this._myTimeGrabbed > this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex]) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "fruit_grab_for_" + this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex] + "_seconds", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "fruit_grab_for_" + this._myTimeGrabbedStep[this._myTimeGrabbedStepIndex] + "_seconds", {
+                  "value": 1
+                });
                 this._myTimeGrabbedStepIndex++;
               }
             } else {
@@ -47101,11 +47111,9 @@
         },
         activateEffect() {
           if (!this._myUsed && this._myGrabbable != null && this._myGrabbable.isGrabbed()) {
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "eat_fruit", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "eat_fruit", {
+              "value": 1
+            });
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
             this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
@@ -47116,33 +47124,25 @@
       Global.myFruitRandomPowers = [];
       decreaseStage = function(full) {
         if (full) {
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_perfect", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "eat_fruit_perfect", {
+            "value": 1
+          });
         } else {
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_good", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "eat_fruit_good", {
+            "value": 1
+          });
         }
         Global.myTransformation.removeStage(full);
       };
       increaseStage = function(full) {
         if (full) {
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_evil", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "eat_fruit_evil", {
+            "value": 1
+          });
         } else {
-          if (Global.myGoogleAnalytics) {
-            gtag("event", "eat_fruit_bad", {
-              "value": 1
-            });
-          }
+          Global.sendAnalytics("event", "eat_fruit_bad", {
+            "value": 1
+          });
         }
         Global.myTransformation.addStage(full);
       };
@@ -47207,54 +47207,50 @@
               if (tree) {
                 tree.rootDie();
               }
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "defeat_root", {
+              Global.sendAnalytics("event", "defeat_root", {
+                "value": 1
+              });
+              Global.sendAnalytics("event", "defeat_root_" + Global.myRootsDefeated, {
+                "value": 1
+              });
+              if (this._myAxeSpawnRoot) {
+                Global.sendAnalytics("event", "defeat_root_axe_spawn", {
                   "value": 1
                 });
-                gtag("event", "defeat_root_" + Global.myRootsDefeated, {
+                Global.sendAnalytics("event", "defeat_root_axe_spawn_" + Global.myRootsDefeated, {
                   "value": 1
                 });
-                if (this._myAxeSpawnRoot) {
-                  gtag("event", "defeat_root_axe_spawn", {
-                    "value": 1
-                  });
-                  gtag("event", "defeat_root_axe_spawn_" + Global.myRootsDefeated, {
-                    "value": 1
-                  });
-                } else {
-                  gtag("event", "defeat_root_normal", {
-                    "value": 1
-                  });
-                  gtag("event", "defeat_root_normal_" + Global.myRootsDefeated, {
-                    "value": 1
-                  });
-                }
+              } else {
+                Global.sendAnalytics("event", "defeat_root_normal", {
+                  "value": 1
+                });
+                Global.sendAnalytics("event", "defeat_root_normal_" + Global.myRootsDefeated, {
+                  "value": 1
+                });
               }
             } else {
               this._myPhases[1].pp_setActive(true);
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "root_hit", {
+              Global.sendAnalytics("event", "root_hit", {
+                "value": 1
+              });
+              let rootHit = Global.myRootsDefeated + 1;
+              Global.sendAnalytics("event", "root_hit_" + rootHit, {
+                "value": 1
+              });
+              if (this._myAxeSpawnRoot) {
+                Global.sendAnalytics("event", "root_hit_axe_spawn", {
                   "value": 1
                 });
-                let rootHit = Global.myRootsDefeated + 1;
-                gtag("event", "root_hit_" + rootHit, {
+                Global.sendAnalytics("event", "root_hit_axe_spawn_" + rootHit, {
                   "value": 1
                 });
-                if (this._myAxeSpawnRoot) {
-                  gtag("event", "root_hit_axe_spawn", {
-                    "value": 1
-                  });
-                  gtag("event", "root_hit_axe_spawn_" + rootHit, {
-                    "value": 1
-                  });
-                } else {
-                  gtag("event", "root_hit_normal", {
-                    "value": 1
-                  });
-                  gtag("event", "root_hit_normal_" + rootHit, {
-                    "value": 1
-                  });
-                }
+              } else {
+                Global.sendAnalytics("event", "root_hit_normal", {
+                  "value": 1
+                });
+                Global.sendAnalytics("event", "root_hit_normal_" + rootHit, {
+                  "value": 1
+                });
               }
             }
           }
@@ -47296,11 +47292,9 @@
             this._myHit--;
             hitted = true;
             if (this._myHit == 0) {
-              if (Global.myGoogleAnalytics) {
-                gtag("event", "defeat_root_wall", {
-                  "value": 1
-                });
-              }
+              Global.sendAnalytics("event", "defeat_root_wall", {
+                "value": 1
+              });
             }
           }
           return hitted;
@@ -47408,32 +47402,26 @@
                 } else {
                   Global.mySaveManager.save("win_normal_maze", true, false);
                 }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "defeat_mother_tree", {
+                Global.sendAnalytics("event", "defeat_mother_tree", {
+                  "value": 1
+                });
+                if (Global.myIsMazeverseTime) {
+                  Global.sendAnalytics("event", "defeat_mother_tree_mazeverse", {
                     "value": 1
                   });
-                }
-                if (Global.myGoogleAnalytics) {
-                  if (Global.myIsMazeverseTime) {
-                    gtag("event", "defeat_mother_tree_mazeverse", {
-                      "value": 1
-                    });
-                    if (!Global.myWinMazeverse) {
-                      gtag("event", "defeat_mother_tree_mazeverse_first_time", {
-                        "value": 1
-                      });
-                    }
-                  } else {
-                    gtag("event", "defeat_mother_tree_normal", {
+                  if (!Global.myWinMazeverse) {
+                    Global.sendAnalytics("event", "defeat_mother_tree_mazeverse_first_time", {
                       "value": 1
                     });
                   }
-                }
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "defeat_mother_tree_seconds", {
-                    "value": Math.round(this._myTimeToWin)
+                } else {
+                  Global.sendAnalytics("event", "defeat_mother_tree_normal", {
+                    "value": 1
                   });
                 }
+                Global.sendAnalytics("event", "defeat_mother_tree_seconds", {
+                  "value": Math.round(this._myTimeToWin)
+                });
                 if (!Global.myIsMazeverseTime) {
                   let score = Math.floor(this._myTimeToWin * 1e3);
                   PP.CAUtils.submitScore("labyroots", score, function() {
@@ -47444,19 +47432,15 @@
                   });
                 }
               } else {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "mother_tree_hit", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "mother_tree_hit", {
+                  "value": 1
+                });
               }
             }
           } else {
-            if (Global.myGoogleAnalytics) {
-              gtag("event", "mother_tree_hit_invincible", {
-                "value": 1
-              });
-            }
+            Global.sendAnalytics("event", "mother_tree_hit_invincible", {
+              "value": 1
+            });
           }
           return hitted;
         },
@@ -47540,33 +47524,25 @@
             hitted = true;
             if (this._myHit == 0) {
               if (this._myType != 90) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "defeat_human_tree", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "defeat_human_tree", {
+                  "value": 1
+                });
               } else {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "defeat_bride_tree", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "defeat_bride_tree", {
+                  "value": 1
+                });
                 Global.myBigTreeDead = true;
                 Global.myStage = 0;
               }
             } else {
               if (this._myType != 90) {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "human_tree_hit", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "human_tree_hit", {
+                  "value": 1
+                });
               } else {
-                if (Global.myGoogleAnalytics) {
-                  gtag("event", "bride_tree_hit", {
-                    "value": 1
-                  });
-                }
+                Global.sendAnalytics("event", "bride_tree_hit", {
+                  "value": 1
+                });
               }
             }
           }

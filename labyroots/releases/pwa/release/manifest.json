@@ -4,7 +4,7 @@
 	"description": "The mother of all trees must succumb.",
 	"lang": "en-US",
 	"display": "standalone",
-	"ovr_package_name": "com.i_polaretti.labyroots",
+	"ovr_package_name": "com.ipolaretti.labyroots",
 	"start_url": "https://labyroots.netlify.app/",
 	"scope": "./",
 	"focusaware": true,
