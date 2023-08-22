@@ -1,3 +1,5 @@
+import { Howler } from "howler";
+
 PP.AudioUtils = {
     isAudioPlaybackBlocked: function () {
         let isBlocked = false;

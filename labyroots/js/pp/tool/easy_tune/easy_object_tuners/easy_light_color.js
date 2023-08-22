@@ -73,7 +73,6 @@ PP.EasyLightColor = class EasyLightColor extends PP.EasyObjectTuner {
             light.color[0] = color[0];
             light.color[1] = color[1];
             light.color[2] = color[2];
-            light.color[3] = light.color[3];
         }
 
         if ((PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressStart() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myIsPressed) ||

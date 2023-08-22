@@ -279,7 +279,7 @@ PP.CharacterColliderUtils.createCharacterColliderSetupSimplified = function (sim
 
         let fps = 90;
         if (simplifiedCreationParams.myAverageSpeed / fps > simplifiedCreationParams.myRadius) {
-            outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementEnabled = other.mySplitMovementEnabled;
+            outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementEnabled = true;
 
             outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementMaxSteps = Math.ceil((simplifiedCreationParams.myAverageSpeed / fps) / simplifiedCreationParams.myRadius);
             outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementMinStepLength = simplifiedCreationParams.myRadius;

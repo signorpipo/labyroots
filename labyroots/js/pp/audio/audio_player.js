@@ -1,4 +1,4 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from "howler";
 
 PP.AudioEvent = {
     END: "end",
@@ -21,7 +21,7 @@ PP.AudioPlayer = class AudioPlayer {
         if (audioSetupOrAudioFilePath == null) {
             this._myAudioSetup = new PP.AudioSetup();
         } else if (typeof audioSetupOrAudioFilePath === 'string') {
-            this._myAudioSetup = new PP.AudioSetup(audioSetupOrAudioFile);
+            this._myAudioSetup = new PP.AudioSetup(audioSetupOrAudioFilePath);
         } else {
             this._myAudioSetup = audioSetupOrAudioFilePath.clone();
         }

@@ -71,7 +71,7 @@ PP.DebugVisualManager.prototype.drawLineEnd = function () {
     let direction = PP.vec3_create();
     return function drawLineEnd(lifetimeSeconds, start, end, color = PP.vec4_create(0, 1, 0, 1), thickness = 0.005) {
         direction = end.vec3_sub(start, direction);
-        length = direction.vec3_length();
+        let length = direction.vec3_length();
         direction.vec3_normalize(direction);
         this.drawLine(lifetimeSeconds, start, direction, length, color, thickness);
     };
@@ -81,7 +81,7 @@ PP.DebugVisualManager.prototype.drawArrowEnd = function () {
     let direction = PP.vec3_create();
     return function drawArrowEnd(lifetimeSeconds, start, end, color = PP.vec4_create(0, 1, 0, 1), thickness = 0.005) {
         direction = end.vec3_sub(start, direction);
-        length = direction.vec3_length();
+        let length = direction.vec3_length();
         direction.vec3_normalize(direction);
         this.drawArrow(lifetimeSeconds, start, direction, length, color, thickness);
     };

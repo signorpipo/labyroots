@@ -125,9 +125,9 @@ PP.PhysicsCollisionCollector = class PhysicsCollisionCollector {
 
     _onCollision(type, physXComponent) {
         if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
-            this._onCollisionStart(physXComponent);
+            this._onCollisionStart(type, physXComponent);
         } else if (type == WL.CollisionEventType.TouchLost || type == WL.CollisionEventType.TriggerTouchLost) {
-            this._onCollisionEnd(physXComponent);
+            this._onCollisionEnd(type, physXComponent);
         }
 
         if (this._myCollisionCallbacks.size > 0) {
@@ -135,7 +135,7 @@ PP.PhysicsCollisionCollector = class PhysicsCollisionCollector {
         }
     }
 
-    _onCollisionStart(physXComponent) {
+    _onCollisionStart(type, physXComponent) {
         if (this._myDebugActive) {
             let objectFound = false;
             for (let object of this._myCollisions) {
@@ -168,7 +168,7 @@ PP.PhysicsCollisionCollector = class PhysicsCollisionCollector {
         }
     }
 
-    _onCollisionEnd(physXComponent) {
+    _onCollisionEnd(type, physXComponent) {
         if (this._myDebugActive) {
             let objectFound = false;
             for (let object of this._myCollisions) {
@@ -220,7 +220,7 @@ PP.PhysicsCollisionCollector = class PhysicsCollisionCollector {
                 for (let collision of collisionsToEnd) {
                     let physX = collision.pp_getComponentSelf("physx");
                     if (physX) {
-                        this._onCollisionEnd(physX);
+                        this._onCollisionEnd(WL.CollisionEventType.TriggerTouchLost, physX);
                     } else {
                         console.error("NO PHYSX, HOW?");
                     }

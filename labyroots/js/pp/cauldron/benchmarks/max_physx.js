@@ -130,7 +130,7 @@ WL.registerComponent('pp-benchmark-max-physx', {
             this._myTranslateVec3.vec3_set(Math.pp_random(-strength, strength), Math.pp_random(-strength, strength), Math.pp_random(-strength, strength));
             physX.pp_translate(this._myTranslateVec3);
 
-            rotateStrength = 50 * dt;
+            let rotateStrength = 50 * dt;
             this._myRotateVec3.vec3_set(Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength));
             physX.pp_rotate(this._myRotateVec3);
         }

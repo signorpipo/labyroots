@@ -19,8 +19,7 @@ WL.registerComponent("pp-easy-transform", {
             "_myVariableName": this._myVariableName,
             "_mySetAsDefault": this._mySetAsDefault,
             "_myUseTuneTarget": this._myUseTuneTarget,
-            "_myIsLocal": this._myIsLocal,
-            "_myUseTuneTarget": this._myUseTuneTarget,
+            "_myIsLocal": this._myIsLocal
         });
         clonedComponent.active = this.active;
 

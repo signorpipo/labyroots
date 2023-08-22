@@ -30,7 +30,7 @@ PP.CollisionCheckBridge = {
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             this._myCollisionCheck.positionCheck(true, checkTransformQuat, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, checkTransformQuat, outCharacterCollisionResults);
         }
     }(),
     updateGroundInfo: function () {
@@ -201,7 +201,7 @@ PP.CollisionCheckBridge = {
             outCharacterCollisionResults.myWallSlideResults.myHasSlid = collisionRuntimeParams.myIsSliding;
             outCharacterCollisionResults.myWallSlideResults.mySlideMovementAngle = collisionRuntimeParams.mySlidingMovementAngle;
             outCharacterCollisionResults.myWallSlideResults.mySlideMovementWallAngle = collisionRuntimeParams.mySlidingCollisionAngle;
-            outCharacterCollisionResults.myWallSlideResults.myWallNormal.vec3_copy(ollisionRuntimeParams.mySlidingWallNormal);
+            outCharacterCollisionResults.myWallSlideResults.myWallNormal.vec3_copy(collisionRuntimeParams.mySlidingWallNormal);
 
             outCharacterCollisionResults.myGroundInfo.myIsOnSurface = collisionRuntimeParams.myIsOnGround;
             outCharacterCollisionResults.myGroundInfo.mySurfaceAngle = collisionRuntimeParams.myGroundAngle;

@@ -179,8 +179,8 @@ WL.registerComponent('pp-gamepad-control-scheme', {
         let length = lineDirection.vec3_length();
         lineDirection.vec3_normalize(lineDirection);
 
-        lineRootObject = parentObject.pp_addObject();
-        lineObject = lineRootObject.pp_addObject();
+        let lineRootObject = parentObject.pp_addObject();
+        let lineObject = lineRootObject.pp_addObject();
 
         let lineMesh = lineObject.addComponent('mesh');
         lineMesh.mesh = PP.myDefaultResources.myMeshes.myCylinder;

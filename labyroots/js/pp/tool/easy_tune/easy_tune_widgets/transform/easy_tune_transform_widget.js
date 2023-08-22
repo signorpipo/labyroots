@@ -448,8 +448,6 @@ PP.EasyTuneTransformWidget = class EasyTuneTransformWidget extends PP.EasyTuneBa
                     this._myVariable.myScale[index] = this._myVariable.myDefaultScale[index];
                     this._myUI.myScaleTextComponents[index].text = this._myVariable.myScale[index].toFixed(this._myVariable.myDecimalPlaces);
                     break;
-                default:
-                    defaultValue = 0;
             }
         }
     }

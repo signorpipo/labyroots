@@ -13,7 +13,8 @@ module.exports = {
     },
     globals: {
         "WL": "readonly",
-        "PP": "readonly",
+        "_WL": "readonly",
+        "PP": "writable",
         "LR": "writable",
         "Global": "writable",
         "AudioID": "writable",
@@ -22,6 +23,7 @@ module.exports = {
         "loadFileText": "writable",
         "loadFileJSON": "writable",
         "loadFile": "writable",
+        "increaseStage": "writable",
         "decreaseStage": "writable",
         "globalDT": "writable",
         "CleanedPlayerLocomotion": "writable",
@@ -68,7 +70,8 @@ module.exports = {
         "PlayerLocomotionTeleportDetectionParams": "writable",
         "PlayerLocomotionTeleportState": "writable",
         "PlayerLocomotionTeleportRuntimeParams": "writable",
-        "Module": "writable"
+        "Module": "writable",
+        "casdk": "writable"
     },
     plugins: [
         "deprecation"

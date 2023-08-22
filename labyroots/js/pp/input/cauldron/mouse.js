@@ -451,7 +451,7 @@ PP.Mouse = class Mouse {
             if (!callback(event)) {
                 isValid = false;
                 break;
-            };
+            }
         }
 
         return isValid;

@@ -1050,15 +1050,15 @@ Array.prototype.vec3_addRotation = function (rotation, out) {
 };
 
 Array.prototype.vec3_addRotationDegrees = function (rotation, out) {
-    return quat.vec3_degreesAddRotationDegrees(rotation, out);
+    return this.vec3_degreesAddRotationDegrees(rotation, out);
 };
 
 Array.prototype.vec3_addRotationRadians = function (rotation, out) {
-    return quat.vec3_degreesAddRotationRadians(rotation, out);
+    return this.vec3_degreesAddRotationRadians(rotation, out);
 };
 
 Array.prototype.vec3_addRotationQuat = function (rotation, out) {
-    return quat.vec3_degreesAddRotationQuat(rotation, out);
+    return this.vec3_degreesAddRotationQuat(rotation, out);
 };
 
 Array.prototype.vec3_degreesAddRotation = function (rotation, out) {
@@ -2342,7 +2342,7 @@ PP.quat2_create = function () {
 };
 
 PP.quat2_fromPositionRotation = function (position, rotation) {
-    return quat2_fromPositionRotationDegrees(position, rotation);
+    return PP.quat2_fromPositionRotationDegrees(position, rotation);
 };
 
 PP.quat2_fromPositionRotationDegrees = function (position, rotation) {
@@ -2369,7 +2369,7 @@ PP.mat4_create = function () {
 };
 
 PP.mat4_fromPositionRotation = function (position, rotation) {
-    return mat4_fromPositionRotationDegrees(position, rotation);
+    return PP.mat4_fromPositionRotationDegrees(position, rotation);
 };
 
 PP.mat4_fromPositionRotationDegrees = function (position, rotation) {
@@ -2391,7 +2391,7 @@ PP.mat4_fromPositionRotationQuat = function (position, rotation) {
 };
 
 PP.mat4_fromPositionRotationScale = function (position, rotation, scale) {
-    return mat4_fromPositionRotationDegreesScale(position, rotation, scale);
+    return PP.mat4_fromPositionRotationDegreesScale(position, rotation, scale);
 };
 
 PP.mat4_fromPositionRotationDegreesScale = function (position, rotation, scale) {

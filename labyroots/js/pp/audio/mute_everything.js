@@ -1,4 +1,4 @@
-import { Howler } from 'howler';
+import { Howler } from "howler";
 
 WL.registerComponent('pp-mute-everything', {
 }, {
