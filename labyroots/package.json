@@ -1,19 +1,22 @@
 {
-  "name": "LabyRoots",
-  "version": "1.0.0",
-  "author": "I Polaretti",
-  "description": "GGJ 2023 Entry - Theme: Roots",
-  "license": "ISC",
-  "dependencies": {
-    "@wonderlandengine/api": "0.9.4",
-    "@wonderlandengine/components": "0.8.16",
-    "gl-matrix": "3.4.3",
-    "howler": "2.2.3"
-  },
-  "devDependencies": {
-    "esbuild": "0.14.54"
-  },
-  "scripts": {
-    "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/labyroots-bundle.js\""
-  }
+    "name": "LabyRoots",
+    "version": "1.0.0",
+    "author": "I Polaretti",
+    "description": "GGJ 2023 Entry - Theme: Roots",
+    "license": "ISC",
+    "dependencies": {
+        "@wonderlandengine/api": "0.9.4",
+        "@wonderlandengine/components": "0.8.16",
+        "gl-matrix": "3.4.3",
+        "howler": "2.2.3"
+    },
+    "devDependencies": {
+        "@typescript-eslint/parser": "^6.4.0",
+        "esbuild": "0.14.54",
+        "eslint": "^8.47.0",
+        "eslint-plugin-deprecation": "^1.5.0"
+    },
+    "scripts": {
+        "build": "esbuild ./js/bundle.js --sourcemap --bundle --outfile=\"deploy/labyroots-bundle.js\""
+    }
 }
