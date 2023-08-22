@@ -384,7 +384,7 @@ Global.isWedding = function () {
                 isWedding = true;
             }
         } catch (error) {
-
+            // Do nothing
         }
     }
 
@@ -401,7 +401,7 @@ Global.isMazeverse = function () {
                 isMazeverse = true;
             }
         } catch (error) {
-
+            // Do nothing
         }
     }
 

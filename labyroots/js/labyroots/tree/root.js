@@ -29,8 +29,6 @@ WL.registerComponent('root', {
                 this._myHit = Global.mySetup.myTreeSetup.myRootHit;
                 this._myPhases[0].pp_setActive(true);
             }
-        } else {
-
         }
     },
     hit() {

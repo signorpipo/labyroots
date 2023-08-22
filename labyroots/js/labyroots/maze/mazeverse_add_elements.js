@@ -183,8 +183,8 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
 Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addElementsResults) {
     let rootWallsToAdd = Math.round(createWallsResults.myDoors.length * (Math.pp_random(0.2, 0.4)));
 
-    let rootWallsAdded = 0;
-    let rootWallsToAddOriginal = rootWallsToAdd;
+    //let rootWallsAdded = 0;
+    //let rootWallsToAddOriginal = rootWallsToAdd;
 
     let allowOneBigRootWall = false;
     if (Math.pp_randomInt(0, 9) == 0) {
@@ -262,7 +262,7 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
                                 //console.error("root door nope", randomDoor.length);
                             }
 
-                            rootWallsAdded++;
+                            //rootWallsAdded++;
 
                             break;
                         } else {

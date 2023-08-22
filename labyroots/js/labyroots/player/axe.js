@@ -311,7 +311,8 @@ WL.registerComponent('axe', {
                             //humanTree.object.pp_setActive(false);
                             this._myToDestroy.push([humanTree.object, true]);
 
-                            if (false) {
+                            let manageFruits = false;
+                            if (manageFruits) {
                                 let fruits = humanTree._myFruits;
                                 for (let fruit of fruits) {
                                     if (!fruit._myGathered) {

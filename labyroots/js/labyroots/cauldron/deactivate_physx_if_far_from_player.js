@@ -18,9 +18,11 @@ WL.registerComponent('deactivate-physx-if-far-from-player', {
             this._myStartd = true;
             this._myPhysxList = this.object.pp_getComponents("physx");
 
+            /*
             for (let physx of this._myPhysxList) {
-                //physx.static = true;
+                physx.static = true;
             }
+            */
         } else if (this._myActive) {
             let position = this.object.pp_getPosition(this._myPosition);
             let playerPosition = Global.myPlayer.getPosition(this._myPlayerPosition);

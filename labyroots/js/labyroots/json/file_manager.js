@@ -20,7 +20,9 @@ downloadFileJSON = function (filename, object) {
     let json = null;
     try {
         json = JSON.stringify(object);
-    } catch (error) { }
+    } catch (error) {
+        // Do nothing
+    }
 
     if (json != null) {
         return downloadFileText(filename, json);

@@ -1,5 +1,3 @@
-import { Howler } from 'howler';
-
 WL.registerComponent('audio-load', {
 }, {
     init() {

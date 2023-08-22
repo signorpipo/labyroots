@@ -21,7 +21,9 @@ module.exports = {
         "downloadFileJSON": "writable",
         "loadFileText": "writable",
         "loadFileJSON": "writable",
-        "loadFile": "writable"
+        "loadFile": "writable",
+        "decreaseStage": "writable",
+        "increaseStage": "writable"
     },
     plugins: [
         "deprecation"

@@ -20,8 +20,6 @@ WL.registerComponent('human-tree', {
                     this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit;
                 }
             }
-        } else {
-
         }
     },
     pp_clone(targetObject) {

@@ -15,7 +15,7 @@ WL.registerComponent('spawn-floor', {
             for (let i = 0; i < 10; i++) {
                 for (let j = 0; j < 10; j++) {
                     if (i != 0) {
-                        newTile = spawnedTile.pp_clone();
+                        let newTile = spawnedTile.pp_clone();
                         newTile.pp_translate([i * 5, 0, j * -5]);
                         //[i * 5, 0, j * -5].vec_error();
 

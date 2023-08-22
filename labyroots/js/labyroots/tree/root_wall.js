@@ -12,8 +12,6 @@ WL.registerComponent('root-wall', {
                 this._myStarted = true;
                 this._myHit = Global.mySetup.myTreeSetup.myRootWallHit;
             }
-        } else {
-
         }
     },
     hit() {
