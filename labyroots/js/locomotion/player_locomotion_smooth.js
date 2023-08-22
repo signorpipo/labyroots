@@ -140,7 +140,8 @@ PlayerLocomotionSmooth.prototype.update = function () {
 
         if (PP.myGamepads[PP.InputUtils.getOppositeHandedness(this._myParams.myHandedness)].getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
             if (!PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-                if (!this._myLocomotionRuntimeParams.myIsFlying && false) {
+                let gravityEnabled = false;
+                if (!this._myLocomotionRuntimeParams.myIsFlying && gravityEnabled) {
                     let gravity = -2;
                     verticalMovement = playerUp.vec3_scale(gravity * dt, verticalMovement);
                     headMovement = headMovement.vec3_add(verticalMovement, headMovement);
@@ -210,7 +211,6 @@ PlayerLocomotionSmooth.prototype._onXRSessionStart = function () {
 }();
 
 PlayerLocomotionSmooth.prototype._onXRSessionEnd = function () {
-    let playerUp = PP.vec3_create();
     return function _onXRSessionEnd(session) {
         this._myDirectionReference = PP.myPlayerObjects.myHead;
         this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;

@@ -105,10 +105,6 @@ PlayerLocomotionTeleportTeleportState = class PlayerLocomotionTeleportTeleportSt
         this._instantUpdate(0, fsm);
     }
 
-    _completeTeleport() {
-        fsm.perform("stop");
-    }
-
     _teleportDone() {
         Global.myPlayer.resetReal(true, false, false);
         Global.myPlayer.resetHeadToReal();

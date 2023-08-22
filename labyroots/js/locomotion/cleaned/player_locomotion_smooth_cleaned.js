@@ -1,3 +1,5 @@
+import { Howler } from 'howler';
+
 CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends PlayerLocomotionMovement {
     constructor(params, locomotionRuntimeParams) {
         super(locomotionRuntimeParams);
@@ -156,7 +158,8 @@ CleanedPlayerLocomotionSmooth.prototype.update = function () {
             }
         }
 
-        if (true || !PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
+        let ignoreMoveThroughCollisionShortcut = true;
+        if (ignoreMoveThroughCollisionShortcut || !PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (!this._myLocomotionRuntimeParams.myIsFlying) {
                 this._myGravitySpeed += this._myParams.myGravityAcceleration * dt;
                 verticalMovement = playerUp.vec3_scale(this._myGravitySpeed * dt, verticalMovement);
@@ -264,7 +267,6 @@ CleanedPlayerLocomotionSmooth.prototype._onXRSessionStart = function () {
 }();
 
 CleanedPlayerLocomotionSmooth.prototype._onXRSessionEnd = function () {
-    let playerUp = PP.vec3_create();
     return function _onXRSessionEnd(session) {
         this._myDirectionReference = PP.myPlayerObjects.myHead;
         this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;

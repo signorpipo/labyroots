@@ -566,7 +566,8 @@ PlayerLocomotionTeleportDetectionState.prototype._isTeleportHitValid = function 
         if (hit.isValid() && !hit.myIsInsideCollision) {
             playerUp = this._myTeleportParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
 
-            if (true || hit.myNormal.vec3_isConcordant(playerUp)) {
+            let hitValidEvenWhenNotConcordant = true;
+            if (hitValidEvenWhenNotConcordant || hit.myNormal.vec3_isConcordant(playerUp)) {
                 // #TODO when the flags on the physx will be available just check that the hit object physx has the floor flag
 
                 raycastSetup.myObjectsToIgnore.pp_copy(this._myTeleportParams.myCollisionCheckParams.myHorizontalObjectsToIgnore);

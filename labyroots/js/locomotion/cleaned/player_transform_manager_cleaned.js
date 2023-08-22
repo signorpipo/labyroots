@@ -191,10 +191,6 @@ CleanedPlayerTransformManager = class CleanedPlayerTransformManager {
         return this.isLeaning() || this.isHopping();
     }
 
-    isHopping() {
-        return this._myIsHopping;
-    }
-
     isLeaning() {
         return this._myIsLeaning;
     }
@@ -506,7 +502,8 @@ CleanedPlayerTransformManager.prototype.update = function () {
 
         this._updateReal(dt);
 
-        if (false && this._myParams.myUpdatePositionValid) {
+        let updatePositionValidEnabled = false;
+        if (updatePositionValidEnabled && this._myParams.myUpdatePositionValid) {
             transformQuat = this.getTransformQuat(transformQuat);
             transformUp = transformQuat.quat2_getUp(transformUp);
             rotationQuat = transformQuat.quat2_getRotationQuat(rotationQuat);
@@ -601,7 +598,8 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             }
 
             // Floating 
-            if (false && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FLOATING)) {
+            let updateFloatingEnabled = false;
+            if (updateFloatingEnabled && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FLOATING)) {
 
                 if (!this._myIsBodyColliding) {
                     movementToCheck = newPosition.vec3_sub(position, movementToCheck);
@@ -749,16 +747,19 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
                 this._myValidPositionHead = this.getPositionHeadReal(newPositionHead);
             }
 
-            if (true || this.isSynced(this._myParams.mySyncRotationFlagMap)) {
+            let alwaysSyncRotation = true;
+            if (alwaysSyncRotation || this.isSynced(this._myParams.mySyncRotationFlagMap)) {
                 this._myValidRotationQuat = this.getRotationRealQuat(this._myValidRotationQuat);
             }
 
-            if (true || this.isSynced(this._myParams.mySyncHeightFlagMap)) {
+            let alwaysSyncHeight = true;
+            if (alwaysSyncHeight || this.isSynced(this._myParams.mySyncHeightFlagMap)) {
                 this._myValidHeight = this._myRealMovementCollisionCheckParams.myHeight;
                 this._updateCollisionHeight();
             }
 
-            if (false && this._myParams.myUpdateRealPositionValid) {
+            let updateRealPositionValidEnabled = false;
+            if (updateRealPositionValidEnabled && this._myParams.myUpdateRealPositionValid) {
                 transformQuat = this.getTransformRealQuat(transformQuat);
                 transformUp = transformQuat.quat2_getUp(transformUp);
                 rotationQuat = transformQuat.quat2_getRotationQuat(rotationQuat);

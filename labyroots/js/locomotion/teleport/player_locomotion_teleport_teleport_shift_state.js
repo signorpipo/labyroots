@@ -1,3 +1,5 @@
+import { Howler } from 'howler';
+
 PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTeleportShiftState extends PlayerLocomotionTeleportState {
     constructor(teleportParams, teleportRuntimeParams, locomotionRuntimeParams) {
         super(teleportParams, teleportRuntimeParams, locomotionRuntimeParams);
