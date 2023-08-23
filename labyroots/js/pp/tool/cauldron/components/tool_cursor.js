@@ -88,7 +88,6 @@ WL.registerComponent('pp-tool-cursor', {
     },
     update: function () {
         let transformQuat = PP.quat2_create();
-        let transform = PP.mat4_create();
         return function update(dt) {
             let isUsingHand = this._isUsingHand();
 
