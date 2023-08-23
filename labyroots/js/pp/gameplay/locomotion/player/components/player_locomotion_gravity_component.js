@@ -1,4 +1,4 @@
-import { Component, Type } from '@wonderlandengine/api';
+import { Component } from '@wonderlandengine/api';
 
 PP.PlayerLocomotionGravityComponent = class PlayerLocomotionGravityComponent extends Component {
     static TypeName = 'pp-player-locomotion-gravity';

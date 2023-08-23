@@ -1,4 +1,4 @@
-import { vec3, mat4 } from 'gl-matrix';
+import { mat4, vec3 } from 'gl-matrix';
 
 if (_WL && _WL._componentTypes && _WL._componentTypes[_WL._componentTypeIndices["cursor"]]) {
 

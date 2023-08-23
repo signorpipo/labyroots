@@ -1,4 +1,4 @@
-import { Component, Type } from '@wonderlandengine/api';
+import { Component } from '@wonderlandengine/api';
 
 PP.CharacterCollisionSystemComponent = class CharacterCollisionSystemComponent extends Component {
     static TypeName = 'pp-character-collision-system';
