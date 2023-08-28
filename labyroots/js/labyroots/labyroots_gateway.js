@@ -159,6 +159,6 @@ Global.sendAnalytics = function sendAnalytics(...args) {
     } catch (error) {
         // Do nothing
     }
-}
+};
 
 LR = {};

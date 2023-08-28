@@ -44,7 +44,7 @@ WL.registerComponent('transformation', {
     update: function (dt) {
         this._secretMazeCodeUpdate(dt);
 
-        Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0)
+        Global.myCancelTeleport = Math.max(Global.myCancelTeleport - 1, 0);
         if (!this._myStarted) {
             if (Global.myReady) {
                 this._start();
@@ -551,7 +551,7 @@ Global.windowOpen = function (urlString, successCallback, errorCallback) {
     document.body.removeChild(element);
 
     return result;
-}
+};
 
 Global.myDebugMoveUsed = false;
 Global.myDebugFlyUsed = false;

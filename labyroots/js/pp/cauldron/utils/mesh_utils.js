@@ -286,7 +286,7 @@ PP.MeshUtils = {
                     invertedTextureCoordinatesAttribute.set(i, textureCoordinatesAttribute.get(i, textureCoordinates));
                 }
                 if (normalAttribute != null && invertedNormalAttribute != null) {
-                    normalAttribute.get(i, normal)
+                    normalAttribute.get(i, normal);
                     normal.vec3_negate(normal);
                     invertedNormalAttribute.set(i, normal);
                 }

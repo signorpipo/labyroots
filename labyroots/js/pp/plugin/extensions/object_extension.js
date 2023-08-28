@@ -2199,7 +2199,7 @@ if (WL && WL.Object) {
 
     WL.Object.prototype.pp_toString = function () {
         return this.pp_toStringCompact();
-    }
+    };
 
     WL.Object.prototype.pp_toStringExtended = function () {
         let tab = "    ";
@@ -2345,77 +2345,77 @@ if (WL && WL.Object) {
 
     WL.Object.prototype.pp_getObjectByName = function (name) {
         return this.pp_getObjectByNameHierarchy(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameHierarchy = function (name) {
         return this.pp_getObjectByNameHierarchyBreadth(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameHierarchyBreadth = function (name) {
         let objects = this.pp_getHierarchyBreadth();
         return WL.Object.pp_getObjectByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameHierarchyDepth = function (name) {
         let objects = this.pp_getHierarchyDepth();
         return WL.Object.pp_getObjectByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameDescendants = function (name) {
         return this.pp_getObjectByNameDescendantsBreadth(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameDescendantsBreadth = function (name) {
         let objects = this.pp_getDescendantsBreadth();
         return WL.Object.pp_getObjectByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameDescendantsDepth = function (name) {
         let objects = this.pp_getDescendantsDepth();
         return WL.Object.pp_getObjectByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectByNameChildren = function (name) {
         let objects = this.pp_getChildren();
         return WL.Object.pp_getObjectByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByName = function (name) {
         return this.pp_getObjectsByNameHierarchy(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameHierarchy = function (name) {
         return this.pp_getObjectsByNameHierarchyBreadth(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameHierarchyBreadth = function (name) {
         let objects = this.pp_getHierarchyBreadth();
         return WL.Object.pp_getObjectsByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameHierarchyDepth = function (name) {
         let objects = this.pp_getHierarchyDepth();
         return WL.Object.pp_getObjectsByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameDescendants = function (name) {
         return this.pp_getObjectsByNameDescendantsBreadth(name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameDescendantsBreadth = function (name) {
         let objects = this.pp_getDescendantsBreadth();
         return WL.Object.pp_getObjectsByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameDescendantsDepth = function (name) {
         let objects = this.pp_getDescendantsDepth();
         return WL.Object.pp_getObjectsByNameObjects(objects, name);
-    }
+    };
 
     WL.Object.prototype.pp_getObjectsByNameChildren = function (name) {
         let objects = this.pp_getChildren();
         return WL.Object.pp_getObjectsByNameObjects(objects, name);
-    }
+    };
 
     //Get Hierarchy
 
@@ -2636,7 +2636,7 @@ if (WL && WL.Object) {
         }
 
         return objectFound;
-    }
+    };
 
     WL.Object.pp_getObjectsByNameObjects = function (objects, name) {
         let objectsFound = [];
@@ -2648,7 +2648,7 @@ if (WL && WL.Object) {
         }
 
         return objectsFound;
-    }
+    };
 
     //Private Utils
 

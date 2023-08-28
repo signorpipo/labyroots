@@ -42,4 +42,4 @@ PP.HowlerAudioPlayer = class HowlerAudioPlayer extends PP.AudioPlayer {
 
         this._addListeners();
     }
-}
+};

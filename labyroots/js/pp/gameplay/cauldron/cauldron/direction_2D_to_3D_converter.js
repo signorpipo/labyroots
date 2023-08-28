@@ -27,7 +27,7 @@ PP.Direction2DTo3DConverterParams = class Direction2DTo3DConverterParams {
         this.myAdjustLastValidFlatForwardOverConversionReferenceRotation = true;
         this.myAdjustLastValidFlatRightOverConversionReferenceRotation = true;
     }
-}
+};
 
 PP.Direction2DTo3DConverter = class Direction2DTo3DConverter {
 
@@ -154,7 +154,7 @@ PP.Direction2DTo3DConverter = class Direction2DTo3DConverter {
     convertRotationQuat(direction2D, conversionRotationQuat, direction3DUp = null, outDirection3D = PP.vec3_create()) {
         // Implemented outside class definition
     }
-}
+};
 
 PP.Direction2DTo3DConverter.prototype.convertForward = function () {
     let rotationQuat = PP.quat_create();
@@ -162,7 +162,7 @@ PP.Direction2DTo3DConverter.prototype.convertForward = function () {
         rotationQuat.quat_identity();
         rotationQuat.quat_setForward(conversionForward, direction3DUp);
         return this.convertRotationQuat(direction2D, rotationQuat, direction3DUp, outDirection3D);
-    }
+    };
 }();
 
 PP.Direction2DTo3DConverter.prototype.convertTransformMatrix = function () {
@@ -170,7 +170,7 @@ PP.Direction2DTo3DConverter.prototype.convertTransformMatrix = function () {
     return function convertTransformMatrix(direction2D, conversionTransformMatrix, direction3DUp = null, outDirection3D = PP.vec3_create()) {
         rotationQuat = conversionTransformMatrix.mat4_getRotationQuat(rotationQuat);
         return this.convertRotationQuat(direction2D, rotationQuat, direction3DUp, outDirection3D);
-    }
+    };
 }();
 
 PP.Direction2DTo3DConverter.prototype.convertTransformQuat = function () {
@@ -178,7 +178,7 @@ PP.Direction2DTo3DConverter.prototype.convertTransformQuat = function () {
     return function convertTransformQuat(direction2D, conversionTransformQuat, direction3DUp = null, outDirection3D = PP.vec3_create()) {
         rotationQuat = conversionTransformQuat.quat2_getRotationQuat(rotationQuat);
         return this.convertRotationQuat(direction2D, rotationQuat, direction3DUp, outDirection3D);
-    }
+    };
 }();
 
 PP.Direction2DTo3DConverter.prototype.convertRotationQuat = function () {

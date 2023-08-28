@@ -10,7 +10,7 @@ WL.registerComponent('mouth', {
     },
     update: function (dt) {
         if (this._myTimerDestroy.isRunning()) {
-            this._myTimerDestroy.update(dt)
+            this._myTimerDestroy.update(dt);
             if (this._myTimerDestroy.isDone()) {
                 for (let object of this._myFruitToDestroy) {
                     //object.pp_destroy();

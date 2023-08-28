@@ -55,7 +55,7 @@ Global.addElementsToMaze = function (maze, createWallsResults) {
     let everythingReachable = Global.isEverythingReachable(maze, addElementsResults);
 
     return everythingReachable;
-}
+};
 
 Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsResults) {
     let room = createWallsResults.myBigTreeRoom;
@@ -85,7 +85,7 @@ Global.addBigTree = function (maze, createWallsResults, freeCells, addElementsRe
     addElementsResults.myAllElements.push(bigTreePosition);
     addElementsResults.myElementsFar.push(bigTreePosition);
     addElementsResults.myRootsFar.push(bigTreePosition);
-}
+};
 
 Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsResults) {
     let firstRootAdded = false;
@@ -148,7 +148,7 @@ Global.addPlayer = function (maze, createWallsResults, freeCells, addElementsRes
     }
 
     return firstRootAdded;
-}
+};
 
 Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElementsResults) {
     let far = addElementsResults.myRootsMustBeFar;
@@ -178,7 +178,7 @@ Global.addFirstRoot = function (maze, createWallsResults, freeCells, addElements
     addElementsResults.myElementsFar.push(firstRootPosition);
     addElementsResults.myFirstRoot.pp_copy(firstRootPosition);
     addElementsResults.myRootsFar.push(firstRootPosition);
-}
+};
 
 Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addElementsResults) {
     let rootWallsToAdd = Math.round(createWallsResults.myDoors.length * (Math.pp_random(0.2, 0.4)));
@@ -284,7 +284,7 @@ Global.addRootWalls = function (maze, createWallsResults, freeCells, doors, addE
     }
 
     //console.error("root walls:", rootWallsToAddOriginal, "- ", rootWallsAdded)
-}
+};
 
 Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResults) {
     let addRoot = Math.pp_randomInt(0, 2) != 0;
@@ -333,12 +333,12 @@ Global.addWoods = function (maze, createWallsResults, freeCells, addElementsResu
         addElementsResults.myAllElements.push(treePosition);
         addElementsResults.myElementsFar.push(treePosition);
     }
-}
+};
 
 Global.addRoots = function (maze, createWallsResults, freeCells, addElementsResults) {
     let far = addElementsResults.myRootsMustBeFar;
 
-    let rootsToAdd = addElementsResults.myRootsToAdd
+    let rootsToAdd = addElementsResults.myRootsToAdd;
     for (let i = 0; i < rootsToAdd; i++) {
         let rootPosition = Math.pp_randomPick(freeCells);
         let farDistance = 3;
@@ -365,16 +365,16 @@ Global.addRoots = function (maze, createWallsResults, freeCells, addElementsResu
         addElementsResults.myElementsFar.push(rootPosition);
         addElementsResults.myRootsFar.push(rootPosition);
     }
-}
+};
 
 Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResults) {
     let far = addElementsResults.myTreesFar;
 
     let extra = 0;
     if (maze.length * maze[0].length > 700) {
-        extra = 2
+        extra = 2;
     } else if (maze.length * maze[0].length > 550) {
-        extra = 1
+        extra = 1;
     }
 
     let treesToAdd = Math.pp_randomInt(4 + extra, 8 + extra);
@@ -408,7 +408,7 @@ Global.addTrees = function (maze, createWallsResults, freeCells, addElementsResu
         addElementsResults.myElementsFar.push(treePosition);
         addElementsResults.myTreesFar.push(treePosition);
     }
-}
+};
 
 Global.addZesties = function (maze, createWallsResults, freeCells, addElementsResults) {
     let far = true;
@@ -451,7 +451,7 @@ Global.addZesties = function (maze, createWallsResults, freeCells, addElementsRe
         addElementsResults.myElementsFar.push(zestyPosition);
         addElementsResults.myZestiesFar.push(zestyPosition);
     }
-}
+};
 
 Global.addWondermelon = function (maze, createWallsResults, freeCells, addElementsResults) {
     let wondermelonPosition = Math.pp_randomPick(freeCells);
@@ -463,7 +463,7 @@ Global.addWondermelon = function (maze, createWallsResults, freeCells, addElemen
     addElementsResults.myAllElements.push(wondermelonPosition);
     addElementsResults.myElementsFar.push(wondermelonPosition);
     addElementsResults.myZestiesFar.push(wondermelonPosition);
-}
+};
 
 Global.isDoorFree = function isDoorFree(door, freeCells) {
     let isDoorFree = true;
@@ -478,7 +478,7 @@ Global.isDoorFree = function isDoorFree(door, freeCells) {
     }
 
     return isDoorFree;
-}
+};
 
 Global.isDoorLimited = function isDoorLimited(door, maze) {
     let isDoorLimited = true;
@@ -512,7 +512,7 @@ Global.isDoorLimited = function isDoorLimited(door, maze) {
     }
 
     return isDoorLimited;
-}
+};
 
 Global.isDoorBlockingPlayer = function isDoorBlockingPlayer(player, firstRoot, randomDoor, maze) {
     let mazeClone = [];
@@ -533,7 +533,7 @@ Global.isDoorBlockingPlayer = function isDoorBlockingPlayer(player, firstRoot, r
     let reachableCells = Global.getReachableCells(player, mazeClone, true);
 
     return !reachableCells.pp_hasEqual(firstRoot, Global.cellCoordinatesEqual);
-}
+};
 
 Global.isEverythingReachable = function isEverythingReachable(maze, addElementsResult) {
     let reachableCells = Global.getReachableCells(addElementsResult.myPlayer, maze, false);
@@ -548,7 +548,7 @@ Global.isEverythingReachable = function isEverythingReachable(maze, addElementsR
     //console.error("Elements Not Reachable:", allElements.length);
 
     return allElements.length == 0;
-}
+};
 
 Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze, far = 3) {
     let farFromAll = true;
@@ -561,15 +561,15 @@ Global.isFarFromAll = function isFarFromAll(cell, otherCells, maze, far = 3) {
     }
 
     return farFromAll;
-}
+};
 
 Global.isFar = function isFar(first, second, maze, far = 3) {
     return Global.distanceBetweenCellPositions(first, second) > Math.max(maze.length, maze[0].length) / far;
-}
+};
 
 Global.distanceBetweenCellPositions = function distanceBetweenCellPositions(first, second) {
-    return Math.max(Math.abs(first[0] - second[0]), Math.abs(first[1] - second[1]))
-}
+    return Math.max(Math.abs(first[0] - second[0]), Math.abs(first[1] - second[1]));
+};
 
 Global.getMiddleDoorIndex = function getMiddleDoorIndex(door) {
     let middleIndex = -1;
@@ -612,4 +612,4 @@ Global.getMiddleDoorIndex = function getMiddleDoorIndex(door) {
     }
 
     return middleIndex;
-}
+};

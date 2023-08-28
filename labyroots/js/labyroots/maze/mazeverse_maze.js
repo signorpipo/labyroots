@@ -33,7 +33,7 @@ LR.CreateWallsResults = class CreateWallsResults {
 
 Global.cellCoordinatesEqual = function (first, second) {
     return first[0] == second[0] && first[1] == second[1];
-}
+};
 
 Global.doorsEqual = function (first, second) {
     let equal = true;
@@ -50,7 +50,7 @@ Global.doorsEqual = function (first, second) {
     }
 
     return equal;
-}
+};
 
 Global.createMazeverseMaze = function () {
     let maxAttempts = 10;
@@ -139,7 +139,7 @@ Global.createMazeverseMaze = function () {
     //console.error(maze);
 
     return maze;
-}
+};
 
 Global.initializeMaze = function () {
     let maze = [];
@@ -169,7 +169,7 @@ Global.initializeMaze = function () {
     }
 
     return maze;
-}
+};
 
 Global.emptyMaze = function (maze) {
     for (let i = 0; i < maze.length; i++) {
@@ -178,7 +178,7 @@ Global.emptyMaze = function (maze) {
             maze[i][j] = LR.MazeItemType.NONE;
         }
     }
-}
+};
 
 Global.convertMazeToString = function (maze) {
     for (let i = 0; i < maze.length; i++) {
@@ -190,7 +190,7 @@ Global.convertMazeToString = function (maze) {
             }
         }
     }
-}
+};
 
 Global.lookPlayerAligned = function (position) {
     let rotationQuat = PP.quat_create();
@@ -215,7 +215,7 @@ Global.lookPlayerAligned = function (position) {
     }
 
     return rotationQuat;
-}
+};
 
 
 Global.lookBigTreeAligned = function (position) {
@@ -241,4 +241,4 @@ Global.lookBigTreeAligned = function (position) {
     }
 
     return rotationQuat;
-}
+};

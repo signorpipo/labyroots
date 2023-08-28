@@ -8,7 +8,7 @@ PP.VirtualGamepadVirtualThumbstick = class VirtualGamepadVirtualThumbstick {
         this._myIsActive = true;
 
         this._myPointerID = null;
-        this._myPointerButton = null
+        this._myPointerButton = null;
 
         this._myThumbstickDragStartPosition = PP.vec2_create();
 

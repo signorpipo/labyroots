@@ -35,7 +35,7 @@ PP.CharacterColliderHorizontalPositionVerticalCheckDirection = {
     // the step that is created "on the other side" in fact can easily be ignored thanks to the myHorizontalCheckFeetDistanceToIgnore param
     // if the level is properly created the best solution should be UPWARD
     // and also myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision = false
-}
+};
 
 PP.CharacterColliderHorizontalCheckSetup = class CharacterColliderHorizontalCheckSetup {
     constructor() {

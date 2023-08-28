@@ -845,7 +845,7 @@ PlayerHeadManager.prototype._resyncHeadRotationForward = function () {
 
         this.setRotationFeetQuat(fixedResyncHeadRotation);
         return;
-    }
+    };
 }();
 
 PlayerHeadManager.prototype._updateHeightOffset = function () {
@@ -861,7 +861,7 @@ PlayerHeadManager.prototype._updateHeightOffset = function () {
         } else {
             this._setPlayerPivotHeightOffset(this._myParams.myHeightOffsetNonVR, this._myParams.myForeheadExtraHeight);
         }
-    }
+    };
 }();
 
 PlayerHeadManager.prototype._setPlayerPivotHeightOffset = function () {
@@ -871,7 +871,7 @@ PlayerHeadManager.prototype._setPlayerPivotHeightOffset = function () {
             playerPivotPosition = PP.myPlayerObjects.myPlayerPivot.pp_getPositionLocal(playerPivotPosition);
             PP.myPlayerObjects.myPlayerPivot.pp_setPositionLocal([playerPivotPosition[0], offset - amountToRemove, playerPivotPosition[2]]);
         }
-    }
+    };
 }();
 
 

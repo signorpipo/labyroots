@@ -36,7 +36,7 @@ Global.createWalls = function (maze, createWallsResults) {
 
                     let wallAttempt = [[], []];
 
-                    let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0])
+                    let rowColumnDiff = (start[1] - start[0]) - (end[1] - end[0]);
                     if (rowColumnDiff < 0) {
                         useRow = Math.pp_randomInt(0, Math.ceil(Math.abs(rowColumnDiff) / (usedRow ? 0.5 : 2))) == 0;
                     } else if (rowColumnDiff > 0) {

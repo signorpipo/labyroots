@@ -34,4 +34,4 @@ LR.MazeItemType = {
     HUMAN_TREE_2: 70,
     HUMAN_TREE_3: 80,
     HUMAN_TREE_4: 90,
-}
+};

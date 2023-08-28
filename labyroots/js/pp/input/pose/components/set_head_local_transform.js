@@ -35,6 +35,6 @@ WL.registerComponent('pp-set-head-local-transform', {
             if (PP.XRUtils.isSessionActive()) {
                 this.object.pp_setTransformLocalQuat(this._myHeadPose.getTransformQuat(headPoseTransform));
             }
-        }
+        };
     }()
 });

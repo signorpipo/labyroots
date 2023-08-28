@@ -19,7 +19,7 @@ PP.EasyTuneBaseWidgetSetup = class EasyTuneBaseWidgetSetup {
     }
 
     _getBackPanelMaxX() {
-        return this._mySideButtonPanelHalfWidth
+        return this._mySideButtonPanelHalfWidth;
     }
 
     _getBackPanelMinX() {

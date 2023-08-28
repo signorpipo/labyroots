@@ -56,7 +56,7 @@ WL.registerComponent('axe', {
         }
 
         if (this._myTimerDestroy.isRunning()) {
-            this._myTimerDestroy.update(dt)
+            this._myTimerDestroy.update(dt);
             if (this._myTimerDestroy.isDone()) {
                 for (let object of this._myToDestroy) {
                     //object.pp_destroy();

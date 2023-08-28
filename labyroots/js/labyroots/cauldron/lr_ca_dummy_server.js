@@ -72,4 +72,4 @@ LR.LRCADummyServer = class LRCADummyServer {
             callbackOnDone(user);
         }
     }
-}
+};

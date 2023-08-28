@@ -9,7 +9,7 @@ PP.CollisionCheckBridge = {
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             this._myCollisionCheck.move(movement, currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
             this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
-        }
+        };
     }(),
     checkTeleportToTransform: function () {
         let teleportPosition = PP.vec3_create();
@@ -21,7 +21,7 @@ PP.CollisionCheckBridge = {
             teleportPosition = teleportTransformQuat.quat2_getPosition(teleportPosition);
             this._myCollisionCheck.teleport(teleportPosition, teleportTransformQuat, collisionCheckParams, collisionRuntimeParams);
             this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
-        }
+        };
     }(),
     checkTransform: function () {
         let collisionCheckParams = new CollisionCheckParams();
@@ -31,7 +31,7 @@ PP.CollisionCheckBridge = {
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             this._myCollisionCheck.positionCheck(true, checkTransformQuat, collisionCheckParams, collisionRuntimeParams);
             this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, checkTransformQuat, outCharacterCollisionResults);
-        }
+        };
     }(),
     updateGroundInfo: function () {
         let collisionCheckParams = new CollisionCheckParams();
@@ -42,7 +42,7 @@ PP.CollisionCheckBridge = {
             collisionCheckParams.myComputeCeilingInfoEnabled = false;
             this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
             this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
-        }
+        };
     }(),
     updateCeilingInfo: function () {
         let collisionCheckParams = new CollisionCheckParams();
@@ -53,7 +53,7 @@ PP.CollisionCheckBridge = {
             collisionCheckParams.myComputeGroundInfoEnabled = false;
             this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
             this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
-        }
+        };
     }(),
     convertCharacterCollisionResultsToCollisionRuntimeParams: function (characterCollisionResults, outCollisionRuntimeParams) {
         outCollisionRuntimeParams.reset();
@@ -257,7 +257,7 @@ PP.CollisionCheckBridge = {
             outCharacterCollisionResults.myTransformResults.myStartTransformQuat.quat2_copy(currentTransformQuat);
 
             return outCharacterCollisionResults;
-        }
+        };
     }(),
 
     convertCharacterColliderSetupToCollisionCheckParams: function () {
@@ -475,6 +475,6 @@ PP.CollisionCheckBridge = {
             outCollisionCheckParams.myDebugMovementActive = characterColliderSetup.myDebugSetup.myVisualDebugMovementActive;
 
             return outCollisionCheckParams;
-        }
+        };
     }()
 };

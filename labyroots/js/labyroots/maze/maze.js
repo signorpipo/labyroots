@@ -341,7 +341,7 @@ LR.Maze = class Maze {
             }
         }
     }
-}
+};
 
 Global.myAxeCell = null;
 Global.myAxeParent = null;
@@ -372,7 +372,7 @@ LR.MazeCell = class MazeCell {
 
         return randomPosition;
     }
-}
+};
 
 Global.isWedding = function () {
     let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
@@ -389,7 +389,7 @@ Global.isWedding = function () {
     }
 
     return isWedding;
-}
+};
 
 Global.isMazeverse = function () {
     let isMazeverse = Global.mySaveManager.loadBool("is_mazeverse", false);
@@ -406,4 +406,4 @@ Global.isMazeverse = function () {
     }
 
     return isMazeverse && !Global.isWedding();
-}
+};

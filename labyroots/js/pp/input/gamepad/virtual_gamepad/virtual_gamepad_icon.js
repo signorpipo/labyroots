@@ -221,4 +221,4 @@ PP.VirtualGamepadIcon = class VirtualGamepadIcon {
             this._myIconElement.style.fill = this._myParams.myBackgroundColor;
         }
     }
-}
+};
