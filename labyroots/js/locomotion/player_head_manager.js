@@ -132,7 +132,7 @@ PlayerHeadManager = class PlayerHeadManager {
             if (this._myParams.myHeightOffsetVRWithFloor == null) {
                 this._myParams.myHeightOffsetVRWithFloor = 0;
             }
-            let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated();
+            let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || (PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost);
             if (this._mySessionActive && isFloor) {
                 this._myParams.myHeightOffsetVRWithFloor = this._myParams.myHeightOffsetVRWithFloor + (height - this.getHeight());
             } else if (!this._mySessionActive) {
@@ -718,7 +718,7 @@ PlayerHeadManager.prototype._sessionChangeResync = function () {
                 resyncMovement = flatResyncHeadPosition.vec3_sub(flatCurrentHeadPosition, resyncMovement);
                 this.moveFeet(resyncMovement);
 
-                let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated();
+                let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || (PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost);
                 if (this._myParams.myEnterSessionResyncHeight || this._myParams.myNextEnterSessionResyncHeight) {
                     this._myParams.myNextEnterSessionResyncHeight = false;
                     let resyncHeadHeight = this._getPositionHeight(resyncHeadPosition);
@@ -851,7 +851,7 @@ PlayerHeadManager.prototype._resyncHeadRotationForward = function () {
 PlayerHeadManager.prototype._updateHeightOffset = function () {
     return function _updateHeightOffset() {
         if (this._mySessionActive) {
-            if (PP.XRUtils.isDeviceEmulated()) {
+            if (PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost) {
                 this._setPlayerPivotHeightOffset(0, 0);
             } else if (PP.XRUtils.isReferenceSpaceLocalFloor()) {
                 this._setPlayerPivotHeightOffset(this._myParams.myHeightOffsetVRWithFloor, 0);

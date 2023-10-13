@@ -6,6 +6,10 @@ WL.registerComponent("labyroots-gateway", {
         Global.myFromAbove = this._myFromAbove;
 
         Global.mySaveManager = new PP.SaveManager();
+
+        if (window.location != null && window.location.host != null) {
+            Global.myIsLocalhost = window.location.host == "localhost:8080";
+        }
     },
     start: function () {
         this._myLoadSetupDone = false;
@@ -144,7 +148,8 @@ Global = {
     myAxeProto: null,
     myFollowAxe: null,
     myFromAbove: false,
-    myAnalyticsEnabled: false
+    myAnalyticsEnabled: false,
+    myIsLocalhost: false
 };
 
 Global.mySessionStarted = false;
