@@ -548,8 +548,6 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
         // check if new head is ok and update the data
         // if head is not synced (blurred or session changing) avoid this and keep last valid
         if (this.getPlayerHeadManager().isSynced()) {
-            this._updateCollisionHeight();
-
             this._myIsBodyColliding = false;
             this._myIsHeadColliding = false;
             this._myIsLeaning = false;
@@ -557,6 +555,8 @@ CleanedPlayerTransformManager.prototype._updateReal = function () {
             this._myIsFar = false;
 
             this._generateRealMovementParamsFromMovementParams();
+
+            this._updateCollisionHeight();
 
             movementToCheck = this.getPositionReal(positionReal).vec3_sub(this.getPosition(position), movementToCheck);
             if (movementToCheck.vec3_length() > 0.0001) {
