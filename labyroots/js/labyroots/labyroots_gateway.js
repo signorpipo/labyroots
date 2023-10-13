@@ -4,6 +4,8 @@ WL.registerComponent("labyroots-gateway", {
     init: function () {
         Global.myAnalyticsEnabled = true;
         Global.myFromAbove = this._myFromAbove;
+
+        Global.mySaveManager = new PP.SaveManager();
     },
     start: function () {
         this._myLoadSetupDone = false;
@@ -22,8 +24,6 @@ WL.registerComponent("labyroots-gateway", {
         PP.CAUtils.setDummyServer(new LR.LRCADummyServer());
         PP.CAUtils.setUseDummyServerOnSDKMissing(true);
         PP.CAUtils.setUseDummyServerOnError(true);
-
-        Global.mySaveManager = new PP.SaveManager();
 
         this._myTimePlayingVR = 0;
         this._myTimePlayingVRStep = [1, 2, 3, 5, 10, 20, 30, 60];

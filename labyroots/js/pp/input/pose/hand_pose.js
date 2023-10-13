@@ -44,26 +44,9 @@ PP.HandPose = class HandPose extends PP.BasePose {
     }
 
     _onXRSessionStartHook(manualStart, session) {
-        session.addEventListener('inputsourceschange', function (event) {
-            if (event.removed) {
-                for (let item of event.removed) {
-                    if (item == this._myInputSource) {
-                        this._myInputSource = null;
-                    }
-                }
-            }
+        this._myInputSource = null;
 
-            if (event.added) {
-                for (let item of event.added) {
-                    if (item.handedness == this._myHandedness) {
-                        this._myInputSource = item;
-                        this._myIsTrackedHand = PP.InputUtils.getInputSourceType(this._myInputSource) == PP.InputSourceType.TRACKED_HAND;
-                    }
-                }
-            }
-        }.bind(this));
-
-        if (manualStart && this._myInputSource == null && session.inputSources) {
+        if (session.inputSources != null && session.inputSources.length > 0) {
             for (let item of session.inputSources) {
                 if (item.handedness == this._myHandedness) {
                     this._myInputSource = item;
@@ -71,6 +54,19 @@ PP.HandPose = class HandPose extends PP.BasePose {
                 }
             }
         }
+
+        session.addEventListener("inputsourceschange", function () {
+            this._myInputSource = null;
+
+            if (session.inputSources != null && session.inputSources.length > 0) {
+                for (let item of session.inputSources) {
+                    if (item.handedness == this._myHandedness) {
+                        this._myInputSource = item;
+                        this._myIsTrackedHand = PP.InputUtils.getInputSourceType(this._myInputSource) == PP.InputSourceType.TRACKED_HAND;
+                    }
+                }
+            }
+        }.bind(this));
     }
 
     _onXRSessionEndHook() {

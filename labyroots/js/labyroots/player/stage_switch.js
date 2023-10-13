@@ -1,4 +1,5 @@
 WL.registerComponent('stage-switch', {
+    _myHandedness: { type: WL.Type.Enum, values: ['left', 'right'], default: 'left' },
     _myOnlyVR: { type: WL.Type.Bool, default: false },
     _myStage1: { type: WL.Type.Object },
     _myStage2: { type: WL.Type.Object },
@@ -10,6 +11,12 @@ WL.registerComponent('stage-switch', {
     init: function () {
     },
     start: function () {
+        if (this._myHandedness == PP.HandednessIndex.LEFT) {
+            this._myGamepad = PP.myLeftGamepad;
+        } else {
+            this._myGamepad = PP.myRightGamepad;
+        }
+
         this._myStages = [];
         this._myStages[0] = this._myStage1;
         this._myStages[1] = this._myStage2;
@@ -27,12 +34,13 @@ WL.registerComponent('stage-switch', {
         this._myCurrentStage = -1;
     },
     update: function (dt) {
-        if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
+        if (!this._myOnlyVR || (PP.XRUtils.isSessionActive() && this._myGamepad.getHandPose() != null && this._myGamepad.getHandPose().isValid())) {
             if (Global.myReady) {
                 if (Global.myStage != this._myCurrentStage) {
                     this.setStageActive(Global.myStage);
                 }
             } else {
+                this._myCurrentStage = -1;
 
                 for (let stage of this._myStages) {
                     if (stage != null) {
@@ -41,6 +49,8 @@ WL.registerComponent('stage-switch', {
                 }
             }
         } else {
+            this._myCurrentStage = -1;
+
             for (let stage of this._myStages) {
                 if (stage != null) {
                     stage.pp_setActive(false);

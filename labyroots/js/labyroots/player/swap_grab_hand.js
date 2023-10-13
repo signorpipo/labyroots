@@ -13,12 +13,17 @@ WL.registerComponent('swap-grab-hand', {
         }
     },
     update: function (dt) {
-        if (this._myGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+        if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
             this._myNormalHand.pp_setActive(false);
-            this._myGrabHand.pp_setActive(true);
-        } else {
-            this._myNormalHand.pp_setActive(true);
             this._myGrabHand.pp_setActive(false);
+        } else {
+            if (this._myGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+                this._myNormalHand.pp_setActive(false);
+                this._myGrabHand.pp_setActive(true);
+            } else {
+                this._myNormalHand.pp_setActive(true);
+                this._myGrabHand.pp_setActive(false);
+            }
         }
     }
 });

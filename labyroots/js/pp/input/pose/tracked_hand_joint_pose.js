@@ -38,27 +38,9 @@ PP.TrackedHandJointPose = class TrackedHandJointPose extends PP.BasePose {
     }
 
     _onXRSessionStartHook(manualStart, session) {
-        session.addEventListener('inputsourceschange', function (event) {
-            if (event.removed) {
-                for (let item of event.removed) {
-                    if (item == this._myInputSource) {
-                        this._myInputSource = null;
-                    }
-                }
-            }
+        this._myInputSource = null;
 
-            if (event.added) {
-                for (let item of event.added) {
-                    if (item.handedness == this._myHandedness) {
-                        if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
-                            this._myInputSource = item;
-                        }
-                    }
-                }
-            }
-        }.bind(this));
-
-        if (manualStart && this._myInputSource == null && session.inputSources) {
+        if (session.inputSources != null && session.inputSources.length > 0) {
             for (let item of session.inputSources) {
                 if (item.handedness == this._myHandedness) {
                     if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
@@ -67,6 +49,20 @@ PP.TrackedHandJointPose = class TrackedHandJointPose extends PP.BasePose {
                 }
             }
         }
+
+        session.addEventListener("inputsourceschange", function () {
+            this._myInputSource = null;
+
+            if (session.inputSources != null && session.inputSources.length > 0) {
+                for (let item of session.inputSources) {
+                    if (item.handedness == this._myHandedness) {
+                        if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
+                            this._myInputSource = item;
+                        }
+                    }
+                }
+            }
+        }.bind(this));
     }
 
     _onXRSessionEndHook() {

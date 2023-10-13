@@ -310,13 +310,6 @@
                         "_myHand": "b8418728-9728-46c6-8041-dedac6ef6fd4"
                     },
                     "active": true
-                },
-                {
-                    "type": "hide-if-pose-not-valid",
-                    "hide-if-pose-not-valid": {
-                        "_myHand": "9f5806db-c077-426c-9f79-d7825fce8af4"
-                    },
-                    "active": true
                 }
             ],
             "translation": [
@@ -469,14 +462,6 @@
                     "type": "hide-if-pose-not-valid",
                     "hide-if-pose-not-valid": {
                         "_myHand": "043d9aad-ab79-4d70-97b5-5e0f8a3728f4",
-                        "_myHandedness": "right"
-                    },
-                    "active": true
-                },
-                {
-                    "type": "hide-if-pose-not-valid",
-                    "hide-if-pose-not-valid": {
-                        "_myHand": "85c60095-e941-4e21-ad59-e6eed85a73c3",
                         "_myHandedness": "right"
                     },
                     "active": true
@@ -13797,7 +13782,8 @@
                         "_myStage4": "1a14a7df-f16e-4980-b7c9-f855a901f62f",
                         "_myStage3": "fd24dd31-2c78-45de-b387-2077b4ea513b",
                         "_myStage5": "1a14a7df-f16e-4980-b7c9-f855a901f62f",
-                        "_myStage6": "1a14a7df-f16e-4980-b7c9-f855a901f62f"
+                        "_myStage6": "1a14a7df-f16e-4980-b7c9-f855a901f62f",
+                        "_myHandedness": "right"
                     }
                 }
             ],
