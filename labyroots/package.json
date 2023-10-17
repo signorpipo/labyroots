@@ -6,7 +6,7 @@
     "homepage": "https://signor-pipo.itch.io/labyroots",
     "repository": {
         "type": "git",
-        "url": "https://github.com/SignorPipo/labyroots"
+        "url": "git+https://github.com/SignorPipo/labyroots.git"
     },
     "license": "ISC",
     "dependencies": {
@@ -16,7 +16,7 @@
         "howler": "2.2.3"
     },
     "devDependencies": {
-        "@typescript-eslint/parser": "^6.7.5",
+        "@typescript-eslint/parser": "^6.8.0",
         "esbuild": "0.14.54",
         "eslint": "^8.51.0",
         "eslint-plugin-deprecation": "^1.5.0"
