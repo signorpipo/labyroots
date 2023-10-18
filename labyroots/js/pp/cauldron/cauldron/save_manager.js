@@ -8,12 +8,6 @@ PP.SaveManager = class SaveManager {
 
         this._myCacheDefaultValueOnFail = true;
 
-        if (WL.xrSession) {
-            this._onXRSessionStart(WL.xrSession);
-        }
-        WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
-        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
-
         this._myClearCallbacks = new Map();                 // Signature: callback()
         this._myDeleteCallbacks = new Map();                // Signature: callback(id)
         this._myDeleteIDCallbacks = new Map();              // Signature: callback(id)
@@ -27,6 +21,12 @@ PP.SaveManager = class SaveManager {
 
         this._myLoadCallbacks = new Map();                  // Signature: callback(id, value, loadFromCache, failed)
         this._myLoadIDCallbacks = new Map();                // Signature: callback(id, value, loadFromCache, failed)
+
+        if (WL.xrSession) {
+            this._onXRSessionStart(WL.xrSession);
+        }
+        WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
     }
 
     setCommitSavesDelay(delay) {
