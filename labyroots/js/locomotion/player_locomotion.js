@@ -162,7 +162,7 @@ PlayerLocomotion = class PlayerLocomotion {
 
             params.myObscureObject = null;
             params.myObscureMaterial = null;
-            params.myObscureRadius = 0.1;
+            params.myObscureRadius = 0.5;
 
             params.myObscureFadeOutSeconds = 0.25;
             params.myObscureFadeInSeconds = 0.25;
