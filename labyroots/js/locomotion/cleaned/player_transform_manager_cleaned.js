@@ -494,7 +494,7 @@ CleanedPlayerTransformManager.prototype.update = function () {
                     this.resetReal(
                         !this._myParams.myNeverResetRealPositionNonVR,
                         !this._myParams.myNeverResetRealRotationNonVR,
-                        !this._myParams.myNeverResetRealHeightNonVR,
+                        !this._myParams.myNeverResetRealHeightNonVR && false,
                         false);
                 }
             }
