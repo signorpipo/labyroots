@@ -154,11 +154,11 @@ Global = {
 
 Global.mySessionStarted = false;
 
-Global.sendAnalytics = function sendAnalytics(...args) {
+Global.sendAnalytics = function sendAnalytics(eventType, eventName, eventValue) {
     try {
         if (Global.myAnalyticsEnabled) {
             if (window.gtag != null) {
-                window.gtag(...args);
+                window.gtag(eventType, eventName, eventValue);
             }
         }
     } catch (error) {
