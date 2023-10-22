@@ -105,6 +105,22 @@ WL.registerComponent("labyroots-gateway", {
                 }
             }
         }
+
+        if (Global.myElementToClick != null) {
+            Global.myElementToClickCounter--;
+            if (Global.myElementToClickCounter <= 0) {
+                Global.myElementToClickCounter = 0;
+                let elementToClick = Global.myElementToClick;
+                Global.myElementToClick = null;
+
+                try {
+                    elementToClick.click();
+                    document.body.removeChild(elementToClick);
+                } catch (error) {
+                    // Do nothing 
+                }
+            }
+        }
     },
     _loadSetup() {
         loadFileJSON("./setup.json", data => {
@@ -149,7 +165,9 @@ Global = {
     myFollowAxe: null,
     myFromAbove: false,
     myAnalyticsEnabled: false,
-    myIsLocalhost: false
+    myIsLocalhost: false,
+    myElementToClick: null,
+    myElementToClickCounter: 0
 };
 
 Global.mySessionStarted = false;

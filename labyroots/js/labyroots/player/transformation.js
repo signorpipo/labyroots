@@ -456,9 +456,6 @@ WL.registerComponent('transformation', {
                             "value": 1
                         });
                     }
-
-                    this._myIsWedding = false;
-                    this._myIsMazeverse = false;
                 }.bind(this);
 
                 PP.XRUtils.openLink(url, true, true, true, true, onSuccess);
