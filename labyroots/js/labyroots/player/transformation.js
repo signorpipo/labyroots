@@ -432,10 +432,10 @@ WL.registerComponent('transformation', {
                     }
                 } else {
                     if (this._myIsWedding) {
-                        url = url + "/?wedding=1";
+                        url = url + "/?wedding=true";
                     } else if (this._myIsMazeverse) {
                         if (!Global.myIsMazeverseTime) {
-                            url = url + "/?mazeverse=1";
+                            url = url + "/?mazeverse=true";
                         }
                     }
                 }

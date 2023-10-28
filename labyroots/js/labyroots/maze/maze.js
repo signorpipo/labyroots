@@ -380,7 +380,7 @@ Global.isWedding = function () {
     if (!isWedding) {
         try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+            if (urlSearchParams != null && urlSearchParams.get("wedding") == "true") {
                 isWedding = true;
             }
         } catch (error) {
@@ -397,7 +397,7 @@ Global.isMazeverse = function () {
     if (!isMazeverse) {
         try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("mazeverse") != null) {
+            if (urlSearchParams != null && urlSearchParams.get("mazeverse") == "true") {
                 isMazeverse = true;
             }
         } catch (error) {
