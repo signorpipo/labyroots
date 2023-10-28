@@ -21,7 +21,10 @@ PP.CAUtils = {
         return PP.CAUtils._myDummyServer;
     },
     isSDKAvailable: function () {
-        return window.casdk != null;
+        return window.heyVR != null;
+    },
+    getSDK: function () {
+        return window.heyVR;
     },
     getLeaderboard: function (leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
         if (PP.CAUtils.isSDKAvailable()) {
@@ -39,7 +42,7 @@ PP.CAUtils = {
                             } else if (callbackOnError) {
                                 let error = {};
                                 error.reason = "Get leaderboard failed";
-                                error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                                error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                                 callbackOnError(error, result);
                             }
                         }
@@ -50,7 +53,7 @@ PP.CAUtils = {
                         } else if (callbackOnError) {
                             let error = {};
                             error.reason = "Get leaderboard failed";
-                            error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                            error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                             callbackOnError(error, result);
                         }
                     });
@@ -61,7 +64,7 @@ PP.CAUtils = {
                     } else if (callbackOnError) {
                         let error = {};
                         error.reason = "Get leaderboard failed";
-                        error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                        error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                         callbackOnError(error, null);
                     }
                 }
@@ -90,7 +93,7 @@ PP.CAUtils = {
                                         } else if (callbackOnError) {
                                             let error = {};
                                             error.reason = "Searching for around player but the user has not submitted a score yet";
-                                            error.type = PP.CAUtils.ErrorType.USER_HAS_NO_SCORE;
+                                            error.type = PP.CAUtils.CAError.USER_HAS_NO_SCORE;
                                             callbackOnError(error, result);
                                         }
                                     }
@@ -101,7 +104,7 @@ PP.CAUtils = {
                                     } else if (callbackOnError) {
                                         let error = {};
                                         error.reason = "Get leaderboard failed";
-                                        error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                                        error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                                         callbackOnError(error, result);
                                     }
                                 }
@@ -112,7 +115,7 @@ PP.CAUtils = {
                                 } else if (callbackOnError) {
                                     let error = {};
                                     error.reason = "Get leaderboard failed";
-                                    error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                                    error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                                     callbackOnError(error, result);
                                 }
                             });
@@ -123,7 +126,7 @@ PP.CAUtils = {
                             } else if (callbackOnError) {
                                 let error = {};
                                 error.reason = "Get leaderboard failed";
-                                error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
+                                error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
                                 callbackOnError(error, null);
                             }
                         }
@@ -135,7 +138,7 @@ PP.CAUtils = {
                         } else if (callbackOnError) {
                             let error = {};
                             error.reason = "Searching for around player but the user can't be retrieved";
-                            error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                            error.type = PP.CAUtils.CAError.GET_USER_FAILED;
                             callbackOnError(error, null);
                         }
                     },
@@ -148,7 +151,7 @@ PP.CAUtils = {
             } else if (callbackOnError) {
                 let error = {};
                 error.reason = "Construct Arcade SDK missing";
-                error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
+                error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
                 callbackOnError(error, null);
             }
         }
@@ -160,7 +163,7 @@ PP.CAUtils = {
             if (callbackOnError) {
                 let error = {};
                 error.reason = "Dummy server not initialized";
-                error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
+                error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
                 callbackOnError(error, null);
             }
         }
@@ -176,7 +179,7 @@ PP.CAUtils = {
                         } else if (callbackOnError) {
                             let error = {};
                             error.reason = "Submit score failed";
-                            error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                            error.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
                             callbackOnError(error, result);
                         }
                     } else {
@@ -189,7 +192,7 @@ PP.CAUtils = {
                     } else if (callbackOnError) {
                         let error = {};
                         error.reason = "Submit score failed";
-                        error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                        error.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
                         callbackOnError(error, result);
                     }
                 });
@@ -200,7 +203,7 @@ PP.CAUtils = {
                 } else if (callbackOnError) {
                     let error = {};
                     error.reason = "Submit score failed";
-                    error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
+                    error.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
                     callbackOnError(error, null);
                 }
             }
@@ -211,7 +214,7 @@ PP.CAUtils = {
             } else if (callbackOnError) {
                 let error = {};
                 error.reason = "Construct Arcade SDK missing";
-                error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
+                error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
                 callbackOnError(error, null);
             }
         }
@@ -223,7 +226,7 @@ PP.CAUtils = {
             if (callbackOnError) {
                 let error = {};
                 error.reason = "Dummy server not initialized";
-                error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
+                error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
                 callbackOnError(error, null);
             }
         }
@@ -243,7 +246,7 @@ PP.CAUtils = {
                         } else if (callbackOnError) {
                             let error = {};
                             error.reason = "Get user failed";
-                            error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                            error.type = PP.CAUtils.CAError.GET_USER_FAILED;
                             callbackOnError(error, result);
                         }
                     }
@@ -254,7 +257,7 @@ PP.CAUtils = {
                     } else if (callbackOnError) {
                         let error = {};
                         error.reason = "Get user failed";
-                        error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                        error.type = PP.CAUtils.CAError.GET_USER_FAILED;
                         callbackOnError(error, result);
                     }
                 });
@@ -265,7 +268,7 @@ PP.CAUtils = {
                 } else if (callbackOnError) {
                     let error = {};
                     error.reason = "Get user failed";
-                    error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
+                    error.type = PP.CAUtils.CAError.GET_USER_FAILED;
                     callbackOnError(error, null);
                 }
             }
@@ -276,7 +279,7 @@ PP.CAUtils = {
             } else if (callbackOnError) {
                 let error = {};
                 error.reason = "Construct Arcade SDK missing";
-                error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
+                error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
                 callbackOnError(error, null);
             }
         }
@@ -288,18 +291,73 @@ PP.CAUtils = {
             if (callbackOnError) {
                 let error = {};
                 error.reason = "Dummy server not initialized";
-                error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
+                error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
                 callbackOnError(error, null);
             }
         }
     },
-    ErrorType: {
-        DUMMY_NOT_INITIALIZED: 0,
+    _getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount) {
+        let heyVR = PP.CAUtils.getSDK();
+
+        if (aroundPlayer) {
+            return heyVR.leaderboard.getMy(leaderboardID, scoresAmount).then(function (result) {
+                let adjustedLeaderboard = [];
+                for (let leaderboardEntry of result) {
+                    adjustedLeaderboard.push({ rank: leaderboardEntry.rank - 1, displayName: leaderboardEntry.user, score: leaderboardEntry.score });
+                }
+                return { leaderboard: adjustedLeaderboard };
+            }).catch(function (error) {
+                if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+                    return { leaderboard: [] };
+                } else {
+                    return { leaderboard: null };
+                }
+            });
+        } else {
+            return heyVR.leaderboard.get(leaderboardID, scoresAmount).then(function (result) {
+                let adjustedLeaderboard = [];
+                for (let leaderboardEntry of result) {
+                    adjustedLeaderboard.push({ rank: leaderboardEntry.rank - 1, displayName: leaderboardEntry.user, score: leaderboardEntry.score });
+                }
+                return { leaderboard: adjustedLeaderboard };
+            }).catch(function () {
+                return { leaderboard: null };
+            });
+        }
+    },
+    _submitScore(leaderboardID, scoreToSubmit) {
+        let heyVR = PP.CAUtils.getSDK();
+        return heyVR.leaderboard.postScore(leaderboardID, scoreToSubmit).then(function () {
+            return { scoreSubmitted: true };
+        }).catch(function (error) {
+            if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+                return { scoreSubmitted: false };
+            } else {
+                return { scoreSubmitted: null };
+            }
+        });
+    },
+    _getUser() {
+        let heyVR = PP.CAUtils.getSDK();
+        return heyVR.user.getName().then(result => {
+            return { user: { displayName: result } };
+        }).catch(function (error) {
+            if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+                return { user: { displayName: null } };
+            } else {
+                return { user: null };
+            }
+        });
+    },
+    CAError: {
+        NONE: 0,
         CA_SDK_MISSING: 1,
-        SUBMIT_SCORE_FAILED: 2,
+        DUMMY_NOT_INITIALIZED: 2,
         GET_LEADERBOARD_FAILED: 3,
-        GET_USER_FAILED: 4,
-        USER_HAS_NO_SCORE: 5
+        SUBMIT_SCORE_FAILED: 4,
+        GET_USER_FAILED: 5,
+        USER_NOT_LOGGED_IN: 6,
+        USER_HAS_NO_SCORE: 7
     }
 };
 
