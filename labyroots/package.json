@@ -1,6 +1,6 @@
 {
     "name": "LabyRoots",
-    "version": "1.0.0",
+    "version": "2.0.2",
     "author": "I Polaretti",
     "description": "GGJ 2023 Entry - Theme: Roots",
     "homepage": "https://signor-pipo.itch.io/labyroots",
@@ -16,7 +16,7 @@
         "howler": "^2.2.4"
     },
     "devDependencies": {
-        "@typescript-eslint/parser": "^6.8.0",
+        "@typescript-eslint/parser": "^6.9.0",
         "esbuild": "^0.19.5",
         "eslint": "^8.52.0",
         "eslint-plugin-deprecation": "^2.0.0"
