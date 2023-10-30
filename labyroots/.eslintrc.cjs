@@ -12,6 +12,8 @@ module.exports = {
         node: true
     },
     globals: {
+        "WebXR": "readonly",
+        "Module": "readonly",
         "WL": "readonly",
         "_WL": "readonly",
         "PP": "writable",
@@ -49,7 +51,6 @@ module.exports = {
         "PlayerLocomotionTeleportTeleportShiftState": "writable",
         "LocomotionUtils": "writable",
         "transformManager": "writable",
-        "WebXR": "writable",
         "CollisionCheckGlobal": "writable",
         "CollisionCheck": "writable",
         "PlayerTransformManagerSyncFlag": "writable",
@@ -69,9 +70,7 @@ module.exports = {
         "PlayerLocomotionTeleportDetectionVisualizer": "writable",
         "PlayerLocomotionTeleportDetectionParams": "writable",
         "PlayerLocomotionTeleportState": "writable",
-        "PlayerLocomotionTeleportRuntimeParams": "writable",
-        "Module": "writable",
-        "casdk": "writable"
+        "PlayerLocomotionTeleportRuntimeParams": "writable"
     },
     plugins: [
         "deprecation"
@@ -88,13 +87,11 @@ module.exports = {
         "/node_modules/",
         "/deploy/",
         "/cache/",
-        "/.editor/",
         "/languages/",
         "/.editor/",
         "/assets/",
         "/static/",
         ".eslintrc.cjs",
-        "zesty.js",
         "zesty-wonderland-sdk-compat.js"
     ],
     overrides: [
