@@ -3,6 +3,11 @@ WL.registerComponent("labyroots-gateway", {
 }, {
     init: function () {
         Global.myAnalyticsEnabled = true;
+
+        Global.sendAnalytics("event", "game_init_started", {
+            "value": 1
+        });
+
         Global.myFromAbove = this._myFromAbove;
 
         Global.mySaveManager = new PP.SaveManager();
@@ -75,6 +80,11 @@ WL.registerComponent("labyroots-gateway", {
         } else if (this._myReadyCounter > 0) {
             this._myReadyCounter--;
             if (this._myReadyCounter == 0) {
+
+                Global.sendAnalytics("event", "game_init_ended", {
+                    "value": 1
+                });
+
                 Global.myStoryReady = true;
             }
         }
