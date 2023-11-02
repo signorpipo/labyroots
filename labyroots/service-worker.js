@@ -902,13 +902,13 @@ async function _fetchFromServiceWorker(request) {
             if (tryFetchFromCacheFirst || forceTryFetchFromCacheFirstOnNetworkError) {
                 cacheAlreadyTried = true;
 
-                let responseFromCache = await _fetchFromCache(request.url);
+                let responseFromCache = await _fetchFromCache(request);
 
                 if (responseFromCache == null) {
                     let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringURLParamsAsFallbackResourceURLsToExclude);
                     let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
                     if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
-                        responseFromCache = await _fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                        responseFromCache = await _fetchFromCache(request, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
                         if (responseFromCache != null) {
                             let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
                             if (logEnabled) {
@@ -954,7 +954,7 @@ async function _fetchFromServiceWorker(request) {
 
             if (fetchFromCacheAllowed) {
                 if (!cacheAlreadyTried) {
-                    let responseFromCache = await _fetchFromCache(request.url);
+                    let responseFromCache = await _fetchFromCache(request);
                     if (responseFromCache != null) {
                         return responseFromCache;
                     }
@@ -963,7 +963,7 @@ async function _fetchFromServiceWorker(request) {
                 let ignoreURLParamsAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringURLParamsAsFallbackResourceURLsToExclude);
                 let ignoreVaryHeaderAsFallback = _shouldResourceURLBeIncluded(request.url, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude, _myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToExclude);
                 if (ignoreURLParamsAsFallback || ignoreVaryHeaderAsFallback) {
-                    let fallbackResponseFromCache = await _fetchFromCache(request.url, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
+                    let fallbackResponseFromCache = await _fetchFromCache(request, ignoreURLParamsAsFallback, ignoreVaryHeaderAsFallback);
                     if (fallbackResponseFromCache != null) {
                         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
                         if (logEnabled) {
@@ -1061,7 +1061,7 @@ async function _postFetchFromNetwork(request, responseFromNetwork, refetchFromNe
     return responseHasBeenCached;
 }
 
-async function _fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryHeader = false) {
+async function _fetchFromCache(request, ignoreURLParams = false, ignoreVaryHeader = false) {
     let responseFromCache = null;
 
     try {
@@ -1069,14 +1069,14 @@ async function _fetchFromCache(resourceURL, ignoreURLParams = false, ignoreVaryH
         let hasCache = await caches.has(currentCacheID); // Avoid creating the cache when opening it if it has not already been created
         if (hasCache) {
             let currentCache = await caches.open(currentCacheID);
-            responseFromCache = await currentCache.match(resourceURL, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
+            responseFromCache = await currentCache.match(request, { ignoreSearch: ignoreURLParams, ignoreVary: ignoreVaryHeader });
         }
     } catch (error) {
         responseFromCache = null;
 
         let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
         if (logEnabled) {
-            console.error("An error occurred while trying to get from the cache: " + resourceURL);
+            console.error("An error occurred while trying to get from the cache: " + request.url);
             console.error(error);
         }
     }
