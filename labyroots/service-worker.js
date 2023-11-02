@@ -326,6 +326,27 @@ let _myTryFetchFromCacheFirstIgnoringVaryHeaderAsFallbackResourceURLsToExclude =
 
 
 
+// This is the same as @_myFetchFromCacheIgnoringVaryHeaderAsFallbackResourceURLsToInclude,
+// but it is used when precaching, since the precache checks if the resource is already in the cache to avoid
+// precaching it again
+//
+// This is needed when precache / installation fails or do not manage to complete,
+// and therefore, on the next attempt, it will start precaching / installing again, 
+// checking if some resources have been already precached during the last attempt, to avoid precache them again
+//
+// Note that during precache u just have the resource URL and not a full request, that can actually use
+// its data to try to match the vary header
+// For this reason precaching will always fetch the resource again, even if the resource was precached previously
+//
+// This should be usually safe to enable since the precache phase should usually give u the same data 
+// over different installing attempts, but on the same device and browser, and with the same service worker version
+//
+// The resources URLs can also be a regex
+let _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToInclude = _EVERY_RESOURCE;
+let _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Used to cache opaque responses
 // Caching opaque responses can lead to a number of issues so use this with caution
 // I also advise u to enable the cache update in background when caching opaque responses,
@@ -1195,7 +1216,8 @@ async function _cacheResourcesToPrecache(rejectServiceWorkerOnPrecacheFailEnable
             } else {
                 let resourceAlreadyInCache = false;
                 if (currentCache != null) {
-                    resourceAlreadyInCache = await currentCache.match(resourceFullURLToPrecache) != null;
+                    let ignoreVaryHeader = _shouldResourceURLBeIncluded(resourceFullURLToPrecache, _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToInclude, _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToExclude);
+                    resourceAlreadyInCache = await currentCache.match(resourceFullURLToPrecache, { ignoreVary: ignoreVaryHeader }) != null;
                 }
 
                 if (!resourceAlreadyInCache) {
@@ -1204,7 +1226,8 @@ async function _cacheResourcesToPrecache(rejectServiceWorkerOnPrecacheFailEnable
                     } else {
                         let resourceAlreadyInTempCache = false;
                         if (currentTempCache != null) {
-                            resourceAlreadyInTempCache = await currentTempCache.match(resourceFullURLToPrecache) != null;
+                            let ignoreVaryHeader = _shouldResourceURLBeIncluded(resourceFullURLToPrecache, _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToInclude, _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsToExclude);
+                            resourceAlreadyInTempCache = await currentTempCache.match(resourceFullURLToPrecache, { ignoreVary: ignoreVaryHeader }) != null;
                         }
 
                         if (!resourceAlreadyInTempCache) {
