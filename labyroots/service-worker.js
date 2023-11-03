@@ -1053,8 +1053,18 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
         if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
             let fetchFromNetworkWithoutBrowserCache = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkWithoutBrowserCacheResourceURLsToInclude, _myFetchFromNetworkWithoutBrowserCacheResourceURLsToExclude);
             if (fetchFromNetworkWithoutBrowserCache) {
+                let requestCacheControlHeader = "";
+                if (request.headers != null) {
+                    requestCacheControlHeader = request.headers.get("Cache-Control");
+                    if (requestCacheControlHeader == null) {
+                        requestCacheControlHeader = "";
+                    }
+                }
+
+                let requestWithoutBrowserCacheCacheControlHeader = (requestCacheControlHeader.length == 0) ? ("no-cache") : (requestCacheControlHeader + ", no-cache");
+
                 let requestWithoutBrowserCache = new Request(request);
-                requestWithoutBrowserCache.headers.set("Cache-Control", "no-cache");
+                requestWithoutBrowserCache.headers.set("Cache-Control", requestWithoutBrowserCacheCacheControlHeader);
                 responseFromNetwork = await fetch(requestWithoutBrowserCache);
             } else {
                 responseFromNetwork = await fetch(request);
