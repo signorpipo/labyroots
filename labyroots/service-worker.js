@@ -347,6 +347,17 @@ let _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsT
 
 
 
+// U can use this to be sure a resource is fetched from the network without looking at the browser cache
+//
+// For resources from the current location it should be safe to override that, but for cross origin (CORS)
+// there might be issues, so use this with caution
+//
+// The resources URLs can also be a regex
+let _myFetchFromNetworkWithoutBrowserCacheResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
+let _myFetchFromNetworkWithoutBrowserCacheResourceURLsToExclude = _NO_RESOURCE;
+
+
+
 // Used to cache opaque responses
 // Caching opaque responses can lead to a number of issues so use this with caution
 // I also advise u to enable the cache update in background when caching opaque responses,
@@ -1040,7 +1051,14 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
     try {
         let fetchFromNetworkAllowed = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkAllowedResourceURLsToInclude, _myFetchFromNetworkAllowedResourceURLsToExclude);
         if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
-            responseFromNetwork = await fetch(request);
+            let fetchFromNetworkWithoutBrowserCache = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkWithoutBrowserCacheResourceURLsToInclude, _myFetchFromNetworkWithoutBrowserCacheResourceURLsToExclude);
+            if (fetchFromNetworkWithoutBrowserCache) {
+                let requestWithoutBrowserCache = new Request(request);
+                requestWithoutBrowserCache.headers.set("Cache-Control", "no-cache");
+                responseFromNetwork = await fetch(requestWithoutBrowserCache);
+            } else {
+                responseFromNetwork = await fetch(request);
+            }
         } else {
             throw new Error("Fetch from network is not allowed: " + request.url);
         }
