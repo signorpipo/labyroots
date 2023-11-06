@@ -574,6 +574,10 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // but do this only if u know what u are doing
 //
 // Note that this will only make the page reload if it was already controlled by a service worker
+//
+// It can also happen that the reload fails, and in that case, if it's important for u that it always work,
+// u might need to handle the reload yourself
+// U can find an example of how to do that in the @_myImmediatelyActivateNewServiceWorker documentation
 let _myReloadAllPagesOnServiceWorkerActivation = false;
 
 
@@ -648,6 +652,10 @@ let _myImmediatelyTakeControlOfAllPages = false;
 //
 // This is due to the fact that @_myReloadAllPagesOnServiceWorkerActivation can only reload pages already controlled, while
 // this flag let you also reload the pages that will be controlled thanks to @ _myImmediatelyTakeControlOfAllPages
+//
+// It can also happen that the reload fails, and in that case, if it's important for u that it always work,
+// u might need to handle the reload yourself
+// U can find an example of how to do that in the @_myImmediatelyTakeControlOfAllPages documentation
 let _myReloadAllPagesAfterImmediatelyTakingControlOfThem = false;
 
 
@@ -1053,19 +1061,23 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
         if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
             let fetchFromNetworkIgnoringBrowserCache = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkIgnoringBrowserCacheResourceURLsToInclude, _myFetchFromNetworkIgnoringBrowserCacheResourceURLsToExclude);
             if (fetchFromNetworkIgnoringBrowserCache) {
-                let requestCacheControlHeader = "";
-                if (request.headers != null) {
-                    requestCacheControlHeader = request.headers.get("Cache-Control");
-                    if (requestCacheControlHeader == null) {
-                        requestCacheControlHeader = "";
-                    }
+                let requestIgnoringBrowserCacheOptions = {};
+                let requestIgnoringBrowserCacheHasOptions = false;
+
+                if (request.cache != "no-cache" && request.cache != "no-store" && request.cache != "reload") {
+                    requestIgnoringBrowserCacheOptions.cache = "no-cache";
+                    requestIgnoringBrowserCacheHasOptions = true;
                 }
 
-                let requestIgnoringBrowserCacheCacheControlHeader = (requestCacheControlHeader.length == 0) ? ("no-cache") : (requestCacheControlHeader + ", no-cache");
+                if (request.headers != null && request.headers.get("Cache-Control") != null
+                    && !request.headers.get("Cache-Control").includes("no-cache") && !request.headers.get("Cache-Control").includes("no-store")) {
+                    requestIgnoringBrowserCacheOptions.headers = new Headers(request.headers);
+                    requestIgnoringBrowserCacheOptions.headers.append("Cache-Control", "no-cache");
+                    requestIgnoringBrowserCacheHasOptions = true;
+                }
 
-                let requestIgnoringBrowserCache = new Request(request);
-                if (requestIgnoringBrowserCache.headers != null) {
-                    requestIgnoringBrowserCache.headers.set("Cache-Control", requestIgnoringBrowserCacheCacheControlHeader);
+                if (requestIgnoringBrowserCacheHasOptions) {
+                    let requestIgnoringBrowserCache = new Request(request, requestIgnoringBrowserCacheOptions);
                     responseFromNetwork = await fetch(requestIgnoringBrowserCache);
                 } else {
                     responseFromNetwork = await fetch(request);
