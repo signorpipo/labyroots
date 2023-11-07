@@ -349,8 +349,9 @@ let _myCheckResourcesAlreadyInCacheDuringPrecacheIgnoringVaryHeaderResourceURLsT
 
 // U can use this to be sure a resource is fetched from the network without using the browser cache
 //
-// For resources from the current location it should be safe to override that, but for cross origin (CORS)
-// there might be issues, so use this with caution
+// Since it requires to create a new Request based on the original one but with a different cache mode,
+// this could potentially create a slightly different request, which might result in a different response from the one
+// u would expect (but I don't think this will actually ever happen)
 //
 // The resources URLs can also be a regex
 let _myFetchFromNetworkIgnoringBrowserCacheResourceURLsToInclude = _EVERY_RESOURCE_FROM_CURRENT_LOCATION;
@@ -417,7 +418,7 @@ let _myHandleHEADRequestsResourceURLsToExclude = _NO_RESOURCE;
 // new Request(headRequest, { method: "GET" })
 //
 // This should be safe, but it could potentially create a slightly different GET request,
-// which could create issues if cached
+// which might result in a different response from the one u would expect (but I don't think this will actually ever happen)
 //
 // Use this with caution
 //
@@ -557,6 +558,11 @@ let _myRecoverInstallationFromLastAttempt = true;
 // which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
 // Be also aware that this will make every opened page related to this service worker reload, not just the current focused one!
 //
+// It can also happen, although very rarely, that the immediate activation may take some time, since it could wait for the
+// current service worker tasks to end before replacing it, therefore delaying the reload, which otherwise would happen very early
+// There might be a very small chance that the immediate activation actually fails, but I'm not sure if that is the case, or I just didn't
+// wait long enough when this rare case happened
+//
 // As u can see, handling a service worker activation is a complex topic!
 // You might want to look on the internet for solutions that best fit your needs,
 // like, for example, asking the user if they want to reload or not
@@ -574,10 +580,6 @@ let _myImmediatelyActivateNewServiceWorker = false;
 // but do this only if u know what u are doing
 //
 // Note that this will only make the page reload if it was already controlled by a service worker
-//
-// It can also happen that the reload fails, and in that case, if it's important for u that it always work,
-// u might need to handle the reload yourself
-// U can find an example of how to do that in the @_myImmediatelyActivateNewServiceWorker documentation
 let _myReloadAllPagesOnServiceWorkerActivation = false;
 
 
@@ -652,10 +654,6 @@ let _myImmediatelyTakeControlOfAllPages = false;
 //
 // This is due to the fact that @_myReloadAllPagesOnServiceWorkerActivation can only reload pages already controlled, while
 // this flag let you also reload the pages that will be controlled thanks to @ _myImmediatelyTakeControlOfAllPages
-//
-// It can also happen that the reload fails, and in that case, if it's important for u that it always work,
-// u might need to handle the reload yourself
-// U can find an example of how to do that in the @_myImmediatelyTakeControlOfAllPages documentation
 let _myReloadAllPagesAfterImmediatelyTakingControlOfThem = false;
 
 
@@ -1061,23 +1059,8 @@ async function _fetchFromNetwork(request, fetchFromNetworkAllowedOverride = null
         if ((fetchFromNetworkAllowed && fetchFromNetworkAllowedOverride == null) || (fetchFromNetworkAllowedOverride != null && fetchFromNetworkAllowedOverride)) {
             let fetchFromNetworkIgnoringBrowserCache = _shouldResourceURLBeIncluded(request.url, _myFetchFromNetworkIgnoringBrowserCacheResourceURLsToInclude, _myFetchFromNetworkIgnoringBrowserCacheResourceURLsToExclude);
             if (fetchFromNetworkIgnoringBrowserCache) {
-                let requestIgnoringBrowserCacheOptions = {};
-                let requestIgnoringBrowserCacheHasOptions = false;
-
                 if (request.cache != "no-cache" && request.cache != "no-store" && request.cache != "reload") {
-                    requestIgnoringBrowserCacheOptions.cache = "no-cache";
-                    requestIgnoringBrowserCacheHasOptions = true;
-                }
-
-                if (request.headers != null && request.headers.get("Cache-Control") != null
-                    && !request.headers.get("Cache-Control").includes("no-cache") && !request.headers.get("Cache-Control").includes("no-store")) {
-                    requestIgnoringBrowserCacheOptions.headers = new Headers(request.headers);
-                    requestIgnoringBrowserCacheOptions.headers.append("Cache-Control", "no-cache");
-                    requestIgnoringBrowserCacheHasOptions = true;
-                }
-
-                if (requestIgnoringBrowserCacheHasOptions) {
-                    let requestIgnoringBrowserCache = new Request(request, requestIgnoringBrowserCacheOptions);
+                    let requestIgnoringBrowserCache = new Request(request, { cache: "no-cache" });
                     responseFromNetwork = await fetch(requestIgnoringBrowserCache);
                 } else {
                     responseFromNetwork = await fetch(request);
