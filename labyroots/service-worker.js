@@ -558,9 +558,9 @@ let _myRecoverInstallationFromLastAttempt = true;
 // which could be annoying (but I'm not sure what the chances are of this actually happening or how to reproduce it)
 // Be also aware that this will make every opened page related to this service worker reload, not just the current focused one!
 //
-// It can also happen, although very rarely, that the immediate activation may take some time, since it could wait for the
+// It can also happen that the immediate activation may take some time, since it could wait for the
 // current service worker tasks to end before replacing it, therefore delaying the reload, which otherwise would happen very early
-// There might be a very small chance that the immediate activation actually fails, but I'm not sure if that is the case, or I just didn't
+// There might also be a very small chance that the immediate activation actually fails, but I'm not sure if that is the case, or I just didn't
 // wait long enough when this rare case happened
 //
 // As u can see, handling a service worker activation is a complex topic!
