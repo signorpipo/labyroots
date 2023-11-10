@@ -31,8 +31,8 @@ WL.registerComponent("labyroots-gateway", {
         this._myLoadSetupDone = false;
         this._loadSetup();
 
-        this._myFirstUpdatesCounterInitialValue = 5;
-        this._myFirstUpdatesCounter = this._myFirstUpdatesCounterInitialValue;
+        this._myFirstUpdate = true;
+        this._myVeryFirstUpdate = true;
         this._myReadyCounter = 10;
 
         if (WL.xrSession) {
@@ -51,73 +51,68 @@ WL.registerComponent("labyroots-gateway", {
         this._myTimePlayingVRStepIndex = 0;
     },
     update: function (dt) {
+        if (this._myVeryFirstUpdate) {
+            this._myVeryFirstUpdate = false;
+
+            if (this._myVRButton != null) {
+                this._myVRButton.style.setProperty("display", "block");
+            }
+        } else {
+            if (!this._myVRButtonUsabilityUpdated) {
+                this._updateVRButtonVisibility();
+            }
+        }
+
         if (!this._myLoadSetupDone) {
             return;
         }
 
         Global.mySaveManager.update(dt);
 
-        if (this._myFirstUpdatesCounter > 0) {
-            this._myFirstUpdatesCounter--;
-            if (this._myFirstUpdatesCounter == this._myFirstUpdatesCounterInitialValue - 1) {
-                if (this._myVRButton != null) {
-                    this._myVRButton.style.setProperty("display", "block");
-                }
-            } else {
-                if (!this._myVRButtonUsabilityUpdated) {
-                    this._updateVRButtonVisibility();
-                }
+        if (this._myFirstUpdate) {
+            this._myFirstUpdate = false;
+            let gameplayItems = WL.scene.pp_getObjectByName("Gameplay Items");
+            if (gameplayItems != null) {
+                let fruits = gameplayItems.pp_getObjectByName("Fruits");
+                let fruit1 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_1).pp_getChildren()[0];
+                let fruit2 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_2).pp_getChildren()[0];
+                let fruit3 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_3).pp_getChildren()[0];
+                let fruit4 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_4).pp_getChildren()[0];
+                Global.myFruits[LR.MazeItemType.HUMAN_TREE_1] = fruit1;
+                Global.myFruits[LR.MazeItemType.HUMAN_TREE_2] = fruit2;
+                Global.myFruits[LR.MazeItemType.HUMAN_TREE_3] = fruit3;
+                Global.myFruits[LR.MazeItemType.HUMAN_TREE_4] = fruit4;
 
-                if (this._myFirstUpdatesCounter == 0) {
-                    let gameplayItems = WL.scene.pp_getObjectByName("Gameplay Items");
-                    if (gameplayItems != null) {
-                        let fruits = gameplayItems.pp_getObjectByName("Fruits");
-                        let fruit1 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_1).pp_getChildren()[0];
-                        let fruit2 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_2).pp_getChildren()[0];
-                        let fruit3 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_3).pp_getChildren()[0];
-                        let fruit4 = fruits.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_4).pp_getChildren()[0];
-                        Global.myFruits[LR.MazeItemType.HUMAN_TREE_1] = fruit1;
-                        Global.myFruits[LR.MazeItemType.HUMAN_TREE_2] = fruit2;
-                        Global.myFruits[LR.MazeItemType.HUMAN_TREE_3] = fruit3;
-                        Global.myFruits[LR.MazeItemType.HUMAN_TREE_4] = fruit4;
-
-                        Global.myAxeProto = gameplayItems.pp_getObjectByName("Axe");
-                        Global.myAxe = Global.myAxeProto;
-                        Global.myFollowAxe = gameplayItems.pp_getObjectByName("Follow Axe");
-                    }
-
-                    let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
-                    if (mazeItems != null) {
-                        let tree1 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_1).pp_getChildren()[0];
-                        let tree2 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_2).pp_getChildren()[0];
-                        let tree3 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_3).pp_getChildren()[0];
-                        let tree4 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_4).pp_getChildren()[0];
-                        Global.myTrees[LR.MazeItemType.HUMAN_TREE_1] = tree1;
-                        Global.myTrees[LR.MazeItemType.HUMAN_TREE_2] = tree2;
-                        Global.myTrees[LR.MazeItemType.HUMAN_TREE_3] = tree3;
-                        Global.myTrees[LR.MazeItemType.HUMAN_TREE_4] = tree4;
-                    }
-
-                    Global.myMaze.buildMaze();
-                }
-            }
-        } else {
-            if (!this._myVRButtonUsabilityUpdated) {
-                this._updateVRButtonVisibility();
+                Global.myAxeProto = gameplayItems.pp_getObjectByName("Axe");
+                Global.myAxe = Global.myAxeProto;
+                Global.myFollowAxe = gameplayItems.pp_getObjectByName("Follow Axe");
             }
 
-            if (this._myReadyCounter > 0) {
-                this._myReadyCounter--;
-                if (this._myReadyCounter == 0) {
+            let mazeItems = WL.scene.pp_getObjectByName("Maze Items");
+            if (mazeItems != null) {
+                let tree1 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_1).pp_getChildren()[0];
+                let tree2 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_2).pp_getChildren()[0];
+                let tree3 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_3).pp_getChildren()[0];
+                let tree4 = mazeItems.pp_getObjectByName("" + LR.MazeItemType.HUMAN_TREE_4).pp_getChildren()[0];
+                Global.myTrees[LR.MazeItemType.HUMAN_TREE_1] = tree1;
+                Global.myTrees[LR.MazeItemType.HUMAN_TREE_2] = tree2;
+                Global.myTrees[LR.MazeItemType.HUMAN_TREE_3] = tree3;
+                Global.myTrees[LR.MazeItemType.HUMAN_TREE_4] = tree4;
+            }
 
-                    Global.sendAnalytics("event", "game_init_ended", {
-                        "value": 1
-                    });
+            Global.myMaze.buildMaze();
+        } else if (this._myReadyCounter > 0) {
+            this._myReadyCounter--;
+            if (this._myReadyCounter == 0) {
 
-                    Global.myStoryReady = true;
-                }
+                Global.sendAnalytics("event", "game_init_ended", {
+                    "value": 1
+                });
+
+                Global.myStoryReady = true;
             }
         }
+
         // ripulire i frutti e le asce  
         // aggiungere le radici
 
