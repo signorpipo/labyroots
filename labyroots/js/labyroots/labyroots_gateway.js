@@ -15,6 +15,7 @@ WL.registerComponent("labyroots-gateway", {
         this._myVRButtonVisibilityUpdated = false;
         this._myVRButtonDisabledOpacityUpdated = false;
         this._myVRButtonUsabilityUpdated = false;
+        this._myXRButtonsContainer = document.getElementById("xr-buttons-container");
         this._myVRButton = document.getElementById("vr-button");
 
         if (window.location != null && window.location.host != null) {
@@ -39,6 +40,7 @@ WL.registerComponent("labyroots-gateway", {
             this._onXRSessionStart(WL.xrSession);
         }
         WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+        WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
 
         this._myButtonPressed = false;
 
@@ -191,6 +193,10 @@ WL.registerComponent("labyroots-gateway", {
         }
     },
     _onXRSessionStart() {
+        if (this._myXRButtonsContainer != null) {
+            this._myXRButtonsContainer.style.setProperty("display", "none");
+        }
+
         Global.sendAnalytics("event", "enter_vr", {
             "value": 1
         });
@@ -205,6 +211,11 @@ WL.registerComponent("labyroots-gateway", {
         Global.mySaveManager.save("is_first_enter_vr", false, false);
 
         Global.mySessionStarted = true;
+    },
+    _onXRSessionEnd() {
+        if (this._myXRButtonsContainer != null) {
+            this._myXRButtonsContainer.style.removeProperty("display");
+        }
     }
 });
 
