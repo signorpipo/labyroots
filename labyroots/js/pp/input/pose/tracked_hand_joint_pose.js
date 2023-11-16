@@ -41,10 +41,11 @@ PP.TrackedHandJointPose = class TrackedHandJointPose extends PP.BasePose {
         this._myInputSource = null;
 
         if (session.inputSources != null && session.inputSources.length > 0) {
-            for (let item of session.inputSources) {
-                if (item.handedness == this._myHandedness) {
-                    if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
-                        this._myInputSource = item;
+            for (let i = 0; i < session.inputSources.length; i++) {
+                let inputSource = session.inputSources[i];
+                if (inputSource.handedness == this._myHandedness) {
+                    if (PP.InputUtils.getInputSourceType(inputSource) == PP.InputSourceType.TRACKED_HAND) {
+                        this._myInputSource = inputSource;
                     }
                 }
             }
@@ -54,10 +55,11 @@ PP.TrackedHandJointPose = class TrackedHandJointPose extends PP.BasePose {
             this._myInputSource = null;
 
             if (session.inputSources != null && session.inputSources.length > 0) {
-                for (let item of session.inputSources) {
-                    if (item.handedness == this._myHandedness) {
-                        if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
-                            this._myInputSource = item;
+                for (let i = 0; i < session.inputSources.length; i++) {
+                    let inputSource = session.inputSources[i];
+                    if (inputSource.handedness == this._myHandedness) {
+                        if (PP.InputUtils.getInputSourceType(inputSource) == PP.InputSourceType.TRACKED_HAND) {
+                            this._myInputSource = inputSource;
                         }
                     }
                 }

@@ -120,7 +120,14 @@ PP.XRGamepadCore = class XRGamepadCore extends PP.GamepadCore {
     _updateHandPose(dt) {
         this._myHandPose.update(dt);
 
+        let prevInputSource = this._myInputSource;
         this._myInputSource = this._myHandPose.getInputSource();
+
+        if (prevInputSource != this._myInputSource) {
+            this._mySelectPressed = false;
+            this._mySqueezePressed = false;
+        }
+
         if (this._myInputSource != null) {
             this._myGamepad = this._myInputSource.gamepad;
         } else {
@@ -154,6 +161,9 @@ PP.XRGamepadCore = class XRGamepadCore extends PP.GamepadCore {
     }
 
     _onXRSessionEnd(session) {
+        this._mySelectPressed = false;
+        this._mySqueezePressed = false;
+
         this._myIsXRSessionActive = false;
     }
 
