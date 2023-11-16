@@ -172,6 +172,14 @@ PP.BaseGamepad = class BaseGamepad {
         button.myIsPressed = buttonData.myIsPressed;
         button.myIsTouched = buttonData.myIsTouched;
         button.myValue = buttonData.myValue;
+
+        if (button.myIsPressed) {
+            button.myIsTouched = true;
+
+            if (button.myValue == 0) {
+                button.myValue = 1;
+            }
+        }
     }
 
     _postUpdateButtonInfos(dt) {
