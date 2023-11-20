@@ -13,6 +13,11 @@ WL.registerComponent("display-leaderboard", {
             this._myNamesTextComponent = this.object.pp_getObjectByName("Names").pp_getComponent("text");
             this._myScoresTextComponent = this.object.pp_getObjectByName("Scores").pp_getComponent("text");
 
+            if (this._myNamesTextComponent != null && this._myScoresTextComponent != null) {
+                this._myNamesTextComponent.text = "";
+                this._myScoresTextComponent.text = "";
+            }
+
             this.updateLeaderboard();
         }
     },
