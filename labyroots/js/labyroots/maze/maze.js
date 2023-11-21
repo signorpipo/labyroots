@@ -24,7 +24,7 @@ LR.Maze = class Maze {
         Global.myIsWeddingTime = false;
         Global.myIsMazeverseTime = false;
 
-        Global.myWinMazeverse = Global.mySaveManager.loadBool("win_mazeverse", false);
+        Global.myWinMazeverse = Global.mySaveManager.load("win_mazeverse", false);
 
         if (isMazeverse) {
             this._myGridToUse = Global.createMazeverseMaze();
@@ -375,7 +375,7 @@ LR.MazeCell = class MazeCell {
 };
 
 Global.isWedding = function () {
-    let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+    let isWedding = Global.mySaveManager.load("is_wedding", false);
 
     if (!isWedding) {
         try {
@@ -392,7 +392,7 @@ Global.isWedding = function () {
 };
 
 Global.isMazeverse = function () {
-    let isMazeverse = Global.mySaveManager.loadBool("is_mazeverse", false);
+    let isMazeverse = Global.mySaveManager.load("is_mazeverse", false);
 
     if (!isMazeverse) {
         try {

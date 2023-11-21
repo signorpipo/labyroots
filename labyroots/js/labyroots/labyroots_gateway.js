@@ -10,7 +10,8 @@ WL.registerComponent("labyroots-gateway", {
 
         Global.myFromAbove = this._myFromAbove;
 
-        Global.mySaveManager = new PP.SaveManager();
+        Global.mySaveManager = new PP.SaveManager("labyroots");
+        Global.mySaveManager.setDelaySavesCommit(false);
 
         this._myVRButtonVisibilityUpdated = false;
         this._myVRButtonDisabledOpacityUpdated = false;
@@ -201,14 +202,14 @@ WL.registerComponent("labyroots-gateway", {
             "value": 1
         });
 
-        let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
+        let isFirstEnterVR = Global.mySaveManager.load("is_first_enter_vr", true);
         if (isFirstEnterVR) {
             Global.sendAnalytics("event", "enter_vr_first_time", {
                 "value": 1
             });
         }
 
-        Global.mySaveManager.save("is_first_enter_vr", false, false);
+        Global.mySaveManager.save("is_first_enter_vr", false);
 
         Global.mySessionStarted = true;
     },

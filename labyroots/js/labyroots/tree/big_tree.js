@@ -101,17 +101,17 @@ WL.registerComponent('big-tree', {
                     Global.myBigTreeDead = true;
                     Global.myStage = 0;
 
-                    let isFirstWin = !Global.mySaveManager.loadBool("win_normal_maze", false);
+                    let isFirstWin = !Global.mySaveManager.load("win_normal_maze", false);
                     if (isFirstWin && !Global.myIsMazeverseTime) {
                         // Automatically switch to mazeverse
-                        Global.mySaveManager.save("is_mazeverse", true, false);
+                        Global.mySaveManager.save("is_mazeverse", true);
                     }
 
-                    Global.mySaveManager.save("win", true, false);
+                    Global.mySaveManager.save("win", true);
                     if (Global.myIsMazeverseTime) {
-                        Global.mySaveManager.save("win_mazeverse", true, false);
+                        Global.mySaveManager.save("win_mazeverse", true);
                     } else {
-                        Global.mySaveManager.save("win_normal_maze", true, false);
+                        Global.mySaveManager.save("win_normal_maze", true);
                     }
 
                     Global.sendAnalytics("event", "defeat_mother_tree", {

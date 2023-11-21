@@ -471,7 +471,7 @@ WL.registerComponent('transformation', {
                         "value": 1
                     });
 
-                    Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
+                    Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime);
 
                     this._myEnd = 1;
                     this._myChange = 1;
@@ -493,7 +493,7 @@ WL.registerComponent('transformation', {
                         "value": 1
                     });
 
-                    Global.mySaveManager.save("is_wedding", true, false);
+                    Global.mySaveManager.save("is_wedding", true);
 
                     this._myEnd = 1;
                     this._myChange = 1;

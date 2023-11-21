@@ -45,7 +45,7 @@ WL.registerComponent('story', {
                     console.log("Game Version:", currentVersion);
 
                     this._myStarted = true;
-                    this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
+                    this._myCanSkip = Global.mySaveManager.load("can_skip", false);
 
                     if (Global.myIsWeddingTime || Global.myIsMazeverseTime) {
                         if (Global.myFromAbove) {
@@ -62,8 +62,8 @@ WL.registerComponent('story', {
                         Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                     }
 
-                    Global.mySaveManager.save("is_wedding", false, false);
-                    //Global.mySaveManager.save("is_mazeverse", false, false); keep mazeverse until switch
+                    Global.mySaveManager.save("is_wedding", false);
+                    //Global.mySaveManager.save("is_mazeverse", false); keep mazeverse until switch
 
                     this._mySessionActive = PP.XRUtils.isSessionActive();
                 }
@@ -169,7 +169,7 @@ WL.registerComponent('story', {
                     Global.myFollowAxe.pp_setActive(true);
                     Global.myReady = true;
 
-                    Global.mySaveManager.save("can_skip", true, false);
+                    Global.mySaveManager.save("can_skip", true);
 
                     Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                     Global.myMusicPlayer.play();
