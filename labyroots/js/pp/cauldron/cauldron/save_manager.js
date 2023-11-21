@@ -16,7 +16,7 @@ PP.SaveManager = class SaveManager {
         this._mySaveValueChangedCallbacks = new Map();      // Signature: callback(id, value)
         this._mySaveIDCallbacks = new Map();                // Signature: callback(id, value)
         this._mySaveValueChangedIDCallbacks = new Map();    // Signature: callback(id, value)
-        this._myCommitSavesCallbacks = new Map();           // Signature: callback(succeeded, isCommitSavesDelayed)
+        this._myCommitSavesCallbacks = new Map();           // Signature: callback(succeeded)
         this._myLoadCallbacks = new Map();                  // Signature: callback(id, value)
         this._myLoadIDCallbacks = new Map();                // Signature: callback(id, value)
 
@@ -54,6 +54,22 @@ PP.SaveManager = class SaveManager {
 
     setCommitSavesDirtyClearOnFail(clearOnFail) {
         this._myCommitSavesDirtyClearOnFail = clearOnFail;
+    }
+
+    getCommitSavesDelay() {
+        return this._myCommitSavesDelayTimer.getDuration();
+    }
+
+    isDelaySavesCommit() {
+        return this._myDelaySavesCommit;
+    }
+
+    isCommitSavesDirty() {
+        return this._myCommitSavesDirty;
+    }
+
+    isCommitSavesDirtyClearOnFail() {
+        return this._myCommitSavesDirtyClearOnFail;
     }
 
     update(dt) {
@@ -201,8 +217,7 @@ PP.SaveManager = class SaveManager {
         }
 
         if (this._myCommitSavesCallbacks.size > 0) {
-            let isCommitSavesDelayed = true;
-            this._myCommitSavesCallbacks.forEach(function (callback) { callback(succeded, isCommitSavesDelayed); });
+            this._myCommitSavesCallbacks.forEach(function (callback) { callback(succeded); });
         }
 
         if (succeded || this._myCommitSavesDirtyClearOnFail) {
@@ -213,20 +228,22 @@ PP.SaveManager = class SaveManager {
         return succeded;
     }
 
-    getCommitSavesDelay() {
-        return this._myCommitSavesDelayTimer.getDuration();
+    _onXRSessionStart(session) {
+        session.addEventListener('visibilitychange', function (event) {
+            if (event.session.visibilityState != "visible") {
+                this._onInterrupt();
+            }
+        }.bind(this));
     }
 
-    isDelaySavesCommit() {
-        return this._myDelaySavesCommit;
+    _onXRSessionEnd() {
+        this._onInterrupt();
     }
 
-    isCommitSavesDirty() {
-        return this._myCommitSavesDirty;
-    }
-
-    isCommitSavesDirtyClearOnFail() {
-        return this._myCommitSavesDirtyClearOnFail;
+    _onInterrupt() {
+        if (this._myCommitSavesDirty) {
+            this._commitSaves();
+        }
     }
 
     registerClearEventListener(callbackID, callback) {
@@ -342,24 +359,6 @@ PP.SaveManager = class SaveManager {
         let valueIDMap = this._myLoadIDCallbacks.get(valueID);
         if (valueIDMap != null) {
             valueIDMap.delete(callbackID);
-        }
-    }
-
-    _onXRSessionStart(session) {
-        session.addEventListener('visibilitychange', function (event) {
-            if (event.session.visibilityState != "visible") {
-                this._onInterrupt();
-            }
-        }.bind(this));
-    }
-
-    _onXRSessionEnd() {
-        this._onInterrupt();
-    }
-
-    _onInterrupt() {
-        if (this._myCommitSavesDirty) {
-            this._commitSaves();
         }
     }
 };
