@@ -20,6 +20,12 @@ PP.SaveManager = class SaveManager {
         this._myLoadCallbacks = new Map();                  // Signature: callback(id, value)
         this._myLoadIDCallbacks = new Map();                // Signature: callback(id, value)
 
+        window.addEventListener('visibilitychange', function () {
+            if (document.visibilityState != "visible") {
+                this._onInterrupt();
+            }
+        }.bind(this));
+
         if (WL.xrSession) {
             this._onXRSessionStart(WL.xrSession);
         }
@@ -342,16 +348,16 @@ PP.SaveManager = class SaveManager {
     _onXRSessionStart(session) {
         session.addEventListener('visibilitychange', function (event) {
             if (event.session.visibilityState != "visible") {
-                this._onXRSessionInterrupt();
+                this._onInterrupt();
             }
         }.bind(this));
     }
 
     _onXRSessionEnd() {
-        this._onXRSessionInterrupt();
+        this._onInterrupt();
     }
 
-    _onXRSessionInterrupt() {
+    _onInterrupt() {
         if (this._myCommitSavesDirty) {
             this._commitSaves();
         }
