@@ -108,7 +108,9 @@ WL.registerComponent('pp-finger-cursor', {
         this._myCursorObjectRoot.pp_setActive(true);
     },
     onDeactivate: function () {
-        this._myCursorObjectRoot.pp_setActive(false);
+        if (this._myCursorObjectRoot != null) {
+            this._myCursorObjectRoot.pp_setActive(false);
+        }
     },
     _updateHand() {
         this._myHandInputSource = PP.InputUtils.getInputSource(this._myHandednessString, PP.InputSourceType.TRACKED_HAND);
