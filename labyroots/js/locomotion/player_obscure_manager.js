@@ -242,6 +242,9 @@ PlayerObscureManager = class PlayerObscureManager {
                 let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenHeadColliding;
                 if (relativeDistance >= 0) {
                     let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenHeadColliding, 0, 1);
+                    if (isNaN(relativeDistancePercentage)) {
+                        relativeDistancePercentage = 1;
+                    }
                     let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                     this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
                 }
@@ -252,6 +255,9 @@ PlayerObscureManager = class PlayerObscureManager {
                 let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenBodyColliding;
                 if (relativeDistance >= 0) {
                     let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenBodyColliding, 0, 1);
+                    if (isNaN(relativeDistancePercentage)) {
+                        relativeDistancePercentage = 1;
+                    }
                     let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                     this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
                 }
@@ -262,6 +268,9 @@ PlayerObscureManager = class PlayerObscureManager {
                 let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenFloating;
                 if (relativeDistance >= 0) {
                     let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFloating, 0, 1);
+                    if (isNaN(relativeDistancePercentage)) {
+                        relativeDistancePercentage = 1;
+                    }
                     let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                     this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
                 }
@@ -272,6 +281,9 @@ PlayerObscureManager = class PlayerObscureManager {
                 let relativeDistance = distance - this._myParams.myDistanceToStartObscureWhenFar;
                 if (relativeDistance >= 0) {
                     let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFar, 0, 1);
+                    if (isNaN(relativeDistancePercentage)) {
+                        relativeDistancePercentage = 1;
+                    }
                     let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                     this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
                 }
