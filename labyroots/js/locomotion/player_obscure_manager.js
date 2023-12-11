@@ -289,11 +289,9 @@ PlayerObscureManager = class PlayerObscureManager {
                 }
             }
 
-            if (!PP.XRUtils.isDeviceEmulated() || !Global.myIsLocalhost) {
-                this._myParams.myPlayerTransformManager.getHead().pp_getPosition(this._myHeadPosition);
-                if (this._myHeadPosition[1] < 0.15 && this._myHeadPosition[1] > -1) {
-                    this._myTargetObscureLevel = 1;
-                }
+            this._myParams.myPlayerTransformManager.getHead().pp_getPosition(this._myHeadPosition);
+            if (this._myHeadPosition[1] < 0.15 && this._myHeadPosition[1] > -1) {
+                this._myTargetObscureLevel = 1;
             }
         }
     }
