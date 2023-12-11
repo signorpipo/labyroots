@@ -40,6 +40,8 @@ PlayerObscureManager = class PlayerObscureManager {
         this._myLastTargetObscureLevel = null;
         this._myLastIsFadingIn = null;
 
+        this._myHeadPosition = PP.vec3_create();
+
         this._myFadeTimer = new PP.Timer(0, false);
 
         this._myFSM = new PP.FSM();
@@ -272,6 +274,13 @@ PlayerObscureManager = class PlayerObscureManager {
                     let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFar, 0, 1);
                     let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                     this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
+                }
+            }
+
+            if (!PP.XRUtils.isDeviceEmulated() || !Global.myIsLocalhost) {
+                this._myParams.myPlayerTransformManager.getHead().pp_getPosition(this._myHeadPosition);
+                if (this._myHeadPosition[1] < 0.15 && this._myHeadPosition[1] > -1) {
+                    this._myTargetObscureLevel = 1;
                 }
             }
         }
