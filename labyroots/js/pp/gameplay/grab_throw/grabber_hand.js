@@ -225,8 +225,10 @@ WL.registerComponent('pp-grabber-hand', {
     },
     _updateLinearVelocityHistory() {
         let handPose = this._myGamepad.getHandPose();
-        this._myHandLinearVelocityHistory.unshift(handPose.getLinearVelocity().pp_clone());
-        this._myHandLinearVelocityHistory.pop();
+        if (handPose) {
+            this._myHandLinearVelocityHistory.unshift(handPose.getLinearVelocity().pp_clone());
+            this._myHandLinearVelocityHistory.pop();
+        }
 
         for (let grabbable of this._myGrabbables) {
             grabbable.updateLinearVelocityHistory();
@@ -234,8 +236,10 @@ WL.registerComponent('pp-grabber-hand', {
     },
     _updateAngularVelocityHistory() {
         let handPose = this._myGamepad.getHandPose();
-        this._myHandAngularVelocityHistory.unshift(handPose.getAngularVelocityRadians().pp_clone());
-        this._myHandAngularVelocityHistory.pop();
+        if (handPose) {
+            this._myHandAngularVelocityHistory.unshift(handPose.getAngularVelocityRadians().pp_clone());
+            this._myHandAngularVelocityHistory.pop();
+        }
 
         for (let grabbable of this._myGrabbables) {
             grabbable.updateAngularVelocityHistory();
