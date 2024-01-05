@@ -46,7 +46,7 @@ WL.registerComponent('fruit', {
     },
     update: function (dt) {
         if (!this._myStarted) {
-            if (Global.myStoryReady) {
+            if (Global.myReady) {
                 this._myStarted = true;
                 this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }

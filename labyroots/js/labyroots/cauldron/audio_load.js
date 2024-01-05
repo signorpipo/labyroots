@@ -230,10 +230,6 @@ WL.registerComponent('audio-load', {
             audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
         }
-
-        for (let i = 0; i <= AudioID.INVINCIBLE; i++) {
-            manager.createAudioPlayer(i);
-        }
     }
 });
 

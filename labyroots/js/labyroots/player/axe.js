@@ -38,7 +38,7 @@ WL.registerComponent('axe', {
         }
 
         if (!this._myStarted) {
-            if (Global.myStoryReady) {
+            if (Global.myReady) {
                 this._myStarted = true;
                 this._myAudioColpi = [];
                 this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);

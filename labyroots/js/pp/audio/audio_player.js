@@ -36,7 +36,6 @@ PP.AudioPlayer = class AudioPlayer {
                 autoplay: this._myAudioSetup.myAutoplay,
                 rate: this._myAudioSetup.myRate,
                 pool: this._myAudioSetup.myPool,
-                pos: (this._myAudioSetup.mySpatial) ? this._myAudioSetup.myPosition : null,
                 refDistance: this._myAudioSetup.myReferenceDistance,
                 preload: this._myAudioSetup.myPreload,
                 onloaderror: function () {
@@ -45,8 +44,6 @@ PP.AudioPlayer = class AudioPlayer {
                     });
                 }
             });
-
-            this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
         }
 
         this._myLastAudioID = null;
