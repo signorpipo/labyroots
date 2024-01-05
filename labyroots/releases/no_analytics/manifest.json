@@ -1,7 +1,9 @@
 {
 	"name": "LabyRoots",
 	"short_name": "LabyRoots",
+	"author": "I Polaretti",
 	"description": "The mother of all trees must succumb.",
+	"homepage_url": "https://signor-pipo.itch.io/labyroots",
 	"lang": "en-US",
 	"display": "standalone",
 	"ovr_package_name": "com.ipolaretti.labyroots",
