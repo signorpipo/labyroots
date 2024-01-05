@@ -5,7 +5,6 @@
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
-  var __defNormalProp = (obj, key, value) => key in obj ? __defProp(obj, key, { enumerable: true, configurable: true, writable: true, value }) : obj[key] = value;
   var __esm = (fn, res) => function __init() {
     return fn && (res = (0, fn[__getOwnPropNames(fn)[0]])(fn = 0)), res;
   };
@@ -25,19 +24,20 @@
     return to;
   };
   var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
     isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
     mod
   ));
   var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-  var __publicField = (obj, key, value) => {
-    __defNormalProp(obj, typeof key !== "symbol" ? key + "" : key, value);
-    return value;
-  };
 
   // node_modules/@wonderlandengine/components/8thwall-camera.js
   var require_thwall_camera = __commonJS({
     "node_modules/@wonderlandengine/components/8thwall-camera.js"() {
       WL.registerComponent("8thwall-camera", {
+        /** Choose front/back camera */
         camera: { type: WL.Type.Enum, values: ["auto", "back", "front"], default: "auto" }
       }, {
         name: "wonderland-engine",
@@ -53,6 +53,7 @@
           this.onStart = this.onStart.bind(this);
           this.onUpdate = this.onUpdate.bind(this);
           XR8.addCameraPipelineModules([
+            /* Draw the camera feed */
             XR8.GlTextureRenderer.pipelineModule(),
             XR8.XrController.pipelineModule(),
             this
@@ -87,6 +88,8 @@
             this.object.translate(this.position);
           }
         },
+        /* XR8 CameraPipelineModule functions
+         * See: https://www.8thwall.com/docs/web/#camerapipelinemodule */
         onUpdate: function(data) {
           if (!data.processCpuResult.reality)
             return;
@@ -216,8 +219,8 @@
     setMatrixArrayType: () => setMatrixArrayType,
     toRadian: () => toRadian
   });
-  function setMatrixArrayType(type2) {
-    ARRAY_TYPE = type2;
+  function setMatrixArrayType(type) {
+    ARRAY_TYPE = type;
   }
   function toRadian(a) {
     return a * degree;
@@ -1963,7 +1966,7 @@
     hermite: () => hermite,
     inverse: () => inverse,
     len: () => len,
-    length: () => length2,
+    length: () => length,
     lerp: () => lerp,
     max: () => max,
     min: () => min,
@@ -2007,7 +2010,7 @@
     out[2] = a[2];
     return out;
   }
-  function length2(a) {
+  function length(a) {
     var x = a[0];
     var y = a[1];
     var z = a[2];
@@ -2297,7 +2300,7 @@
       div = divide;
       dist = distance;
       sqrDist = squaredDistance;
-      len = length2;
+      len = length;
       sqrLen = squaredLength;
       forEach = function() {
         var vec = create3();
@@ -2350,7 +2353,7 @@
     fromValues: () => fromValues4,
     inverse: () => inverse2,
     len: () => len2,
-    length: () => length3,
+    length: () => length2,
     lerp: () => lerp2,
     max: () => max2,
     min: () => min2,
@@ -2505,7 +2508,7 @@
     var w = b[3] - a[3];
     return x * x + y * y + z * z + w * w;
   }
-  function length3(a) {
+  function length2(a) {
     var x = a[0];
     var y = a[1];
     var z = a[2];
@@ -2643,7 +2646,7 @@
       div2 = divide2;
       dist2 = distance2;
       sqrDist2 = squaredDistance2;
-      len2 = length3;
+      len2 = length2;
       sqrLen2 = squaredLength2;
       forEach2 = function() {
         var vec = create4();
@@ -2698,7 +2701,7 @@
     identity: () => identity3,
     invert: () => invert3,
     len: () => len3,
-    length: () => length4,
+    length: () => length3,
     lerp: () => lerp3,
     ln: () => ln,
     mul: () => mul5,
@@ -2941,7 +2944,7 @@
   function str5(a) {
     return "quat(" + a[0] + ", " + a[1] + ", " + a[2] + ", " + a[3] + ")";
   }
-  var clone5, fromValues5, copy5, set5, add5, mul5, scale5, dot3, lerp3, length4, len3, squaredLength3, sqrLen3, normalize3, exactEquals5, equals6, rotationTo, sqlerp, setAxes;
+  var clone5, fromValues5, copy5, set5, add5, mul5, scale5, dot3, lerp3, length3, len3, squaredLength3, sqrLen3, normalize3, exactEquals5, equals6, rotationTo, sqlerp, setAxes;
   var init_quat = __esm({
     "node_modules/gl-matrix/esm/quat.js"() {
       init_common();
@@ -2957,8 +2960,8 @@
       scale5 = scale4;
       dot3 = dot2;
       lerp3 = lerp2;
-      length4 = length3;
-      len3 = length4;
+      length3 = length2;
+      len3 = length3;
       squaredLength3 = squaredLength2;
       sqrLen3 = squaredLength3;
       normalize3 = normalize2;
@@ -3044,7 +3047,7 @@
     identity: () => identity4,
     invert: () => invert4,
     len: () => len4,
-    length: () => length5,
+    length: () => length4,
     lerp: () => lerp4,
     mul: () => mul6,
     multiply: () => multiply6,
@@ -3423,7 +3426,7 @@
     var b0 = b[0], b1 = b[1], b2 = b[2], b3 = b[3], b4 = b[4], b5 = b[5], b6 = b[6], b7 = b[7];
     return Math.abs(a0 - b0) <= EPSILON * Math.max(1, Math.abs(a0), Math.abs(b0)) && Math.abs(a1 - b1) <= EPSILON * Math.max(1, Math.abs(a1), Math.abs(b1)) && Math.abs(a2 - b2) <= EPSILON * Math.max(1, Math.abs(a2), Math.abs(b2)) && Math.abs(a3 - b3) <= EPSILON * Math.max(1, Math.abs(a3), Math.abs(b3)) && Math.abs(a4 - b4) <= EPSILON * Math.max(1, Math.abs(a4), Math.abs(b4)) && Math.abs(a5 - b5) <= EPSILON * Math.max(1, Math.abs(a5), Math.abs(b5)) && Math.abs(a6 - b6) <= EPSILON * Math.max(1, Math.abs(a6), Math.abs(b6)) && Math.abs(a7 - b7) <= EPSILON * Math.max(1, Math.abs(a7), Math.abs(b7));
   }
-  var getReal, setReal, mul6, dot4, length5, len4, squaredLength4, sqrLen4;
+  var getReal, setReal, mul6, dot4, length4, len4, squaredLength4, sqrLen4;
   var init_quat2 = __esm({
     "node_modules/gl-matrix/esm/quat2.js"() {
       init_common();
@@ -3433,8 +3436,8 @@
       setReal = copy5;
       mul6 = multiply6;
       dot4 = dot3;
-      length5 = length4;
-      len4 = length5;
+      length4 = length3;
+      len4 = length4;
       squaredLength4 = squaredLength3;
       sqrLen4 = squaredLength4;
     }
@@ -3462,7 +3465,7 @@
     fromValues: () => fromValues7,
     inverse: () => inverse3,
     len: () => len5,
-    length: () => length6,
+    length: () => length5,
     lerp: () => lerp5,
     max: () => max3,
     min: () => min3,
@@ -3582,7 +3585,7 @@
     var x = b[0] - a[0], y = b[1] - a[1];
     return x * x + y * y;
   }
-  function length6(a) {
+  function length5(a) {
     var x = a[0], y = a[1];
     return Math.hypot(x, y);
   }
@@ -3687,7 +3690,7 @@
   var init_vec2 = __esm({
     "node_modules/gl-matrix/esm/vec2.js"() {
       init_common();
-      len5 = length6;
+      len5 = length5;
       sub5 = subtract5;
       mul7 = multiply7;
       div3 = divide3;
@@ -3742,12 +3745,19 @@
     "node_modules/@wonderlandengine/components/cursor.js"() {
       init_esm();
       WL.registerComponent("cursor", {
+        /** Collision group for the ray cast. Only objects in this group will be affected by this cursor. */
         collisionGroup: { type: WL.Type.Int, default: 1 },
+        /** (optional) Object that visualizes the cursor's ray. */
         cursorRayObject: { type: WL.Type.Object },
+        /** Axis along which to scale the `cursorRayObject`. */
         cursorRayScalingAxis: { type: WL.Type.Enum, values: ["x", "y", "z", "none"], default: "z" },
+        /** (optional) Object that visualizes the cursor's hit location. */
         cursorObject: { type: WL.Type.Object },
+        /** Handedness for VR cursors to accept trigger events only from respective controller. */
         handedness: { type: WL.Type.Enum, values: ["input component", "left", "right", "none"], default: "input component" },
+        /** Mode for raycasting, whether to use PhysX or simple collision components */
         rayCastMode: { type: WL.Type.Enum, values: ["collision", "physx"], default: "collision" },
+        /** Whether to set the CSS style of the mouse cursor on desktop */
         styleCursor: { type: WL.Type.Bool, default: true }
       }, {
         init: function() {
@@ -3942,6 +3952,13 @@
           }
           this.lastIsDown = this.isDown;
         },
+        /**
+         * Setup event listeners on session object
+         * @param s WebXR session
+         *
+         * Sets up 'select' and 'end' events and caches the session to avoid
+         * Module object access.
+         */
         setupVREvents: function(s) {
           this.session = s;
           const onSessionEnd = function(e) {
@@ -3964,21 +3981,25 @@
           });
           this.onViewportResize();
         },
+        /** 'select' event listener */
         onSelect: function(e) {
           if (e.inputSource.handedness != this.handedness)
             return;
           this.doUpdate(true);
         },
+        /** 'selectstart' event listener */
         onSelectStart: function(e) {
           this.arTouchDown = true;
           if (e.inputSource.handedness == this.handedness)
             this.isDown = true;
         },
+        /** 'selectend' event listener */
         onSelectEnd: function(e) {
           this.arTouchDown = false;
           if (e.inputSource.handedness == this.handedness)
             this.isDown = false;
         },
+        /** 'pointermove' event listener */
         onPointerMove: function(e) {
           if (!e.isPrimary)
             return;
@@ -3986,11 +4007,13 @@
           const rayHit = this.updateMousePos(e.clientX, e.clientY, bounds.width, bounds.height);
           this.hoverBehaviour(rayHit, false);
         },
+        /** 'click' event listener */
         onClick: function(e) {
           const bounds = e.target.getBoundingClientRect();
           const rayHit = this.updateMousePos(e.clientX, e.clientY, bounds.width, bounds.height);
           this.hoverBehaviour(rayHit, true);
         },
+        /** 'pointerdown' event listener */
         onPointerDown: function(e) {
           if (!e.isPrimary || e.button !== 0)
             return;
@@ -3999,6 +4022,7 @@
           this.isDown = true;
           this.hoverBehaviour(rayHit, false);
         },
+        /** 'pointerup' event listener */
         onPointerUp: function(e) {
           if (!e.isPrimary || e.button !== 0)
             return;
@@ -4007,6 +4031,10 @@
           this.isDown = false;
           this.hoverBehaviour(rayHit, false);
         },
+        /**
+         * Update mouse position in non-VR mode and raycast for new position
+         * @returns @ref WL.RayHit for new position.
+         */
         updateMousePos: function(clientX, clientY, w, h) {
           const left = clientX / w;
           const top = clientY / h;
@@ -4056,6 +4084,7 @@
   var require_debug_object = __commonJS({
     "node_modules/@wonderlandengine/components/debug-object.js"() {
       WL.registerComponent("debug-object", {
+        /** A second object to print the name of */
         obj: { type: WL.Type.Object }
       }, {
         start: function() {
@@ -4170,6 +4199,7 @@
   var require_fixed_foveation = __commonJS({
     "node_modules/@wonderlandengine/components/fixed-foveation.js"() {
       WL.registerComponent("fixed-foveation", {
+        /** Amount to apply from 0 (none) to 1 (full) */
         fixedFoveation: { type: WL.Type.Float, default: 0.5 }
       }, {
         start: function() {
@@ -4194,11 +4224,17 @@
     "node_modules/@wonderlandengine/components/hand-tracking.js"() {
       init_esm();
       WL.registerComponent("hand-tracking", {
+        /** Handedness determining whether to receive tracking input from right or left hand */
         handedness: { type: WL.Type.Enum, default: "left", values: ["left", "right"] },
+        /** (optional) Mesh to use to visualize joints */
         jointMesh: { type: WL.Type.Mesh, default: null },
+        /** Material to use for display. Applied to either the spawned skinned mesh or the joint spheres. */
         jointMaterial: { type: WL.Type.Material, default: null },
+        /** (optional) Skin to apply tracked joint poses to. If not present, joint spheres will be used for display instead. */
         handSkin: { type: WL.Type.Skin, default: null },
+        /** Deactivate children if no pose was tracked */
         deactivateChildrenWithoutPose: { type: WL.Type.Bool, default: true },
+        /** Controller objects to activate including children if no pose is available */
         controllerToDeactivate: { type: WL.Type.Object }
       }, {
         ORDERED_JOINTS: [
@@ -4450,8 +4486,12 @@
           this.init();
         };
         HowlerGlobal2.prototype = {
+          /**
+           * Initialize the global Howler object.
+           * @return {Howler}
+           */
           init: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             self2._counter = 1e3;
             self2._html5AudioPool = [];
             self2.html5PoolSize = 10;
@@ -4470,8 +4510,13 @@
             self2._setup();
             return self2;
           },
+          /**
+           * Get/set the global volume for all sounds.
+           * @param  {Float} vol Volume from 0.0 to 1.0.
+           * @return {Howler/Float}     Returns self or current volume.
+           */
           volume: function(vol) {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             vol = parseFloat(vol);
             if (!self2.ctx) {
               setupAudioContext();
@@ -4482,7 +4527,7 @@
                 return self2;
               }
               if (self2.usingWebAudio) {
-                self2.masterGain.gain.setValueAtTime(vol, Howler6.ctx.currentTime);
+                self2.masterGain.gain.setValueAtTime(vol, Howler14.ctx.currentTime);
               }
               for (var i = 0; i < self2._howls.length; i++) {
                 if (!self2._howls[i]._webAudio) {
@@ -4499,14 +4544,18 @@
             }
             return self2._volume;
           },
+          /**
+           * Handle muting and unmuting globally.
+           * @param  {Boolean} muted Is muted or not.
+           */
           mute: function(muted) {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             if (!self2.ctx) {
               setupAudioContext();
             }
             self2._muted = muted;
             if (self2.usingWebAudio) {
-              self2.masterGain.gain.setValueAtTime(muted ? 0 : self2._volume, Howler6.ctx.currentTime);
+              self2.masterGain.gain.setValueAtTime(muted ? 0 : self2._volume, Howler14.ctx.currentTime);
             }
             for (var i = 0; i < self2._howls.length; i++) {
               if (!self2._howls[i]._webAudio) {
@@ -4521,15 +4570,22 @@
             }
             return self2;
           },
+          /**
+           * Handle stopping all sounds globally.
+           */
           stop: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             for (var i = 0; i < self2._howls.length; i++) {
               self2._howls[i].stop();
             }
             return self2;
           },
+          /**
+           * Unload and destroy all currently loaded Howl objects.
+           * @return {Howler}
+           */
           unload: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             for (var i = self2._howls.length - 1; i >= 0; i--) {
               self2._howls[i].unload();
             }
@@ -4540,11 +4596,20 @@
             }
             return self2;
           },
+          /**
+           * Check for codec support of specific extension.
+           * @param  {String} ext Audio file extention.
+           * @return {Boolean}
+           */
           codecs: function(ext) {
-            return (this || Howler6)._codecs[ext.replace(/^x-/, "")];
+            return (this || Howler14)._codecs[ext.replace(/^x-/, "")];
           },
+          /**
+           * Setup various state values for global tracking.
+           * @return {Howler}
+           */
           _setup: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             self2.state = self2.ctx ? self2.ctx.state || "suspended" : "suspended";
             self2._autoSuspend();
             if (!self2.usingWebAudio) {
@@ -4573,8 +4638,12 @@
             }
             return self2;
           },
+          /**
+           * Check for browser support for various codecs and cache the results.
+           * @return {Howler}
+           */
           _setupCodecs: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             var audioTest = null;
             try {
               audioTest = typeof Audio !== "undefined" ? new Audio() : null;
@@ -4586,7 +4655,7 @@
             }
             var mpegTest = audioTest.canPlayType("audio/mpeg;").replace(/^no$/, "");
             var ua = self2._navigator ? self2._navigator.userAgent : "";
-            var checkOpera = ua.match(/OPR\/([0-6].)/g);
+            var checkOpera = ua.match(/OPR\/(\d+)/g);
             var isOldOpera = checkOpera && parseInt(checkOpera[0].split("/")[1], 10) < 33;
             var checkSafari = ua.indexOf("Safari") !== -1 && ua.indexOf("Chrome") === -1;
             var safariVersion = ua.match(/Version\/(.*?) /);
@@ -4610,8 +4679,14 @@
             };
             return self2;
           },
+          /**
+           * Some browsers/devices will only allow audio to be played after a user interaction.
+           * Attempt to automatically unlock audio on the first user interaction.
+           * Concept from: http://paulbakaus.com/tutorials/html5/web-audio-on-ios/
+           * @return {Howler}
+           */
           _unlockAudio: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             if (self2._audioUnlocked || !self2.ctx) {
               return;
             }
@@ -4675,8 +4750,13 @@
             document.addEventListener("keydown", unlock, true);
             return self2;
           },
+          /**
+           * Get an unlocked HTML5 Audio object from the pool. If none are left,
+           * return a new Audio object and throw a warning.
+           * @return {Audio} HTML5 Audio object.
+           */
           _obtainHtml5Audio: function() {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             if (self2._html5AudioPool.length) {
               return self2._html5AudioPool.pop();
             }
@@ -4688,16 +4768,25 @@
             }
             return new Audio();
           },
+          /**
+           * Return an activated HTML5 Audio object to the pool.
+           * @return {Howler}
+           */
           _releaseHtml5Audio: function(audio) {
-            var self2 = this || Howler6;
+            var self2 = this || Howler14;
             if (audio._unlocked) {
               self2._html5AudioPool.push(audio);
             }
             return self2;
           },
+          /**
+           * Automatically suspend the Web Audio AudioContext after no sound has played for 30 seconds.
+           * This saves processing/energy and fixes various browser-specific bugs with audio getting stuck.
+           * @return {Howler}
+           */
           _autoSuspend: function() {
             var self2 = this;
-            if (!self2.autoSuspend || !self2.ctx || typeof self2.ctx.suspend === "undefined" || !Howler6.usingWebAudio) {
+            if (!self2.autoSuspend || !self2.ctx || typeof self2.ctx.suspend === "undefined" || !Howler14.usingWebAudio) {
               return;
             }
             for (var i = 0; i < self2._howls.length; i++) {
@@ -4729,9 +4818,13 @@
             }, 3e4);
             return self2;
           },
+          /**
+           * Automatically resume the Web Audio AudioContext when a new sound is played.
+           * @return {Howler}
+           */
           _autoResume: function() {
             var self2 = this;
-            if (!self2.ctx || typeof self2.ctx.resume === "undefined" || !Howler6.usingWebAudio) {
+            if (!self2.ctx || typeof self2.ctx.resume === "undefined" || !Howler14.usingWebAudio) {
               return;
             }
             if (self2.state === "running" && self2.ctx.state !== "interrupted" && self2._suspendTimer) {
@@ -4754,7 +4847,7 @@
             return self2;
           }
         };
-        var Howler6 = new HowlerGlobal2();
+        var Howler14 = new HowlerGlobal2();
         var Howl4 = function(o) {
           var self2 = this;
           if (!o.src || o.src.length === 0) {
@@ -4764,9 +4857,14 @@
           self2.init(o);
         };
         Howl4.prototype = {
+          /**
+           * Initialize a new Howl group object.
+           * @param  {Object} o Passed in properties for this group.
+           * @return {Howl}
+           */
           init: function(o) {
             var self2 = this;
-            if (!Howler6.ctx) {
+            if (!Howler14.ctx) {
               setupAudioContext();
             }
             self2._autoplay = o.autoplay || false;
@@ -4805,11 +4903,11 @@
             self2._onseek = o.onseek ? [{ fn: o.onseek }] : [];
             self2._onunlock = o.onunlock ? [{ fn: o.onunlock }] : [];
             self2._onresume = [];
-            self2._webAudio = Howler6.usingWebAudio && !self2._html5;
-            if (typeof Howler6.ctx !== "undefined" && Howler6.ctx && Howler6.autoUnlock) {
-              Howler6._unlockAudio();
+            self2._webAudio = Howler14.usingWebAudio && !self2._html5;
+            if (typeof Howler14.ctx !== "undefined" && Howler14.ctx && Howler14.autoUnlock) {
+              Howler14._unlockAudio();
             }
-            Howler6._howls.push(self2);
+            Howler14._howls.push(self2);
             if (self2._autoplay) {
               self2._queue.push({
                 event: "play",
@@ -4823,10 +4921,14 @@
             }
             return self2;
           },
+          /**
+           * Load the audio file.
+           * @return {Howler}
+           */
           load: function() {
             var self2 = this;
             var url = null;
-            if (Howler6.noAudio) {
+            if (Howler14.noAudio) {
               self2._emit("loaderror", null, "No audio support.");
               return;
             }
@@ -4854,7 +4956,7 @@
               if (!ext) {
                 console.warn('No file extension was found. Consider using the "format" property or specify an extension.');
               }
-              if (ext && Howler6.codecs(ext)) {
+              if (ext && Howler14.codecs(ext)) {
                 url = self2._src[i];
                 break;
               }
@@ -4875,6 +4977,12 @@
             }
             return self2;
           },
+          /**
+           * Play a sound or resume previous playback.
+           * @param  {String/Number} sprite   Sprite name for sprite playback or sound id to continue previous.
+           * @param  {Boolean} internal Internal Use: true prevents event firing.
+           * @return {Number}          Sound ID.
+           */
           play: function(sprite, internal) {
             var self2 = this;
             var id = null;
@@ -4926,7 +5034,7 @@
               return sound._id;
             }
             if (self2._webAudio) {
-              Howler6._autoResume();
+              Howler14._autoResume();
             }
             var seek = Math.max(0, sound._seek > 0 ? sound._seek : self2._sprite[sprite][0] / 1e3);
             var duration = Math.max(0, (self2._sprite[sprite][0] + self2._sprite[sprite][1]) / 1e3 - seek);
@@ -4953,8 +5061,8 @@
                 setParams();
                 self2._refreshBuffer(sound);
                 var vol = sound._muted || self2._muted ? 0 : sound._volume;
-                node.gain.setValueAtTime(vol, Howler6.ctx.currentTime);
-                sound._playStart = Howler6.ctx.currentTime;
+                node.gain.setValueAtTime(vol, Howler14.ctx.currentTime);
+                sound._playStart = Howler14.ctx.currentTime;
                 if (typeof node.bufferSource.start === "undefined") {
                   sound._loop ? node.bufferSource.noteGrainOn(0, seek, 86400) : node.bufferSource.noteGrainOn(0, seek, duration);
                 } else {
@@ -4970,7 +5078,7 @@
                   }, 0);
                 }
               };
-              if (Howler6.state === "running" && Howler6.ctx.state !== "interrupted") {
+              if (Howler14.state === "running" && Howler14.ctx.state !== "interrupted") {
                 playWebAudio();
               } else {
                 self2._playLock = true;
@@ -4980,8 +5088,8 @@
             } else {
               var playHtml5 = function() {
                 node.currentTime = seek;
-                node.muted = sound._muted || self2._muted || Howler6._muted || node.muted;
-                node.volume = sound._volume * Howler6.volume();
+                node.muted = sound._muted || self2._muted || Howler14._muted || node.muted;
+                node.volume = sound._volume * Howler14.volume();
                 node.playbackRate = sound._rate;
                 try {
                   var play = node.play();
@@ -5029,7 +5137,7 @@
                 node.src = self2._src;
                 node.load();
               }
-              var loadedNoReadyState = window && window.ejecta || !node.readyState && Howler6._navigator.isCocoonJS;
+              var loadedNoReadyState = window && window.ejecta || !node.readyState && Howler14._navigator.isCocoonJS;
               if (node.readyState >= 3 || loadedNoReadyState) {
                 playHtml5();
               } else {
@@ -5038,14 +5146,19 @@
                 var listener = function() {
                   self2._state = "loaded";
                   playHtml5();
-                  node.removeEventListener(Howler6._canPlayEvent, listener, false);
+                  node.removeEventListener(Howler14._canPlayEvent, listener, false);
                 };
-                node.addEventListener(Howler6._canPlayEvent, listener, false);
+                node.addEventListener(Howler14._canPlayEvent, listener, false);
                 self2._clearTimer(sound._id);
               }
             }
             return sound._id;
           },
+          /**
+           * Pause playback and save current position.
+           * @param  {Number} id The sound ID (empty to pause all in group).
+           * @return {Howl}
+           */
           pause: function(id) {
             var self2 = this;
             if (self2._state !== "loaded" || self2._playLock) {
@@ -5088,6 +5201,12 @@
             }
             return self2;
           },
+          /**
+           * Stop playback and reset to start.
+           * @param  {Number} id The sound ID (empty to stop all in group).
+           * @param  {Boolean} internal Internal Use: true prevents event firing.
+           * @return {Howl}
+           */
           stop: function(id, internal) {
             var self2 = this;
             if (self2._state !== "loaded" || self2._playLock) {
@@ -5134,6 +5253,12 @@
             }
             return self2;
           },
+          /**
+           * Mute/unmute a single sound or all sounds in this Howl group.
+           * @param  {Boolean} muted Set to true to mute and false to unmute.
+           * @param  {Number} id    The sound ID to update (omit to mute/unmute all).
+           * @return {Howl}
+           */
           mute: function(muted, id) {
             var self2 = this;
             if (self2._state !== "loaded" || self2._playLock) {
@@ -5161,15 +5286,23 @@
                   self2._stopFade(sound._id);
                 }
                 if (self2._webAudio && sound._node) {
-                  sound._node.gain.setValueAtTime(muted ? 0 : sound._volume, Howler6.ctx.currentTime);
+                  sound._node.gain.setValueAtTime(muted ? 0 : sound._volume, Howler14.ctx.currentTime);
                 } else if (sound._node) {
-                  sound._node.muted = Howler6._muted ? true : muted;
+                  sound._node.muted = Howler14._muted ? true : muted;
                 }
                 self2._emit("mute", sound._id);
               }
             }
             return self2;
           },
+          /**
+           * Get/set the volume of this sound or of the Howl group. This method can optionally take 0, 1 or 2 arguments.
+           *   volume() -> Returns the group's volume value.
+           *   volume(id) -> Returns the sound id's current volume.
+           *   volume(vol) -> Sets the volume of all sounds in this Howl group.
+           *   volume(vol, id) -> Sets the volume of passed sound id.
+           * @return {Howl/Number} Returns self or current volume.
+           */
           volume: function() {
             var self2 = this;
             var args = arguments;
@@ -5211,9 +5344,9 @@
                     self2._stopFade(id[i]);
                   }
                   if (self2._webAudio && sound._node && !sound._muted) {
-                    sound._node.gain.setValueAtTime(vol, Howler6.ctx.currentTime);
+                    sound._node.gain.setValueAtTime(vol, Howler14.ctx.currentTime);
                   } else if (sound._node && !sound._muted) {
-                    sound._node.volume = vol * Howler6.volume();
+                    sound._node.volume = vol * Howler14.volume();
                   }
                   self2._emit("volume", sound._id);
                 }
@@ -5224,6 +5357,14 @@
             }
             return self2;
           },
+          /**
+           * Fade a currently playing sound between two volumes (if no id is passed, all sounds will fade).
+           * @param  {Number} from The value to fade from (0.0 to 1.0).
+           * @param  {Number} to   The volume to fade to (0.0 to 1.0).
+           * @param  {Number} len  Time in milliseconds to fade.
+           * @param  {Number} id   The sound id (omit to fade all sounds).
+           * @return {Howl}
+           */
           fade: function(from, to, len6, id) {
             var self2 = this;
             if (self2._state !== "loaded" || self2._playLock) {
@@ -5247,7 +5388,7 @@
                   self2._stopFade(ids[i]);
                 }
                 if (self2._webAudio && !sound._muted) {
-                  var currentTime = Howler6.ctx.currentTime;
+                  var currentTime = Howler14.ctx.currentTime;
                   var end = currentTime + len6 / 1e3;
                   sound._volume = from;
                   sound._node.gain.setValueAtTime(from, currentTime);
@@ -5258,6 +5399,15 @@
             }
             return self2;
           },
+          /**
+           * Starts the internal interval to fade a sound.
+           * @param  {Object} sound Reference to sound to fade.
+           * @param  {Number} from The value to fade from (0.0 to 1.0).
+           * @param  {Number} to   The volume to fade to (0.0 to 1.0).
+           * @param  {Number} len  Time in milliseconds to fade.
+           * @param  {Number} id   The sound id to fade.
+           * @param  {Boolean} isGroup   If true, set the volume on the group.
+           */
           _startFadeInterval: function(sound, from, to, len6, id, isGroup) {
             var self2 = this;
             var vol = from;
@@ -5293,12 +5443,18 @@
               }
             }, stepLen);
           },
+          /**
+           * Internal method that stops the currently playing fade when
+           * a new fade starts, volume is changed or the sound is stopped.
+           * @param  {Number} id The sound id.
+           * @return {Howl}
+           */
           _stopFade: function(id) {
             var self2 = this;
             var sound = self2._soundById(id);
             if (sound && sound._interval) {
               if (self2._webAudio) {
-                sound._node.gain.cancelScheduledValues(Howler6.ctx.currentTime);
+                sound._node.gain.cancelScheduledValues(Howler14.ctx.currentTime);
               }
               clearInterval(sound._interval);
               sound._interval = null;
@@ -5308,6 +5464,14 @@
             }
             return self2;
           },
+          /**
+           * Get/set the loop parameter on a sound. This method can optionally take 0, 1 or 2 arguments.
+           *   loop() -> Returns the group's loop value.
+           *   loop(id) -> Returns the sound id's loop value.
+           *   loop(loop) -> Sets the loop value for all sounds in this Howl group.
+           *   loop(loop, id) -> Sets the loop value of passed sound id.
+           * @return {Howl/Boolean} Returns self or current loop value.
+           */
           loop: function() {
             var self2 = this;
             var args = arguments;
@@ -5346,6 +5510,14 @@
             }
             return self2;
           },
+          /**
+           * Get/set the playback rate of a sound. This method can optionally take 0, 1 or 2 arguments.
+           *   rate() -> Returns the first sound node's current playback rate.
+           *   rate(id) -> Returns the sound id's current playback rate.
+           *   rate(rate) -> Sets the playback rate of all sounds in this Howl group.
+           *   rate(rate, id) -> Sets the playback rate of passed sound id.
+           * @return {Howl/Number} Returns self or the current playback rate.
+           */
           rate: function() {
             var self2 = this;
             var args = arguments;
@@ -5384,11 +5556,11 @@
                 if (sound) {
                   if (self2.playing(id[i])) {
                     sound._rateSeek = self2.seek(id[i]);
-                    sound._playStart = self2._webAudio ? Howler6.ctx.currentTime : sound._playStart;
+                    sound._playStart = self2._webAudio ? Howler14.ctx.currentTime : sound._playStart;
                   }
                   sound._rate = rate;
                   if (self2._webAudio && sound._node && sound._node.bufferSource) {
-                    sound._node.bufferSource.playbackRate.setValueAtTime(rate, Howler6.ctx.currentTime);
+                    sound._node.bufferSource.playbackRate.setValueAtTime(rate, Howler14.ctx.currentTime);
                   } else if (sound._node) {
                     sound._node.playbackRate = rate;
                   }
@@ -5408,6 +5580,14 @@
             }
             return self2;
           },
+          /**
+           * Get/set the seek position of a sound. This method can optionally take 0, 1 or 2 arguments.
+           *   seek() -> Returns the first sound node's current seek position.
+           *   seek(id) -> Returns the sound id's current seek position.
+           *   seek(seek) -> Sets the seek position of the first sound node.
+           *   seek(seek, id) -> Sets the seek position of passed sound id.
+           * @return {Howl/Number} Returns self or the current seek position.
+           */
           seek: function() {
             var self2 = this;
             var args = arguments;
@@ -5474,7 +5654,7 @@
                 }
               } else {
                 if (self2._webAudio) {
-                  var realTime = self2.playing(id) ? Howler6.ctx.currentTime - sound._playStart : 0;
+                  var realTime = self2.playing(id) ? Howler14.ctx.currentTime - sound._playStart : 0;
                   var rateSeek = sound._rateSeek ? sound._rateSeek - sound._seek : 0;
                   return sound._seek + (rateSeek + realTime * Math.abs(sound._rate));
                 } else {
@@ -5484,6 +5664,11 @@
             }
             return self2;
           },
+          /**
+           * Check if a specific sound is currently playing or not (if id is provided), or check if at least one of the sounds in the group is playing or not.
+           * @param  {Number}  id The sound id to check. If none is passed, the whole sound group is checked.
+           * @return {Boolean} True if playing and false if not.
+           */
           playing: function(id) {
             var self2 = this;
             if (typeof id === "number") {
@@ -5497,6 +5682,11 @@
             }
             return false;
           },
+          /**
+           * Get the duration of this sound. Passing a sound id will return the sprite duration.
+           * @param  {Number} id The sound id to check. If none is passed, return full source duration.
+           * @return {Number} Audio duration in seconds.
+           */
           duration: function(id) {
             var self2 = this;
             var duration = self2._duration;
@@ -5506,9 +5696,17 @@
             }
             return duration;
           },
+          /**
+           * Returns the current loaded state of this Howl.
+           * @return {String} 'unloaded', 'loading', 'loaded'
+           */
           state: function() {
             return this._state;
           },
+          /**
+           * Unload and destroy the current Howl object.
+           * This will immediately stop all sound instances attached to this group.
+           */
           unload: function() {
             var self2 = this;
             var sounds = self2._sounds;
@@ -5519,20 +5717,20 @@
               if (!self2._webAudio) {
                 self2._clearSound(sounds[i]._node);
                 sounds[i]._node.removeEventListener("error", sounds[i]._errorFn, false);
-                sounds[i]._node.removeEventListener(Howler6._canPlayEvent, sounds[i]._loadFn, false);
+                sounds[i]._node.removeEventListener(Howler14._canPlayEvent, sounds[i]._loadFn, false);
                 sounds[i]._node.removeEventListener("ended", sounds[i]._endFn, false);
-                Howler6._releaseHtml5Audio(sounds[i]._node);
+                Howler14._releaseHtml5Audio(sounds[i]._node);
               }
               delete sounds[i]._node;
               self2._clearTimer(sounds[i]._id);
             }
-            var index = Howler6._howls.indexOf(self2);
+            var index = Howler14._howls.indexOf(self2);
             if (index >= 0) {
-              Howler6._howls.splice(index, 1);
+              Howler14._howls.splice(index, 1);
             }
             var remCache = true;
-            for (i = 0; i < Howler6._howls.length; i++) {
-              if (Howler6._howls[i]._src === self2._src || self2._src.indexOf(Howler6._howls[i]._src) >= 0) {
+            for (i = 0; i < Howler14._howls.length; i++) {
+              if (Howler14._howls[i]._src === self2._src || self2._src.indexOf(Howler14._howls[i]._src) >= 0) {
                 remCache = false;
                 break;
               }
@@ -5540,12 +5738,20 @@
             if (cache && remCache) {
               delete cache[self2._src];
             }
-            Howler6.noAudio = false;
+            Howler14.noAudio = false;
             self2._state = "unloaded";
             self2._sounds = [];
             self2 = null;
             return null;
           },
+          /**
+           * Listen to a custom event.
+           * @param  {String}   event Event name.
+           * @param  {Function} fn    Listener to call.
+           * @param  {Number}   id    (optional) Only listen to events for this sound.
+           * @param  {Number}   once  (INTERNAL) Marks event to fire only once.
+           * @return {Howl}
+           */
           on: function(event, fn, id, once) {
             var self2 = this;
             var events = self2["_on" + event];
@@ -5554,6 +5760,13 @@
             }
             return self2;
           },
+          /**
+           * Remove a custom event. Call without parameters to remove all events.
+           * @param  {String}   event Event name.
+           * @param  {Function} fn    Listener to remove. Leave empty to remove all.
+           * @param  {Number}   id    (optional) Only remove events for this sound.
+           * @return {Howl}
+           */
           off: function(event, fn, id) {
             var self2 = this;
             var events = self2["_on" + event];
@@ -5582,11 +5795,25 @@
             }
             return self2;
           },
+          /**
+           * Listen to a custom event and remove it once fired.
+           * @param  {String}   event Event name.
+           * @param  {Function} fn    Listener to call.
+           * @param  {Number}   id    (optional) Only listen to events for this sound.
+           * @return {Howl}
+           */
           once: function(event, fn, id) {
             var self2 = this;
             self2.on(event, fn, id, 1);
             return self2;
           },
+          /**
+           * Emit all events of a specific type and pass the sound id.
+           * @param  {String} event Event name.
+           * @param  {Number} id    Sound ID.
+           * @param  {Number} msg   Message to go with event.
+           * @return {Howl}
+           */
           _emit: function(event, id, msg) {
             var self2 = this;
             var events = self2["_on" + event];
@@ -5603,6 +5830,12 @@
             self2._loadQueue(event);
             return self2;
           },
+          /**
+           * Queue of actions initiated before the sound has loaded.
+           * These will be called in sequence, with the next only firing
+           * after the previous has finished executing (even if async like play).
+           * @return {Howl}
+           */
           _loadQueue: function(event) {
             var self2 = this;
             if (self2._queue.length > 0) {
@@ -5617,6 +5850,11 @@
             }
             return self2;
           },
+          /**
+           * Fired when playback ends at the end of the duration.
+           * @param  {Sound} sound The sound object to work with.
+           * @return {Howl}
+           */
           _ended: function(sound) {
             var self2 = this;
             var sprite = sound._sprite;
@@ -5633,7 +5871,7 @@
               self2._emit("play", sound._id);
               sound._seek = sound._start || 0;
               sound._rateSeek = 0;
-              sound._playStart = Howler6.ctx.currentTime;
+              sound._playStart = Howler14.ctx.currentTime;
               var timeout = (sound._stop - sound._start) * 1e3 / Math.abs(sound._rate);
               self2._endTimers[sound._id] = setTimeout(self2._ended.bind(self2, sound), timeout);
             }
@@ -5644,13 +5882,18 @@
               sound._rateSeek = 0;
               self2._clearTimer(sound._id);
               self2._cleanBuffer(sound._node);
-              Howler6._autoSuspend();
+              Howler14._autoSuspend();
             }
             if (!self2._webAudio && !loop) {
               self2.stop(sound._id, true);
             }
             return self2;
           },
+          /**
+           * Clear the end timer for a sound playback.
+           * @param  {Number} id The sound ID.
+           * @return {Howl}
+           */
           _clearTimer: function(id) {
             var self2 = this;
             if (self2._endTimers[id]) {
@@ -5666,6 +5909,11 @@
             }
             return self2;
           },
+          /**
+           * Return the sound identified by this ID, or return null.
+           * @param  {Number} id Sound ID
+           * @return {Object}    Sound object or null.
+           */
           _soundById: function(id) {
             var self2 = this;
             for (var i = 0; i < self2._sounds.length; i++) {
@@ -5675,6 +5923,10 @@
             }
             return null;
           },
+          /**
+           * Return an inactive sound from the pool or create a new one.
+           * @return {Sound} Sound playback object.
+           */
           _inactiveSound: function() {
             var self2 = this;
             self2._drain();
@@ -5685,6 +5937,9 @@
             }
             return new Sound2(self2);
           },
+          /**
+           * Drain excess inactive sounds from the pool.
+           */
           _drain: function() {
             var self2 = this;
             var limit = self2._pool;
@@ -5711,6 +5966,11 @@
               }
             }
           },
+          /**
+           * Get all ID's from the sounds pool.
+           * @param  {Number} id Only return one ID if one is passed.
+           * @return {Array}    Array of IDs.
+           */
           _getSoundIds: function(id) {
             var self2 = this;
             if (typeof id === "undefined") {
@@ -5723,9 +5983,14 @@
               return [id];
             }
           },
+          /**
+           * Load the sound back into the buffer source.
+           * @param  {Sound} sound The sound object to work with.
+           * @return {Howl}
+           */
           _refreshBuffer: function(sound) {
             var self2 = this;
-            sound._node.bufferSource = Howler6.ctx.createBufferSource();
+            sound._node.bufferSource = Howler14.ctx.createBufferSource();
             sound._node.bufferSource.buffer = cache[self2._src];
             if (sound._panner) {
               sound._node.bufferSource.connect(sound._panner);
@@ -5737,18 +6002,26 @@
               sound._node.bufferSource.loopStart = sound._start || 0;
               sound._node.bufferSource.loopEnd = sound._stop || 0;
             }
-            sound._node.bufferSource.playbackRate.setValueAtTime(sound._rate, Howler6.ctx.currentTime);
+            sound._node.bufferSource.playbackRate.setValueAtTime(sound._rate, Howler14.ctx.currentTime);
             return self2;
           },
+          /**
+           * Prevent memory leaks by cleaning up the buffer source after playback.
+           * @param  {Object} node Sound's audio node containing the buffer source.
+           * @return {Howl}
+           */
           _cleanBuffer: function(node) {
             var self2 = this;
-            var isIOS = Howler6._navigator && Howler6._navigator.vendor.indexOf("Apple") >= 0;
-            if (Howler6._scratchBuffer && node.bufferSource) {
+            var isIOS = Howler14._navigator && Howler14._navigator.vendor.indexOf("Apple") >= 0;
+            if (!node.bufferSource) {
+              return self2;
+            }
+            if (Howler14._scratchBuffer && node.bufferSource) {
               node.bufferSource.onended = null;
               node.bufferSource.disconnect(0);
               if (isIOS) {
                 try {
-                  node.bufferSource.buffer = Howler6._scratchBuffer;
+                  node.bufferSource.buffer = Howler14._scratchBuffer;
                 } catch (e) {
                 }
               }
@@ -5756,8 +6029,12 @@
             node.bufferSource = null;
             return self2;
           },
+          /**
+           * Set the source to a 0-second silence to stop any downloading (except in IE).
+           * @param  {Object} node Audio node to clear.
+           */
           _clearSound: function(node) {
-            var checkIE = /MSIE |Trident\//.test(Howler6._navigator && Howler6._navigator.userAgent);
+            var checkIE = /MSIE |Trident\//.test(Howler14._navigator && Howler14._navigator.userAgent);
             if (!checkIE) {
               node.src = "data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA";
             }
@@ -5768,6 +6045,10 @@
           this.init();
         };
         Sound2.prototype = {
+          /**
+           * Initialize a new Sound object.
+           * @return {Sound}
+           */
           init: function() {
             var self2 = this;
             var parent = self2._parent;
@@ -5779,35 +6060,43 @@
             self2._paused = true;
             self2._ended = true;
             self2._sprite = "__default";
-            self2._id = ++Howler6._counter;
+            self2._id = ++Howler14._counter;
             parent._sounds.push(self2);
             self2.create();
             return self2;
           },
+          /**
+           * Create and setup a new sound object, whether HTML5 Audio or Web Audio.
+           * @return {Sound}
+           */
           create: function() {
             var self2 = this;
             var parent = self2._parent;
-            var volume = Howler6._muted || self2._muted || self2._parent._muted ? 0 : self2._volume;
+            var volume = Howler14._muted || self2._muted || self2._parent._muted ? 0 : self2._volume;
             if (parent._webAudio) {
-              self2._node = typeof Howler6.ctx.createGain === "undefined" ? Howler6.ctx.createGainNode() : Howler6.ctx.createGain();
-              self2._node.gain.setValueAtTime(volume, Howler6.ctx.currentTime);
+              self2._node = typeof Howler14.ctx.createGain === "undefined" ? Howler14.ctx.createGainNode() : Howler14.ctx.createGain();
+              self2._node.gain.setValueAtTime(volume, Howler14.ctx.currentTime);
               self2._node.paused = true;
-              self2._node.connect(Howler6.masterGain);
-            } else if (!Howler6.noAudio) {
-              self2._node = Howler6._obtainHtml5Audio();
+              self2._node.connect(Howler14.masterGain);
+            } else if (!Howler14.noAudio) {
+              self2._node = Howler14._obtainHtml5Audio();
               self2._errorFn = self2._errorListener.bind(self2);
               self2._node.addEventListener("error", self2._errorFn, false);
               self2._loadFn = self2._loadListener.bind(self2);
-              self2._node.addEventListener(Howler6._canPlayEvent, self2._loadFn, false);
+              self2._node.addEventListener(Howler14._canPlayEvent, self2._loadFn, false);
               self2._endFn = self2._endListener.bind(self2);
               self2._node.addEventListener("ended", self2._endFn, false);
               self2._node.src = parent._src;
               self2._node.preload = parent._preload === true ? "auto" : parent._preload;
-              self2._node.volume = volume * Howler6.volume();
+              self2._node.volume = volume * Howler14.volume();
               self2._node.load();
             }
             return self2;
           },
+          /**
+           * Reset the parameters of this sound to the original state (for recycle).
+           * @return {Sound}
+           */
           reset: function() {
             var self2 = this;
             var parent = self2._parent;
@@ -5820,14 +6109,20 @@
             self2._paused = true;
             self2._ended = true;
             self2._sprite = "__default";
-            self2._id = ++Howler6._counter;
+            self2._id = ++Howler14._counter;
             return self2;
           },
+          /**
+           * HTML5 Audio error listener callback.
+           */
           _errorListener: function() {
             var self2 = this;
             self2._parent._emit("loaderror", self2._id, self2._node.error ? self2._node.error.code : 0);
             self2._node.removeEventListener("error", self2._errorFn, false);
           },
+          /**
+           * HTML5 Audio canplaythrough listener callback.
+           */
           _loadListener: function() {
             var self2 = this;
             var parent = self2._parent;
@@ -5840,8 +6135,11 @@
               parent._emit("load");
               parent._loadQueue();
             }
-            self2._node.removeEventListener(Howler6._canPlayEvent, self2._loadFn, false);
+            self2._node.removeEventListener(Howler14._canPlayEvent, self2._loadFn, false);
           },
+          /**
+           * HTML5 Audio ended listener callback.
+           */
           _endListener: function() {
             var self2 = this;
             var parent = self2._parent;
@@ -5919,10 +6217,10 @@
               error();
             }
           };
-          if (typeof Promise !== "undefined" && Howler6.ctx.decodeAudioData.length === 1) {
-            Howler6.ctx.decodeAudioData(arraybuffer).then(success).catch(error);
+          if (typeof Promise !== "undefined" && Howler14.ctx.decodeAudioData.length === 1) {
+            Howler14.ctx.decodeAudioData(arraybuffer).then(success).catch(error);
           } else {
-            Howler6.ctx.decodeAudioData(arraybuffer, success, error);
+            Howler14.ctx.decodeAudioData(arraybuffer, success, error);
           }
         };
         var loadSound = function(self2, buffer) {
@@ -5939,59 +6237,59 @@
           }
         };
         var setupAudioContext = function() {
-          if (!Howler6.usingWebAudio) {
+          if (!Howler14.usingWebAudio) {
             return;
           }
           try {
             if (typeof AudioContext !== "undefined") {
-              Howler6.ctx = new AudioContext();
+              Howler14.ctx = new AudioContext();
             } else if (typeof webkitAudioContext !== "undefined") {
-              Howler6.ctx = new webkitAudioContext();
+              Howler14.ctx = new webkitAudioContext();
             } else {
-              Howler6.usingWebAudio = false;
+              Howler14.usingWebAudio = false;
             }
           } catch (e) {
-            Howler6.usingWebAudio = false;
+            Howler14.usingWebAudio = false;
           }
-          if (!Howler6.ctx) {
-            Howler6.usingWebAudio = false;
+          if (!Howler14.ctx) {
+            Howler14.usingWebAudio = false;
           }
-          var iOS = /iP(hone|od|ad)/.test(Howler6._navigator && Howler6._navigator.platform);
-          var appVersion = Howler6._navigator && Howler6._navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
+          var iOS = /iP(hone|od|ad)/.test(Howler14._navigator && Howler14._navigator.platform);
+          var appVersion = Howler14._navigator && Howler14._navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/);
           var version = appVersion ? parseInt(appVersion[1], 10) : null;
           if (iOS && version && version < 9) {
-            var safari = /safari/.test(Howler6._navigator && Howler6._navigator.userAgent.toLowerCase());
-            if (Howler6._navigator && !safari) {
-              Howler6.usingWebAudio = false;
+            var safari = /safari/.test(Howler14._navigator && Howler14._navigator.userAgent.toLowerCase());
+            if (Howler14._navigator && !safari) {
+              Howler14.usingWebAudio = false;
             }
           }
-          if (Howler6.usingWebAudio) {
-            Howler6.masterGain = typeof Howler6.ctx.createGain === "undefined" ? Howler6.ctx.createGainNode() : Howler6.ctx.createGain();
-            Howler6.masterGain.gain.setValueAtTime(Howler6._muted ? 0 : Howler6._volume, Howler6.ctx.currentTime);
-            Howler6.masterGain.connect(Howler6.ctx.destination);
+          if (Howler14.usingWebAudio) {
+            Howler14.masterGain = typeof Howler14.ctx.createGain === "undefined" ? Howler14.ctx.createGainNode() : Howler14.ctx.createGain();
+            Howler14.masterGain.gain.setValueAtTime(Howler14._muted ? 0 : Howler14._volume, Howler14.ctx.currentTime);
+            Howler14.masterGain.connect(Howler14.ctx.destination);
           }
-          Howler6._setup();
+          Howler14._setup();
         };
         if (typeof define === "function" && define.amd) {
           define([], function() {
             return {
-              Howler: Howler6,
+              Howler: Howler14,
               Howl: Howl4
             };
           });
         }
         if (typeof exports !== "undefined") {
-          exports.Howler = Howler6;
+          exports.Howler = Howler14;
           exports.Howl = Howl4;
         }
         if (typeof global !== "undefined") {
           global.HowlerGlobal = HowlerGlobal2;
-          global.Howler = Howler6;
+          global.Howler = Howler14;
           global.Howl = Howl4;
           global.Sound = Sound2;
         } else if (typeof window !== "undefined") {
           window.HowlerGlobal = HowlerGlobal2;
-          window.Howler = Howler6;
+          window.Howler = Howler14;
           window.Howl = Howl4;
           window.Sound = Sound2;
         }
@@ -6297,21 +6595,21 @@
                 panningModel: typeof o.panningModel !== "undefined" ? o.panningModel : pa.panningModel
               };
               var panner = sound._panner;
-              if (panner) {
-                panner.coneInnerAngle = pa.coneInnerAngle;
-                panner.coneOuterAngle = pa.coneOuterAngle;
-                panner.coneOuterGain = pa.coneOuterGain;
-                panner.distanceModel = pa.distanceModel;
-                panner.maxDistance = pa.maxDistance;
-                panner.refDistance = pa.refDistance;
-                panner.rolloffFactor = pa.rolloffFactor;
-                panner.panningModel = pa.panningModel;
-              } else {
+              if (!panner) {
                 if (!sound._pos) {
                   sound._pos = self2._pos || [0, 0, -0.5];
                 }
                 setupPanner(sound, "spatial");
+                panner = sound._panner;
               }
+              panner.coneInnerAngle = pa.coneInnerAngle;
+              panner.coneOuterAngle = pa.coneOuterAngle;
+              panner.coneOuterGain = pa.coneOuterGain;
+              panner.distanceModel = pa.distanceModel;
+              panner.maxDistance = pa.maxDistance;
+              panner.refDistance = pa.refDistance;
+              panner.rolloffFactor = pa.rolloffFactor;
+              panner.panningModel = pa.panningModel;
             }
           }
           return self2;
@@ -6352,9 +6650,9 @@
             return _super.call(this);
           };
         }(Sound.prototype.reset);
-        var setupPanner = function(sound, type2) {
-          type2 = type2 || "spatial";
-          if (type2 === "spatial") {
+        var setupPanner = function(sound, type) {
+          type = type || "spatial";
+          if (type === "spatial") {
             sound._panner = Howler.ctx.createPanner();
             sound._panner.coneInnerAngle = sound._pannerAttr.coneInnerAngle;
             sound._panner.coneOuterAngle = sound._pannerAttr.coneOuterAngle;
@@ -6398,6 +6696,7 @@
     "node_modules/@wonderlandengine/components/howler-audio-listener.js"() {
       import_howler = __toESM(require_howler());
       WL.registerComponent("howler-audio-listener", {
+        /** Whether audio should be spatialized/positional. */
         spatial: { type: WL.Type.Bool, default: true }
       }, {
         init: function() {
@@ -6432,10 +6731,15 @@
     "node_modules/@wonderlandengine/components/howler-audio-source.js"() {
       import_howler2 = __toESM(require_howler());
       WL.registerComponent("howler-audio-source", {
+        /** Volume */
         volume: { type: WL.Type.Float, default: 1 },
+        /** Whether audio should be spatialized/positional */
         spatial: { type: WL.Type.Bool, default: true },
+        /** Whether to loop the sound */
         loop: { type: WL.Type.Bool, default: false },
+        /** Whether to start playing automatically */
         autoplay: { type: WL.Type.Bool, default: false },
+        /** URL to a sound file to play */
         src: { type: WL.Type.String, default: "" }
       }, {
         start: function() {
@@ -6498,7 +6802,9 @@
   var require_image_texture = __commonJS({
     "node_modules/@wonderlandengine/components/image-texture.js"() {
       WL.registerComponent("image-texture", {
+        /** URL to download the image from */
         url: { type: WL.Type.String, default: "" },
+        /** 0-based mesh component index on this object (e.g. 1 for "second mesh") */
         meshIndex: { type: WL.Type.Int, default: 0 }
       }, {
         init: function() {
@@ -6524,8 +6830,13 @@
     "node_modules/@wonderlandengine/components/mouse-look.js"() {
       init_esm();
       WL.registerComponent("mouse-look", {
+        /** Mouse look sensitivity */
         sensitity: { type: WL.Type.Float, default: 0.25 },
+        /** Require a mouse button to be pressed to control view.
+         * Otherwise view will allways follow mouse movement */
         requireMouseDown: { type: WL.Type.Bool, default: true },
+        /** If "moveOnClick" is enabled, mouse button which should
+         * be held down to control view */
         mouseButtonIndex: { type: WL.Type.Int, default: 0 }
       }, {
         init: function() {
@@ -6612,17 +6923,29 @@
     "node_modules/@wonderlandengine/components/teleport.js"() {
       init_esm();
       WL.registerComponent("teleport", {
+        /** Object that will be placed as indiciation forwhere the player will teleport to. */
         teleportIndicatorMeshObject: { type: WL.Type.Object },
+        /** Root of the player, the object that will be positioned on teleportation. */
         camRoot: { type: WL.Type.Object },
+        /** Non-vr camera for use outside of VR */
         cam: { type: WL.Type.Object },
+        /** Left eye for use in VR*/
         eyeLeft: { type: WL.Type.Object },
+        /** Right eye for use in VR*/
         eyeRight: { type: WL.Type.Object },
+        /** Handedness for VR cursors to accept trigger events only from respective controller. */
         handedness: { type: WL.Type.Enum, values: ["input component", "left", "right", "none"], default: "input component" },
+        /** Collision group of valid "floor" objects that can be teleported on */
         floorGroup: { type: WL.Type.Int, default: 1 },
+        /** How far the thumbstick needs to be pushed to have the teleport target indicator show up */
         thumbstickActivationThreshhold: { type: WL.Type.Float, default: -0.7 },
+        /** How far the thumbstick needs to be released to execute the teleport */
         thumbstickDeactivationThreshhold: { type: WL.Type.Float, default: 0.3 },
+        /** Offset to apply to the indicator object, e.g. to avoid it from Z-fighting with the floor */
         indicatorYOffset: { type: WL.Type.Float, default: 0.01 },
+        /** Mode for raycasting, whether to use PhysX or simple collision components */
         rayCastMode: { type: WL.Type.Enum, values: ["collision", "physx"], default: "collision" },
+        /** Max distance for PhysX raycast */
         maxDistance: { type: WL.Type.Float, default: 100 }
       }, {
         init: function() {
@@ -6674,6 +6997,7 @@
           WL.onXRSessionStart.push(this.setupVREvents.bind(this));
           this.teleportIndicatorMeshObject.active = false;
         },
+        /* Get current camera Y rotation */
         _getCamRotation: function() {
           this.eyeLeft.getForward(this._tempVec);
           this._tempVec[1] = 0;
@@ -6900,10 +7224,15 @@
         };
       }();
       WL.registerComponent("two-joint-ik-solver", {
+        /** Root bone, never moves */
         root: { type: WL.Type.Object },
+        /** Bone attached to the root */
         middle: { type: WL.Type.Object },
+        /** Bone attached to the middle */
         end: { type: WL.Type.Object },
+        /** Target the joins should reach for */
         target: { type: WL.Type.Object },
+        /** Helper object to use to determine joint rotation axis */
         helper: { type: WL.Type.Object }
       }, {
         init: function() {
@@ -6955,10 +7284,15 @@
   var require_video_texture = __commonJS({
     "node_modules/@wonderlandengine/components/video-texture.js"() {
       WL.registerComponent("video-texture", {
+        /** URL to download video from */
         url: { type: WL.Type.String, default: "" },
+        /** Material to apply the video texture to */
         material: { type: WL.Type.Material },
+        /** Whether to loop the video */
         loop: { type: WL.Type.Bool, default: true },
+        /** Whether to automatically start playing the video */
         autoplay: { type: WL.Type.Bool, default: true },
+        /** Whether to mute sound */
         muted: { type: WL.Type.Bool, default: true }
       }, {
         init: function() {
@@ -7021,7 +7355,9 @@
       WL.registerComponent(
         "vr-mode-active-switch",
         {
+          /** When components should be active: In VR or when not in VR */
           activateComponents: { type: WL.Type.Enum, values: ["in VR", "in non-VR"], default: "in VR" },
+          /** Whether child object's components should be affected */
           affectChildren: { type: WL.Type.Bool, default: true }
         },
         {
@@ -7069,7 +7405,9 @@
     "node_modules/@wonderlandengine/components/wasd-controls.js"() {
       init_esm();
       WL.registerComponent("wasd-controls", {
+        /** Movement speed in m/s. */
         speed: { type: WL.Type.Float, default: 0.1 },
+        /** Object of which the orientation is used to determine forward direction */
         headObject: { type: WL.Type.Object }
       }, {
         init: function() {
@@ -7131,7 +7469,9 @@
     "node_modules/@wonderlandengine/components/wonderleap-ad.js"() {
       init_esm();
       WL.registerComponent("wonderleap-ad", {
+        /** Ad user id */
         auId: { type: WL.Type.String, default: "ce6f68fc-4809-4409-8f57-c631283ce5a3" },
+        /** Ad id */
         adId: { type: WL.Type.String }
       }, {
         init: function() {
@@ -7324,20 +7664,20 @@
         return this.pp_removeAll((element) => elementsEqualCallback(element, elementToRemove));
       };
       Array.prototype.pp_pushUnique = function(element, elementsEqualCallback = null) {
-        let length7 = this.length;
+        let length6 = this.length;
         let hasElement = this.pp_hasEqual(element, elementsEqualCallback);
         if (!hasElement) {
-          length7 = this.push(element);
+          length6 = this.push(element);
         }
-        return length7;
+        return length6;
       };
       Array.prototype.pp_unshiftUnique = function(element, elementsEqualCallback = null) {
-        let length7 = this.length;
+        let length6 = this.length;
         let hasElement = this.pp_hasEqual(element, elementsEqualCallback);
         if (!hasElement) {
-          length7 = this.unshift(element);
+          length6 = this.unshift(element);
         }
-        return length7;
+        return length6;
       };
       Array.prototype.pp_copy = function(array, copyCallback = null) {
         while (this.length > array.length) {
@@ -7560,8 +7900,8 @@
         vec3_exports.cross(out, this, vector);
         return out;
       };
-      Array.prototype.vec3_transformQuat = function(quat2, out = vec3_exports.create()) {
-        vec3_exports.transformQuat(out, this, quat2);
+      Array.prototype.vec3_transformQuat = function(quat, out = vec3_exports.create()) {
+        vec3_exports.transformQuat(out, this, quat);
         return out;
       };
       Array.prototype.vec3_transformMat4 = function(mat4, out = vec3_exports.create()) {
@@ -7619,9 +7959,9 @@
       };
       Array.prototype.vec3_componentAlongAxis = function(axis, out = vec3_exports.create()) {
         let angle3 = vec3_exports.angle(this, axis);
-        let length7 = Math.cos(angle3) * vec3_exports.length(this);
+        let length6 = Math.cos(angle3) * vec3_exports.length(this);
         vec3_exports.copy(out, axis);
-        vec3_exports.scale(out, out, length7);
+        vec3_exports.scale(out, out, length6);
         return out;
       };
       Array.prototype.vec3_valueAlongAxis = function() {
@@ -7789,17 +8129,17 @@
         return this.vec3_rotateAroundDegrees(rotation, origin, out);
       };
       Array.prototype.vec3_rotateAroundDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_rotateAroundDegrees(rotation, origin, out = vec3_exports.create()) {
-          rotation.vec3_degreesToQuat(quat2);
-          return this.vec3_rotateAroundQuat(quat2, origin, out);
+          rotation.vec3_degreesToQuat(quat);
+          return this.vec3_rotateAroundQuat(quat, origin, out);
         };
       }();
       Array.prototype.vec3_rotateAroundRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_rotateAroundRadians(rotation, origin, out = vec3_exports.create()) {
-          rotation.vec3_radiansToQuat(quat2);
-          return this.vec3_rotateAroundQuat(quat2, origin, out);
+          rotation.vec3_radiansToQuat(quat);
+          return this.vec3_rotateAroundQuat(quat, origin, out);
         };
       }();
       Array.prototype.vec3_rotateAroundQuat = function(rotation, origin, out = vec3_exports.create()) {
@@ -7815,10 +8155,10 @@
         return this.vec3_rotateAroundAxisRadians(common_exports.toRadian(angle3), axis, origin, out);
       };
       Array.prototype.vec3_rotateAroundAxisRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_rotateAroundAxisRadians(angle3, axis, origin, out = vec3_exports.create()) {
-          quat_exports.setAxisAngle(quat2, axis, angle3);
-          return this.vec3_rotateAroundQuat(quat2, origin, out);
+          quat_exports.setAxisAngle(quat, axis, angle3);
+          return this.vec3_rotateAroundQuat(quat, origin, out);
         };
       }();
       Array.prototype.vec3_convertPositionToWorld = function(parentTransform, out) {
@@ -7918,77 +8258,77 @@
         return this.vec3_degreesAddRotation(rotation, out);
       };
       Array.prototype.vec3_addRotationDegrees = function(rotation, out) {
-        return quat.vec3_degreesAddRotationDegrees(rotation, out);
+        return this.vec3_degreesAddRotationDegrees(rotation, out);
       };
       Array.prototype.vec3_addRotationRadians = function(rotation, out) {
-        return quat.vec3_degreesAddRotationRadians(rotation, out);
+        return this.vec3_degreesAddRotationRadians(rotation, out);
       };
       Array.prototype.vec3_addRotationQuat = function(rotation, out) {
-        return quat.vec3_degreesAddRotationQuat(rotation, out);
+        return this.vec3_degreesAddRotationQuat(rotation, out);
       };
       Array.prototype.vec3_degreesAddRotation = function(rotation, out) {
         return this.vec3_degreesAddRotationDegrees(rotation, out);
       };
       Array.prototype.vec3_degreesAddRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_degreesAddRotationDegrees(rotation, out = vec3_exports.create()) {
-          this.vec3_degreesToQuat(quat2);
-          return quat2.quat_addRotationDegrees(rotation, quat2).quat_toDegrees(out);
+          this.vec3_degreesToQuat(quat);
+          return quat.quat_addRotationDegrees(rotation, quat).quat_toDegrees(out);
         };
       }();
       Array.prototype.vec3_degreesAddRotationRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_degreesAddRotationRadians(rotation, out = vec3_exports.create()) {
-          this.vec3_degreesToQuat(quat2);
-          return quat2.quat_addRotationRadians(rotation, quat2).quat_toDegrees(out);
+          this.vec3_degreesToQuat(quat);
+          return quat.quat_addRotationRadians(rotation, quat).quat_toDegrees(out);
         };
       }();
       Array.prototype.vec3_degreesAddRotationQuat = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_degreesAddRotationQuat(rotation, out = vec3_exports.create()) {
-          this.vec3_degreesToQuat(quat2);
-          return quat2.quat_addRotationQuat(rotation, quat2).quat_toDegrees(out);
+          this.vec3_degreesToQuat(quat);
+          return quat.quat_addRotationQuat(rotation, quat).quat_toDegrees(out);
         };
       }();
       Array.prototype.vec3_radiansAddRotation = function(rotation, out) {
         return this.vec3_radiansAddRotationDegrees(rotation, out);
       };
       Array.prototype.vec3_radiansAddRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_radiansAddRotationDegrees(rotation, out = vec3_exports.create()) {
-          this.vec3_radiansToQuat(quat2);
-          return quat2.quat_addRotationDegrees(rotation, quat2).quat_toRadians(out);
+          this.vec3_radiansToQuat(quat);
+          return quat.quat_addRotationDegrees(rotation, quat).quat_toRadians(out);
         };
       }();
       Array.prototype.vec3_radiansAddRotationRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_radiansAddRotationRadians(rotation, out = vec3_exports.create()) {
-          this.vec3_radiansToQuat(quat2);
-          return quat2.quat_addRotationRadians(rotation, quat2).quat_toRadians(out);
+          this.vec3_radiansToQuat(quat);
+          return quat.quat_addRotationRadians(rotation, quat).quat_toRadians(out);
         };
       }();
       Array.prototype.vec3_radiansAddRotationQuat = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_radiansAddRotationQuat(rotation, out = vec3_exports.create()) {
-          this.vec3_radiansToQuat(quat2);
-          return quat2.quat_addRotationQuat(rotation, quat2).quat_toRadians(out);
+          this.vec3_radiansToQuat(quat);
+          return quat.quat_addRotationQuat(rotation, quat).quat_toRadians(out);
         };
       }();
       Array.prototype.vec3_toMatrix = function(out = mat3_exports.create()) {
         return this.vec3_degreesToMatrix(out);
       };
       Array.prototype.vec3_degreesToMatrix = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_degreesToMatrix(out = mat3_exports.create()) {
-          this.vec3_degreesToQuat(quat2);
-          return quat2.quat_toMatrix(out);
+          this.vec3_degreesToQuat(quat);
+          return quat.quat_toMatrix(out);
         };
       }();
       Array.prototype.vec3_radiansToMatrix = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function vec3_radiansToMatrix(out = mat3_exports.create()) {
-          this.vec3_radiansToQuat(quat2);
-          return quat2.quat_toMatrix(out);
+          this.vec3_radiansToQuat(quat);
+          return quat.quat_toMatrix(out);
         };
       }();
       Array.prototype.vec3_rotationTo = function(direction, out) {
@@ -8084,8 +8424,8 @@
         quat_exports.normalize(out, this);
         return out;
       };
-      Array.prototype.quat_copy = function(quat2) {
-        quat_exports.copy(this, quat2);
+      Array.prototype.quat_copy = function(quat) {
+        quat_exports.copy(this, quat);
         return this;
       };
       Array.prototype.quat_clone = function(out = quat_exports.create()) {
@@ -8303,17 +8643,17 @@
         return this.quat_addRotationDegrees(rotation, out);
       };
       Array.prototype.quat_addRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function quat_addRotationDegrees(rotation, out) {
-          rotation.vec3_degreesToQuat(quat2);
-          return this.quat_addRotationQuat(quat2, out);
+          rotation.vec3_degreesToQuat(quat);
+          return this.quat_addRotationQuat(quat, out);
         };
       }();
       Array.prototype.quat_addRotationRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function quat_addRotationRadians(rotation, out) {
-          rotation.vec3_radiansToQuat(quat2);
-          return this.quat_addRotationQuat(quat2, out);
+          rotation.vec3_radiansToQuat(quat);
+          return this.quat_addRotationQuat(quat, out);
         };
       }();
       Array.prototype.quat_addRotationQuat = function(rotation, out = quat_exports.create()) {
@@ -8324,17 +8664,17 @@
         return this.quat_subRotationDegrees(rotation, out);
       };
       Array.prototype.quat_subRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function quat_subRotationDegrees(rotation, out) {
-          rotation.vec3_degreesToQuat(quat2);
-          return this.quat_subRotationQuat(quat2, out);
+          rotation.vec3_degreesToQuat(quat);
+          return this.quat_subRotationQuat(quat, out);
         };
       }();
       Array.prototype.quat_subRotationRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function quat_subRotationRadians(rotation, out) {
-          rotation.vec3_radiansToQuat(quat2);
-          return this.quat_subRotationQuat(quat2, out);
+          rotation.vec3_radiansToQuat(quat);
+          return this.quat_subRotationQuat(quat, out);
         };
       }();
       Array.prototype.quat_subRotationQuat = function() {
@@ -8659,18 +8999,18 @@
         return this.quat2_lerp(to, lerpValue, out);
       };
       Array.prototype.mat3_toDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat3_toDegrees(out = vec3_exports.create()) {
-          this.mat3_toQuat(quat2);
-          quat2.quat_toDegrees(out);
+          this.mat3_toQuat(quat);
+          quat.quat_toDegrees(out);
           return out;
         };
       }();
       Array.prototype.mat3_toRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat3_toRadians(out = vec3_exports.create()) {
-          this.mat3_toQuat(quat2);
-          quat2.quat_toRadians(out);
+          this.mat3_toQuat(quat);
+          quat.quat_toRadians(out);
           return out;
         };
       }();
@@ -8717,18 +9057,18 @@
         return this.mat4_getRotationDegrees(out);
       };
       Array.prototype.mat4_getRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat4_getRotationDegrees(out = vec3_exports.create()) {
-          this.mat4_getRotationQuat(quat2);
-          quat2.quat_toDegrees(out);
+          this.mat4_getRotationQuat(quat);
+          quat.quat_toDegrees(out);
           return out;
         };
       }();
       Array.prototype.mat4_getRotationRadians = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat4_getRotationRadians(out = vec3_exports.create()) {
-          this.mat4_getRotationQuat(quat2);
-          quat2.quat_toRadians(out);
+          this.mat4_getRotationQuat(quat);
+          quat.quat_toRadians(out);
           return out;
         };
       }();
@@ -8762,9 +9102,9 @@
         return this;
       };
       Array.prototype.mat4_setRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat4_setRotationDegrees(rotation) {
-          this.mat4_setRotationQuat(rotation.vec3_degreesToQuat(quat2));
+          this.mat4_setRotationQuat(rotation.vec3_degreesToQuat(quat));
           return this;
         };
       }();
@@ -8799,9 +9139,9 @@
         return this;
       };
       Array.prototype.mat4_setPositionRotationDegreesScale = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat4_setPositionRotationDegreesScale(position, rotation, scale8) {
-          this.mat4_setPositionRotationQuatScale(position, rotation.vec3_degreesToQuat(quat2), scale8);
+          this.mat4_setPositionRotationQuatScale(position, rotation.vec3_degreesToQuat(quat), scale8);
           return this;
         };
       }();
@@ -8821,9 +9161,9 @@
         return this;
       };
       Array.prototype.mat4_setPositionRotationDegrees = function() {
-        let quat2 = quat_exports.create();
+        let quat = quat_exports.create();
         return function mat4_setPositionRotationDegrees(position, rotation) {
-          this.mat4_setPositionRotationQuat(position, rotation.vec3_degreesToQuat(quat2));
+          this.mat4_setPositionRotationQuat(position, rotation.vec3_degreesToQuat(quat));
           return this;
         };
       }();
@@ -8982,7 +9322,7 @@
         return out;
       };
       PP.quat2_fromPositionRotation = function(position, rotation) {
-        return quat2_fromPositionRotationDegrees(position, rotation);
+        return PP.quat2_fromPositionRotationDegrees(position, rotation);
       };
       PP.quat2_fromPositionRotationDegrees = function(position, rotation) {
         let out = mat4_exports.create();
@@ -9004,7 +9344,7 @@
         return out;
       };
       PP.mat4_fromPositionRotation = function(position, rotation) {
-        return mat4_fromPositionRotationDegrees(position, rotation);
+        return PP.mat4_fromPositionRotationDegrees(position, rotation);
       };
       PP.mat4_fromPositionRotationDegrees = function(position, rotation) {
         let out = mat4_exports.create();
@@ -9022,7 +9362,7 @@
         return out;
       };
       PP.mat4_fromPositionRotationScale = function(position, rotation, scale8) {
-        return mat4_fromPositionRotationDegreesScale(position, rotation, scale8);
+        return PP.mat4_fromPositionRotationDegreesScale(position, rotation, scale8);
       };
       PP.mat4_fromPositionRotationDegreesScale = function(position, rotation, scale8) {
         let out = mat4_exports.create();
@@ -9239,18 +9579,18 @@
           return rotation;
         };
         WL.Object.prototype.pp_getRotationWorldRadians = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_getRotationWorldRadians(rotation = vec3_exports.create()) {
-            this.pp_getRotationWorldQuat(quat2);
-            this._pp_quaternionToRadians(quat2, rotation);
+            this.pp_getRotationWorldQuat(quat);
+            this._pp_quaternionToRadians(quat, rotation);
             return rotation;
           };
         }();
         WL.Object.prototype.pp_getRotationWorldMatrix = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_getRotationWorldMatrix(rotation = mat3_exports.create()) {
-            this.pp_getRotationWorldQuat(quat2);
-            mat3_exports.fromQuat(rotation, quat2);
+            this.pp_getRotationWorldQuat(quat);
+            mat3_exports.fromQuat(rotation, quat);
             return rotation;
           };
         }();
@@ -9269,18 +9609,18 @@
           return rotation;
         };
         WL.Object.prototype.pp_getRotationLocalRadians = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_getRotationLocalRadians(rotation = vec3_exports.create()) {
-            this.pp_getRotationLocalQuat(quat2);
-            this._pp_quaternionToRadians(quat2, rotation);
+            this.pp_getRotationLocalQuat(quat);
+            this._pp_quaternionToRadians(quat, rotation);
             return rotation;
           };
         }();
         WL.Object.prototype.pp_getRotationLocalMatrix = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_getRotationLocalMatrix(rotation = mat3_exports.create()) {
-            this.pp_getRotationLocalQuat(quat2);
-            mat3_exports.fromQuat(rotation, quat2);
+            this.pp_getRotationLocalQuat(quat);
+            mat3_exports.fromQuat(rotation, quat);
             return rotation;
           };
         }();
@@ -9525,10 +9865,10 @@
           this.pp_setRotationWorldDegrees(rotation);
         };
         WL.Object.prototype.pp_setRotationWorldDegrees = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_setRotationWorldDegrees(rotation) {
-            this._pp_degreesToQuaternion(rotation, quat2);
-            this.pp_setRotationWorldQuat(quat2);
+            this._pp_degreesToQuaternion(rotation, quat);
+            this.pp_setRotationWorldQuat(quat);
           };
         }();
         WL.Object.prototype.pp_setRotationWorldRadians = function() {
@@ -9541,10 +9881,10 @@
           };
         }();
         WL.Object.prototype.pp_setRotationWorldMatrix = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_setRotationWorldMatrix(rotation) {
-            quat_exports.fromMat3(quat2, rotation);
-            this.pp_setRotationWorldQuat(quat2);
+            quat_exports.fromMat3(quat, rotation);
+            this.pp_setRotationWorldQuat(quat);
           };
         }();
         WL.Object.prototype.pp_setRotationWorldQuat = function(rotation) {
@@ -9554,10 +9894,10 @@
           this.pp_setRotationLocalDegrees(rotation);
         };
         WL.Object.prototype.pp_setRotationLocalDegrees = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_setRotationLocalDegrees(rotation) {
-            this._pp_degreesToQuaternion(rotation, quat2);
-            this.pp_setRotationLocalQuat(quat2);
+            this._pp_degreesToQuaternion(rotation, quat);
+            this.pp_setRotationLocalQuat(quat);
           };
         }();
         WL.Object.prototype.pp_setRotationLocalRadians = function() {
@@ -9570,10 +9910,10 @@
           };
         }();
         WL.Object.prototype.pp_setRotationLocalMatrix = function() {
-          let quat2 = quat_exports.create();
+          let quat = quat_exports.create();
           return function pp_setRotationLocalMatrix(rotation) {
-            quat_exports.fromMat3(quat2, rotation);
-            this.pp_setRotationLocalQuat(quat2);
+            quat_exports.fromMat3(quat, rotation);
+            this.pp_setRotationLocalQuat(quat);
           };
         }();
         WL.Object.prototype.pp_setRotationLocalQuat = function(rotation) {
@@ -10505,7 +10845,7 @@
           this.pp_convertTransformWorldToObjectQuat(resultTransform, resultTransform);
           return resultTransform;
         };
-        WL.Object.prototype.pp_addComponent = function(type2, paramsOrActive, active = null) {
+        WL.Object.prototype.pp_addComponent = function(type, paramsOrActive, active = null) {
           let params = null;
           if (typeof paramsOrActive == "boolean") {
             params = {};
@@ -10519,71 +10859,71 @@
               params["active"] = active;
             }
           }
-          return this.addComponent(type2, params);
+          return this.addComponent(type, params);
         };
-        WL.Object.prototype.pp_getComponent = function(type2, index = 0) {
-          return this.pp_getComponentHierarchy(type2, index);
+        WL.Object.prototype.pp_getComponent = function(type, index = 0) {
+          return this.pp_getComponentHierarchy(type, index);
         };
-        WL.Object.prototype.pp_getComponentSelf = function(type2, index = 0) {
-          return this.getComponent(type2, index);
+        WL.Object.prototype.pp_getComponentSelf = function(type, index = 0) {
+          return this.getComponent(type, index);
         };
-        WL.Object.prototype.pp_getComponentHierarchy = function(type2, index = 0) {
-          return this.pp_getComponentHierarchyBreadth(type2, index);
+        WL.Object.prototype.pp_getComponentHierarchy = function(type, index = 0) {
+          return this.pp_getComponentHierarchyBreadth(type, index);
         };
-        WL.Object.prototype.pp_getComponentHierarchyBreadth = function(type2, index = 0) {
+        WL.Object.prototype.pp_getComponentHierarchyBreadth = function(type, index = 0) {
           let objects = this.pp_getHierarchyBreadth();
-          return WL.Object.pp_getComponentObjects(objects, type2, index);
+          return WL.Object.pp_getComponentObjects(objects, type, index);
         };
-        WL.Object.prototype.pp_getComponentHierarchyDepth = function(type2, index = 0) {
+        WL.Object.prototype.pp_getComponentHierarchyDepth = function(type, index = 0) {
           let objects = this.pp_getHierarchyDepth();
-          return WL.Object.pp_getComponentObjects(objects, type2, index);
+          return WL.Object.pp_getComponentObjects(objects, type, index);
         };
-        WL.Object.prototype.pp_getComponentDescendants = function(type2, index = 0) {
-          return this.pp_getComponentDescendantsBreadth(type2, index);
+        WL.Object.prototype.pp_getComponentDescendants = function(type, index = 0) {
+          return this.pp_getComponentDescendantsBreadth(type, index);
         };
-        WL.Object.prototype.pp_getComponentDescendantsBreadth = function(type2, index = 0) {
+        WL.Object.prototype.pp_getComponentDescendantsBreadth = function(type, index = 0) {
           let objects = this.pp_getDescendantsBreadth();
-          return WL.Object.pp_getComponentObjects(objects, type2, index);
+          return WL.Object.pp_getComponentObjects(objects, type, index);
         };
-        WL.Object.prototype.pp_getComponentDescendantsDepth = function(type2, index = 0) {
+        WL.Object.prototype.pp_getComponentDescendantsDepth = function(type, index = 0) {
           let objects = this.pp_getDescendantsDepth();
-          return WL.Object.pp_getComponentObjects(objects, type2, index);
+          return WL.Object.pp_getComponentObjects(objects, type, index);
         };
-        WL.Object.prototype.pp_getComponentChildren = function(type2, index = 0) {
+        WL.Object.prototype.pp_getComponentChildren = function(type, index = 0) {
           let objects = this.pp_getChildren();
-          return WL.Object.pp_getComponentObjects(objects, type2, index);
+          return WL.Object.pp_getComponentObjects(objects, type, index);
         };
-        WL.Object.prototype.pp_getComponents = function(type2) {
-          return this.pp_getComponentsHierarchy(type2);
+        WL.Object.prototype.pp_getComponents = function(type) {
+          return this.pp_getComponentsHierarchy(type);
         };
-        WL.Object.prototype.pp_getComponentsSelf = function(type2) {
-          return this.getComponents(type2);
+        WL.Object.prototype.pp_getComponentsSelf = function(type) {
+          return this.getComponents(type);
         };
-        WL.Object.prototype.pp_getComponentsHierarchy = function(type2) {
-          return this.pp_getComponentsHierarchyBreadth(type2);
+        WL.Object.prototype.pp_getComponentsHierarchy = function(type) {
+          return this.pp_getComponentsHierarchyBreadth(type);
         };
-        WL.Object.prototype.pp_getComponentsHierarchyBreadth = function(type2) {
+        WL.Object.prototype.pp_getComponentsHierarchyBreadth = function(type) {
           let objects = this.pp_getHierarchyBreadth();
-          return WL.Object.pp_getComponentsObjects(objects, type2);
+          return WL.Object.pp_getComponentsObjects(objects, type);
         };
-        WL.Object.prototype.pp_getComponentsHierarchyDepth = function(type2) {
+        WL.Object.prototype.pp_getComponentsHierarchyDepth = function(type) {
           let objects = this.pp_getHierarchyDepth();
-          return WL.Object.pp_getComponentsObjects(objects, type2);
+          return WL.Object.pp_getComponentsObjects(objects, type);
         };
-        WL.Object.prototype.pp_getComponentsDescendants = function(type2) {
-          return this.pp_getComponentsDescendantsBreadth(type2);
+        WL.Object.prototype.pp_getComponentsDescendants = function(type) {
+          return this.pp_getComponentsDescendantsBreadth(type);
         };
-        WL.Object.prototype.pp_getComponentsDescendantsBreadth = function(type2) {
+        WL.Object.prototype.pp_getComponentsDescendantsBreadth = function(type) {
           let objects = this.pp_getDescendantsBreadth();
-          return WL.Object.pp_getComponentsObjects(objects, type2);
+          return WL.Object.pp_getComponentsObjects(objects, type);
         };
-        WL.Object.prototype.pp_getComponentsDescendantsDepth = function(type2) {
+        WL.Object.prototype.pp_getComponentsDescendantsDepth = function(type) {
           let objects = this.pp_getDescendantsDepth();
-          return WL.Object.pp_getComponentsObjects(objects, type2);
+          return WL.Object.pp_getComponentsObjects(objects, type);
         };
-        WL.Object.prototype.pp_getComponentsChildren = function(type2) {
+        WL.Object.prototype.pp_getComponentsChildren = function(type) {
           let objects = this.pp_getChildren();
-          return WL.Object.pp_getComponentsObjects(objects, type2);
+          return WL.Object.pp_getComponentsObjects(objects, type);
         };
         WL.Object.prototype.pp_setActive = function(active, applyToHierarchy = true) {
           if (applyToHierarchy) {
@@ -10659,12 +10999,17 @@
             this._myOverrideDeepCloneComponentsMap = /* @__PURE__ */ new Map();
             this._myOverrideDeepCloneComponentsVariablesMap = /* @__PURE__ */ new Map();
           }
+          // The implementation is component dependant, not every component implements the deep clone
           setDeepCloneObject(deepClone) {
             this._myDeepCloneObject = deepClone;
           }
+          // This value override the deep clone object value
+          // The implementation is component dependant, not every component implements the deep clone
           setDeepCloneComponent(componentName, deepClone) {
             this._myOverrideDeepCloneComponentsMap.set(componentName, deepClone);
           }
+          // This value override both the deep clone object value and the deep clone component one
+          // The implementation is component dependant, not every component variable override is taken into consideration
           setDeepCloneComponentVariable(componentName, variableName, deepClone) {
             let componentsVariablesMap = null;
             if (!this._myOverrideDeepCloneComponentsVariablesMap.has(componentName)) {
@@ -11095,13 +11440,13 @@
           amountMap.set("object", objectsAmount);
           let components = this.pp_getComponentsSelf();
           for (let component of components) {
-            let type2 = component.type;
-            let typeAmount = amountMap.get(type2);
+            let type = component.type;
+            let typeAmount = amountMap.get(type);
             if (typeAmount == null) {
               typeAmount = 0;
             }
             typeAmount += 1;
-            amountMap.set(type2, typeAmount);
+            amountMap.set(type, typeAmount);
           }
           return amountMap;
         };
@@ -11126,20 +11471,20 @@
           }
           return amountMap;
         };
-        WL.Object.pp_getComponentObjects = function(objects, type2, index = 0) {
+        WL.Object.pp_getComponentObjects = function(objects, type, index = 0) {
           let component = null;
           for (let object of objects) {
-            component = object.getComponent(type2, index);
+            component = object.getComponent(type, index);
             if (component != null) {
               break;
             }
           }
           return component;
         };
-        WL.Object.pp_getComponentsObjects = function(objects, type2) {
+        WL.Object.pp_getComponentsObjects = function(objects, type) {
           let components = [];
           for (let object of objects) {
-            components.push(...object.getComponents(type2));
+            components.push(...object.getComponents(type));
           }
           return components;
         };
@@ -11522,23 +11867,23 @@
         WL.Scene.prototype.pp_getObjectsDepth = function() {
           return this.pp_getRoot().pp_getHierarchyDepth();
         };
-        WL.Scene.prototype.pp_getComponent = function(type2, index = 0) {
-          return this.pp_getComponentBreadth(type2, index);
+        WL.Scene.prototype.pp_getComponent = function(type, index = 0) {
+          return this.pp_getComponentBreadth(type, index);
         };
-        WL.Scene.prototype.pp_getComponentBreadth = function(type2, index = 0) {
-          return this.pp_getRoot().pp_getComponentHierarchyBreadth(type2, index);
+        WL.Scene.prototype.pp_getComponentBreadth = function(type, index = 0) {
+          return this.pp_getRoot().pp_getComponentHierarchyBreadth(type, index);
         };
-        WL.Scene.prototype.pp_getComponentDepth = function(type2, index = 0) {
-          return this.pp_getRoot().pp_getComponentHierarchyDepth(type2, index);
+        WL.Scene.prototype.pp_getComponentDepth = function(type, index = 0) {
+          return this.pp_getRoot().pp_getComponentHierarchyDepth(type, index);
         };
-        WL.Scene.prototype.pp_getComponents = function(type2) {
-          return this.pp_getComponentsBreadth(type2);
+        WL.Scene.prototype.pp_getComponents = function(type) {
+          return this.pp_getComponentsBreadth(type);
         };
-        WL.Scene.prototype.pp_getComponentsBreadth = function(type2) {
-          return this.pp_getRoot().pp_getComponentsHierarchyBreadth(type2);
+        WL.Scene.prototype.pp_getComponentsBreadth = function(type) {
+          return this.pp_getRoot().pp_getComponentsHierarchyBreadth(type);
         };
-        WL.Scene.prototype.pp_getComponentsDepth = function(type2) {
-          return this.pp_getRoot().pp_getComponentsHierarchyDepth(type2);
+        WL.Scene.prototype.pp_getComponentsDepth = function(type) {
+          return this.pp_getRoot().pp_getComponentsHierarchyDepth(type);
         };
         WL.Scene.prototype.pp_getObjectByName = function(name) {
           return this.pp_getObjectByNameBreadth(name);
@@ -11635,10 +11980,12 @@
         WL.PhysXComponent.prototype.pp_clone = function(targetObject, deepCloneParams = new PP.DeepCloneParams(), customParamsMap = null) {
           let clonedComponent = targetObject.pp_addComponent(this.type, {
             "angularDamping": this.angularDamping,
+            //"angularVelocity": this.angularVelocity,
             "dynamicFriction": this.dynamicFriction,
             "extents": this.extents,
             "kinematic": this.kinematic,
             "linearDamping": this.linearDamping,
+            //"linearVelocity": this.linearVelocity,
             "mass": this.mass,
             "restituition": this.restituition,
             "shape": this.shape,
@@ -12494,7 +12841,7 @@
     o.objectId = objectId;
     return o;
   }
-  function _wrapComponent(type2, componentType, componentId) {
+  function _wrapComponent(type, componentType, componentId) {
     if (componentId < 0)
       return null;
     const c = ComponentCache[componentType] || (ComponentCache[componentType] = []);
@@ -12502,24 +12849,24 @@
       return c[componentId];
     }
     let component;
-    if (type2 == "collision") {
+    if (type == "collision") {
       component = new CollisionComponent(componentType, componentId);
-    } else if (type2 == "text") {
+    } else if (type == "text") {
       component = new TextComponent(componentType, componentId);
-    } else if (type2 == "view") {
+    } else if (type == "view") {
       component = new ViewComponent(componentType, componentId);
-    } else if (type2 == "mesh") {
+    } else if (type == "mesh") {
       component = new MeshComponent(componentType, componentId);
-    } else if (type2 == "input") {
+    } else if (type == "input") {
       component = new InputComponent(componentType, componentId);
-    } else if (type2 == "light") {
+    } else if (type == "light") {
       component = new LightComponent(componentType, componentId);
-    } else if (type2 == "animation") {
+    } else if (type == "animation") {
       component = new AnimationComponent(componentType, componentId);
-    } else if (type2 == "physx") {
+    } else if (type == "physx") {
       component = new PhysXComponent(componentType, componentId);
     } else {
-      const typeIndex = _WL._componentTypeIndices[type2];
+      const typeIndex = _WL._componentTypeIndices[type];
       const constructor = _WL._componentTypes[typeIndex];
       component = new constructor();
     }
@@ -12649,15 +12996,25 @@
       _tempMemUint8 = null;
       UP_VECTOR = [0, 1, 0];
       Component = class {
+        /**
+         * Create a new instance
+         *
+         * @param managerIndex Index of the manager.
+         * @param id WASM component instance index.
+         *
+         * @hidden
+         */
         constructor(managerIndex = -1, id = -1) {
           this._manager = managerIndex;
           this._id = id;
           this._object = null;
           this._type = null;
         }
+        /** The name of this component's type */
         get type() {
           return this._type || $Object._typeNameFor(this._manager);
         }
+        /** The object this component is attached to. */
         get object() {
           if (!this._object) {
             const objectId = _wl_component_get_object(this._manager, this._id);
@@ -12665,85 +13022,228 @@
           }
           return this._object;
         }
+        /**
+         * Set whether this component is active.
+         *
+         * Activating/deactivating a component comes at a small cost of reordering
+         * components in the respective component manager. This function therefore
+         * is not a trivial assignment.
+         *
+         * Does nothing if the component is already activated/deactivated.
+         *
+         * @param active New active state.
+         */
         set active(active) {
           _wl_component_setActive(this._manager, this._id, active);
         }
+        /**
+         * Whether this component is active
+         */
         get active() {
           return _wl_component_isActive(this._manager, this._id) != 0;
         }
+        /**
+         * Remove this component from its objects and destroy it.
+         *
+         * It is best practice to set the component to `null` after,
+         * to ensure it does not get used later.
+         *
+         * ```js
+         *    c.destroy();
+         *    c = null;
+         * ```
+         * @since 0.9.0
+         */
         destroy() {
           _wl_component_remove(this._manager, this._id);
           this._manager = void 0;
           this._id = void 0;
         }
+        /**
+         * Checks equality by comparing whether the wrapped native component ids
+         * and component manager types are equal.
+         *
+         * @param otherComponent Component to check equality with.
+         * @returns Whether this component equals the given component.
+         */
         equals(otherComponent) {
           if (!otherComponent)
             return false;
           return this._manager == otherComponent._manager && this._id == otherComponent._id;
         }
       };
-      CollisionComponent = class extends Component {
+      CollisionComponent = class _CollisionComponent extends Component {
+        /** Collision component collider */
         get collider() {
           return _wl_collision_component_get_collider(this._id);
         }
+        /**
+         * Set collision component collider.
+         *
+         * @param collider Collider of the collision component.
+         */
         set collider(collider) {
           _wl_collision_component_set_collider(this._id, collider);
         }
+        /**
+         * Collision component extents.
+         *
+         * If {@link collider} returns {@link Collider.Sphere}, only the first
+         * component of the returned vector is used.
+         */
         get extents() {
           return new Float32Array(HEAPF32.buffer, _wl_collision_component_get_extents(this._id), 3);
         }
+        /**
+         * Set collision component extents.
+         *
+         * If {@link collider} returns {@link Collider.Sphere}, only the first
+         * component of the passed vector is used.
+         *
+         * Example:
+         *
+         * ```js
+         * // Spans 1 unit on the x-axis, 2 on the y-axis, 3 on the z-axis.
+         * collision.extent = [1, 2, 3];
+         * ```
+         *
+         * @param extents Extents of the collision component, expects a
+         *      3 component array.
+         */
         set extents(extents) {
           this.extents.set(extents);
         }
+        /**
+         * Collision component group.
+         *
+         * The groups is a bitmask that is compared to other components in {@link CollisionComponent#queryOverlaps}
+         * or the group in {@link Scene#rayCast}.
+         *
+         * Colliders that have no common groups will not overlap with each other. If a collider
+         * has none of the groups set for {@link Scene#rayCast}, the ray will not hit it.
+         *
+         * Each bit represents belonging to a group, see example.
+         *
+         * ```js
+         *    // c belongs to group 2
+         *    c.group = (1 << 2);
+         *
+         *    // c belongs to group 0
+         *    c.group = (1 << 0);
+         *
+         *    // c belongs to group 0 *and* 2
+         *    c.group = (1 << 0) | (1 << 2);
+         *
+         *    (c.group & (1 << 2)) != 0; // true
+         *    (c.group & (1 << 7)) != 0; // false
+         * ```
+         */
         get group() {
           return _wl_collision_component_get_group(this._id);
         }
+        /**
+         * Set collision component group.
+         *
+         * @param group Group mask of the collision component.
+         */
         set group(group) {
           _wl_collision_component_set_group(this._id, group);
         }
+        /**
+         * Query overlapping objects.
+         *
+         * Usage:
+         *
+         * ```js
+         * const collision = object.getComponent('collision');
+         * const overlaps = collision.queryOverlaps();
+         * for(const otherCollision of overlaps) {
+         *     const otherObject = otherCollision.object;
+         *     console.log(`Collision with object ${otherObject.objectId}`);
+         * }
+         * ```
+         *
+         * @returns Collision components overlapping this collider.
+         */
         queryOverlaps() {
           const count = _wl_collision_component_query_overlaps(this._id, _tempMem, _tempMemSize >> 1);
           let overlaps = new Array(count);
           for (let i = 0; i < count; ++i) {
-            overlaps[i] = new CollisionComponent(this._manager, _tempMemUint16[i]);
+            overlaps[i] = new _CollisionComponent(this._manager, _tempMemUint16[i]);
           }
           return overlaps;
         }
       };
       TextComponent = class extends Component {
+        /** Text component alignment. */
         get alignment() {
           return _wl_text_component_get_horizontal_alignment(this._id);
         }
+        /**
+         * Set text component alignment.
+         *
+         * @param alignment Alignment for the text component.
+         */
         set alignment(alignment) {
           _wl_text_component_set_horizontal_alignment(this._id, alignment);
         }
+        /** Text component justification. */
         get justification() {
           return _wl_text_component_get_vertical_alignment(this._id);
         }
+        /**
+         * Set text component justification.
+         *
+         * @param justification Justification for the text component.
+         */
         set justification(justification) {
           _wl_text_component_set_vertical_alignment(this._id, justification);
         }
+        /** Text component character spacing. */
         get characterSpacing() {
           return _wl_text_component_get_character_spacing(this._id);
         }
+        /**
+         * Set text component character spacing.
+         *
+         * @param spacing Character spacing for the text component.
+         */
         set characterSpacing(spacing) {
           _wl_text_component_set_character_spacing(this._id, spacing);
         }
+        /** Text component line spacing. */
         get lineSpacing() {
           return _wl_text_component_get_line_spacing(this._id);
         }
+        /**
+         * Set text component line spacing
+         *
+         * @param spacing Line spacing for the text component
+         */
         set lineSpacing(spacing) {
           _wl_text_component_set_line_spacing(this._id, spacing);
         }
+        /** Text component effect. */
         get effect() {
           return _wl_text_component_get_effect(this._id);
         }
+        /**
+         * Set text component effect
+         *
+         * @param effect Effect for the text component
+         */
         set effect(effect) {
           _wl_text_component_set_effect(this._id, effect);
         }
+        /** Text component text. */
         get text() {
           return UTF8ToString(_wl_text_component_get_text(this._id));
         }
+        /**
+         * Set text component text.
+         *
+         * @param text Text of the text component.
+         */
         set text(text) {
           const strLen = lengthBytesUTF8(text) + 1;
           const ptr = _malloc(strLen);
@@ -12751,45 +13251,95 @@
           _wl_text_component_set_text(this._id, ptr);
           _free(ptr);
         }
+        /**
+         * Set material to render the text with.
+         *
+         * @param material New material.
+         */
         set material(material) {
           const matIndex = material ? material._index : 0;
           _wl_text_component_set_material(this._id, matIndex);
         }
+        /** Material used to render the text. */
         get material() {
           const id = _wl_text_component_get_material(this._id);
           return id > 0 ? new Material(id) : null;
         }
       };
       ViewComponent = class extends Component {
+        /** Projection matrix. */
         get projectionMatrix() {
           return new Float32Array(HEAPF32.buffer, _wl_view_component_get_projection_matrix(this._id), 16);
         }
+        /** ViewComponent near clipping plane value. */
         get near() {
           return _wl_view_component_get_near(this._id);
         }
+        /**
+         * Set near clipping plane distance for the view.
+         *
+         * If an XR session is active, the change will apply in the
+         * following frame, otherwise the change is immediate.
+         *
+         * @param near Near depth value.
+         */
         set near(near) {
           _wl_view_component_set_near(this._id, near);
         }
+        /** Far clipping plane value. */
         get far() {
           return _wl_view_component_get_far(this._id);
         }
+        /**
+         * Set far clipping plane distance for the view.
+         *
+         * If an XR session is active, the change will apply in the
+         * following frame, otherwise the change is immediate.
+         *
+         * @param far Near depth value.
+         */
         set far(far) {
           _wl_view_component_set_far(this._id, far);
         }
+        /**
+         * Get the horizontal field of view for the view, **in degrees**.
+         *
+         * If an XR session is active, this returns the field of view reported by
+         * the device, regardless of the fov that was set.
+         */
         get fov() {
           return _wl_view_component_get_fov(this._id);
         }
+        /**
+         * Set the horizontal field of view for the view, **in degrees**.
+         *
+         * If an XR session is active, the field of view reported by the device is
+         * used and this value is ignored. After the XR session ends, the new value
+         * is applied.
+         *
+         * @param fov Horizontal field of view, **in degrees**.
+         */
         set fov(fov) {
           _wl_view_component_set_fov(this._id, fov);
         }
       };
       InputComponent = class extends Component {
+        /** Input component type */
         get inputType() {
           return _wl_input_component_get_type(this._id);
         }
-        set inputType(type2) {
-          _wl_input_component_set_type(this._id, type2);
+        /**
+         * Set input component type.
+         *
+         * @params New input component type.
+         */
+        set inputType(type) {
+          _wl_input_component_set_type(this._id, type);
         }
+        /**
+         * WebXR Device API input source associated with this input component,
+         * if type {@link InputType.ControllerLeft} or {@link InputType.ControllerRight}.
+         */
         get xrInputSource() {
           if (xrSession) {
             for (let inputSource of xrSession.inputSources) {
@@ -12800,6 +13350,9 @@
           }
           return null;
         }
+        /**
+         * 'left', 'right' or {@link null} depending on the {@link InputComponent#inputType}.
+         */
         get handedness() {
           const inputType = this.inputType;
           if (inputType == InputType.ControllerRight || inputType == InputType.RayRight || inputType == InputType.EyeRight)
@@ -12810,158 +13363,358 @@
         }
       };
       LightComponent = class extends Component {
+        /** View on the light color */
         get color() {
           return new Float32Array(HEAPF32.buffer, _wl_light_component_get_color(this._id), 4);
         }
+        /** Light type. */
         get lightType() {
           return _wl_light_component_get_type(this._id);
         }
+        /**
+         * Set light type.
+         *
+         * @param lightType Type of the light component.
+         */
         set lightType(t) {
           _wl_light_component_set_type(this._id, t);
         }
       };
       AnimationComponent = class extends Component {
+        /**
+         * Set animation to play.
+         *
+         * Make sure to {@link Animation#retarget} the animation to affect the
+         * right objects.
+         *
+         * @param anim Animation to play.
+         */
         set animation(anim) {
           _wl_animation_component_set_animation(this._id, anim._index);
         }
+        /** Animation set for this component */
         get animation() {
           return new Animation(_wl_animation_component_get_animation(this._id));
         }
+        /**
+         * Set play count. Set to `0` to loop indefinitely.
+         *
+         * @param playCount Number of times to repeat the animation.
+         */
         set playCount(playCount) {
           _wl_animation_component_set_playCount(this._id, playCount);
         }
+        /** Number of times the animation is played. */
         get playCount() {
           return _wl_animation_component_get_playCount(this._id);
         }
+        /**
+         * Set speed. Set to negative values to run the animation backwards.
+         *
+         * Setting speed has an immediate effect for the current frame's update
+         * and will continue with the speed from the current point in the animation.
+         *
+         * @param speed New speed at which to play the animation.
+         * @since 0.8.10
+         */
         set speed(speed) {
           _wl_animation_component_set_speed(this._id, speed);
         }
+        /**
+         * Speed factor at which the animation is played.
+         *
+         * @since 0.8.10
+         */
         get speed() {
           return _wl_animation_component_get_speed(this._id);
         }
+        /** Current playing state of the animation */
         get state() {
           return _wl_animation_component_state(this._id);
         }
+        /** Play animation. */
         play() {
           _wl_animation_component_play(this._id);
         }
+        /** Stop animation. */
         stop() {
           _wl_animation_component_stop(this._id);
         }
+        /** Pause animation. */
         pause() {
           _wl_animation_component_pause(this._id);
         }
       };
       MeshComponent = class extends Component {
+        /**
+         * Set material to render the mesh with.
+         *
+         * @param material Material to render the mesh with.
+         */
         set material(material) {
           _wl_mesh_component_set_material(this._id, material ? material._index : 0);
         }
+        /** Material used to render the mesh. */
         get material() {
           const id = _wl_mesh_component_get_material(this._id);
           return id > 0 ? new Material(id) : null;
         }
+        /** Mesh rendered by this component. */
         get mesh() {
           return new Mesh(_wl_mesh_component_get_mesh(this._id));
         }
+        /**
+         * Set mesh to rendered with this component.
+         *
+         * @param mesh Mesh rendered by this component.
+         */
         set mesh(mesh) {
           _wl_mesh_component_set_mesh(this._id, mesh ? mesh._index : 0);
         }
+        /** Skin for this mesh component. */
         get skin() {
           return new Skin(_wl_mesh_component_get_skin(this._id));
         }
+        /**
+         * Set skin to transform this mesh component.
+         *
+         * @param {?Skin} skin Skin to use for rendering skinned meshes.
+         */
         set skin(skin) {
           _wl_mesh_component_set_skin(this._id, skin._index);
         }
       };
       PhysXComponent = class extends Component {
+        /**
+         * Set whether this rigid body is static.
+         *
+         * Setting this property only takes effect once the component
+         * switches from inactive to active.
+         *
+         * @param b Whether the rigid body should be static.
+         */
         set static(b) {
           _wl_physx_component_set_static(this._id, b);
         }
+        /**
+         * Whether this rigid body is static.
+         *
+         * This property returns whether the rigid body is *effectively*
+         * static. If static property was set while the rigid body was
+         * active, it will not take effect until the rigid body is set
+         * inactive and active again. Until the component is set inactive,
+         * this getter will return whether the rigidbody is actually
+         * static.
+         */
         get static() {
           return !!_wl_physx_component_get_static(this._id);
         }
+        /**
+         * Set whether this rigid body is kinematic.
+         *
+         * @param b Whether the rigid body should be kinematic.
+         */
         set kinematic(b) {
           _wl_physx_component_set_kinematic(this._id, b);
         }
+        /**
+         * Whether this rigid body is kinematic.
+         */
         get kinematic() {
           return !!_wl_physx_component_get_kinematic(this._id);
         }
+        /**
+         * Set the shape for collision detection.
+         *
+         * @param s New shape.
+         * @since 0.8.5
+         */
         set shape(s) {
           _wl_physx_component_set_shape(this._id, s);
         }
+        /** The shape for collision detection. */
         get shape() {
           return _wl_physx_component_get_shape(this._id);
         }
+        /**
+         * Set additional data for the shape.
+         *
+         * Retrieved only from {@link PhysXComponent#shapeData}.
+         * @since 0.8.10
+         */
         set shapeData(d) {
           if (d == null || ![Shape.TriangleMesh, Shape.ConvexMesh].includes(this.shape))
             return;
           _wl_physx_component_set_shape_data(this._id, d.index);
         }
+        /**
+         * Additional data for the shape.
+         *
+         * `null` for {@link Shape} values: `None`, `Sphere`, `Capsule`, `Box`, `Plane`.
+         * `{index: n}` for `TriangleMesh` and `ConvexHull`.
+         *
+         * This data is currently only for passing onto or creating other {@link PhysXComponent}.
+         * @since 0.8.10
+         */
         get shapeData() {
           if (![Shape.TriangleMesh, Shape.ConvexMesh].includes(this.shape))
             return null;
           return { index: _wl_physx_component_get_shape_data(this._id) };
         }
+        /**
+         * Set the shape extents for collision detection.
+         *
+         * @param e New extents for the shape.
+         * @since 0.8.5
+         */
         set extents(e) {
           this.extents.set(e);
         }
+        /**
+         * The shape extents for collision detection.
+         */
         get extents() {
           const ptr = _wl_physx_component_get_extents(this._id);
           return new Float32Array(HEAPF32.buffer, ptr, 3);
         }
+        /**
+         * Get staticFriction.
+         */
         get staticFriction() {
           return _wl_physx_component_get_staticFriction(this._id);
         }
+        /**
+         * Set staticFriction.
+         * @param v New staticFriction.
+         */
         set staticFriction(v) {
           _wl_physx_component_set_staticFriction(this._id, v);
         }
+        /**
+         * Get dynamicFriction.
+         */
         get dynamicFriction() {
           return _wl_physx_component_get_dynamicFriction(this._id);
         }
+        /**
+         * Set dynamicFriction
+         * @param v New dynamicDamping.
+         */
         set dynamicFriction(v) {
           _wl_physx_component_set_dynamicFriction(this._id, v);
         }
+        /**
+         * Get bounciness.
+         * @since 0.9.0
+         */
         get bounciness() {
           return _wl_physx_component_get_bounciness(this._id);
         }
+        /**
+         * Set bounciness.
+         * @param v New bounciness.
+         * @since 0.9.0
+         */
         set bounciness(v) {
           _wl_physx_component_set_bounciness(this._id, v);
         }
+        /**
+         * Get linearDamping/
+         */
         get linearDamping() {
           return _wl_physx_component_get_linearDamping(this._id);
         }
+        /**
+         * Set linearDamping.
+         * @param v New linearDamping.
+         */
         set linearDamping(v) {
           _wl_physx_component_set_linearDamping(this._id, v);
         }
+        /** Get angularDamping. */
         get angularDamping() {
           return _wl_physx_component_get_angularDamping(this._id);
         }
+        /**
+         * Set angularDamping.
+         * @param v New angularDamping.
+         */
         set angularDamping(v) {
           _wl_physx_component_set_angularDamping(this._id, v);
         }
+        /**
+         * Set linear velocity.
+         *
+         * [PhysX Manual - "Velocity"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#velocity)
+         *
+         * Has no effect, if the component is not active.
+         *
+         * @param v New linear velocity.
+         */
         set linearVelocity(v) {
           _wl_physx_component_set_linearVelocity(this._id, v[0], v[1], v[2]);
         }
+        /** Linear velocity or `[0, 0, 0]` if the component is not active. */
         get linearVelocity() {
           _wl_physx_component_get_linearVelocity(this._id, _tempMem);
           return new Float32Array(HEAPF32.buffer, _tempMem, 3);
         }
+        /**
+         * Set angular velocity
+         *
+         * [PhysX Manual - "Velocity"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#velocity)
+         *
+         * Has no effect, if the component is not active.
+         *
+         * @param v New angular velocity
+         */
         set angularVelocity(v) {
           _wl_physx_component_set_angularVelocity(this._id, v[0], v[1], v[2]);
         }
+        /** Angular velocity or `[0, 0, 0]` if the component is not active. */
         get angularVelocity() {
           _wl_physx_component_get_angularVelocity(this._id, _tempMem);
           return new Float32Array(HEAPF32.buffer, _tempMem, 3);
         }
+        /**
+         * Set mass.
+         *
+         * [PhysX Manual - "Mass Properties"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#mass-properties)
+         *
+         * @param m New mass.
+         */
         set mass(m) {
           _wl_physx_component_set_mass(this._id, m);
         }
+        /** Mass */
         get mass() {
           return _wl_physx_component_get_mass(this._id);
         }
+        /**
+         * Set mass space interia tensor.
+         *
+         * [PhysX Manual - "Mass Properties"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#mass-properties)
+         *
+         * Has no effect, if the component is not active.
+         *
+         * @param v New mass space interatia tensor.
+         */
         set massSpaceInteriaTensor(v) {
           _wl_physx_component_set_massSpaceInertiaTensor(this._id, v[0], v[1], v[2]);
         }
+        /**
+         * Apply a force.
+         *
+         * [PhysX Manual - "Applying Forces and Torques"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#applying-forces-and-torques)
+         *
+         * Has no effect, if the component is not active.
+         *
+         * @param f Force vector.
+         * @param m Force mode, see {@link ForceMode}, default `Force`.
+         * @param localForce Whether the force vector is in local space, default `false`.
+         * @param p Position to apply force at, default is center of mass.
+         * @param local Whether position is in local space, default `false`.
+         */
         addForce(f, m, localForce, p, local) {
           m = m || ForceMode.Force;
           if (!p) {
@@ -12970,17 +13723,64 @@
             _wl_physx_component_addForceAt(this._id, f[0], f[1], f[2], m, !!localForce, p[0], p[1], p[2], !!local);
           }
         }
+        /**
+         * Apply torque.
+         *
+         * [PhysX Manual - "Applying Forces and Torques"](https://gameworksdocs.nvidia.com/PhysX/4.1/documentation/physxguide/Manual/RigidBodyDynamics.html#applying-forces-and-torques)
+         *
+         * Has no effect, if the component is not active.
+         *
+         * @param f Force vector.
+         * @param m Force mode, see {@link ForceMode}, default `Force`.
+         */
         addTorque(f, m = ForceMode.Force) {
           _wl_physx_component_addTorque(this._id, f[0], f[1], f[2], m);
         }
+        /**
+         * Add on collision callback.
+         *
+         * @param callback Function to call when this rigid body (un)collides with any other.
+         *
+         * ```js
+         *  let rigidBody = this.object.getComponent('physx');
+         *  rigidBody.onCollision(function(type, other) {
+         *      // Ignore uncollides
+         *      if(type == CollisionEventType.TouchLost) return;
+         *
+         *      // Take damage on collision with enemies
+         *      if(other.object.name.startsWith('enemy-')) {
+         *          this.applyDamage(10);
+         *      }
+         *  }.bind(this));
+         * ```
+         *
+         * @returns Id of the new callback for use with {@link PhysXComponent#removeCollisionCallback}.
+         */
         onCollision(callback) {
           return this.onCollisionWith(this, callback);
         }
+        /**
+         * Add filtered on collision callback.
+         *
+         * @param otherComp Component for which callbacks will
+         *        be triggered. If you pass this component, the method is equivalent to.
+         *        {@link PhysXComponent#onCollision}.
+         * @param callback Function to call when this rigid body
+         *        (un)collides with `otherComp`.
+         * @returns Id of the new callback for use with {@link PhysXComponent#removeCollisionCallback}.
+         */
         onCollisionWith(otherComp, callback) {
           physics._callbacks[this._id] = physics._callbacks[this._id] || [];
           physics._callbacks[this._id].push(callback);
           return _wl_physx_component_addCallback(this._id, otherComp._id || this._id);
         }
+        /**
+         * Remove a collision callback added with {@link PhysXComponent#onCollision} or {@link PhysXComponent#onCollisionWith}.
+         *
+         * @param callbackId Callback id as returned by {@link PhysXComponent#onCollision} or {@link PhysXComponent#onCollisionWith}.
+         * @throws When the callback does not belong to the component.
+         * @throws When the callback does not exist.
+         */
         removeCollisionCallback(callbackId) {
           const r = _wl_physx_component_removeCallback(this._id, callbackId);
           if (r)
@@ -13009,26 +13809,52 @@
         MeshIndexType2[MeshIndexType2["UnsignedShort"] = 2] = "UnsignedShort";
         MeshIndexType2[MeshIndexType2["UnsignedInt"] = 4] = "UnsignedInt";
       })(MeshIndexType || (MeshIndexType = {}));
-      Mesh = class {
+      Mesh = class _Mesh {
+        /**
+         * Size of a vertex in float elements.
+         * @deprecated Replaced with {@link Mesh#attribute} and {@link MeshAttributeAccessor}
+         */
         static get VERTEX_FLOAT_SIZE() {
           return 3 + 3 + 2;
         }
+        /**
+         * Size of a vertex in bytes.
+         * @deprecated Replaced with {@link Mesh#attribute} and {@link MeshAttributeAccessor}
+         */
         static get VERTEX_SIZE() {
           return this.VERTEX_FLOAT_SIZE * 4;
         }
+        /**
+         * Position attribute offsets in float elements.
+         * @deprecated Replaced with {@link Mesh#attribute} and {@link MeshAttribute#Position}
+         */
         static get POS() {
           return { X: 0, Y: 1, Z: 2 };
         }
+        /**
+         * Texture coordinate attribute offsets in float elements.
+         * @deprecated Replaced with {@link Mesh#attribute} and {@link MeshAttribute#TextureCoordinate}
+         */
         static get TEXCOORD() {
           return { U: 3, V: 4 };
         }
+        /**
+         * Normal attribute offsets in float elements.
+         * @deprecated Replaced with {@link Mesh#attribute} and {@link MeshAttribute#Normal}
+         */
         static get NORMAL() {
           return { X: 5, Y: 6, Z: 7 };
         }
+        /**
+         * Create a new instance.
+         *
+         * @param params Either a mesh index to wrap or set of parameters to create a new mesh.
+         *    For more information, please have a look at the {@link MeshParameters} interface.
+         */
         constructor(params) {
           if (typeof params === "object") {
             if (!params.vertexCount && params.vertexData) {
-              params.vertexCount = params.vertexData.length / Mesh.VERTEX_FLOAT_SIZE;
+              params.vertexCount = params.vertexData.length / _Mesh.VERTEX_FLOAT_SIZE;
             }
             if (!params.vertexCount)
               throw new Error("Missing parameter 'vertexCount'");
@@ -13058,7 +13884,7 @@
               const normals = this.attribute(MeshAttribute.Normal);
               const textureCoordinates = this.attribute(MeshAttribute.TextureCoordinate);
               for (let i = 0; i < params.vertexCount; ++i) {
-                const start = i * Mesh.VERTEX_FLOAT_SIZE;
+                const start = i * _Mesh.VERTEX_FLOAT_SIZE;
                 positions.set(i, params.vertexData.subarray(start, start + 3));
                 textureCoordinates === null || textureCoordinates === void 0 ? void 0 : textureCoordinates.set(i, params.vertexData.subarray(start + 3, start + 5));
                 normals === null || normals === void 0 ? void 0 : normals.set(i, params.vertexData.subarray(start + 5, start + 8));
@@ -13068,13 +13894,20 @@
             this._index = params;
           }
         }
+        /**
+         * Vertex data (read-only).
+         *
+         * @deprecated Replaced with {@link attribute}
+         */
         get vertexData() {
           const ptr = _wl_mesh_get_vertexData(this._index, _tempMem);
-          return new Float32Array(HEAPF32.buffer, ptr, Mesh.VERTEX_FLOAT_SIZE * HEAPU32[_tempMem / 4]);
+          return new Float32Array(HEAPF32.buffer, ptr, _Mesh.VERTEX_FLOAT_SIZE * HEAPU32[_tempMem / 4]);
         }
+        /** Number of vertices in this mesh. */
         get vertexCount() {
           return _wl_mesh_get_vertexCount(this._index);
         }
+        /** Index data (read-only) or {@link null} if the mesh is not indexed. */
         get indexData() {
           const ptr = _wl_mesh_get_indexData(this._index, _tempMem, _tempMem + 4);
           if (ptr === null)
@@ -13091,9 +13924,29 @@
           }
           return null;
         }
+        /** Updates the bounding sphere to match new vertex positions. */
         update() {
           _wl_mesh_update(this._index);
         }
+        /**
+         * Mesh bounding sphere.
+         *
+         * @param out Preallocated array to write into, to avoid garbage,
+         *     otherwise will allocate a new {@link Float32Array}.
+         *
+         * ```js
+         *  const sphere = new Float32Array(4);
+         *  for(...) {
+         *      mesh.getBoundingSphere(sphere);
+         *      ...
+         *  }
+         * ```
+         *
+         * If the position data is changed, call {@link Mesh#update} to update the
+         * bounding sphere.
+         *
+         * @returns Bounding sphere, 0-2 sphere origin, 3 radius.
+         */
         getBoundingSphere(out = new Float32Array(4)) {
           _wl_mesh_get_boundingSphere(this._index, _tempMem);
           out[0] = _tempMemFloat[0];
@@ -13102,6 +13955,19 @@
           out[3] = _tempMemFloat[3];
           return out;
         }
+        /**
+         * Get an attribute accessor to retrieve or modify data of give attribute.
+         *
+         * @param attr Attribute to get access to
+         * @returns {?MeshAttributeAccessor} attr Attribute to get access to or `null`,
+         *      if mesh does not have this attribute.
+         *
+         * If there are no shaders in the scene that use `TextureCoordinate` for example,
+         * no meshes will have the `TextureCoordinate` attribute.
+         *
+         * For flexible reusable components, take this into account that only `Position`
+         * is guaranteed to be present at all time.
+         */
         attribute(attr) {
           if (typeof attr != "number")
             throw new TypeError("Expected number, but got " + typeof attr);
@@ -13117,19 +13983,43 @@
           a.length = this.vertexCount;
           return a;
         }
+        /**
+         * Destroy and free the meshes memory.
+         *
+         * It is best practice to set the mesh variable to `null` after calling
+         * destroy to prevent accidental use:
+         *
+         * ```js
+         *   mesh.destroy();
+         *   mesh = null;
+         * ```
+         *
+         * Accessing the mesh after destruction behaves like accessing an empty
+         * mesh.
+         *
+         * @since 0.9.0
+         */
         destroy() {
           _wl_mesh_destroy(this._index);
         }
       };
       MeshAttributeAccessor = class {
-        constructor(type2 = MeshAttribute.Position) {
+        /**
+         * Create a new instance.
+         *
+         * @param type The type of data this accessor is wrapping.
+         * @note Do not use this constructor. Instead, please use the {@link Mesh.attribute} method.
+         *
+         * @hidden
+         */
+        constructor(type = MeshAttribute.Position) {
           this._attribute = -1;
           this._offset = 0;
           this._stride = 0;
           this._formatSize = 0;
           this._componentCount = 0;
           this.length = 0;
-          switch (type2) {
+          switch (type) {
             case MeshAttribute.Position:
             case MeshAttribute.Normal:
             case MeshAttribute.TextureCoordinate:
@@ -13146,13 +14036,46 @@
               this._tempBufferGetter = getTempBufferU16;
               break;
             default:
-              throw new Error(`Invalid attribute accessor type: ${type2}`);
+              throw new Error(`Invalid attribute accessor type: ${type}`);
           }
         }
+        /**
+         * Create a new TypedArray to hold this attribute values.
+         *
+         * This method is useful to create a view to hold the data to
+         * pass to {@link MeshAttributeAccessor.get} and {@link MeshAttributeAccessor.set}
+         *
+         * Example:
+         *
+         * ```js
+         * const vertexCount = 4;
+         * const positionAttribute = mesh.attribute(MeshAttributes.Position);
+         *
+         * // A position has 3 floats per vertex. Thus, positions has length 3 * 4.
+         * const positions = positionAttribute.createArray(vertexCount);
+         * ```
+         *
+         * @param count The number of **vertices** expected.
+         * @returns A TypedArray with the appropriate format to access the data
+         */
         createArray(count = 1) {
           count = count > this.length ? this.length : count;
           return new this._bufferType(count * this._componentCount);
         }
+        /**
+         * Get attribute element.
+         *
+         * @param {number} index Index
+         * @param out Preallocated array to write into,
+         *      to avoid garbage, otherwise will allocate a new TypedArray.
+         *
+         * `out.length` needs to be a multiple of the attributes component count, see
+         * {@link MeshAttribute}. If `out.length` is more than one multiple, it will be
+         * filled with the next n attribute elements, which can reduce overhead
+         * of this call.
+         *
+         * @returns The `out` parameter
+         */
         get(index, out = this.createArray()) {
           if (out.length % this._componentCount !== 0)
             throw new Error(`out.length, ${out.length} is not a multiple of the attribute vector components, ${this._componentCount}`);
@@ -13165,6 +14088,19 @@
             out[i] = dest[i];
           return out;
         }
+        /**
+         * Set attribute element.
+         *
+         * @param i Index
+         * @param v Value to set the element to
+         *
+         * `v.length` needs to be a multiple of the attributes component count, see
+         * {@link MeshAttribute}. If `v.length` is more than one multiple, it will be
+         * filled with the next n attribute elements, which can reduce overhead
+         * of this call.
+         *
+         * @returns Reference to self (for method chaining)
+         */
         set(i, v) {
           if (v.length % this._componentCount !== 0)
             throw new Error(`out.length, ${v.length} is not a multiple of the attribute vector components, ${this._componentCount}`);
@@ -13180,7 +14116,13 @@
           return this;
         }
       };
-      Material = class {
+      Material = class _Material {
+        /**
+         * Create a new Material.
+         *
+         * @note Creating material is expensive. Please use {@link Material#clone} to clone a material.
+         * @note Do not use this constructor directly with an index, this is reserved for internal purposes.
+         */
         constructor(params) {
           if (typeof params !== "number") {
             if (!(params === null || params === void 0 ? void 0 : params.pipeline))
@@ -13204,18 +14146,18 @@
               if (!param)
                 return target[prop];
               if (_wl_material_get_param_value(target._index, param.index, _tempMem)) {
-                const type2 = param.type;
-                switch (type2.type) {
+                const type = param.type;
+                switch (type.type) {
                   case MaterialParamType.UnsignedInt:
-                    return type2.componentCount == 1 ? _tempMemUint32[0] : new Uint32Array(HEAPU32.buffer, _tempMem, type2.componentCount);
+                    return type.componentCount == 1 ? _tempMemUint32[0] : new Uint32Array(HEAPU32.buffer, _tempMem, type.componentCount);
                   case MaterialParamType.Int:
-                    return type2.componentCount == 1 ? _tempMemInt[0] : new Int32Array(HEAP32.buffer, _tempMem, type2.componentCount);
+                    return type.componentCount == 1 ? _tempMemInt[0] : new Int32Array(HEAP32.buffer, _tempMem, type.componentCount);
                   case MaterialParamType.Float:
-                    return type2.componentCount == 1 ? _tempMemFloat[0] : new Float32Array(HEAPF32.buffer, _tempMem, type2.componentCount);
+                    return type.componentCount == 1 ? _tempMemFloat[0] : new Float32Array(HEAPF32.buffer, _tempMem, type.componentCount);
                   case MaterialParamType.Sampler:
                     return new Texture(_tempMemInt[0]);
                   default:
-                    throw new Error(`Invalid type ${type2} on parameter ${param.index} for material ${target._index}`);
+                    throw new Error(`Invalid type ${type} on parameter ${param.index} for material ${target._index}`);
                 }
               }
             },
@@ -13226,8 +14168,8 @@
                 target[prop] = value;
                 return true;
               }
-              const type2 = param.type;
-              switch (type2.type) {
+              const type = param.type;
+              switch (type.type) {
                 case MaterialParamType.UnsignedInt:
                 case MaterialParamType.Int:
                 case MaterialParamType.Sampler:
@@ -13252,19 +14194,36 @@
             }
           });
         }
+        /** Name of the shader used by this material. */
         get shader() {
           return UTF8ToString(_wl_material_get_shader(this._index));
         }
+        /**
+         * Create a copy of the underlying native material.
+         *
+         * @returns Material clone.
+         */
         clone() {
           const id = _wl_material_clone(this._index);
-          return id > 0 ? new Material(id) : null;
+          return id > 0 ? new _Material(id) : null;
         }
+        /**
+         * Wrap a native material index.
+         *
+         * @param index The index.
+         * @returns Material instance or {@link null} if index <= 0.
+         *
+         * @deprecated Please use `new Material()` instead.
+         */
         static wrap(index) {
-          return index > 0 ? new Material(index) : null;
+          return index > 0 ? new _Material(index) : null;
         }
       };
       tempCanvas = null;
       Texture = class {
+        /**
+         * @param param HTML media element to create texture from or texture id to wrap.
+         */
         constructor(param) {
           this._id = 0;
           this._imageIndex = void 0;
@@ -13278,25 +14237,45 @@
           }
           textures[this._id] = this;
         }
+        /** Whether this texture is valid. */
         get valid() {
           return this._id >= 0;
         }
+        /** Index in this manager. */
         get id() {
           return this._id;
         }
+        /** Update the texture to match the HTML element (e.g. reflect the current frame of a video). */
         update() {
           if (!this.valid)
             return;
           _wl_renderer_updateImage(this._id, this._imageIndex);
         }
+        /** Width of the texture. */
         get width() {
           return _wl_texture_width(this._id);
         }
+        /** Height of the texture. */
         get height() {
           return _wl_texture_height(this._id);
         }
+        /**
+         * Update a subrange on the texture to match the HTML element (e.g. reflect the current frame of a video).
+         *
+         * Usage:
+         *
+         * ```js
+         * // Copies rectangle of pixel starting from (10, 20)
+         * texture.updateSubImage(10, 20, 600, 400);
+         * ```
+         *
+         * @param x x offset
+         * @param y y offset
+         * @param w width
+         * @param h height
+         */
         updateSubImage(x, y, w, h) {
-          var _a14;
+          var _a;
           if (!this.valid)
             return;
           if (!tempCanvas)
@@ -13306,7 +14285,7 @@
             return;
           tempCanvas.width = w;
           tempCanvas.height = h;
-          (_a14 = tempCanvas.getContext("2d")) === null || _a14 === void 0 ? void 0 : _a14.drawImage(img, x, y, w, h, 0, 0, w, h);
+          (_a = tempCanvas.getContext("2d")) === null || _a === void 0 ? void 0 : _a.drawImage(img, x, y, w, h, 0, 0, w, h);
           _images[this._imageIndex] = tempCanvas;
           try {
             _wl_renderer_updateImage(this._id, this._imageIndex, x, (img.videoHeight || img.height) - y - h);
@@ -13314,6 +14293,19 @@
             _images[this._imageIndex] = img;
           }
         }
+        /**
+         * Destroy and free the texture's texture altas space and memory.
+         *
+         * It is best practice to set the texture variable to `null` after calling
+         * destroy to prevent accidental use of the invalid texture:
+         *
+         * ```js
+         *   texture.destroy();
+         *   texture = null;
+         * ```
+         *
+         * @since 0.9.0
+         */
         destroy() {
           _wl_texture_destroy(this._id);
           if (this._imageIndex) {
@@ -13323,6 +14315,12 @@
         }
       };
       textures = {
+        /**
+         * Load an image from URL as {@link Texture}
+         * @param {string} filename URL to load from
+         * @param {string} crossOrigin Cross origin flag for the {@link Image} object
+         * @returns {Promise<Texture>} Loaded texture
+         */
         load: function(filename, crossOrigin) {
           let image = new Image();
           if (crossOrigin !== void 0) {
@@ -13340,20 +14338,41 @@
           });
         }
       };
-      Animation = class {
+      Animation = class _Animation {
+        /**
+         * @param index Index in the manager
+         */
         constructor(index) {
           this._index = index;
         }
+        /** Duration of this animation. */
         get duration() {
           return _wl_animation_get_duration(this._index);
         }
+        /** Number of tracks in this animation. */
         get trackCount() {
           return _wl_animation_get_trackCount(this._index);
         }
+        /**
+         * Clone this animation retargeted to a new set of objects.
+         *
+         * The clone shares most of the data with the original and is therefore
+         * light-weight.
+         *
+         * **Experimental:** This API might change in upcoming versions.
+         *
+         * If retargetting to {@link Skin}, the join names will be used to determine a mapping
+         * from the previous skin to the new skin. The source skin will be retrieved from
+         * the first track in the animation that targets a joint.
+         *
+         * @param newTargets New targets per track. Expected to have
+         *      {@link Animation#trackCount} elements or to be a {@link Skin}.
+         * @returns The retargeted clone of this animation.
+         */
         retarget(newTargets) {
           if (newTargets instanceof Skin) {
             const animId2 = _wl_animation_retargetToSkin(this._index, newTargets._index);
-            return new Animation(animId2);
+            return new _Animation(animId2);
           }
           if (newTargets.length != this.trackCount) {
             throw Error("Expected " + this.trackCount.toString() + " targets, but got " + newTargets.length.toString());
@@ -13364,16 +14383,29 @@
           }
           const animId = _wl_animation_retarget(this._index, ptr);
           _free(ptr);
-          return new Animation(animId);
+          return new _Animation(animId);
         }
       };
-      $Object = class {
+      $Object = class _$Object {
+        /**
+         * @param o Object id to wrap
+         */
         constructor(o) {
           this.objectId = o;
         }
+        /**
+         * Name of the object.
+         *
+         * Useful for identifying objects during debugging.
+         */
         get name() {
           return UTF8ToString(_wl_object_name(this.objectId));
         }
+        /**
+         * Set the object's name.
+         *
+         * @param newName The new name to set.
+         */
         set name(newName) {
           const lengthBytes = lengthBytesUTF8(newName) + 1;
           const mem = _malloc(lengthBytes);
@@ -13381,10 +14413,16 @@
           _wl_object_set_name(this.objectId, mem);
           _free(mem);
         }
+        /**
+         * Parent of this object or {@link null} if parented to root.
+         */
         get parent() {
           const p = _wl_object_parent(this.objectId);
           return p == 0 ? null : _wrapObject(p);
         }
+        /**
+         * Children of this object.
+         */
         get children() {
           const childrenCount = _wl_object_get_children_count(this.objectId);
           if (childrenCount === 0)
@@ -13397,62 +14435,171 @@
           }
           return children;
         }
+        /**
+         * Reparent object to given object.
+         *
+         * @note Reparenting is not trivial and might have a noticeable performance impact.
+         *
+         * @param newParent New parent or {@link null} to parent to root
+         */
         set parent(newParent) {
           _wl_object_set_parent(this.objectId, newParent == null ? 0 : newParent.objectId);
         }
+        /** Reset local transformation (translation, rotation and scaling) to identity. */
         resetTransform() {
           _wl_object_reset_translation_rotation(this.objectId);
           _wl_object_reset_scaling(this.objectId);
         }
+        /** Reset local translation and rotation to identity */
         resetTranslationRotation() {
           _wl_object_reset_translation_rotation(this.objectId);
         }
+        /**
+         * Reset local rotation, keep translation.
+         * @note To reset both rotation and translation, prefer
+         *       {@link resetTranslationRotation}.
+         */
         resetRotation() {
           _wl_object_reset_rotation(this.objectId);
         }
+        /**
+         * Reset local translation, keep rotation.
+         * @note To reset both rotation and translation, prefer
+         *       {@link resetTranslationRotation}.
+         */
         resetTranslation() {
           _wl_object_reset_translation(this.objectId);
         }
+        /** Reset local scaling to identity (``[1.0, 1.0, 1.0]``). */
         resetScaling() {
           _wl_object_reset_scaling(this.objectId);
         }
+        /**
+         * Translate object by a vector in the parent's space.
+         * @param v Vector to translate by.
+         */
         translate(v) {
           _wl_object_translate(this.objectId, v[0], v[1], v[2]);
         }
+        /**
+         * Translate object by a vector in object space.
+         * @param v Vector to translate by.
+         */
         translateObject(v) {
           _wl_object_translate_obj(this.objectId, v[0], v[1], v[2]);
         }
+        /**
+         * Translate object by a vector in world space.
+         * @param v Vector to translate by.
+         */
         translateWorld(v) {
           _wl_object_translate_world(this.objectId, v[0], v[1], v[2]);
         }
+        /**
+         * Rotate around given axis by given angle (degrees) in local space.
+         *
+         * @param a Vector representing the rotation axis.
+         * @param d Angle in degrees.
+         *
+         * @note If the object is translated the rotation will be around
+         *     the parent. To rotate around the object origin, use
+         *     {@link rotateAxisAngleDegObject}
+         *
+         * @see {@link rotateAxisAngleRad}
+         */
         rotateAxisAngleDeg(a, d) {
           _wl_object_rotate_axis_angle(this.objectId, a[0], a[1], a[2], d);
         }
+        /**
+         * Rotate around given axis by given angle (radians) in local space.
+         *
+         * @param {number[]} a Vector representing the rotation axis.
+         * @param {number} d Angle in radians.
+         *
+         * @note If the object is translated the rotation will be around
+         *     the parent. To rotate around the object origin, use
+         *     {@link rotateAxisAngleDegObject}
+         *
+         * @see {@link rotateAxisAngleDeg}
+         */
         rotateAxisAngleRad(a, d) {
           _wl_object_rotate_axis_angle_rad(this.objectId, a[0], a[1], a[2], d);
         }
+        /**
+         * Rotate around given axis by given angle (degrees) in object space.
+         *
+         * @param a Vector representing the rotation axis.
+         * @param d Angle in degrees.
+         *
+         * Equivalent to prepending a rotation quaternion to the object's
+         * local transformation.
+         *
+         * @see {@link rotateAxisAngleRadObject}
+         */
         rotateAxisAngleDegObject(a, d) {
           _wl_object_rotate_axis_angle_obj(this.objectId, a[0], a[1], a[2], d);
         }
+        /**
+         * Rotate around given axis by given angle (radians) in object space
+         * Equivalent to prepending a rotation quaternion to the object's
+         * local transformation.
+         *
+         * @param a Vector representing the rotation axis
+         * @param d Angle in degrees
+         *
+         * @see {@link rotateAxisAngleDegObject}
+         */
         rotateAxisAngleRadObject(a, d) {
           _wl_object_rotate_axis_angle_rad_obj(this.objectId, a[0], a[1], a[2], d);
         }
+        /**
+         * Rotate by a quaternion.
+         *
+         * @param q the Quaternion to rotate by.
+         */
         rotate(q) {
           _wl_object_rotate_quat(this.objectId, q[0], q[1], q[2], q[3]);
         }
+        /**
+         * Rotate by a quaternion in object space.
+         *
+         * Equivalent to prepending a rotation quaternion to the object's
+         * local transformation.
+         *
+         * @param q the Quaternion to rotate by.
+         */
         rotateObject(q) {
           _wl_object_rotate_quat_obj(this.objectId, q[0], q[1], q[2], q[3]);
         }
+        /**
+         * Scale object by a vector in object space.
+         *
+         * @param v Vector to scale by.
+         */
         scale(v) {
           _wl_object_scale(this.objectId, v[0], v[1], v[2]);
         }
+        /** Local / object space transformation. */
         get transformLocal() {
           return new Float32Array(HEAPF32.buffer, _wl_object_trans_local(this.objectId), 8);
         }
+        /**
+         * Set local transform.
+         *
+         * @param t Local space transformation.
+         *
+         * @since 0.8.5
+         */
         set transformLocal(t) {
           this.transformLocal.set(t);
           this.setDirty();
         }
+        /**
+         * Compute local / object space translation from transformation.
+         *
+         * @param out Destination array/vector, expected to have at least 3 elements.
+         * @return The `out` parameter.
+         */
         getTranslationLocal(out) {
           _wl_object_get_translation_local(this.objectId, _tempMem);
           out[0] = _tempMemFloat[0];
@@ -13460,6 +14607,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Compute world space translation from transformation.
+         *
+         * May recompute transformations of the hierarchy of this object,
+         * if they were changed by JavaScript components this frame.
+         *
+         * @param out Destination array/vector, expected to have at least 3 elements.
+         * @return The `out` parameter.
+         */
         getTranslationWorld(out) {
           _wl_object_get_translation_world(this.objectId, _tempMem);
           out[0] = _tempMemFloat[0];
@@ -13467,45 +14623,124 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Set local / object space translation.
+         *
+         * Concatenates a new translation dual quaternion onto the existing rotation.
+         *
+         * @param v New local translation array/vector, expected to have at least 3 elements.
+         */
         setTranslationLocal(v) {
           _wl_object_set_translation_local(this.objectId, v[0], v[1], v[2]);
         }
+        /**
+         * Set world space translation.
+         *
+         * Applies the inverse parent transform with a new translation dual quaternion
+         * which is concatenated onto the existing rotation.
+         *
+         * @param v New world translation array/vector, expected to have at least 3 elements.
+         */
         setTranslationWorld(v) {
           _wl_object_set_translation_world(this.objectId, v[0], v[1], v[2]);
         }
+        /**
+         * Global / world space transformation.
+         *
+         * May recompute transformations of the hierarchy of this object,
+         * if they were changed by JavaScript components this frame.
+         */
         get transformWorld() {
           return new Float32Array(HEAPF32.buffer, _wl_object_trans_world(this.objectId), 8);
         }
+        /**
+         * Set world transform.
+         *
+         * @param t Global / world space transformation.
+         *
+         * @since 0.8.5
+         */
         set transformWorld(t) {
           this.transformWorld.set(t);
           _wl_object_trans_world_to_local(this.objectId);
         }
+        /** Local / object space scaling. */
         get scalingLocal() {
           return new Float32Array(HEAPF32.buffer, _wl_object_scaling_local(this.objectId), 3);
         }
+        /**
+         * Set scaling local.
+         *
+         * @param s Global / world space transformation.
+         *
+         * @since 0.8.7
+         */
         set scalingLocal(s) {
           this.scalingLocal.set(s);
           this.setDirty();
         }
+        /**
+         * Global / world space scaling.
+         *
+         * May recompute transformations of the hierarchy of this object,
+         * if they were changed by JavaScript components this frame.
+         */
         get scalingWorld() {
           return new Float32Array(HEAPF32.buffer, _wl_object_scaling_world(this.objectId), 3);
         }
+        /**
+         * Set scaling world.
+         *
+         * @param t Global / world space transformation.
+         *
+         * @since 0.8.7
+         */
         set scalingWorld(s) {
           this.scalingWorld.set(s);
           _wl_object_scaling_world_to_local(this.objectId);
         }
+        /**
+         * Local space rotation.
+         *
+         * @since 0.8.7
+         */
         get rotationLocal() {
           return this.transformLocal.subarray(0, 4);
         }
+        /**
+         * Global / world space rotation
+         *
+         * @since 0.8.7
+         */
         get rotationWorld() {
           return this.transformWorld.subarray(0, 4);
         }
+        /**
+         * Set rotation local
+         *
+         * @param r Local space rotation
+         *
+         * @since 0.8.7
+         */
         set rotationLocal(r) {
           _wl_object_set_rotation_local(this.objectId, r[0], r[1], r[2], r[3]);
         }
+        /**
+         * Set rotation world.
+         *
+         * @param {number} r Global / world space rotation.
+         *
+         * @since 0.8.7
+         */
         set rotationWorld(r) {
           _wl_object_set_rotation_world(this.objectId, r[0], r[1], r[2], r[3]);
         }
+        /**
+         * Compute the object's forward facing world space vector.
+         *
+         * @param out Destination array/vector, expected to have at least 3 elements.
+         * @return The `out` parameter.
+         */
         getForward(out) {
           out[0] = 0;
           out[1] = 0;
@@ -13513,6 +14748,12 @@
           this.transformVectorWorld(out);
           return out;
         }
+        /**
+         * Compute the object's up facing world space vector.
+         *
+         * @param out Destination array/vector, expected to have at least 3 elements.
+         * @return The `out` parameter.
+         */
         getUp(out) {
           out[0] = 0;
           out[1] = 1;
@@ -13520,6 +14761,12 @@
           this.transformVectorWorld(out);
           return out;
         }
+        /**
+         * Compute the object's right facing world space vector/
+         *
+         * @param out Destination array/vector, expected to have at least 3 elements.
+         * @return The `out` parameter.
+         */
         getRight(out) {
           out[0] = 1;
           out[1] = 0;
@@ -13527,6 +14774,15 @@
           this.transformVectorWorld(out);
           return out;
         }
+        /**
+         * Transform a vector by this object's world transform.
+         *
+         * @param out Out point
+         * @param v Point to transform, default `out`
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformVectorWorld(out, v) {
           v = v || out;
           _tempMemFloat[0] = v[0];
@@ -13538,6 +14794,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a vector by this object's local transform
+         *
+         * @param out Out point
+         * @param v Point to transform, default `out`
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformVectorLocal(out, v) {
           v = v || out;
           _tempMemFloat[0] = v[0];
@@ -13549,6 +14814,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a point by this object's world transform.
+         *
+         * @param out Out point.
+         * @param p Point to transform, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformPointWorld(out, p) {
           p = p || out;
           _tempMemFloat[0] = p[0];
@@ -13560,6 +14834,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a point by this object's local transform.
+         *
+         * @param out Out point.
+         * @param p Point to transform, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformPointLocal(out, p) {
           p = p || out;
           _tempMemFloat[0] = p[0];
@@ -13571,6 +14854,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a vector by this object's inverse world transform.
+         *
+         * @param {number[]} out Out point.
+         * @param {number[]} v Vector to transform, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformVectorInverseWorld(out, v) {
           v = v || out;
           _tempMemFloat[0] = v[0];
@@ -13582,6 +14874,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a point by this object's inverse local transform.
+         *
+         * @param out Out point
+         * @param v Vector to transform, default `out`
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformVectorInverseLocal(out, v) {
           v = v || out;
           _tempMemFloat[0] = v[0];
@@ -13593,6 +14894,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a point by this object's inverse world transform.
+         *
+         * @param out Out point.
+         * @param v Point to transform, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformPointInverseWorld(out, p) {
           p = p || out;
           _tempMemFloat[0] = p[0];
@@ -13604,6 +14914,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform a point by this object's inverse local transform.
+         *
+         * @param out Out point.
+         * @param p Point to transform, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         transformPointInverseLocal(out, p) {
           p = p || out;
           _tempMemFloat.set(p);
@@ -13613,6 +14932,15 @@
           out[2] = _tempMemFloat[2];
           return out;
         }
+        /**
+         * Transform an object space dual quaternion into world space.
+         *
+         * @param out Out transformation.
+         * @param q Local space transformation, default `out`.
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         toWorldSpaceTransform(out, q) {
           q = q || out;
           _tempMemFloat.set(q);
@@ -13627,6 +14955,15 @@
           out[7] = _tempMemFloat[7];
           return out;
         }
+        /**
+         * Transform a world space dual quaternion into local space
+         *
+         * @param {number[]} out Out transformation
+         * @param {number[]} q World space transformation, default `out`
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         toLocalSpaceTransform(out, q) {
           const p = this.parent;
           q = q || out;
@@ -13646,6 +14983,15 @@
           }
           return out;
         }
+        /**
+         * Transform a world space dual quaternion into object space
+         *
+         * @param out Out transformation.
+         * @param q World space transformation, default `out`
+         * @return The `out` parameter.
+         *
+         * @since 0.8.7
+         */
         toObjectSpaceTransform(out, q) {
           q = q || out;
           _tempMemFloat.set(q);
@@ -13660,83 +15006,148 @@
           out[7] = _tempMemFloat[7];
           return out;
         }
+        /**
+         * Turn towards / look at target.
+         *
+         * @param v Target vector to turn towards.
+         * @param up Up vector of this object, default `[0, 1, 0]`.
+         */
         lookAt(v, up = UP_VECTOR) {
           _wl_object_lookAt(this.objectId, v[0], v[1], v[2], up[0], up[1], up[2]);
         }
+        /** Destroy the object with all of its components and remove it from the scene */
         destroy() {
           _wl_scene_remove_object(this.objectId);
           this.objectId = null;
         }
+        /**
+         * Mark transformation dirty.
+         *
+         * Causes an eventual recalculation of {@link transformWorld}, either
+         * on next {@link getTranslationWorld}, {@link transformWorld} or
+         * {@link scalingWorld} or the beginning of next frame, whichever
+         * happens first.
+         */
         setDirty() {
           _wl_object_set_dirty(this.objectId);
         }
+        /**
+         * Disable/enable all components of this object.
+         *
+         * @param b New state for the components.
+         *
+         * @since 0.8.5
+         */
         set active(b) {
           const comps = this.getComponents();
           for (let c of comps) {
             c.active = b;
           }
         }
+        /**
+         * Get a component attached to this object.
+         *
+         * @param typeOrClass Type name. It's also possible to give a class definition.
+         *     In this case, the method will use the `class.TypeName` field to find the component.
+         * @param index=0 Index for component of given type. This can be used to access specific
+         *      components if the object has multiple components of the same type.
+         * @returns The component or {@link null} if there is no such component on this object
+         */
         getComponent(typeOrClass, index) {
-          const type2 = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
-          const lengthBytes = lengthBytesUTF8(type2) + 1;
+          const type = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
+          const lengthBytes = lengthBytesUTF8(type) + 1;
           const mem = _malloc(lengthBytes);
-          stringToUTF8(type2, mem, lengthBytes);
+          stringToUTF8(type, mem, lengthBytes);
           const componentType = _wl_get_component_manager_index(mem);
           _free(mem);
           if (componentType < 0) {
-            const typeIndex = _WL._componentTypeIndices[type2];
+            const typeIndex = _WL._componentTypeIndices[type];
             const jsIndex = _wl_get_js_component_index(this.objectId, typeIndex, index || 0);
             return jsIndex < 0 ? null : _WL._components[jsIndex];
           }
           const componentId = _wl_get_component_id(this.objectId, componentType, index || 0);
-          return _wrapComponent(type2, componentType, componentId);
+          return _wrapComponent(type, componentType, componentId);
         }
+        /**
+         * @param typeOrClass Type name, pass a falsey value (`undefined` or {@link null}) to retrieve all.
+         *     It's also possible to give a class definition. In this case, the method will use the `class.TypeName` field to
+         *     find the components.
+         * @returns All components of given type attached to this object.
+         *
+         * @note As this function is non-trivial, avoid using it in `update()` repeatedly,
+         *      but rather store its result in `init()` or `start()`
+         * @warning This method will currently return at most 341 components.
+         */
         getComponents(typeOrClass) {
           let componentType = null;
-          let type2 = null;
+          let type = null;
           if (typeOrClass) {
-            type2 = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
-            componentType = $Object._typeIndexFor(type2);
+            type = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
+            componentType = _$Object._typeIndexFor(type);
           }
           const components = [];
           const maxComps = Math.floor(_tempMemSize / 3 * 2);
           const componentsCount = _wl_object_get_components(this.objectId, _tempMem, maxComps);
           const offset = 2 * componentsCount;
           _wl_object_get_component_types(this.objectId, _tempMem + offset, maxComps);
-          const jsManagerIndex = $Object._typeIndexFor("js");
+          const jsManagerIndex = _$Object._typeIndexFor("js");
           for (let i = 0; i < componentsCount; ++i) {
             const t = _tempMemUint8[i + offset];
             const componentId = _tempMemUint16[i];
             if (t == jsManagerIndex) {
               const comp = _WL._components[_wl_get_js_component_index_for_id(componentId)];
-              if (componentType === null || comp.type == type2)
+              if (componentType === null || comp.type == type)
                 components.push(comp);
               continue;
             }
             if (componentType === null) {
-              const managerName = $Object._typeNameFor(t);
+              const managerName = _$Object._typeNameFor(t);
               components.push(_wrapComponent(managerName, t, componentId));
             } else if (t == componentType) {
-              components.push(_wrapComponent(type2, componentType, componentId));
+              components.push(_wrapComponent(type, componentType, componentId));
             }
           }
           return components;
         }
+        /**
+         * Add component of given type to the object.
+         *
+         * You can use this function to clone components, see the example below.
+         *
+         * ```js
+         *  // Clone existing component (since 0.8.10)
+         *  let original = this.object.getComponent('mesh');
+         *  otherObject.addComponent('mesh', original);
+         *  // Create component from parameters
+         *  this.object.addComponent('mesh', {
+         *      mesh: someMesh,
+         *      material: someMaterial,
+         *  });
+         * ```
+         *
+         * @param typeOrClass Typename to create a component of. Can be native or
+         *     custom JavaScript component type. It's also possible to give a class definition.
+         *     In this case, the method will use the `class.TypeName` field.
+         * @param params Parameters to initialize properties of the new component,
+         *      can be another component to copy properties from.
+         *
+         * @returns {?(Component|CollisionComponent|TextComponent|ViewComponent|MeshComponent|InputComponent|LightComponent|AnimationComponent|PhysXComponent)} The component or {@link null} if the type was not found
+         */
         addComponent(typeOrClass, params) {
-          const type2 = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
-          const componentType = $Object._typeIndexFor(type2);
+          const type = isString(typeOrClass) ? typeOrClass : typeOrClass.TypeName;
+          const componentType = _$Object._typeIndexFor(type);
           let component = null;
           let componentIndex = null;
           if (componentType < 0) {
-            if (!(type2 in _WL._componentTypeIndices)) {
-              throw new TypeError("Unknown component type '" + type2 + "'");
+            if (!(type in _WL._componentTypeIndices)) {
+              throw new TypeError("Unknown component type '" + type + "'");
             }
-            const componentId = _wl_object_add_js_component(this.objectId, _WL._componentTypeIndices[type2]);
+            const componentId = _wl_object_add_js_component(this.objectId, _WL._componentTypeIndices[type]);
             componentIndex = _wl_get_js_component_index_for_id(componentId);
             component = _WL._components[componentIndex];
           } else {
             const componentId = _wl_object_add_component(this.objectId, componentType);
-            component = _wrapComponent(type2, componentType, componentId);
+            component = _wrapComponent(type, componentType, componentId);
           }
           if (params !== void 0) {
             for (const key in params) {
@@ -13753,22 +15164,44 @@
           }
           return component;
         }
+        /**
+         * Whether given object's transformation has changed.
+         */
         get changed() {
           return !!_wl_object_is_changed(this.objectId);
         }
+        /**
+         * Checks equality by comparing whether the wrapped native component ids
+         * and component manager types are equal.
+         *
+         * @param otherObject Object to check equality with.
+         * @returns Whether this object equals the given object.
+         */
         equals(otherObject) {
           if (!otherObject)
             return false;
           return this.objectId == otherObject.objectId;
         }
-        static _typeIndexFor(type2) {
-          const lengthBytes = lengthBytesUTF8(type2) + 1;
+        /**
+         * Used internally.
+         *
+         * @param type The type
+         * @return The component type
+         */
+        static _typeIndexFor(type) {
+          const lengthBytes = lengthBytesUTF8(type) + 1;
           const mem = _malloc(lengthBytes);
-          stringToUTF8(type2, mem, lengthBytes);
+          stringToUTF8(type, mem, lengthBytes);
           const componentType = _wl_get_component_manager_index(mem);
           _free(mem);
           return componentType;
         }
+        /**
+         * Used internally.
+         *
+         * @param typeIndex The type index
+         * @return The name as a string
+         */
         static _typeNameFor(typeIndex) {
           return UTF8ToString(_wl_component_manager_name(typeIndex));
         }
@@ -13777,15 +15210,27 @@
         constructor(index) {
           this._index = index;
         }
+        /** Amount of joints in this skin. */
         get jointCount() {
           return _wl_skin_get_joint_count(this._index);
         }
+        /** Joints object ids for this skin */
         get jointIds() {
           return new Uint16Array(HEAPU16.buffer, _wl_skin_joint_ids(this._index), this.jointCount);
         }
+        /**
+         * Dual quaternions in a flat array of size 8 times {@link jointCount}.
+         *
+         * Inverse bind transforms of the skin.
+         */
         get inverseBindTransforms() {
           return new Float32Array(HEAPF32.buffer, _wl_skin_inverse_bind_transforms(this._index), 8 * this.jointCount);
         }
+        /**
+         * Vectors in a flat array of size 3 times {@link jointCount}.
+         *
+         * Inverse bind scalings of the skin.
+         */
         get inverseBindScalings() {
           return new Float32Array(HEAPF32.buffer, _wl_skin_inverse_bind_scalings(this._index), 3 * this.jointCount);
         }
@@ -13803,12 +15248,13 @@
 
   // js/pp/audio/audio_manager_component.js
   var audio_manager_component_exports = {};
-  var _a;
   var init_audio_manager_component = __esm({
     "js/pp/audio/audio_manager_component.js"() {
       init_api();
       PP.myAudioManager = null;
-      PP.AudioManagerComponent = (_a = class extends Component {
+      PP.AudioManagerComponent = class AudioManagerComponent extends Component {
+        static TypeName = "pp-audio-manager";
+        static Properties = {};
         init() {
           PP.myAudioManager = new PP.AudioManager();
         }
@@ -13816,7 +15262,7 @@
         }
         update(dt) {
         }
-      }, __publicField(_a, "TypeName", "pp-audio-manager"), __publicField(_a, "Properties", {}), _a);
+      };
       WL.registerComponent(PP.AudioManagerComponent);
     }
   });
@@ -13829,26 +15275,25 @@
       import_howler4 = __toESM(require_howler());
       PP.AudioManager = class AudioManager {
         constructor() {
-          this._myAudioSetups = /* @__PURE__ */ new Map();
+          this._myAudioSetupMap = /* @__PURE__ */ new Map();
+          this._myAudioPlayersForPreload = [];
         }
         createAudioPlayer(audioSetupID) {
-          let audioSetup = this.getAudioSetup(audioSetupID);
-          if (audioSetup != null) {
-            return new PP.AudioPlayer(this.getAudioSetup(audioSetupID));
-          }
-          return null;
+          return new PP.AudioPlayer(this.getAudioSetup(audioSetupID));
         }
         getAudioSetup(id) {
-          return this._myAudioSetups.get(id);
+          return this._myAudioSetupMap.get(id);
         }
         addAudioSetup(id, audioSetup, preload = true) {
-          this._myAudioSetups.set(id, audioSetup);
+          this._myAudioSetupMap.set(id, audioSetup);
           if (preload) {
-            this.createAudioPlayer(id);
+            let preloadAudioSetup = audioSetup.clone();
+            preloadAudioSetup.myPreload = true;
+            this._myAudioPlayersForPreload.push(new PP.AudioPlayer(preloadAudioSetup));
           }
         }
         removeAudioSetup(id) {
-          this._myAudioSetups.delete(id);
+          this._myAudioSetupMap.delete(id);
         }
         setVolume(volume) {
           import_howler4.Howler.volume(volume);
@@ -13889,7 +15334,7 @@
           if (audioSetupOrAudioFilePath == null) {
             this._myAudioSetup = new PP.AudioSetup();
           } else if (typeof audioSetupOrAudioFilePath === "string") {
-            this._myAudioSetup = new PP.AudioSetup(audioSetupOrAudioFile);
+            this._myAudioSetup = new PP.AudioSetup(audioSetupOrAudioFilePath);
           } else {
             this._myAudioSetup = audioSetupOrAudioFilePath.clone();
           }
@@ -13902,7 +15347,6 @@
               autoplay: this._myAudioSetup.myAutoplay,
               rate: this._myAudioSetup.myRate,
               pool: this._myAudioSetup.myPool,
-              pos: this._myAudioSetup.mySpatial ? this._myAudioSetup.myPosition : null,
               refDistance: this._myAudioSetup.myReferenceDistance,
               preload: this._myAudioSetup.myPreload,
               onloaderror: function() {
@@ -13911,7 +15355,6 @@
                 });
               }
             });
-            this._myAudio._pannerAttr.refDistance = this._myAudioSetup.myReferenceDistance;
           }
           this._myLastAudioID = null;
           this._myCallbacks = /* @__PURE__ */ new Map();
@@ -13926,7 +15369,7 @@
           return this._myAudio != null;
         }
         play() {
-          if (Howler.state != "running" && this._myAudioSetup.myPreventPlayWhenAudioContextNotRunning) {
+          if (import_howler5.Howler.state != "running" && this._myAudioSetup.myPreventPlayWhenAudioContextNotRunning) {
             return false;
           }
           let audioID = this._myAudio.play();
@@ -14104,12 +15547,15 @@
   });
 
   // js/pp/audio/audio_utils.js
-  var require_audio_utils = __commonJS({
+  var audio_utils_exports = {};
+  var import_howler6;
+  var init_audio_utils = __esm({
     "js/pp/audio/audio_utils.js"() {
+      import_howler6 = __toESM(require_howler());
       PP.AudioUtils = {
         isAudioPlaybackBlocked: function() {
           let isBlocked = false;
-          if (Howler != null && Howler.state != "running") {
+          if (import_howler6.Howler != null && import_howler6.Howler.state != "running") {
             isBlocked = true;
           }
           return isBlocked;
@@ -14120,15 +15566,15 @@
 
   // js/pp/audio/mute_everything.js
   var mute_everything_exports = {};
-  var import_howler6;
+  var import_howler7;
   var init_mute_everything = __esm({
     "js/pp/audio/mute_everything.js"() {
-      import_howler6 = __toESM(require_howler());
+      import_howler7 = __toESM(require_howler());
       WL.registerComponent("pp-mute-everything", {}, {
         init: function() {
         },
         start: function() {
-          import_howler6.Howler.mute(true);
+          import_howler7.Howler.mute(true);
         },
         update: function(dt) {
         }
@@ -14189,9 +15635,12 @@
         _myRaycastCount: { type: WL.Type.Int, default: 100 },
         _myVisualizeRaycast: { type: WL.Type.Bool, default: false },
         _myVisualizeRaycastDelay: { type: WL.Type.Float, default: 0.5 },
+        // you can use this to test with convex mesh, 
+        // but u first need to add a physx with a convex mesh to the scene and read the shapeData index on the component to set it as _myShapeIndex
         _myUseConvexMesh: { type: WL.Type.Bool, default: false },
         _myShapeIndex: { type: WL.Type.Int, default: 0 },
         _myShapeScaleMultiplier: { type: WL.Type.Float, default: 1 },
+        // used to adjust the scale of the convex mesh if too big or small based on how u imported it
         _myEnableLog: { type: WL.Type.Bool, default: true }
       }, {
         start: function() {
@@ -14286,7 +15735,7 @@
             let strength = 5 * dt;
             this._myTranslateVec3.vec3_set(Math.pp_random(-strength, strength), Math.pp_random(-strength, strength), Math.pp_random(-strength, strength));
             physX.pp_translate(this._myTranslateVec3);
-            rotateStrength = 50 * dt;
+            let rotateStrength = 50 * dt;
             this._myRotateVec3.vec3_set(Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength), Math.pp_random(-rotateStrength, rotateStrength));
             physX.pp_rotate(this._myRotateVec3);
           }
@@ -14412,10 +15861,12 @@
     "js/pp/cauldron/benchmarks/max_visible_triangles.js"() {
       WL.registerComponent("pp-benchmark-max-visible-triangles", {
         _myTargetFrameRate: { type: WL.Type.Int, default: -1 },
+        // -1 means it will auto detect it at start
         _myTargetFrameRateThreshold: { type: WL.Type.Int, default: 3 },
         _myStartPlaneCount: { type: WL.Type.Int, default: 1 },
         _myPlaneTriangles: { type: WL.Type.Int, default: 100 },
         _mySecondsBeforeDoubling: { type: WL.Type.Float, default: 0.5 },
+        // higher gives a better frame rate evaluation
         _myDTHistoryToIgnorePercentage: { type: WL.Type.Float, default: 0.25 },
         _myCloneMaterial: { type: WL.Type.Bool, default: false },
         _myCloneMesh: { type: WL.Type.Bool, default: false },
@@ -14918,17 +16369,13 @@
   var require_save_manager = __commonJS({
     "js/pp/cauldron/cauldron/save_manager.js"() {
       PP.SaveManager = class SaveManager {
-        constructor() {
-          this._mySaveCache = /* @__PURE__ */ new Map();
+        constructor(saveID) {
+          this._mySaveID = saveID;
+          this._mySaveObject = PP.SaveUtils.loadObject(this._mySaveID, {});
           this._myCommitSavesDelayTimer = new PP.Timer(0, false);
           this._myDelaySavesCommit = true;
-          this._myIDsToCommit = [];
-          this._myCacheDefaultValueOnFail = true;
-          if (WL.xrSession) {
-            this._onXRSessionStart(WL.xrSession);
-          }
-          WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
-          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
+          this._myCommitSavesDirty = false;
+          this._myCommitSavesDirtyClearOnFail = true;
           this._myClearCallbacks = /* @__PURE__ */ new Map();
           this._myDeleteCallbacks = /* @__PURE__ */ new Map();
           this._myDeleteIDCallbacks = /* @__PURE__ */ new Map();
@@ -14936,11 +16383,19 @@
           this._mySaveValueChangedCallbacks = /* @__PURE__ */ new Map();
           this._mySaveIDCallbacks = /* @__PURE__ */ new Map();
           this._mySaveValueChangedIDCallbacks = /* @__PURE__ */ new Map();
-          this._myCommitSaveCallbacks = /* @__PURE__ */ new Map();
-          this._myCommitSaveIDCallbacks = /* @__PURE__ */ new Map();
           this._myCommitSavesCallbacks = /* @__PURE__ */ new Map();
           this._myLoadCallbacks = /* @__PURE__ */ new Map();
           this._myLoadIDCallbacks = /* @__PURE__ */ new Map();
+          window.addEventListener("visibilitychange", function() {
+            if (document.visibilityState != "visible") {
+              this._onInterrupt();
+            }
+          }.bind(this));
+          if (WL.xrSession) {
+            this._onXRSessionStart(WL.xrSession);
+          }
+          WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         }
         setCommitSavesDelay(delay) {
           this._myCommitSavesDelayTimer.start(delay);
@@ -14948,37 +16403,62 @@
         setDelaySavesCommit(delayed) {
           this._myDelaySavesCommit = delayed;
         }
-        setCacheDefaultValueOnFail(cache) {
-          this._myCacheDefaultValueOnFail = cache;
+        setCommitSavesDirty(dirty, startDelayTimer = true) {
+          this._myCommitSavesDirty = dirty;
+          if (dirty && startDelayTimer) {
+            if (!this.startDelayTimer.isRunning()) {
+              this._myCommitSavesDelayTimer.start();
+            }
+          } else {
+            this._myCommitSavesDelayTimer.reset();
+          }
+        }
+        setCommitSavesDirtyClearOnFail(clearOnFail) {
+          this._myCommitSavesDirtyClearOnFail = clearOnFail;
+        }
+        getCommitSavesDelay() {
+          return this._myCommitSavesDelayTimer.getDuration();
+        }
+        isDelaySavesCommit() {
+          return this._myDelaySavesCommit;
+        }
+        isCommitSavesDirty() {
+          return this._myCommitSavesDirty;
+        }
+        isCommitSavesDirtyClearOnFail() {
+          return this._myCommitSavesDirtyClearOnFail;
         }
         update(dt) {
           if (this._myCommitSavesDelayTimer.isRunning()) {
             this._myCommitSavesDelayTimer.update(dt);
             if (this._myCommitSavesDelayTimer.isDone()) {
-              this.commitSaves();
+              if (this._myCommitSavesDirty) {
+                this._commitSaves();
+              }
+            }
+          } else {
+            if (this._myCommitSavesDirty) {
+              this._commitSaves();
             }
           }
         }
+        has(id) {
+          return id in this._mySaveObject;
+        }
         save(id, value, overrideDelaySavesCommit = null) {
           let sameValue = false;
-          if (this._mySaveCache.has(id)) {
-            sameValue = this._mySaveCache.get(id) === value;
+          if (this.has(id)) {
+            sameValue = this._mySaveObject[id] === value;
           }
-          if (!sameValue || true) {
-            this._mySaveCache.set(id, value);
+          if (!sameValue) {
+            this._mySaveObject[id] = value;
             if (this._myDelaySavesCommit && overrideDelaySavesCommit == null || overrideDelaySavesCommit != null && overrideDelaySavesCommit) {
-              this._myIDsToCommit.pp_pushUnique(id);
+              this._myCommitSavesDirty = true;
               if (!this._myCommitSavesDelayTimer.isRunning()) {
                 this._myCommitSavesDelayTimer.start();
               }
             } else {
-              let failed = this._commitSave(id, false);
-              if (this._myCommitSavesCallbacks.size > 0) {
-                let isCommitSaveDelayed = false;
-                this._myCommitSavesCallbacks.forEach(function(callback) {
-                  callback(isCommitSaveDelayed, failed);
-                });
-              }
+              this._commitSaves();
             }
           }
           if (this._mySaveCallbacks.size > 0) {
@@ -14987,9 +16467,9 @@
             });
           }
           if (this._mySaveIDCallbacks.size > 0) {
-            let callbacks = this._mySaveIDCallbacks.get(id);
-            if (callbacks != null) {
-              callbacks.forEach(function(callback) {
+            let callbackMap = this._mySaveIDCallbacks.get(id);
+            if (callbackMap != null) {
+              callbackMap.forEach(function(callback) {
                 callback(id, value);
               });
             }
@@ -15001,165 +16481,117 @@
               });
             }
             if (this._mySaveValueChangedIDCallbacks.size > 0) {
-              let callbacks = this._mySaveValueChangedIDCallbacks.get(id);
-              if (callbacks != null) {
-                callbacks.forEach(function(callback) {
+              let callbackMap = this._mySaveValueChangedIDCallbacks.get(id);
+              if (callbackMap != null) {
+                callbackMap.forEach(function(callback) {
                   callback(id, value);
                 });
               }
             }
           }
         }
-        commitSaves() {
-          if (this._myIDsToCommit.length > 0) {
-            let failed = false;
-            for (let id of this._myIDsToCommit) {
-              if (this._mySaveCache.has(id)) {
-                let result = this._commitSave(id, true);
-                failed = failed || result;
+        delete(id, overrideDelaySavesCommit = null) {
+          if (this.has(id)) {
+            delete this._mySaveObject[id];
+            if (this._myDelaySavesCommit && overrideDelaySavesCommit == null || overrideDelaySavesCommit != null && overrideDelaySavesCommit) {
+              this._myCommitSavesDirty = true;
+              if (!this._myCommitSavesDelayTimer.isRunning()) {
+                this._myCommitSavesDelayTimer.start();
               }
-            }
-            this._myIDsToCommit = [];
-            if (this._myCommitSavesCallbacks.size > 0) {
-              let isCommitSavesDelayed = true;
-              this._myCommitSavesCallbacks.forEach(function(callback) {
-                callback(isCommitSavesDelayed, failed);
-              });
+            } else {
+              this._commitSaves();
             }
           }
-        }
-        has(id) {
-          return this._mySaveCache.has(id) || PP.SaveUtils.has(id);
-        }
-        delete(id) {
-          this._mySaveCache.delete(id);
-          PP.SaveUtils.delete(id);
           if (this._myDeleteCallbacks.size > 0) {
             this._myDeleteCallbacks.forEach(function(callback) {
               callback(id);
             });
           }
           if (this._myDeleteIDCallbacks.size > 0) {
-            let callbacks = this._myDeleteIDCallbacks.get(id);
-            if (callbacks != null) {
-              callbacks.forEach(function(callback) {
+            let callbackMap = this._myDeleteIDCallbacks.get(id);
+            if (callbackMap != null) {
+              callbackMap.forEach(function(callback) {
                 callback(id);
               });
             }
           }
         }
-        clear() {
-          this._mySaveCache.clear();
-          PP.SaveUtils.clear();
+        clear(overrideDelaySavesCommit = null) {
+          if (Object.keys(this._mySaveObject).length > 0) {
+            this._mySaveObject = {};
+            if (this._myDelaySavesCommit && overrideDelaySavesCommit == null || overrideDelaySavesCommit != null && overrideDelaySavesCommit) {
+              this._myCommitSavesDirty = true;
+              if (!this._myCommitSavesDelayTimer.isRunning()) {
+                this._myCommitSavesDelayTimer.start();
+              }
+            } else {
+              this._commitSaves();
+            }
+          }
           if (this._myClearCallbacks.size > 0) {
             this._myClearCallbacks.forEach(function(callback) {
               callback();
             });
           }
         }
-        load(id, defaultValue2 = null) {
-          return this._load(id, defaultValue2, "load");
-        }
-        loadString(id, defaultValue2 = null) {
-          return this._load(id, defaultValue2, "loadString");
-        }
-        loadNumber(id, defaultValue2 = null) {
-          return this._load(id, defaultValue2, "loadNumber");
-        }
-        loadBool(id, defaultValue2 = null) {
-          return this._load(id, defaultValue2, "loadBool");
-        }
-        getCommitSavesDelay() {
-          return this._myCommitSavesDelayTimer.getDuration();
-        }
-        isDelaySavesCommit() {
-          return this._myDelaySavesCommit;
-        }
-        isCacheDefaultValueOnFail() {
-          return this._myCacheDefaultValueOnFail;
-        }
-        _commitSave(id, isCommitSaveDelayed) {
-          let value = this._mySaveCache.get(id);
-          let failed = false;
-          try {
-            PP.SaveUtils.save(id, value);
-          } catch (error) {
-            failed = true;
-          }
-          if (this._myCommitSaveCallbacks.size > 0) {
-            this._myCommitSaveCallbacks.forEach(function(callback) {
-              callback(id, value, isCommitSaveDelayed, failed);
-            });
-          }
-          if (this._myCommitSaveIDCallbacks.size > 0) {
-            let callbacks = this._myCommitSaveIDCallbacks.get(id);
-            if (callbacks != null) {
-              callbacks.forEach(function(callback) {
-                callback(id, value, isCommitSaveDelayed, failed);
-              });
-            }
-          }
-          return failed;
-        }
-        _load(id, defaultValue2, functionName) {
-          let value = null;
-          let failed = false;
-          let loadFromCache = false;
-          if (this._mySaveCache.has(id)) {
-            value = this._mySaveCache.get(id);
-            if (value == null && defaultValue2 != null) {
-              value = defaultValue2;
-              if (this._myCacheDefaultValueOnFail) {
-                this._mySaveCache.set(id, value);
-              }
-            }
-            loadFromCache = true;
-          } else {
-            let saveResult = null;
-            try {
-              saveResult = PP.SaveUtils[functionName](id, null);
-            } catch (error) {
-              saveResult = null;
-              failed = true;
-            }
-            if (saveResult == null) {
-              value = defaultValue2;
-            } else {
-              value = saveResult;
-            }
-            if (saveResult != null || this._myCacheDefaultValueOnFail) {
-              this._mySaveCache.set(id, value);
-            } else {
-              this._mySaveCache.set(id, null);
-            }
+        load(id, defaultValue) {
+          let value = this._mySaveObject[id];
+          if (value == null && defaultValue != null) {
+            value = defaultValue;
           }
           if (this._myLoadCallbacks.size > 0) {
             this._myLoadCallbacks.forEach(function(callback) {
-              callback(id, value, loadFromCache, failed);
+              callback(id, value);
             });
           }
           if (this._myLoadIDCallbacks.size > 0) {
-            let callbacks = this._myLoadIDCallbacks.get(id);
-            if (callbacks != null) {
-              callbacks.forEach(function(callback) {
-                callback(id, value, loadFromCache, failed);
+            let callbackMap = this._myLoadIDCallbacks.get(id);
+            if (callbackMap != null) {
+              callbackMap.forEach(function(callback) {
+                callback(id, value);
               });
             }
           }
           return value;
         }
+        commitSaves(commitSavesOnlyIfDirty = true) {
+          if (this._myCommitSavesDirty || !commitSavesOnlyIfDirty) {
+            this._commitSaves();
+          }
+        }
+        _commitSaves() {
+          let succeded = true;
+          try {
+            let saveObjectStringified = JSON.stringify(this._mySaveObject);
+            PP.SaveUtils.save(this._mySaveID, saveObjectStringified);
+          } catch (error) {
+            succeded = false;
+          }
+          if (this._myCommitSavesCallbacks.size > 0) {
+            this._myCommitSavesCallbacks.forEach(function(callback) {
+              callback(succeded);
+            });
+          }
+          if (succeded || this._myCommitSavesDirtyClearOnFail) {
+            this._myCommitSavesDirty = false;
+            this._myCommitSavesDelayTimer.reset();
+          }
+          return succeded;
+        }
         _onXRSessionStart(session) {
           session.addEventListener("visibilitychange", function(event) {
             if (event.session.visibilityState != "visible") {
-              this._onXRSessionInterrupt();
+              this._onInterrupt();
             }
           }.bind(this));
         }
         _onXRSessionEnd() {
-          this._onXRSessionInterrupt();
+          this._onInterrupt();
         }
-        _onXRSessionInterrupt() {
-          this.commitSaves();
+        _onInterrupt() {
+          if (this._myCommitSavesDirty) {
+            this._commitSaves();
+          }
         }
         registerClearEventListener(callbackID, callback) {
           this._myClearCallbacks.set(callbackID, callback);
@@ -15174,20 +16606,17 @@
           this._myDeleteCallbacks.delete(callbackID);
         }
         registerDeleteIDEventListener(valueID, callbackID, callback) {
-          let valueIDCallbacks = this._myDeleteIDCallbacks.get(valueID);
-          if (valueIDCallbacks == null) {
+          let valueIDMap = this._myDeleteIDCallbacks.get(valueID);
+          if (valueIDMap == null) {
             this._myDeleteIDCallbacks.set(valueID, /* @__PURE__ */ new Map());
-            valueIDCallbacks = this._myDeleteIDCallbacks.get(valueID);
+            valueIDMap = this._myDeleteIDCallbacks.get(valueID);
           }
-          valueIDCallbacks.set(callbackID, callback);
+          valueIDMap.set(callbackID, callback);
         }
         unregisterDeleteIDEventListener(valueID, callbackID) {
-          let valueIDCallbacks = this._myDeleteIDCallbacks.get(valueID);
-          if (valueIDCallbacks != null) {
-            valueIDCallbacks.delete(callbackID);
-            if (valueIDCallbacks.size <= 0) {
-              this._myDeleteIDCallbacks.delete(valueID);
-            }
+          let valueIDMap = this._myDeleteIDCallbacks.get(valueID);
+          if (valueIDMap != null) {
+            valueIDMap.delete(callbackID);
           }
         }
         registerSaveEventListener(callbackID, callback) {
@@ -15197,20 +16626,17 @@
           this._mySaveCallbacks.delete(callbackID);
         }
         registerSaveIDEventListener(valueID, callbackID, callback) {
-          let valueIDCallbacks = this._mySaveIDCallbacks.get(valueID);
-          if (valueIDCallbacks == null) {
+          let valueIDMap = this._mySaveIDCallbacks.get(valueID);
+          if (valueIDMap == null) {
             this._mySaveIDCallbacks.set(valueID, /* @__PURE__ */ new Map());
-            valueIDCallbacks = this._mySaveIDCallbacks.get(valueID);
+            valueIDMap = this._mySaveIDCallbacks.get(valueID);
           }
-          valueIDCallbacks.set(callbackID, callback);
+          valueIDMap.set(callbackID, callback);
         }
         unregisterSaveIDEventListener(valueID, callbackID) {
-          let valueIDCallbacks = this._mySaveIDCallbacks.get(valueID);
-          if (valueIDCallbacks != null) {
-            valueIDCallbacks.delete(callbackID);
-            if (valueIDCallbacks.size <= 0) {
-              this._mySaveIDCallbacks.delete(valueID);
-            }
+          let valueIDMap = this._mySaveIDCallbacks.get(valueID);
+          if (valueIDMap != null) {
+            valueIDMap.delete(callbackID);
           }
         }
         registerSaveValueChangedEventListener(callbackID, callback) {
@@ -15220,20 +16646,17 @@
           this._mySaveValueChangedCallbacks.delete(callbackID);
         }
         registerSaveValueChangedIDEventListener(valueID, callbackID, callback) {
-          let valueIDCallbacks = this._mySaveValueChangedIDCallbacks.get(valueID);
-          if (valueIDCallbacks == null) {
+          let valueIDMap = this._mySaveValueChangedIDCallbacks.get(valueID);
+          if (valueIDMap == null) {
             this._mySaveValueChangedIDCallbacks.set(valueID, /* @__PURE__ */ new Map());
-            valueIDCallbacks = this._mySaveValueChangedIDCallbacks.get(valueID);
+            valueIDMap = this._mySaveValueChangedIDCallbacks.get(valueID);
           }
-          valueIDCallbacks.set(callbackID, callback);
+          valueIDMap.set(callbackID, callback);
         }
         unregisterSaveValueChangedIDEventListener(valueID, callbackID) {
-          let valueIDCallbacks = this._mySaveValueChangedIDCallbacks.get(valueID);
-          if (valueIDCallbacks != null) {
-            valueIDCallbacks.delete(callbackID);
-            if (valueIDCallbacks.size <= 0) {
-              this._mySaveValueChangedIDCallbacks.delete(valueID);
-            }
+          let valueIDMap = this._mySaveValueChangedIDCallbacks.get(valueID);
+          if (valueIDMap != null) {
+            valueIDMap.delete(callbackID);
           }
         }
         registerCommitSavesEventListener(callbackID, callback) {
@@ -15242,29 +16665,6 @@
         unregisterCommitSavesEventListener(callbackID) {
           this._myCommitSavesCallbacks.delete(callbackID);
         }
-        registerCommitSaveEventListener(callbackID, callback) {
-          this._myCommitSaveCallbacks.set(callbackID, callback);
-        }
-        unregisterCommitSaveEventListener(callbackID) {
-          this._myCommitSaveCallbacks.delete(callbackID);
-        }
-        registerCommitSaveIDEventListener(valueID, callbackID, callback) {
-          let valueIDCallbacks = this._myCommitSaveIDCallbacks.get(valueID);
-          if (valueIDCallbacks == null) {
-            this._myCommitSaveIDCallbacks.set(valueID, /* @__PURE__ */ new Map());
-            valueIDCallbacks = this._myCommitSaveIDCallbacks.get(valueID);
-          }
-          valueIDCallbacks.set(callbackID, callback);
-        }
-        unregisterCommitSaveIDEventListener(valueID, callbackID) {
-          let valueIDCallbacks = this._myCommitSaveIDCallbacks.get(valueID);
-          if (valueIDCallbacks != null) {
-            valueIDCallbacks.delete(callbackID);
-            if (valueIDCallbacks.size <= 0) {
-              this._myCommitSaveIDCallbacks.delete(valueID);
-            }
-          }
-        }
         registerLoadEventListener(callbackID, callback) {
           this._myLoadCallbacks.set(callbackID, callback);
         }
@@ -15272,20 +16672,17 @@
           this._myLoadCallbacks.delete(callbackID);
         }
         registerLoadIDEventListener(valueID, callbackID, callback) {
-          let valueIDCallbacks = this._myLoadIDCallbacks.get(valueID);
-          if (valueIDCallbacks == null) {
+          let valueIDMap = this._myLoadIDCallbacks.get(valueID);
+          if (valueIDMap == null) {
             this._myLoadIDCallbacks.set(valueID, /* @__PURE__ */ new Map());
-            valueIDCallbacks = this._myLoadIDCallbacks.get(valueID);
+            valueIDMap = this._myLoadIDCallbacks.get(valueID);
           }
-          valueIDCallbacks.set(callbackID, callback);
+          valueIDMap.set(callbackID, callback);
         }
         unregisterLoadIDEventListener(valueID, callbackID) {
-          let valueIDCallbacks = this._myLoadIDCallbacks.get(valueID);
-          if (valueIDCallbacks != null) {
-            valueIDCallbacks.delete(callbackID);
-            if (valueIDCallbacks.size <= 0) {
-              this._myLoadIDCallbacks.delete(valueID);
-            }
+          let valueIDMap = this._myLoadIDCallbacks.get(valueID);
+          if (valueIDMap != null) {
+            valueIDMap.delete(callbackID);
           }
         }
       };
@@ -15494,6 +16891,7 @@
       WL.registerComponent("pp-get-player-objects", {
         _myPlayer: { type: WL.Type.Object },
         _myPlayerPivot: { type: WL.Type.Object },
+        // if u don't have a pivot under the player you set this to null, by default will be the same as the player
         _myNonVRCamera: { type: WL.Type.Object },
         _myEyeLeft: { type: WL.Type.Object },
         _myEyeRight: { type: WL.Type.Object },
@@ -15598,6 +16996,7 @@
         myMaterials: {
           myFlatOpaque: null,
           myFlatTransparentNoDepth: null,
+          // for now the pipeline needs to be the last one to make this work properly
           myPhongOpaque: null,
           myText: null
         }
@@ -16072,6 +17471,8 @@
         unregisterTransitionEventListener(callbackID) {
           this._myTransitionCallbacks.delete(callbackID);
         }
+        //the fsm IDs can be null, that means that the callback is called whenever only the valid IDs match
+        //this let you register to all the transitions with a specific ID and from of a specific state but to every state (toStateID == null)
         registerTransitionIDEventListener(fromStateID, toStateID, transitionID, callbackID, callback) {
           let internalTransitionIDCallbacks = null;
           for (let value of this._myTransitionIDCallbacks) {
@@ -16188,13 +17589,21 @@
   var require_state = __commonJS({
     "js/pp/cauldron/fsm/state.js"() {
       PP.State = class State {
-        update(dt, fsm2, ...args) {
+        //Called every frame if this is the current state
+        //You can retrieve this state data by calling fsm.getCurrentState()
+        update(dt, fsm, ...args) {
         }
-        init(fsm2, state, ...args) {
+        //Called when the fsm is started with this init state if no init transition object is specified or it does not have a performInit function
+        //Since the state is set as the current one after the init, you can't use fsm.getCurrentState() to get it, so it is forwarded as a param if needed
+        init(fsm, state, ...args) {
         }
-        start(fsm2, transition, ...args) {
+        //Called when entering this state if no transition object is specified or it does not have a perform function
+        //You can get this state data by accesing to the to state data inside the transition
+        start(fsm, transition, ...args) {
         }
-        end(fsm2, transition, ...args) {
+        //Called when exiting this state if no transition function is specified
+        //You can get this state data by accesing to the from state data inside the transition
+        end(fsm, transition, ...args) {
         }
       };
     }
@@ -16204,9 +17613,12 @@
   var require_transition = __commonJS({
     "js/pp/cauldron/fsm/transition.js"() {
       PP.Transition = class Transition {
-        performInit(fsm2, initState, ...args) {
+        //Called if this is used as an init transition for the fsm
+        performInit(fsm, initState, ...args) {
         }
-        perform(fsm2, transition, ...args) {
+        //Called when performing a transition
+        //You can find the from and to states inside the transition params
+        perform(fsm, transition, ...args) {
         }
       };
     }
@@ -16235,22 +17647,22 @@
         unregisterOnEnd(id = null) {
           this._myTimer.unregisterOnEnd(id);
         }
-        update(dt, fsm2) {
+        update(dt, fsm) {
           this._myTimer.update(dt);
           if (this._myTimer.isDone()) {
             if (this._myTransitionToPerformOnEnd != null) {
-              fsm2.perform(this._myTransitionToPerformOnEnd, ...this._myTransitionArgs);
+              fsm.perform(this._myTransitionToPerformOnEnd, ...this._myTransitionArgs);
             }
           }
         }
-        start(fsm2, transition, duration = null, transitionToPerformOnEnd = null, ...transitionArgs) {
+        start(fsm, transition, duration = null, transitionToPerformOnEnd = null, ...transitionArgs) {
           this._myTimer.start(duration);
           if (transitionToPerformOnEnd != null) {
             this._myTransitionToPerformOnEnd = transitionToPerformOnEnd;
             this._myTransitionArgs = transitionArgs;
           }
         }
-        init(fsm2, state, duration = null, transitionToPerformOnEnd = null, ...transitionArgs) {
+        init(fsm, state, duration = null, transitionToPerformOnEnd = null, ...transitionArgs) {
           this._myTimer.start(duration);
           if (transitionToPerformOnEnd != null) {
             this._myTransitionToPerformOnEnd = transitionToPerformOnEnd;
@@ -16265,6 +17677,7 @@
   var require_color_utils = __commonJS({
     "js/pp/cauldron/utils/color_utils.js"() {
       PP.ColorUtils = {
+        //RGB is in [0,1], alpha is not changed
         rgbToHsv: function(rgb) {
           let hsv = rgb.pp_clone();
           let r = rgb[0];
@@ -16293,6 +17706,7 @@
           hsv[2] = v;
           return hsv;
         },
+        //alpha is not changed
         hsvToRgb: function(hsv) {
           let rgb = hsv.pp_clone();
           let h = hsv[0];
@@ -16707,31 +18121,38 @@
         clear: function() {
           return localStorage.clear();
         },
-        load: function(id, defaultValue2 = null) {
-          return PP.SaveUtils.loadString(id, defaultValue2);
+        load: function(id, defaultValue = null) {
+          return PP.SaveUtils.loadString(id, defaultValue);
         },
-        loadString: function(id, defaultValue2 = null) {
+        loadString: function(id, defaultValue = null) {
           let item = localStorage.getItem(id);
-          if (item == null) {
-            item = defaultValue2;
+          if (item != null) {
+            return item;
           }
-          return item;
+          return defaultValue;
         },
-        loadNumber: function(id, defaultValue2 = null) {
+        loadNumber: function(id, defaultValue = null) {
           let item = PP.SaveUtils.loadString(id);
           if (item != null) {
             return Number(item);
           }
-          return defaultValue2;
+          return defaultValue;
         },
-        loadBool: function(id, defaultValue2 = null) {
+        loadBool: function(id, defaultValue = null) {
           let item = PP.SaveUtils.loadString(id);
           if (item == "true") {
             return true;
           } else if (item == "false") {
             return false;
           }
-          return defaultValue2;
+          return defaultValue;
+        },
+        loadObject: function(id, defaultValue = null) {
+          let item = PP.SaveUtils.loadString(id);
+          if (item != null) {
+            return JSON.parse(item);
+          }
+          return defaultValue;
         }
       };
     }
@@ -16756,7 +18177,7 @@
     "js/pp/cauldron/utils/xr_utils.js"() {
       PP.XRUtils = {
         isDeviceEmulated: function() {
-          let isEmulated = "CustomWebXRPolyfill" in window;
+          let isEmulated = window.CustomWebXRPolyfill != null;
           return isEmulated;
         },
         isSessionActive: function() {
@@ -16766,6 +18187,8 @@
           return !["local", "viewer"].includes(WebXR.refSpace);
         },
         openLink(url, newTab = true, exitXRSessionBeforeOpen = true, exitXRSessionOnSuccess = true, tryOpenLinkOnClickOnFailure = false, onSuccessCallback = null, onFailureCallback = null) {
+          if (Global.myElementToClick != null)
+            return;
           let element = document.createElement("a");
           element.style.display = "none";
           document.body.appendChild(element);
@@ -16807,10 +18230,8 @@
               }
             }
           }
-          setTimeout(function() {
-            element.click();
-            document.body.removeChild(element);
-          }, 100);
+          Global.myElementToClick = element;
+          Global.myElementToClickCounter = 3;
         },
         openLinkOnClick(url, newTab = true, exitXRSessionOnSuccess = true, onSuccessCallback = null, onFailureCallback = null) {
           document.addEventListener("click", function() {
@@ -17057,8 +18478,8 @@
             }
           } else if (this.myHits.length < result.myHits.length) {
             if (this._myUnusedHits != null) {
-              let length7 = Math.min(this._myUnusedHits.length, result.myHits.length - this.myHits.length);
-              for (let i = 0; i < length7; i++) {
+              let length6 = Math.min(this._myUnusedHits.length, result.myHits.length - this.myHits.length);
+              for (let i = 0; i < length6; i++) {
                 this.myHits.push(this._myUnusedHits.pop());
               }
             }
@@ -17183,9 +18604,11 @@
             }
           }
         }
+        //Set to true only if u are going to actually update this object and don't want to lose any collision start/end events prior to updating the first time after activation
         setUpdateActive(active) {
           this._myUpdateActive = active;
         }
+        //Update is not mandatory, use it only if u want to access collisions start and end
         update(dt) {
           if (!this._myIsActive) {
             return;
@@ -17226,19 +18649,19 @@
         unregisterCollisionEndEventListener(callbackID) {
           this._myCollisionEndCallbacks.delete(callbackID);
         }
-        _onCollision(type2, physXComponent) {
-          if (type2 == WL.CollisionEventType.Touch || type2 == WL.CollisionEventType.TriggerTouch) {
-            this._onCollisionStart(physXComponent);
-          } else if (type2 == WL.CollisionEventType.TouchLost || type2 == WL.CollisionEventType.TriggerTouchLost) {
-            this._onCollisionEnd(physXComponent);
+        _onCollision(type, physXComponent) {
+          if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
+            this._onCollisionStart(type, physXComponent);
+          } else if (type == WL.CollisionEventType.TouchLost || type == WL.CollisionEventType.TriggerTouchLost) {
+            this._onCollisionEnd(type, physXComponent);
           }
           if (this._myCollisionCallbacks.size > 0) {
             this._myCollisionCallbacks.forEach(function(callback) {
-              callback(this._myPhysX, physXComponent, type2);
+              callback(this._myPhysX, physXComponent, type);
             });
           }
         }
-        _onCollisionStart(physXComponent) {
+        _onCollisionStart(type, physXComponent) {
           if (this._myDebugActive) {
             let objectFound = false;
             for (let object of this._myCollisions) {
@@ -17267,7 +18690,7 @@
             });
           }
         }
-        _onCollisionEnd(physXComponent) {
+        _onCollisionEnd(type, physXComponent) {
           if (this._myDebugActive) {
             let objectFound = false;
             for (let object of this._myCollisions) {
@@ -17310,7 +18733,7 @@
               for (let collision of collisionsToEnd) {
                 let physX = collision.pp_getComponentSelf("physx");
                 if (physX) {
-                  this._onCollisionEnd(physX);
+                  this._onCollisionEnd(WL.CollisionEventType.TriggerTouchLost, physX);
                 } else {
                   console.error("NO PHYSX, HOW?");
                 }
@@ -17351,6 +18774,7 @@
         update(dt) {
           this._updateDraw(dt);
         }
+        //lifetimeSeconds can be null, in that case the element will be drawn until cleared
         draw(visualElementParams, lifetimeSeconds = 0, idToReuse = null) {
           if (!this._myActive) {
             return 0;
@@ -17476,7 +18900,7 @@
           }
           return element;
         }
-        _addVisualElementTypeToPool(type2) {
+        _addVisualElementTypeToPool(type) {
           let objectPoolParams = new PP.ObjectPoolParams();
           objectPoolParams.myInitialPoolSize = 10;
           objectPoolParams.myAmountToAddWhenEmpty = 0;
@@ -17486,13 +18910,13 @@
             object.setVisible(active);
           };
           let visualElementPrototype = null;
-          if (this._myVisualElementPrototypeCreationCallbacks.has(type2)) {
-            visualElementPrototype = this._myVisualElementPrototypeCreationCallbacks.get(type2)();
+          if (this._myVisualElementPrototypeCreationCallbacks.has(type)) {
+            visualElementPrototype = this._myVisualElementPrototypeCreationCallbacks.get(type)();
           }
           if (visualElementPrototype != null) {
             visualElementPrototype.setVisible(false);
             visualElementPrototype.setAutoRefresh(true);
-            this._myVisualElementsPool.addPool(type2, visualElementPrototype, objectPoolParams);
+            this._myVisualElementsPool.addPool(type, visualElementPrototype, objectPoolParams);
           } else {
             console.error("Visual element type not supported");
           }
@@ -18842,11 +20266,11 @@
   var require_debug_visual_manager = __commonJS({
     "js/pp/debug/debug_visual_manager.js"() {
       PP.DebugVisualManager = class DebugVisualManager extends PP.VisualManager {
-        drawLine(lifetimeSeconds, start, direction, length7, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
+        drawLine(lifetimeSeconds, start, direction, length6, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
           let visualParams = new PP.VisualLineParams();
           visualParams.myStart.vec3_copy(start);
           visualParams.myDirection.vec3_copy(direction);
-          visualParams.myLength = length7;
+          visualParams.myLength = length6;
           visualParams.myThickness = thickness;
           visualParams.myColor = PP.vec4_create();
           visualParams.myColor.vec4_copy(color);
@@ -18854,11 +20278,11 @@
         }
         drawLineEnd(lifetimeSeconds, start, end, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
         }
-        drawArrow(lifetimeSeconds, start, direction, length7, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
+        drawArrow(lifetimeSeconds, start, direction, length6, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
           let visualParams = new PP.VisualArrowParams();
           visualParams.myStart.vec3_copy(start);
           visualParams.myDirection.vec3_copy(direction);
-          visualParams.myLength = length7;
+          visualParams.myLength = length6;
           visualParams.myThickness = thickness;
           visualParams.myColor = PP.vec4_create();
           visualParams.myColor.vec4_copy(color);
@@ -18884,18 +20308,18 @@
           visualParams.myColor.vec4_copy(color);
           this.draw(visualParams, lifetimeSeconds);
         }
-        drawRaycast(lifetimeSeconds, raycastResult2, showOnlyFirstHit = true, hitNormalLength = 0.2, thickness = 5e-3) {
+        drawRaycast(lifetimeSeconds, raycastResult, showOnlyFirstHit = true, hitNormalLength = 0.2, thickness = 5e-3) {
           let visualParams = new PP.VisualRaycastParams();
-          visualParams.myRaycastResults = raycastResult2;
+          visualParams.myRaycastResults = raycastResult;
           visualParams.myShowOnlyFirstHit = showOnlyFirstHit;
           visualParams.myHitNormalLength = hitNormalLength;
           visualParams.myThickness = thickness;
           this.draw(visualParams, lifetimeSeconds);
         }
-        drawTransform(lifetimeSeconds, transform, length7 = 0.2, thickness = 5e-3) {
+        drawTransform(lifetimeSeconds, transform, length6 = 0.2, thickness = 5e-3) {
           let visualParams = new PP.VisualTransformParams();
           visualParams.myTransform.mat4_copy(transform);
-          visualParams.myLength = length7;
+          visualParams.myLength = length6;
           visualParams.myThickness = thickness;
           this.draw(visualParams, lifetimeSeconds);
         }
@@ -18904,18 +20328,18 @@
         let direction = PP.vec3_create();
         return function drawLineEnd(lifetimeSeconds, start, end, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
           direction = end.vec3_sub(start, direction);
-          length = direction.vec3_length();
+          let length6 = direction.vec3_length();
           direction.vec3_normalize(direction);
-          this.drawLine(lifetimeSeconds, start, direction, length, color, thickness);
+          this.drawLine(lifetimeSeconds, start, direction, length6, color, thickness);
         };
       }();
       PP.DebugVisualManager.prototype.drawArrowEnd = function() {
         let direction = PP.vec3_create();
         return function drawArrowEnd(lifetimeSeconds, start, end, color = PP.vec4_create(0, 1, 0, 1), thickness = 5e-3) {
           direction = end.vec3_sub(start, direction);
-          length = direction.vec3_length();
+          let length6 = direction.vec3_length();
           direction.vec3_normalize(direction);
-          this.drawArrow(lifetimeSeconds, start, direction, length, color, thickness);
+          this.drawArrow(lifetimeSeconds, start, direction, length6, color, thickness);
         };
       }();
       Object.defineProperty(PP.DebugVisualManager.prototype, "drawLineEnd", { enumerable: false });
@@ -19003,6 +20427,9 @@
           this._myLastValidFlatForward = PP.vec3_create();
           this._myLastValidFlatRight = PP.vec3_create();
         }
+        // @direction3DUp can be used to flat the direction if the @conversionTransform is not aligned with it
+        // It's also needed to specify the fly axis, if different from the @conversionTransform up
+        // If @direction3DUp is null, @conversionTransform up is used
         convert(direction2D, conversionTransform, direction3DUp = null, outDirection3D = PP.vec3_create()) {
           return this.convertTransform(direction2D, conversionTransform, direction3DUp, outDirection3D);
         }
@@ -19067,8 +20494,14 @@
           this._myLastConvertRotationQuatValid = false;
           this._myLastConvertRotationQuat.quat_identity();
         }
+        // Convert Alternatives
+        // If @direction3DUp is null, PP.vec3_create(0, 1, 0) is used
+        // Does not work properly if @conversionForward is aligned with @direction3DUp
         convertForward(direction2D, conversionForward, direction3DUp = null, outDirection3D = PP.vec3_create()) {
         }
+        // @direction3DUp can be used to flat the direction if the @conversionTransform is not aligned with it
+        // It's also needed to specify the fly axis, if different from the @conversionTransform up
+        // If @direction3DUp is null, conversionTransform up is used
         convertTransform(direction2D, conversionTransform, direction3DUp = null, outDirection3D = PP.vec3_create()) {
           return this.convertTransformMatrix(direction2D, conversionTransform, direction3DUp, outDirection3D);
         }
@@ -19389,11 +20822,12 @@
 
   // js/pp/gameplay/cauldron/player/components/player_head_controller_component.js
   var player_head_controller_component_exports = {};
-  var _a2;
   var init_player_head_controller_component = __esm({
     "js/pp/gameplay/cauldron/player/components/player_head_controller_component.js"() {
       init_api();
-      PP.PlayerHeadControllerComponent = (_a2 = class extends Component {
+      PP.PlayerHeadControllerComponent = class PlayerHeadControllerComponent extends Component {
+        static TypeName = "pp-player-head-controller";
+        static Properties = {};
         init() {
         }
         start() {
@@ -19405,18 +20839,19 @@
         getPlayerHeadController() {
           return this._myPlayerHeadController;
         }
-      }, __publicField(_a2, "TypeName", "pp-player-head-controller"), __publicField(_a2, "Properties", {}), _a2);
+      };
       WL.registerComponent(PP.PlayerHeadControllerComponent);
     }
   });
 
   // js/pp/gameplay/cauldron/player/components/player_occlusion_component.js
   var player_occlusion_component_exports = {};
-  var _a3;
   var init_player_occlusion_component = __esm({
     "js/pp/gameplay/cauldron/player/components/player_occlusion_component.js"() {
       init_api();
-      PP.PlayerOcclusionComponent = (_a3 = class extends Component {
+      PP.PlayerOcclusionComponent = class PlayerOcclusionComponent extends Component {
+        static TypeName = "pp-player-occlusion";
+        static Properties = {};
         init() {
         }
         start() {
@@ -19428,7 +20863,7 @@
         getPlayerOcclusion() {
           return this._myPlayerOcclusion;
         }
-      }, __publicField(_a3, "TypeName", "pp-player-occlusion"), __publicField(_a3, "Properties", {}), _a3);
+      };
       WL.registerComponent(PP.PlayerOcclusionComponent);
     }
   });
@@ -19619,185 +21054,185 @@
           this.myDebugRuntimeParamsActive = false;
           this.myDebugMovementActive = false;
         }
-        copy(other2) {
-          this.mySplitMovementEnabled = other2.mySplitMovementEnabled;
-          this.mySplitMovementMaxLength = other2.mySplitMovementMaxLength;
-          this.mySplitMovementMaxStepsEnabled = other2.mySplitMovementMaxStepsEnabled;
-          this.mySplitMovementMaxSteps = other2.mySplitMovementMaxSteps;
-          this.mySplitMovementStepEqualLength = other2.mySplitMovementStepEqualLength;
-          this.mySplitMovementStepEqualLengthMinLength = other2.mySplitMovementStepEqualLengthMinLength;
-          this.mySplitMovementStopWhenHorizontalMovementCanceled = other2.mySplitMovementStopWhenHorizontalMovementCanceled;
-          this.mySplitMovementStopWhenVerticalMovementCanceled = other2.mySplitMovementStopWhenVerticalMovementCanceled;
-          this.mySplitMovementStopCallback = other2.mySplitMovementStopCallback;
-          this.mySplitMovementStopReturnPrevious = other2.mySplitMovementStopReturnPrevious;
-          this.myRadius = other2.myRadius;
-          this.myDistanceFromFeetToIgnore = other2.myDistanceFromFeetToIgnore;
-          this.myDistanceFromHeadToIgnore = other2.myDistanceFromHeadToIgnore;
-          this.myPositionOffsetLocal.vec3_copy(other2.myPositionOffsetLocal);
-          this.myRotationOffsetLocalQuat.quat_copy(other2.myRotationOffsetLocalQuat);
-          this.myHorizontalMovementCheckEnabled = other2.myHorizontalMovementCheckEnabled;
-          this.myHorizontalMovementStepEnabled = other2.myHorizontalMovementStepEnabled;
-          this.myHorizontalMovementStepMaxLength = other2.myHorizontalMovementStepMaxLength;
-          this.myHorizontalMovementRadialStepAmount = other2.myHorizontalMovementRadialStepAmount;
-          this.myHorizontalMovementCheckDiagonalOutward = other2.myHorizontalMovementCheckDiagonalOutward;
-          this.myHorizontalMovementCheckDiagonalInward = other2.myHorizontalMovementCheckDiagonalInward;
-          this.myHorizontalMovementCheckStraight = other2.myHorizontalMovementCheckStraight;
-          this.myHorizontalMovementCheckHorizontalBorder = other2.myHorizontalMovementCheckHorizontalBorder;
-          this.myHorizontalMovementCheckVerticalStraight = other2.myHorizontalMovementCheckVerticalStraight;
-          this.myHorizontalMovementCheckVerticalDiagonalUpwardOutward = other2.myHorizontalMovementCheckVerticalDiagonalUpwardOutward;
-          this.myHorizontalMovementCheckVerticalDiagonalUpwardInward = other2.myHorizontalMovementCheckVerticalDiagonalUpwardInward;
-          this.myHorizontalMovementCheckVerticalDiagonalDownwardOutward = other2.myHorizontalMovementCheckVerticalDiagonalDownwardOutward;
-          this.myHorizontalMovementCheckVerticalDiagonalDownwardInward = other2.myHorizontalMovementCheckVerticalDiagonalDownwardInward;
-          this.myHorizontalMovementCheckVerticalStraightDiagonalUpward = other2.myHorizontalMovementCheckVerticalStraightDiagonalUpward;
-          this.myHorizontalMovementCheckVerticalStraightDiagonalDownward = other2.myHorizontalMovementCheckVerticalStraightDiagonalDownward;
-          this.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalOutward = other2.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalOutward;
-          this.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalInward = other2.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalInward;
-          this.myHorizontalMovementHorizontalStraightCentralCheckEnabled = other2.myHorizontalMovementHorizontalStraightCentralCheckEnabled;
-          this.myHorizontalMovementVerticalStraightCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightCentralCheckEnabled;
-          this.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled;
-          this.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled;
-          this.myHorizontalPositionCheckEnabled = other2.myHorizontalPositionCheckEnabled;
-          this.myHalfConeAngle = other2.myHalfConeAngle;
-          this.myHalfConeSliceAmount = other2.myHalfConeSliceAmount;
-          this.myCheckConeBorder = other2.myCheckConeBorder;
-          this.myCheckConeRay = other2.myCheckConeRay;
-          this.myHorizontalPositionCheckVerticalIgnoreHitsInsideCollision = other2.myHorizontalPositionCheckVerticalIgnoreHitsInsideCollision;
-          this.myHorizontalPositionCheckVerticalDirectionType = other2.myHorizontalPositionCheckVerticalDirectionType;
-          this.myVerticalMovementCheckEnabled = other2.myVerticalMovementCheckEnabled;
-          this.myVerticalPositionCheckEnabled = other2.myVerticalPositionCheckEnabled;
-          this.myFeetRadius = other2.myFeetRadius;
-          this.myAdjustVerticalMovementWithGroundAngleDownhill = other2.myAdjustVerticalMovementWithGroundAngleDownhill;
-          this.myAdjustVerticalMovementWithGroundAngleUphill = other2.myAdjustVerticalMovementWithGroundAngleUphill;
-          this.myAdjustVerticalMovementWithGroundAngleDownhillMaxAngle = other2.myAdjustVerticalMovementWithGroundAngleDownhillMaxAngle;
-          this.myAdjustVerticalMovementWithGroundAngleUphillMaxAngle = other2.myAdjustVerticalMovementWithGroundAngleUphillMaxAngle;
-          this.myAdjustVerticalMovementWithGroundAngleDownhillMaxPerceivedAngle = other2.myAdjustVerticalMovementWithGroundAngleDownhillMaxPerceivedAngle;
-          this.myAdjustVerticalMovementWithGroundAngleUphillMaxPerceivedAngle = other2.myAdjustVerticalMovementWithGroundAngleUphillMaxPerceivedAngle;
-          this.myAdjustHorizontalMovementWithGroundAngleDownhill = other2.myAdjustHorizontalMovementWithGroundAngleDownhill;
-          this.myAdjustHorizontalMovementWithGroundAngleDownhillMinAngle = other2.myAdjustHorizontalMovementWithGroundAngleDownhillMinAngle;
-          this.myAdjustVerticalMovementWithCeilingAngleDownhill = other2.myAdjustVerticalMovementWithCeilingAngleDownhill;
-          this.myAdjustVerticalMovementWithCeilingAngleUphill = other2.myAdjustVerticalMovementWithCeilingAngleUphill;
-          this.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle = other2.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle;
-          this.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle = other2.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle;
-          this.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle = other2.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle;
-          this.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle = other2.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle;
-          this.myAdjustHorizontalMovementWithCeilingAngleDownhill = other2.myAdjustHorizontalMovementWithCeilingAngleDownhill;
-          this.myAdjustHorizontalMovementWithCeilingAngleDownhillMinAngle = other2.myAdjustHorizontalMovementWithCeilingAngleDownhillMinAngle;
-          this.myCheckVerticalFixedForwardEnabled = other2.myCheckVerticalFixedForwardEnabled;
-          this.myCheckVerticalFixedForward.vec3_copy(other2.myCheckVerticalFixedForward);
-          this.myCheckVerticalBothDirection = other2.myCheckVerticalBothDirection;
-          this.mySnapOnGroundEnabled = other2.mySnapOnGroundEnabled;
-          this.mySnapOnGroundExtraDistance = other2.mySnapOnGroundExtraDistance;
-          this.mySnapOnCeilingEnabled = other2.mySnapOnCeilingEnabled;
-          this.mySnapOnCeilingExtraDistance = other2.mySnapOnCeilingExtraDistance;
-          this.myGroundPopOutEnabled = other2.myGroundPopOutEnabled;
-          this.myGroundPopOutExtraDistance = other2.myGroundPopOutExtraDistance;
-          this.myCeilingPopOutEnabled = other2.myCeilingPopOutEnabled;
-          this.myCeilingPopOutExtraDistance = other2.myCeilingPopOutExtraDistance;
-          this.myVerticalMovementReduceEnabled = other2.myVerticalMovementReduceEnabled;
-          this.myGroundCircumferenceAddCenter = other2.myGroundCircumferenceAddCenter;
-          this.myGroundCircumferenceSliceAmount = other2.myGroundCircumferenceSliceAmount;
-          this.myGroundCircumferenceStepAmount = other2.myGroundCircumferenceStepAmount;
-          this.myGroundCircumferenceRotationPerStep = other2.myGroundCircumferenceRotationPerStep;
-          this.myVerticalAllowHitInsideCollisionIfOneOk = other2.myVerticalAllowHitInsideCollisionIfOneOk;
-          this.myCheckHeight = other2.myCheckHeight;
-          this.myCheckHeightVerticalMovement = other2.myCheckHeightVerticalMovement;
-          this.myCheckHeightVerticalPosition = other2.myCheckHeightVerticalPosition;
-          this.myCheckHeightTopMovement = other2.myCheckHeightTopMovement;
-          this.myCheckHeightTopPosition = other2.myCheckHeightTopPosition;
-          this.myCheckHeightConeOnCollision = other2.myCheckHeightConeOnCollision;
-          this.myCheckHeightConeOnCollisionKeepHit = other2.myCheckHeightConeOnCollisionKeepHit;
-          this.myHeightCheckStepAmountMovement = other2.myHeightCheckStepAmountMovement;
-          this.myHeightCheckStepAmountPosition = other2.myHeightCheckStepAmountPosition;
-          this.myCheckVerticalStraight = other2.myCheckVerticalStraight;
-          this.myCheckVerticalDiagonalRayOutward = other2.myCheckVerticalDiagonalRayOutward;
-          this.myCheckVerticalDiagonalRayInward = other2.myCheckVerticalDiagonalRayInward;
-          this.myCheckVerticalDiagonalBorderOutward = other2.myCheckVerticalDiagonalBorderOutward;
-          this.myCheckVerticalDiagonalBorderInward = other2.myCheckVerticalDiagonalBorderInward;
-          this.myCheckVerticalDiagonalBorderRayOutward = other2.myCheckVerticalDiagonalBorderRayOutward;
-          this.myCheckVerticalDiagonalBorderRayInward = other2.myCheckVerticalDiagonalBorderRayInward;
-          this.myCheckVerticalSearchFartherVerticalHit = other2.myCheckVerticalSearchFartherVerticalHit;
-          this.myGroundAngleToIgnore = other2.myGroundAngleToIgnore;
-          this.myGroundAngleToIgnoreWithPerceivedAngle = other2.myGroundAngleToIgnoreWithPerceivedAngle;
-          this.myCeilingAngleToIgnore = other2.myCeilingAngleToIgnore;
-          this.myCeilingAngleToIgnoreWithPerceivedAngle = other2.myCeilingAngleToIgnoreWithPerceivedAngle;
-          this.myHorizontalMovementGroundAngleIgnoreHeight = other2.myHorizontalMovementGroundAngleIgnoreHeight;
-          this.myHorizontalMovementCeilingAngleIgnoreHeight = other2.myHorizontalMovementCeilingAngleIgnoreHeight;
-          this.myHorizontalPositionGroundAngleIgnoreHeight = other2.myHorizontalPositionGroundAngleIgnoreHeight;
-          this.myHorizontalPositionCeilingAngleIgnoreHeight = other2.myHorizontalPositionCeilingAngleIgnoreHeight;
-          this.myHorizontalMovementGroundAngleIgnoreMaxMovementLeft = other2.myHorizontalMovementGroundAngleIgnoreMaxMovementLeft;
-          this.myHorizontalMovementCeilingAngleIgnoreMaxMovementLeft = other2.myHorizontalMovementCeilingAngleIgnoreMaxMovementLeft;
-          this.myHeight = other2.myHeight;
-          this.myComputeGroundInfoEnabled = other2.myComputeGroundInfoEnabled;
-          this.myComputeCeilingInfoEnabled = other2.myComputeCeilingInfoEnabled;
-          this.myDistanceToBeOnGround = other2.myDistanceToBeOnGround;
-          this.myDistanceToComputeGroundInfo = other2.myDistanceToComputeGroundInfo;
-          this.myDistanceToBeOnCeiling = other2.myDistanceToBeOnCeiling;
-          this.myDistanceToComputeCeilingInfo = other2.myDistanceToComputeCeilingInfo;
-          this.myVerticalFixToBeOnGround = other2.myVerticalFixToBeOnGround;
-          this.myVerticalFixToComputeGroundInfo = other2.myVerticalFixToComputeGroundInfo;
-          this.myVerticalFixToBeOnCeiling = other2.myVerticalFixToBeOnCeiling;
-          this.myVerticalFixToComputeCeilingInfo = other2.myVerticalFixToComputeCeilingInfo;
-          this.myGroundIsBaseInsideCollisionCheckEnabled = other2.myGroundIsBaseInsideCollisionCheckEnabled;
-          this.myCeilingIsBaseInsideCollisionCheckEnabled = other2.myCeilingIsBaseInsideCollisionCheckEnabled;
-          this.myIsOnGroundIfInsideHit = other2.myIsOnGroundIfInsideHit;
-          this.myIsOnCeilingIfInsideHit = other2.myIsOnCeilingIfInsideHit;
-          this.myIsOnGroundMaxSurfaceAngle = other2.myIsOnGroundMaxSurfaceAngle;
-          this.myIsOnCeilingMaxSurfaceAngle = other2.myIsOnCeilingMaxSurfaceAngle;
-          this.myFindGroundDistanceMaxOutsideDistance = other2.myFindGroundDistanceMaxOutsideDistance;
-          this.myFindGroundDistanceMaxInsideDistance = other2.myFindGroundDistanceMaxInsideDistance;
-          this.myFindCeilingDistanceMaxOutsideDistance = other2.myFindCeilingDistanceMaxOutsideDistance;
-          this.myFindCeilingDistanceMaxInsideDistance = other2.myFindCeilingDistanceMaxInsideDistance;
-          this.myAllowGroundSteepFix = other2.myAllowGroundSteepFix;
-          this.myAllowCeilingSteepFix = other2.myAllowCeilingSteepFix;
-          this.myMustStayOnGround = other2.myMustStayOnGround;
-          this.myMustStayOnCeiling = other2.myMustStayOnCeiling;
-          this.myMustStayOnValidGroundAngleDownhill = other2.myMustStayOnValidGroundAngleDownhill;
-          this.myMustStayOnValidCeilingAngleDownhill = other2.myMustStayOnValidCeilingAngleDownhill;
-          this.myRegatherGroundInfoOnSurfaceCheckFail = other2.myRegatherGroundInfoOnSurfaceCheckFail;
-          this.myRegatherCeilingInfoOnSurfaceCheckFail = other2.myRegatherCeilingInfoOnSurfaceCheckFail;
-          this.myMustStayBelowGroundAngleDownhill = other2.myMustStayBelowGroundAngleDownhill;
-          this.myMustStayBelowCeilingAngleDownhill = other2.myMustStayBelowCeilingAngleDownhill;
-          this.myMustStayBelowIgnorableGroundAngleDownhill = other2.myMustStayBelowIgnorableGroundAngleDownhill;
-          this.myMustStayBelowIgnorableCeilingAngleDownhill = other2.myMustStayBelowIgnorableCeilingAngleDownhill;
-          this.myMovementMustStayOnGroundHitAngle = other2.myMovementMustStayOnGroundHitAngle;
-          this.myMovementMustStayOnCeilingHitAngle = other2.myMovementMustStayOnCeilingHitAngle;
-          this.myTeleportMustBeOnIgnorableGroundAngle = other2.myTeleportMustBeOnIgnorableGroundAngle;
-          this.myCheckTransformMustBeOnIgnorableGroundAngle = other2.myCheckTransformMustBeOnIgnorableGroundAngle;
-          this.myTeleportMustBeOnIgnorableCeilingAngle = other2.myTeleportMustBeOnIgnorableCeilingAngle;
-          this.myCheckTransformMustBeOnIgnorableCeilingAngle = other2.myCheckTransformMustBeOnIgnorableCeilingAngle;
-          this.myTeleportMustBeOnGroundAngle = other2.myTeleportMustBeOnGroundAngle;
-          this.myCheckTransformMustBeOnGroundAngle = other2.myCheckTransformMustBeOnGroundAngle;
-          this.myTeleportMustBeOnCeilingAngle = other2.myTeleportMustBeOnCeilingAngle;
-          this.myCheckTransformMustBeOnCeilingAngle = other2.myCheckTransformMustBeOnCeilingAngle;
-          this.myTeleportMustBeOnGround = other2.myTeleportMustBeOnGround;
-          this.myCheckTransformMustBeOnGround = other2.myCheckTransformMustBeOnGround;
-          this.myTeleportMustBeOnCeiling = other2.myTeleportMustBeOnCeiling;
-          this.myCheckTransformMustBeOnCeiling = other2.myCheckTransformMustBeOnCeiling;
-          this.mySlidingEnabled = other2.mySlidingEnabled;
-          this.mySlidingHorizontalMovementCheckBetterNormal = other2.mySlidingHorizontalMovementCheckBetterNormal;
-          this.mySlidingMaxAttempts = other2.mySlidingMaxAttempts;
-          this.mySlidingCheckBothDirections = other2.mySlidingCheckBothDirections;
-          this.mySlidingFlickeringPreventionType = other2.mySlidingFlickeringPreventionType;
-          this.mySlidingFlickeringPreventionCheckOnlyIfAlreadySliding = other2.mySlidingFlickeringPreventionCheckOnlyIfAlreadySliding;
-          this.mySlidingFlickerPreventionCheckAnywayCounter = other2.mySlidingFlickerPreventionCheckAnywayCounter;
-          this.mySlidingAdjustSign90Degrees = other2.mySlidingAdjustSign90Degrees;
-          this.myHorizontalBlockLayerFlags.copy(other2.myHorizontalBlockLayerFlags);
-          this.myHorizontalObjectsToIgnore.pp_copy(other2.myHorizontalObjectsToIgnore);
-          this.myVerticalBlockLayerFlags.copy(other2.myVerticalBlockLayerFlags);
-          this.myVerticalObjectsToIgnore.pp_copy(other2.myVerticalObjectsToIgnore);
-          this.myExtraMovementCheckCallback = other2.myExtraMovementCheckCallback;
-          this.myExtraTeleportCheckCallback = other2.myExtraTeleportCheckCallback;
-          this.myExtraCheckTransformCheckCallback = other2.myExtraCheckTransformCheckCallback;
-          this.myDebugActive = other2.myDebugActive;
-          this.myDebugHorizontalMovementActive = other2.myDebugHorizontalMovementActive;
-          this.myDebugHorizontalPositionActive = other2.myDebugHorizontalPositionActive;
-          this.myDebugVerticalMovementActive = other2.myDebugVerticalMovementActive;
-          this.myDebugVerticalPositionActive = other2.myDebugVerticalPositionActive;
-          this.myDebugSlidingActive = other2.myDebugSlidingActive;
-          this.myDebugGroundInfoActive = other2.myDebugGroundInfoActive;
-          this.myDebugCeilingInfoActive = other2.myDebugCeilingInfoActive;
-          this.myDebugRuntimeParamsActive = other2.myDebugRuntimeParamsActive;
-          this.myDebugMovementActive = other2.myDebugMovementActive;
+        copy(other) {
+          this.mySplitMovementEnabled = other.mySplitMovementEnabled;
+          this.mySplitMovementMaxLength = other.mySplitMovementMaxLength;
+          this.mySplitMovementMaxStepsEnabled = other.mySplitMovementMaxStepsEnabled;
+          this.mySplitMovementMaxSteps = other.mySplitMovementMaxSteps;
+          this.mySplitMovementStepEqualLength = other.mySplitMovementStepEqualLength;
+          this.mySplitMovementStepEqualLengthMinLength = other.mySplitMovementStepEqualLengthMinLength;
+          this.mySplitMovementStopWhenHorizontalMovementCanceled = other.mySplitMovementStopWhenHorizontalMovementCanceled;
+          this.mySplitMovementStopWhenVerticalMovementCanceled = other.mySplitMovementStopWhenVerticalMovementCanceled;
+          this.mySplitMovementStopCallback = other.mySplitMovementStopCallback;
+          this.mySplitMovementStopReturnPrevious = other.mySplitMovementStopReturnPrevious;
+          this.myRadius = other.myRadius;
+          this.myDistanceFromFeetToIgnore = other.myDistanceFromFeetToIgnore;
+          this.myDistanceFromHeadToIgnore = other.myDistanceFromHeadToIgnore;
+          this.myPositionOffsetLocal.vec3_copy(other.myPositionOffsetLocal);
+          this.myRotationOffsetLocalQuat.quat_copy(other.myRotationOffsetLocalQuat);
+          this.myHorizontalMovementCheckEnabled = other.myHorizontalMovementCheckEnabled;
+          this.myHorizontalMovementStepEnabled = other.myHorizontalMovementStepEnabled;
+          this.myHorizontalMovementStepMaxLength = other.myHorizontalMovementStepMaxLength;
+          this.myHorizontalMovementRadialStepAmount = other.myHorizontalMovementRadialStepAmount;
+          this.myHorizontalMovementCheckDiagonalOutward = other.myHorizontalMovementCheckDiagonalOutward;
+          this.myHorizontalMovementCheckDiagonalInward = other.myHorizontalMovementCheckDiagonalInward;
+          this.myHorizontalMovementCheckStraight = other.myHorizontalMovementCheckStraight;
+          this.myHorizontalMovementCheckHorizontalBorder = other.myHorizontalMovementCheckHorizontalBorder;
+          this.myHorizontalMovementCheckVerticalStraight = other.myHorizontalMovementCheckVerticalStraight;
+          this.myHorizontalMovementCheckVerticalDiagonalUpwardOutward = other.myHorizontalMovementCheckVerticalDiagonalUpwardOutward;
+          this.myHorizontalMovementCheckVerticalDiagonalUpwardInward = other.myHorizontalMovementCheckVerticalDiagonalUpwardInward;
+          this.myHorizontalMovementCheckVerticalDiagonalDownwardOutward = other.myHorizontalMovementCheckVerticalDiagonalDownwardOutward;
+          this.myHorizontalMovementCheckVerticalDiagonalDownwardInward = other.myHorizontalMovementCheckVerticalDiagonalDownwardInward;
+          this.myHorizontalMovementCheckVerticalStraightDiagonalUpward = other.myHorizontalMovementCheckVerticalStraightDiagonalUpward;
+          this.myHorizontalMovementCheckVerticalStraightDiagonalDownward = other.myHorizontalMovementCheckVerticalStraightDiagonalDownward;
+          this.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalOutward = other.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalOutward;
+          this.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalInward = other.myHorizontalMovementCheckVerticalHorizontalBorderDiagonalInward;
+          this.myHorizontalMovementHorizontalStraightCentralCheckEnabled = other.myHorizontalMovementHorizontalStraightCentralCheckEnabled;
+          this.myHorizontalMovementVerticalStraightCentralCheckEnabled = other.myHorizontalMovementVerticalStraightCentralCheckEnabled;
+          this.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled;
+          this.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled;
+          this.myHorizontalPositionCheckEnabled = other.myHorizontalPositionCheckEnabled;
+          this.myHalfConeAngle = other.myHalfConeAngle;
+          this.myHalfConeSliceAmount = other.myHalfConeSliceAmount;
+          this.myCheckConeBorder = other.myCheckConeBorder;
+          this.myCheckConeRay = other.myCheckConeRay;
+          this.myHorizontalPositionCheckVerticalIgnoreHitsInsideCollision = other.myHorizontalPositionCheckVerticalIgnoreHitsInsideCollision;
+          this.myHorizontalPositionCheckVerticalDirectionType = other.myHorizontalPositionCheckVerticalDirectionType;
+          this.myVerticalMovementCheckEnabled = other.myVerticalMovementCheckEnabled;
+          this.myVerticalPositionCheckEnabled = other.myVerticalPositionCheckEnabled;
+          this.myFeetRadius = other.myFeetRadius;
+          this.myAdjustVerticalMovementWithGroundAngleDownhill = other.myAdjustVerticalMovementWithGroundAngleDownhill;
+          this.myAdjustVerticalMovementWithGroundAngleUphill = other.myAdjustVerticalMovementWithGroundAngleUphill;
+          this.myAdjustVerticalMovementWithGroundAngleDownhillMaxAngle = other.myAdjustVerticalMovementWithGroundAngleDownhillMaxAngle;
+          this.myAdjustVerticalMovementWithGroundAngleUphillMaxAngle = other.myAdjustVerticalMovementWithGroundAngleUphillMaxAngle;
+          this.myAdjustVerticalMovementWithGroundAngleDownhillMaxPerceivedAngle = other.myAdjustVerticalMovementWithGroundAngleDownhillMaxPerceivedAngle;
+          this.myAdjustVerticalMovementWithGroundAngleUphillMaxPerceivedAngle = other.myAdjustVerticalMovementWithGroundAngleUphillMaxPerceivedAngle;
+          this.myAdjustHorizontalMovementWithGroundAngleDownhill = other.myAdjustHorizontalMovementWithGroundAngleDownhill;
+          this.myAdjustHorizontalMovementWithGroundAngleDownhillMinAngle = other.myAdjustHorizontalMovementWithGroundAngleDownhillMinAngle;
+          this.myAdjustVerticalMovementWithCeilingAngleDownhill = other.myAdjustVerticalMovementWithCeilingAngleDownhill;
+          this.myAdjustVerticalMovementWithCeilingAngleUphill = other.myAdjustVerticalMovementWithCeilingAngleUphill;
+          this.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle = other.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle;
+          this.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle = other.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle;
+          this.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle = other.myAdjustVerticalMovementWithCeilingAngleDownhillMaxAngle;
+          this.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle = other.myAdjustVerticalMovementWithCeilingAngleUphillMaxAngle;
+          this.myAdjustHorizontalMovementWithCeilingAngleDownhill = other.myAdjustHorizontalMovementWithCeilingAngleDownhill;
+          this.myAdjustHorizontalMovementWithCeilingAngleDownhillMinAngle = other.myAdjustHorizontalMovementWithCeilingAngleDownhillMinAngle;
+          this.myCheckVerticalFixedForwardEnabled = other.myCheckVerticalFixedForwardEnabled;
+          this.myCheckVerticalFixedForward.vec3_copy(other.myCheckVerticalFixedForward);
+          this.myCheckVerticalBothDirection = other.myCheckVerticalBothDirection;
+          this.mySnapOnGroundEnabled = other.mySnapOnGroundEnabled;
+          this.mySnapOnGroundExtraDistance = other.mySnapOnGroundExtraDistance;
+          this.mySnapOnCeilingEnabled = other.mySnapOnCeilingEnabled;
+          this.mySnapOnCeilingExtraDistance = other.mySnapOnCeilingExtraDistance;
+          this.myGroundPopOutEnabled = other.myGroundPopOutEnabled;
+          this.myGroundPopOutExtraDistance = other.myGroundPopOutExtraDistance;
+          this.myCeilingPopOutEnabled = other.myCeilingPopOutEnabled;
+          this.myCeilingPopOutExtraDistance = other.myCeilingPopOutExtraDistance;
+          this.myVerticalMovementReduceEnabled = other.myVerticalMovementReduceEnabled;
+          this.myGroundCircumferenceAddCenter = other.myGroundCircumferenceAddCenter;
+          this.myGroundCircumferenceSliceAmount = other.myGroundCircumferenceSliceAmount;
+          this.myGroundCircumferenceStepAmount = other.myGroundCircumferenceStepAmount;
+          this.myGroundCircumferenceRotationPerStep = other.myGroundCircumferenceRotationPerStep;
+          this.myVerticalAllowHitInsideCollisionIfOneOk = other.myVerticalAllowHitInsideCollisionIfOneOk;
+          this.myCheckHeight = other.myCheckHeight;
+          this.myCheckHeightVerticalMovement = other.myCheckHeightVerticalMovement;
+          this.myCheckHeightVerticalPosition = other.myCheckHeightVerticalPosition;
+          this.myCheckHeightTopMovement = other.myCheckHeightTopMovement;
+          this.myCheckHeightTopPosition = other.myCheckHeightTopPosition;
+          this.myCheckHeightConeOnCollision = other.myCheckHeightConeOnCollision;
+          this.myCheckHeightConeOnCollisionKeepHit = other.myCheckHeightConeOnCollisionKeepHit;
+          this.myHeightCheckStepAmountMovement = other.myHeightCheckStepAmountMovement;
+          this.myHeightCheckStepAmountPosition = other.myHeightCheckStepAmountPosition;
+          this.myCheckVerticalStraight = other.myCheckVerticalStraight;
+          this.myCheckVerticalDiagonalRayOutward = other.myCheckVerticalDiagonalRayOutward;
+          this.myCheckVerticalDiagonalRayInward = other.myCheckVerticalDiagonalRayInward;
+          this.myCheckVerticalDiagonalBorderOutward = other.myCheckVerticalDiagonalBorderOutward;
+          this.myCheckVerticalDiagonalBorderInward = other.myCheckVerticalDiagonalBorderInward;
+          this.myCheckVerticalDiagonalBorderRayOutward = other.myCheckVerticalDiagonalBorderRayOutward;
+          this.myCheckVerticalDiagonalBorderRayInward = other.myCheckVerticalDiagonalBorderRayInward;
+          this.myCheckVerticalSearchFartherVerticalHit = other.myCheckVerticalSearchFartherVerticalHit;
+          this.myGroundAngleToIgnore = other.myGroundAngleToIgnore;
+          this.myGroundAngleToIgnoreWithPerceivedAngle = other.myGroundAngleToIgnoreWithPerceivedAngle;
+          this.myCeilingAngleToIgnore = other.myCeilingAngleToIgnore;
+          this.myCeilingAngleToIgnoreWithPerceivedAngle = other.myCeilingAngleToIgnoreWithPerceivedAngle;
+          this.myHorizontalMovementGroundAngleIgnoreHeight = other.myHorizontalMovementGroundAngleIgnoreHeight;
+          this.myHorizontalMovementCeilingAngleIgnoreHeight = other.myHorizontalMovementCeilingAngleIgnoreHeight;
+          this.myHorizontalPositionGroundAngleIgnoreHeight = other.myHorizontalPositionGroundAngleIgnoreHeight;
+          this.myHorizontalPositionCeilingAngleIgnoreHeight = other.myHorizontalPositionCeilingAngleIgnoreHeight;
+          this.myHorizontalMovementGroundAngleIgnoreMaxMovementLeft = other.myHorizontalMovementGroundAngleIgnoreMaxMovementLeft;
+          this.myHorizontalMovementCeilingAngleIgnoreMaxMovementLeft = other.myHorizontalMovementCeilingAngleIgnoreMaxMovementLeft;
+          this.myHeight = other.myHeight;
+          this.myComputeGroundInfoEnabled = other.myComputeGroundInfoEnabled;
+          this.myComputeCeilingInfoEnabled = other.myComputeCeilingInfoEnabled;
+          this.myDistanceToBeOnGround = other.myDistanceToBeOnGround;
+          this.myDistanceToComputeGroundInfo = other.myDistanceToComputeGroundInfo;
+          this.myDistanceToBeOnCeiling = other.myDistanceToBeOnCeiling;
+          this.myDistanceToComputeCeilingInfo = other.myDistanceToComputeCeilingInfo;
+          this.myVerticalFixToBeOnGround = other.myVerticalFixToBeOnGround;
+          this.myVerticalFixToComputeGroundInfo = other.myVerticalFixToComputeGroundInfo;
+          this.myVerticalFixToBeOnCeiling = other.myVerticalFixToBeOnCeiling;
+          this.myVerticalFixToComputeCeilingInfo = other.myVerticalFixToComputeCeilingInfo;
+          this.myGroundIsBaseInsideCollisionCheckEnabled = other.myGroundIsBaseInsideCollisionCheckEnabled;
+          this.myCeilingIsBaseInsideCollisionCheckEnabled = other.myCeilingIsBaseInsideCollisionCheckEnabled;
+          this.myIsOnGroundIfInsideHit = other.myIsOnGroundIfInsideHit;
+          this.myIsOnCeilingIfInsideHit = other.myIsOnCeilingIfInsideHit;
+          this.myIsOnGroundMaxSurfaceAngle = other.myIsOnGroundMaxSurfaceAngle;
+          this.myIsOnCeilingMaxSurfaceAngle = other.myIsOnCeilingMaxSurfaceAngle;
+          this.myFindGroundDistanceMaxOutsideDistance = other.myFindGroundDistanceMaxOutsideDistance;
+          this.myFindGroundDistanceMaxInsideDistance = other.myFindGroundDistanceMaxInsideDistance;
+          this.myFindCeilingDistanceMaxOutsideDistance = other.myFindCeilingDistanceMaxOutsideDistance;
+          this.myFindCeilingDistanceMaxInsideDistance = other.myFindCeilingDistanceMaxInsideDistance;
+          this.myAllowGroundSteepFix = other.myAllowGroundSteepFix;
+          this.myAllowCeilingSteepFix = other.myAllowCeilingSteepFix;
+          this.myMustStayOnGround = other.myMustStayOnGround;
+          this.myMustStayOnCeiling = other.myMustStayOnCeiling;
+          this.myMustStayOnValidGroundAngleDownhill = other.myMustStayOnValidGroundAngleDownhill;
+          this.myMustStayOnValidCeilingAngleDownhill = other.myMustStayOnValidCeilingAngleDownhill;
+          this.myRegatherGroundInfoOnSurfaceCheckFail = other.myRegatherGroundInfoOnSurfaceCheckFail;
+          this.myRegatherCeilingInfoOnSurfaceCheckFail = other.myRegatherCeilingInfoOnSurfaceCheckFail;
+          this.myMustStayBelowGroundAngleDownhill = other.myMustStayBelowGroundAngleDownhill;
+          this.myMustStayBelowCeilingAngleDownhill = other.myMustStayBelowCeilingAngleDownhill;
+          this.myMustStayBelowIgnorableGroundAngleDownhill = other.myMustStayBelowIgnorableGroundAngleDownhill;
+          this.myMustStayBelowIgnorableCeilingAngleDownhill = other.myMustStayBelowIgnorableCeilingAngleDownhill;
+          this.myMovementMustStayOnGroundHitAngle = other.myMovementMustStayOnGroundHitAngle;
+          this.myMovementMustStayOnCeilingHitAngle = other.myMovementMustStayOnCeilingHitAngle;
+          this.myTeleportMustBeOnIgnorableGroundAngle = other.myTeleportMustBeOnIgnorableGroundAngle;
+          this.myCheckTransformMustBeOnIgnorableGroundAngle = other.myCheckTransformMustBeOnIgnorableGroundAngle;
+          this.myTeleportMustBeOnIgnorableCeilingAngle = other.myTeleportMustBeOnIgnorableCeilingAngle;
+          this.myCheckTransformMustBeOnIgnorableCeilingAngle = other.myCheckTransformMustBeOnIgnorableCeilingAngle;
+          this.myTeleportMustBeOnGroundAngle = other.myTeleportMustBeOnGroundAngle;
+          this.myCheckTransformMustBeOnGroundAngle = other.myCheckTransformMustBeOnGroundAngle;
+          this.myTeleportMustBeOnCeilingAngle = other.myTeleportMustBeOnCeilingAngle;
+          this.myCheckTransformMustBeOnCeilingAngle = other.myCheckTransformMustBeOnCeilingAngle;
+          this.myTeleportMustBeOnGround = other.myTeleportMustBeOnGround;
+          this.myCheckTransformMustBeOnGround = other.myCheckTransformMustBeOnGround;
+          this.myTeleportMustBeOnCeiling = other.myTeleportMustBeOnCeiling;
+          this.myCheckTransformMustBeOnCeiling = other.myCheckTransformMustBeOnCeiling;
+          this.mySlidingEnabled = other.mySlidingEnabled;
+          this.mySlidingHorizontalMovementCheckBetterNormal = other.mySlidingHorizontalMovementCheckBetterNormal;
+          this.mySlidingMaxAttempts = other.mySlidingMaxAttempts;
+          this.mySlidingCheckBothDirections = other.mySlidingCheckBothDirections;
+          this.mySlidingFlickeringPreventionType = other.mySlidingFlickeringPreventionType;
+          this.mySlidingFlickeringPreventionCheckOnlyIfAlreadySliding = other.mySlidingFlickeringPreventionCheckOnlyIfAlreadySliding;
+          this.mySlidingFlickerPreventionCheckAnywayCounter = other.mySlidingFlickerPreventionCheckAnywayCounter;
+          this.mySlidingAdjustSign90Degrees = other.mySlidingAdjustSign90Degrees;
+          this.myHorizontalBlockLayerFlags.copy(other.myHorizontalBlockLayerFlags);
+          this.myHorizontalObjectsToIgnore.pp_copy(other.myHorizontalObjectsToIgnore);
+          this.myVerticalBlockLayerFlags.copy(other.myVerticalBlockLayerFlags);
+          this.myVerticalObjectsToIgnore.pp_copy(other.myVerticalObjectsToIgnore);
+          this.myExtraMovementCheckCallback = other.myExtraMovementCheckCallback;
+          this.myExtraTeleportCheckCallback = other.myExtraTeleportCheckCallback;
+          this.myExtraCheckTransformCheckCallback = other.myExtraCheckTransformCheckCallback;
+          this.myDebugActive = other.myDebugActive;
+          this.myDebugHorizontalMovementActive = other.myDebugHorizontalMovementActive;
+          this.myDebugHorizontalPositionActive = other.myDebugHorizontalPositionActive;
+          this.myDebugVerticalMovementActive = other.myDebugVerticalMovementActive;
+          this.myDebugVerticalPositionActive = other.myDebugVerticalPositionActive;
+          this.myDebugSlidingActive = other.myDebugSlidingActive;
+          this.myDebugGroundInfoActive = other.myDebugGroundInfoActive;
+          this.myDebugCeilingInfoActive = other.myDebugCeilingInfoActive;
+          this.myDebugRuntimeParamsActive = other.myDebugRuntimeParamsActive;
+          this.myDebugMovementActive = other.myDebugMovementActive;
         }
       };
       CollisionRuntimeParams = class CollisionRuntimeParams {
@@ -19953,81 +21388,81 @@
           this.myRealIsOnGround = false;
           this.myRealIsOnCeiling = false;
         }
-        copy(other2) {
-          this.myOriginalPosition.vec3_copy(other2.myOriginalPosition);
-          this.myNewPosition.vec3_copy(other2.myNewPosition);
-          this.myOriginalHeight = other2.myOriginalHeight;
-          this.myOriginalForward.vec3_copy(other2.myOriginalForward);
-          this.myOriginalUp.vec3_copy(other2.myOriginalUp);
-          this.myOriginalMovement.vec3_copy(other2.myOriginalMovement);
-          this.myFixedMovement.vec3_copy(other2.myFixedMovement);
-          this.myLastValidOriginalHorizontalMovement.vec3_copy(other2.myLastValidOriginalHorizontalMovement);
-          this.myLastValidOriginalVerticalMovement.vec3_copy(other2.myLastValidOriginalVerticalMovement);
-          this.myLastValidSurfaceAdjustedHorizontalMovement.vec3_copy(other2.myLastValidSurfaceAdjustedHorizontalMovement);
-          this.myLastValidSurfaceAdjustedVerticalMovement.vec3_copy(other2.myLastValidSurfaceAdjustedVerticalMovement);
-          this.myLastValidEndHorizontalMovement.vec3_copy(other2.myLastValidEndHorizontalMovement);
-          this.myLastValidEndVerticalMovement.vec3_copy(other2.myLastValidEndVerticalMovement);
-          this.myIsOnGround = other2.myIsOnGround;
-          this.myGroundAngle = other2.myGroundAngle;
-          this.myGroundPerceivedAngle = other2.myGroundPerceivedAngle;
-          this.myGroundNormal.vec3_copy(other2.myGroundNormal);
-          this.myGroundHitMaxAngle = other2.myGroundHitMaxAngle;
-          this.myGroundHitMaxNormal.vec3_copy(other2.myGroundHitMaxNormal);
-          this.myGroundDistance = other2.myGroundDistance;
-          this.myGroundIsBaseInsideCollision = other2.myGroundIsBaseInsideCollision;
-          this.myIsOnCeiling = other2.myIsOnCeiling;
-          this.myCeilingAngle = other2.myCeilingAngle;
-          this.myCeilingPerceivedAngle = other2.myCeilingPerceivedAngle;
-          this.myCeilingNormal.vec3_copy(other2.myCeilingNormal);
-          this.myCeilingHitMaxAngle = other2.myCeilingHitMaxAngle;
-          this.myCeilingHitMaxNormal.vec3_copy(other2.myCeilingHitMaxNormal);
-          this.myCeilingDistance = other2.myCeilingDistance;
-          this.myCeilingIsBaseInsideCollision = other2.myCeilingIsBaseInsideCollision;
-          this.myHorizontalMovementCanceled = other2.myHorizontalMovementCanceled;
-          this.myIsCollidingHorizontally = other2.myIsCollidingHorizontally;
-          this.myHorizontalCollisionHit.copy(other2.myHorizontalCollisionHit);
-          this.myVerticalMovementCanceled = other2.myVerticalMovementCanceled;
-          this.myIsCollidingVertically = other2.myIsCollidingVertically;
-          this.myVerticalCollisionHit.copy(other2.myVerticalCollisionHit);
-          this.myHasSnappedOnGround = other2.myHasSnappedOnGround;
-          this.myHasSnappedOnCeiling = other2.myHasSnappedOnCeiling;
-          this.myHasPoppedOutGround = other2.myHasPoppedOutGround;
-          this.myHasPoppedOutCeiling = other2.myHasPoppedOutCeiling;
-          this.myHasReducedVerticalMovement = other2.myHasReducedVerticalMovement;
-          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleDownhill = other2.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleDownhill;
-          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleUphill = other2.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleUphill;
-          this.myVerticalMovementHasAdjustedHorizontalMovementBasedOnGroundAngleDownhill = other2.myVerticalMovementHasAdjustedHorizontalMovementBasedOnGroundAngleDownhill;
-          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleDownhill = other2.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleDownhill;
-          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleUphill = other2.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleUphill;
-          this.myVerticalMovementHasAdjustedHorizontalMovementBasedOnCeilingAngleDownhill = other2.myVerticalMovementHasAdjustedHorizontalMovementBasedOnCeilingAngleDownhill;
-          this.myIsSliding = other2.myIsSliding;
-          this.myIsSlidingIntoOppositeDirection = other2.myIsSlidingIntoOppositeDirection;
-          this.myIsSlidingFlickerPrevented = other2.myIsSlidingFlickerPrevented;
-          this.mySlidingFlickerPreventionCheckAnywayCounter = other2.mySlidingFlickerPreventionCheckAnywayCounter;
-          this.mySlidingMovementAngle = other2.mySlidingMovementAngle;
-          this.mySlidingCollisionAngle = other2.mySlidingCollisionAngle;
-          this.mySlidingCollisionHit.copy(other2.mySlidingCollisionHit);
-          this.mySliding90DegreesSign = other2.mySliding90DegreesSign;
-          this.mySlidingRecompute90DegreesSign = other2.mySlidingRecompute90DegreesSign;
-          this.myLastValidIsSliding = other2.myLastValidIsSliding;
-          this.mySlidingPreviousHorizontalMovement.vec3_copy(other2.mySlidingPreviousHorizontalMovement);
-          this.mySlidingWallNormal.vec3_copy(other2.mySlidingWallNormal);
-          this.myOriginalTeleportPosition.vec3_copy(other2.myOriginalTeleportPosition);
-          this.myFixedTeleportPosition.vec3_copy(other2.myFixedTeleportPosition);
-          this.myTeleportCanceled = other2.myTeleportCanceled;
-          this.myIsPositionOk = other2.myIsPositionOk;
-          this.myOriginalPositionCheckPosition.vec3_copy(other2.myOriginalPositionCheckPosition);
-          this.myFixedPositionCheckPosition.vec3_copy(other2.myFixedPositionCheckPosition);
-          this.myIsTeleport = other2.myIsTeleport;
-          this.myIsMove = other2.myIsMove;
-          this.myIsPositionCheck = other2.myIsPositionCheck;
-          this.myIsPositionCheckAllowAdjustments = other2.myIsPositionCheckAllowAdjustments;
-          this.mySplitMovementSteps = other2.mySplitMovementSteps;
-          this.mySplitMovementStepsPerformed = other2.mySplitMovementStepsPerformed;
-          this.mySplitMovementStop = other2.mySplitMovementStop;
-          this.mySplitMovementMovementChecked.vec3_copy(other2.mySplitMovementMovementChecked);
-          this.myRealIsOnGround = other2.myRealIsOnGround;
-          this.myRealIsOnCeiling = other2.myRealIsOnCeiling;
+        copy(other) {
+          this.myOriginalPosition.vec3_copy(other.myOriginalPosition);
+          this.myNewPosition.vec3_copy(other.myNewPosition);
+          this.myOriginalHeight = other.myOriginalHeight;
+          this.myOriginalForward.vec3_copy(other.myOriginalForward);
+          this.myOriginalUp.vec3_copy(other.myOriginalUp);
+          this.myOriginalMovement.vec3_copy(other.myOriginalMovement);
+          this.myFixedMovement.vec3_copy(other.myFixedMovement);
+          this.myLastValidOriginalHorizontalMovement.vec3_copy(other.myLastValidOriginalHorizontalMovement);
+          this.myLastValidOriginalVerticalMovement.vec3_copy(other.myLastValidOriginalVerticalMovement);
+          this.myLastValidSurfaceAdjustedHorizontalMovement.vec3_copy(other.myLastValidSurfaceAdjustedHorizontalMovement);
+          this.myLastValidSurfaceAdjustedVerticalMovement.vec3_copy(other.myLastValidSurfaceAdjustedVerticalMovement);
+          this.myLastValidEndHorizontalMovement.vec3_copy(other.myLastValidEndHorizontalMovement);
+          this.myLastValidEndVerticalMovement.vec3_copy(other.myLastValidEndVerticalMovement);
+          this.myIsOnGround = other.myIsOnGround;
+          this.myGroundAngle = other.myGroundAngle;
+          this.myGroundPerceivedAngle = other.myGroundPerceivedAngle;
+          this.myGroundNormal.vec3_copy(other.myGroundNormal);
+          this.myGroundHitMaxAngle = other.myGroundHitMaxAngle;
+          this.myGroundHitMaxNormal.vec3_copy(other.myGroundHitMaxNormal);
+          this.myGroundDistance = other.myGroundDistance;
+          this.myGroundIsBaseInsideCollision = other.myGroundIsBaseInsideCollision;
+          this.myIsOnCeiling = other.myIsOnCeiling;
+          this.myCeilingAngle = other.myCeilingAngle;
+          this.myCeilingPerceivedAngle = other.myCeilingPerceivedAngle;
+          this.myCeilingNormal.vec3_copy(other.myCeilingNormal);
+          this.myCeilingHitMaxAngle = other.myCeilingHitMaxAngle;
+          this.myCeilingHitMaxNormal.vec3_copy(other.myCeilingHitMaxNormal);
+          this.myCeilingDistance = other.myCeilingDistance;
+          this.myCeilingIsBaseInsideCollision = other.myCeilingIsBaseInsideCollision;
+          this.myHorizontalMovementCanceled = other.myHorizontalMovementCanceled;
+          this.myIsCollidingHorizontally = other.myIsCollidingHorizontally;
+          this.myHorizontalCollisionHit.copy(other.myHorizontalCollisionHit);
+          this.myVerticalMovementCanceled = other.myVerticalMovementCanceled;
+          this.myIsCollidingVertically = other.myIsCollidingVertically;
+          this.myVerticalCollisionHit.copy(other.myVerticalCollisionHit);
+          this.myHasSnappedOnGround = other.myHasSnappedOnGround;
+          this.myHasSnappedOnCeiling = other.myHasSnappedOnCeiling;
+          this.myHasPoppedOutGround = other.myHasPoppedOutGround;
+          this.myHasPoppedOutCeiling = other.myHasPoppedOutCeiling;
+          this.myHasReducedVerticalMovement = other.myHasReducedVerticalMovement;
+          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleDownhill = other.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleDownhill;
+          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleUphill = other.myHorizontalMovementHasAdjustedVerticalMovementBasedOnGroundPerceivedAngleUphill;
+          this.myVerticalMovementHasAdjustedHorizontalMovementBasedOnGroundAngleDownhill = other.myVerticalMovementHasAdjustedHorizontalMovementBasedOnGroundAngleDownhill;
+          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleDownhill = other.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleDownhill;
+          this.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleUphill = other.myHorizontalMovementHasAdjustedVerticalMovementBasedOnCeilingPerceivedAngleUphill;
+          this.myVerticalMovementHasAdjustedHorizontalMovementBasedOnCeilingAngleDownhill = other.myVerticalMovementHasAdjustedHorizontalMovementBasedOnCeilingAngleDownhill;
+          this.myIsSliding = other.myIsSliding;
+          this.myIsSlidingIntoOppositeDirection = other.myIsSlidingIntoOppositeDirection;
+          this.myIsSlidingFlickerPrevented = other.myIsSlidingFlickerPrevented;
+          this.mySlidingFlickerPreventionCheckAnywayCounter = other.mySlidingFlickerPreventionCheckAnywayCounter;
+          this.mySlidingMovementAngle = other.mySlidingMovementAngle;
+          this.mySlidingCollisionAngle = other.mySlidingCollisionAngle;
+          this.mySlidingCollisionHit.copy(other.mySlidingCollisionHit);
+          this.mySliding90DegreesSign = other.mySliding90DegreesSign;
+          this.mySlidingRecompute90DegreesSign = other.mySlidingRecompute90DegreesSign;
+          this.myLastValidIsSliding = other.myLastValidIsSliding;
+          this.mySlidingPreviousHorizontalMovement.vec3_copy(other.mySlidingPreviousHorizontalMovement);
+          this.mySlidingWallNormal.vec3_copy(other.mySlidingWallNormal);
+          this.myOriginalTeleportPosition.vec3_copy(other.myOriginalTeleportPosition);
+          this.myFixedTeleportPosition.vec3_copy(other.myFixedTeleportPosition);
+          this.myTeleportCanceled = other.myTeleportCanceled;
+          this.myIsPositionOk = other.myIsPositionOk;
+          this.myOriginalPositionCheckPosition.vec3_copy(other.myOriginalPositionCheckPosition);
+          this.myFixedPositionCheckPosition.vec3_copy(other.myFixedPositionCheckPosition);
+          this.myIsTeleport = other.myIsTeleport;
+          this.myIsMove = other.myIsMove;
+          this.myIsPositionCheck = other.myIsPositionCheck;
+          this.myIsPositionCheckAllowAdjustments = other.myIsPositionCheckAllowAdjustments;
+          this.mySplitMovementSteps = other.mySplitMovementSteps;
+          this.mySplitMovementStepsPerformed = other.mySplitMovementStepsPerformed;
+          this.mySplitMovementStop = other.mySplitMovementStop;
+          this.mySplitMovementMovementChecked.vec3_copy(other.mySplitMovementMovementChecked);
+          this.myRealIsOnGround = other.myRealIsOnGround;
+          this.myRealIsOnCeiling = other.myRealIsOnCeiling;
         }
       };
     }
@@ -20069,6 +21504,8 @@
         move(movement, transformQuat3, collisionCheckParams, collisionRuntimeParams) {
           this._move(movement, transformQuat3, collisionCheckParams, collisionRuntimeParams);
         }
+        //#TODO add teleport position/transform and return originalteleportransform
+        // instead of position old transform / new transform
         teleport(position, transformQuat3, collisionCheckParams, collisionRuntimeParams) {
           this._teleport(position, transformQuat3, collisionCheckParams, collisionRuntimeParams);
         }
@@ -20139,12 +21576,12 @@
             this._myRaycastSetup.myObjectsToIgnore = collisionCheckParams.myVerticalObjectsToIgnore;
           }
           this._myRaycastSetup.myIgnoreHitsInsideCollision = ignoreHitsInsideCollision;
-          let raycastResult2 = PP.PhysicsUtils.raycast(this._myRaycastSetup, this._myRaycastResult);
+          let raycastResult = PP.PhysicsUtils.raycast(this._myRaycastSetup, this._myRaycastResult);
           _myTotalRaycasts++;
           if (this._myDebugActive) {
-            PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+            PP.myDebugVisualManager.drawRaycast(0, raycastResult);
           }
-          return raycastResult2;
+          return raycastResult;
         };
       }();
       Object.defineProperty(CollisionCheck.prototype, "_raycastAndDebug", { enumerable: false });
@@ -20851,13 +22288,13 @@
           }
           let distance4 = direction.vec3_length();
           direction.vec3_normalize(direction);
-          let raycastResult2 = this._raycastAndDebug(origin, direction, distance4, ignoreHitsInsideCollision, true, collisionCheckParams, collisionRuntimeParams);
+          let raycastResult = this._raycastAndDebug(origin, direction, distance4, ignoreHitsInsideCollision, true, collisionCheckParams, collisionRuntimeParams);
           let isOk = true;
-          if (raycastResult2.isColliding()) {
-            let hitsToControl = checkAllHits ? raycastResult2.myHits.length : 1;
+          if (raycastResult.isColliding()) {
+            let hitsToControl = checkAllHits ? raycastResult.myHits.length : 1;
             let validHitIndex = 0;
             for (let i = 0; i < hitsToControl; i++) {
-              let hit = raycastResult2.myHits[i];
+              let hit = raycastResult.myHits[i];
               if ((ignoreGroundAngleCallback == null || !ignoreGroundAngleCallback(hit, ignoreHitsInsideCollisionIfObjectToIgnore)) && (ignoreCeilingAngleCallback == null || !ignoreCeilingAngleCallback(hit, ignoreHitsInsideCollisionIfObjectToIgnore))) {
                 isOk = false;
                 validHitIndex = i;
@@ -20866,12 +22303,12 @@
             }
             if (!isOk && validHitIndex > 0) {
               for (let i = 0; i < validHitIndex; i++) {
-                raycastResult2.removeHit(0);
+                raycastResult.removeHit(0);
               }
             }
           }
           if (!isOk && fixHitOnCollision) {
-            let hitPosition = raycastResult2.myHits[0].myPosition;
+            let hitPosition = raycastResult.myHits[0].myPosition;
             fixedFeetPosition = feetPosition.vec3_copyComponentAlongAxis(hitPosition, up, fixedFeetPosition);
             fixedHitPosition.vec3_copy(hitPosition);
             let directionOffsetEpsilonValue = 1e-4;
@@ -21028,7 +22465,6 @@
     "js/pp/gameplay/character_controller/collision/collision_check_bridge/collision_check/horizontal_collision_sliding.js"() {
       CollisionCheck.prototype._horizontalSlide = function() {
         let previousHorizontalMovement = PP.vec3_create();
-        let horizontalDirection = PP.vec3_create();
         return function _horizontalSlide(movement, feetPosition, height, up, forward, allowSurfaceSteepFix, collisionCheckParams, collisionRuntimeParams, previousCollisionRuntimeParams, outSlideMovement) {
           if (movement.vec3_isZero(1e-5)) {
             return outSlideMovement.vec3_zero();
@@ -21057,7 +22493,6 @@
       CollisionCheck.prototype._horizontalSlideCheckOpposite = function() {
         let horizontalCollisionNormal = PP.vec3_create();
         let oppositeSlideMovement = PP.vec3_create();
-        let hitNormal = PP.vec3_create();
         return function _horizontalSlideCheckOpposite(movement, feetPosition, height, up, forward, previousHorizontalMovement, previousIsSliding, allowSurfaceSteepFix, collisionCheckParams, preSlideCollisionRuntimeParams, postSlideCollisionRuntimeParams, previousCollisionRuntimeParams, outSlideMovement) {
           horizontalCollisionNormal = preSlideCollisionRuntimeParams.myHorizontalCollisionHit.myNormal.vec3_removeComponentAlongAxis(up, horizontalCollisionNormal);
           horizontalCollisionNormal.vec3_normalize(horizontalCollisionNormal);
@@ -21243,7 +22678,6 @@
             currentMovement.vec3_zero();
             let backupDebugActive = collisionCheckParams.myDebugActive;
             collisionCheckParams.myDebugActive = collisionCheckParams.myDebugActive && collisionCheckParams.myDebugSlidingActive;
-            let originalCurrentAngle = currentAngle;
             for (let i = 0; i < collisionCheckParams.mySlidingMaxAttempts; i++) {
               this._myInternalSlidingCollisionRuntimeParams.copy(collisionRuntimeParams);
               currentMovement = slidingMovement.vec3_rotateAxis(currentAngle, up, currentMovement);
@@ -21740,7 +23174,7 @@
               }
               if (!isHorizontalCheckOk) {
                 collisionRuntimeParams.myIsCollidingHorizontally = true;
-                collisionRuntimeParams.myHorizontalCollisionHit.copy(raycastResult.myHits[0]);
+                collisionRuntimeParams.myHorizontalCollisionHit.copy(this._myRaycastResult.myHits[0]);
                 break;
               }
             }
@@ -22407,15 +23841,15 @@
               direction = currentPosition.vec3_add(endOffset, direction).vec3_sub(origin, direction);
               let distance4 = direction.vec3_length();
               direction.vec3_normalize(direction);
-              let raycastResult2 = this._raycastAndDebug(origin, direction, distance4, true, false, collisionCheckParams, collisionRuntimeParams);
-              if (raycastResult2.myHits.length > 0) {
+              let raycastResult = this._raycastAndDebug(origin, direction, distance4, true, false, collisionCheckParams, collisionRuntimeParams);
+              if (raycastResult.myHits.length > 0) {
                 if (furtherDirectionPositionSet) {
-                  if (raycastResult2.myHits[0].myPosition.vec3_isFartherAlongAxis(furtherDirectionPosition, furtherDirection)) {
-                    furtherDirectionPosition.vec3_copy(raycastResult2.myHits[0].myPosition);
+                  if (raycastResult.myHits[0].myPosition.vec3_isFartherAlongAxis(furtherDirectionPosition, furtherDirection)) {
+                    furtherDirectionPosition.vec3_copy(raycastResult.myHits[0].myPosition);
                   }
                 } else {
                   furtherDirectionPositionSet = true;
-                  furtherDirectionPosition.vec3_copy(raycastResult2.myHits[0].myPosition);
+                  furtherDirectionPosition.vec3_copy(raycastResult.myHits[0].myPosition);
                 }
               }
             }
@@ -22501,16 +23935,16 @@
             direction = endPosition.vec3_sub(origin, direction);
             let distance4 = direction.vec3_length();
             direction.vec3_normalize(direction);
-            let raycastResult2 = this._raycastAndDebug(origin, direction, distance4, false, false, collisionCheckParams, collisionRuntimeParams);
-            if (raycastResult2.isColliding()) {
-              let firstHitOutsideCollision = raycastResult2.getFirstHitOutsideCollision();
+            let raycastResult = this._raycastAndDebug(origin, direction, distance4, false, false, collisionCheckParams, collisionRuntimeParams);
+            if (raycastResult.isColliding()) {
+              let firstHitOutsideCollision = raycastResult.getFirstHitOutsideCollision();
               if (firstHitOutsideCollision != null) {
                 isVerticalPositionOk = false;
                 collisionRuntimeParams.myVerticalCollisionHit.copy(firstHitOutsideCollision);
                 break;
               } else if (!insideHitSet) {
                 insideHitSet = true;
-                collisionRuntimeParams.myVerticalCollisionHit.copy(raycastResult2.myHits[0]);
+                collisionRuntimeParams.myVerticalCollisionHit.copy(raycastResult.myHits[0]);
                 if (!collisionCheckParams.myVerticalAllowHitInsideCollisionIfOneOk) {
                   isVerticalPositionOk = false;
                   break;
@@ -23022,9 +24456,9 @@
               direction = smallEndPosition.vec3_sub(origin, direction);
               let distance4 = direction.vec3_length();
               direction.vec3_normalize(direction);
-              let raycastResult2 = this._raycastAndDebug(origin, direction, distance4, false, false, collisionCheckParams, collisionRuntimeParams);
-              if (raycastResult2.isColliding()) {
-                baseHitIsInsideCollision = raycastResult2.myHits[0].myIsInsideCollision;
+              let raycastResult = this._raycastAndDebug(origin, direction, distance4, false, false, collisionCheckParams, collisionRuntimeParams);
+              if (raycastResult.isColliding()) {
+                baseHitIsInsideCollision = raycastResult.myHits[0].myIsInsideCollision;
               }
             }
             isBaseInsideCollision &&= baseHitIsInsideCollision;
@@ -23035,15 +24469,15 @@
               direction = endPosition.vec3_sub(origin, direction);
               let distance4 = direction.vec3_length();
               direction.vec3_normalize(direction);
-              let raycastResult2 = this._raycastAndDebug(origin, direction, distance4, true, false, collisionCheckParams, collisionRuntimeParams);
-              if (raycastResult2.isColliding()) {
-                hitFromCurrentPosition = raycastResult2.myHits[0].myPosition.vec3_sub(currentPosition, hitFromCurrentPosition);
+              let raycastResult = this._raycastAndDebug(origin, direction, distance4, true, false, collisionCheckParams, collisionRuntimeParams);
+              if (raycastResult.isColliding()) {
+                hitFromCurrentPosition = raycastResult.myHits[0].myPosition.vec3_sub(currentPosition, hitFromCurrentPosition);
                 let hitFromCurrentPositionLength = hitFromCurrentPosition.vec3_lengthSigned(verticalDirection);
                 if (hitFromCurrentPositionLength >= 0 && hitFromCurrentPositionLength <= verticalFixToBeOnSurface + 1e-5 || hitFromCurrentPositionLength < 0 && Math.abs(hitFromCurrentPositionLength) <= distanceToBeOnSurface + 1e-5) {
                   isOnSurface = true;
                 }
                 if (hitFromCurrentPositionLength >= 0 && hitFromCurrentPositionLength <= verticalFixToComputeSurfaceInfo + 1e-5 || hitFromCurrentPositionLength < 0 && Math.abs(hitFromCurrentPositionLength) <= distanceToComputeSurfaceInfo + 1e-5) {
-                  let currentSurfaceNormal = raycastResult2.myHits[0].myNormal;
+                  let currentSurfaceNormal = raycastResult.myHits[0].myNormal;
                   surfaceNormal.vec3_add(currentSurfaceNormal, surfaceNormal);
                   let surfaceHitAngle = currentSurfaceNormal.vec3_angle(verticalDirection);
                   if (surfaceHitAngle > surfaceHitMaxAngle) {
@@ -23150,23 +24584,23 @@
         checkMovement: function() {
           let collisionCheckParams = new CollisionCheckParams();
           let collisionRuntimeParams = new CollisionRuntimeParams();
-          return function checkMovement(movement, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          return function checkMovement(movement, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
-            this._myCollisionCheck.move(movement, currentTransformQuat2, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat2, outCharacterCollisionResults);
+            this._myCollisionCheck.move(movement, currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
           };
         }(),
         checkTeleportToTransform: function() {
           let teleportPosition = PP.vec3_create();
           let collisionCheckParams = new CollisionCheckParams();
           let collisionRuntimeParams = new CollisionRuntimeParams();
-          return function checkTeleportToTransform(teleportTransformQuat, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          return function checkTeleportToTransform(teleportTransformQuat, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             teleportPosition = teleportTransformQuat.quat2_getPosition(teleportPosition);
             this._myCollisionCheck.teleport(teleportPosition, teleportTransformQuat, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat2, outCharacterCollisionResults);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
           };
         }(),
         checkTransform: function() {
@@ -23176,29 +24610,29 @@
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             this._myCollisionCheck.positionCheck(true, checkTransformQuat, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, checkTransformQuat, outCharacterCollisionResults);
           };
         }(),
         updateGroundInfo: function() {
           let collisionCheckParams = new CollisionCheckParams();
           let collisionRuntimeParams = new CollisionRuntimeParams();
-          return function updateGroundInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          return function updateGroundInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             collisionCheckParams.myComputeCeilingInfoEnabled = false;
-            this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat2, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat2, outCharacterCollisionResults);
+            this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
           };
         }(),
         updateCeilingInfo: function() {
           let collisionCheckParams = new CollisionCheckParams();
           let collisionRuntimeParams = new CollisionRuntimeParams();
-          return function updateCeilingInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          return function updateCeilingInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
             this.convertCharacterColliderSetupToCollisionCheckParams(characterColliderSetup, collisionCheckParams);
             this.convertCharacterCollisionResultsToCollisionRuntimeParams(prevCharacterCollisionResults, collisionRuntimeParams);
             collisionCheckParams.myComputeGroundInfoEnabled = false;
-            this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat2, collisionCheckParams, collisionRuntimeParams);
-            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat2, outCharacterCollisionResults);
+            this._myCollisionCheck.updateSurfaceInfo(currentTransformQuat, collisionCheckParams, collisionRuntimeParams);
+            this.convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults);
           };
         }(),
         convertCharacterCollisionResultsToCollisionRuntimeParams: function(characterCollisionResults, outCollisionRuntimeParams) {
@@ -23275,7 +24709,7 @@
         },
         convertCollisionRuntimeParamsToCharacterCollisionResults: function() {
           let rotationQuat = PP.quat_create();
-          return function convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat2, outCharacterCollisionResults) {
+          return function convertCollisionRuntimeParamsToCharacterCollisionResults(collisionRuntimeParams, currentTransformQuat, outCharacterCollisionResults) {
             outCharacterCollisionResults.reset();
             if (collisionRuntimeParams.myIsMove) {
               outCharacterCollisionResults.myCheckType = PP.CharacterCollisionCheckType.CHECK_MOVEMENT;
@@ -23315,7 +24749,7 @@
             outCharacterCollisionResults.myWallSlideResults.myHasSlid = collisionRuntimeParams.myIsSliding;
             outCharacterCollisionResults.myWallSlideResults.mySlideMovementAngle = collisionRuntimeParams.mySlidingMovementAngle;
             outCharacterCollisionResults.myWallSlideResults.mySlideMovementWallAngle = collisionRuntimeParams.mySlidingCollisionAngle;
-            outCharacterCollisionResults.myWallSlideResults.myWallNormal.vec3_copy(ollisionRuntimeParams.mySlidingWallNormal);
+            outCharacterCollisionResults.myWallSlideResults.myWallNormal.vec3_copy(collisionRuntimeParams.mySlidingWallNormal);
             outCharacterCollisionResults.myGroundInfo.myIsOnSurface = collisionRuntimeParams.myIsOnGround;
             outCharacterCollisionResults.myGroundInfo.mySurfaceAngle = collisionRuntimeParams.myGroundAngle;
             outCharacterCollisionResults.myGroundInfo.mySurfacePerceivedAngle = collisionRuntimeParams.myGroundPerceivedAngle;
@@ -23358,7 +24792,7 @@
             outCharacterCollisionResults.myInternalResults.myWallSlideFlickerPreventionForceCheckCounter = collisionRuntimeParams.mySlidingFlickerPreventionCheckAnywayCounter;
             outCharacterCollisionResults.myInternalResults.myWallSlide90DegreesDirectionSign = collisionRuntimeParams.mySliding90DegreesSign;
             outCharacterCollisionResults.myInternalResults.myWallSlide90DegreesRecomputeDirectionSign = collisionRuntimeParams.mySlidingRecompute90DegreesSign;
-            outCharacterCollisionResults.myTransformResults.myStartTransformQuat.quat2_copy(currentTransformQuat2);
+            outCharacterCollisionResults.myTransformResults.myStartTransformQuat.quat2_copy(currentTransformQuat);
             return outCharacterCollisionResults;
           };
         }(),
@@ -23559,13 +24993,24 @@
           this.myAdditionalSetup = new PP.CharacterColliderAdditionalSetup();
           this.myDebugSetup = new PP.CharacterColliderDebugSetup();
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderHorizontalPositionVerticalCheckDirection = {
         UPWARD: 0,
+        // gives less issues with a ground based movement, but may also collide a bit more, resulting in less sliding
         DOWNWARD: 1,
+        // gives less issues with a ceiling based movement (unusual), but may also collide a bit more, resulting in less sliding and more stuck in front of a wall
         BOTH: 2
+        // check both directions, more expensive (2x checks) and better prevent collisions, sliding more, but is more expensive and gives more issues           
+        //                                                                                                                                                  _
+        // the issues means that a small step at the end of a slope, maybe due to 2 rectangles, one for the floor and the other for the slope like this -> /   
+        // can create a small step if the floor rectangle is a bit above the end of the slope, this will make the character get stuck thinking it's a wall
+        // BOTH do a more "aggressive" vertical check that makes the character get less stuck in other situations, but can get stuck in this one
+        // the better solution is to properly create the level, and if possible combine the 2 rectangles by having the floor a little below the end of the slope (like this -> /-)
+        // the step that is created "on the other side" in fact can easily be ignored thanks to the myHorizontalCheckFeetDistanceToIgnore param
+        // if the level is properly created the best solution should be UPWARD
+        // and also myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision = false
       };
       PP.CharacterColliderHorizontalCheckSetup = class CharacterColliderHorizontalCheckSetup {
         constructor() {
@@ -23626,7 +25071,7 @@
           this.myHorizontalCheckBlockLayerFlags = new PP.PhysicsLayerFlags();
           this.myHorizontalCheckObjectsToIgnore = [];
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderVerticalCheckSetup = class CharacterColliderVerticalCheckSetup {
@@ -23646,15 +25091,19 @@
           this.myVerticalCheckBlockLayerFlags = new PP.PhysicsLayerFlags();
           this.myVerticalCheckObjectsToIgnore = [];
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderSlideFlickerPreventionMode = {
         NONE: 0,
         USE_PREVIOUS_RESULTS: 1,
+        // allow some flicker before stabilizing but avoid stopping for a 1 frame flicker only (false positive), is also less expensive
         COLLISION_ANGLE_ABOVE_90_DEGREES: 2,
+        // prevents most flicker apart those on almost flat surface, can have some false positive, always check when sliding into opposite direction
         COLLISION_ANGLE_ABOVE_90_DEGREES_OR_MOVEMENT_ANGLE_ABOVE_85_DEGREES: 3,
+        // less flicker than COLLISION_ANGLE_ABOVE_90_DEGREES but more false positive, always check when sliding into opposite direction
         ALWAYS: 4
+        // less flicker than COLLISION_ANGLE_ABOVE_90_DEGREES_OR_MOVEMENT_ANGLE_ABOVE_85_DEGREES but more false positive
       };
       PP.CharacterColliderWallSlideSetup = class CharacterColliderWallSlideSetup {
         constructor() {
@@ -23666,7 +25115,7 @@
           this.myWallSlideFlickerPreventionForceCheckCounter = 0;
           this.my90DegreesWallSlideAdjustDirectionSign = false;
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderSurfaceSetup = class CharacterColliderSurfaceSetup {
@@ -23710,7 +25159,7 @@
           this.myRecollectSurfaceInfoOnSurfaceCheckFailed = false;
           this.myHorizontalMovementAllowExitAttemptWhenOnNotIgnorableSurfacePerceivedAngle = false;
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderSplitMovementSetup = class CharacterColliderSplitMovementSetup {
@@ -23723,7 +25172,7 @@
           this.mySplitMovementStopOnVerticalMovementFailed = false;
           this.mySplitMovementStopReturnPreviousResults = false;
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderAdditionalSetup = class CharacterColliderAdditionalSetup {
@@ -23731,7 +25180,7 @@
           this.myPositionOffsetLocal = PP.vec3_create();
           this.myRotationOffsetLocalQuat = PP.quat_create();
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterColliderDebugSetup = class CharacterColliderDebugSetup {
@@ -23747,167 +25196,167 @@
           this.myVisualDebugCeilingInfoActive = false;
           this.myVisualDebugResultsActive = false;
         }
-        copy(other2) {
+        copy(other) {
         }
       };
-      PP.CharacterColliderSetup.prototype.copy = function(other2) {
-        this.myHeight = other2.myHeight;
-        this.myHorizontalCheckSetup.copy(other2.myHorizontalCheckSetup);
-        this.myVerticalCheckSetup.copy(other2.myVerticalCheckSetup);
-        this.myWallSlideSetup.copy(other2.myWallSlideSetup);
-        this.myGroundSetup.copy(other2.myGroundSetup);
-        this.myCeilingSetup.copy(other2.myCeilingSetup);
-        this.mySplitMovementSetup.copy(other2.mySplitMovementSetup);
-        this.myAdditionalSetup.copy(other2.myAdditionalSetup);
-        this.myDebugSetup.copy(other2.myDebugSetup);
+      PP.CharacterColliderSetup.prototype.copy = function(other) {
+        this.myHeight = other.myHeight;
+        this.myHorizontalCheckSetup.copy(other.myHorizontalCheckSetup);
+        this.myVerticalCheckSetup.copy(other.myVerticalCheckSetup);
+        this.myWallSlideSetup.copy(other.myWallSlideSetup);
+        this.myGroundSetup.copy(other.myGroundSetup);
+        this.myCeilingSetup.copy(other.myCeilingSetup);
+        this.mySplitMovementSetup.copy(other.mySplitMovementSetup);
+        this.myAdditionalSetup.copy(other.myAdditionalSetup);
+        this.myDebugSetup.copy(other.myDebugSetup);
       };
-      PP.CharacterColliderHorizontalCheckSetup.prototype.copy = function(other2) {
-        this.myHorizontalCheckConeRadius = other2.myHorizontalCheckConeRadius;
-        this.myHorizontalCheckConeHalfAngle = other2.myHorizontalCheckConeHalfAngle;
-        this.myHorizontalHeightCheckEnabled = other2.myHorizontalHeightCheckEnabled;
-        this.myHorizontalCheckFeetDistanceToIgnore = other2.myHorizontalCheckFeetDistanceToIgnore;
-        this.myHorizontalCheckHeadDistanceToIgnore = other2.myHorizontalCheckHeadDistanceToIgnore;
-        this.myHorizontalCheckFixedForwardEnabled = other2.myHorizontalCheckFixedForwardEnabled;
-        this.myHorizontalCheckFixedForward.vec3_copy(other2.myHorizontalCheckFixedForward);
-        this.myHorizontalMovementCheckEnabled = other2.myHorizontalMovementCheckEnabled;
-        this.myHorizontalMovementCheckRadialSteps = other2.myHorizontalMovementCheckRadialSteps;
-        this.myHorizontalMovementCheckSplitMovementEnabled = other2.myHorizontalMovementCheckSplitMovementEnabled;
-        this.myHorizontalMovementCheckSplitMovementMaxSteps = other2.myHorizontalMovementCheckSplitMovementMaxSteps;
-        this.myHorizontalMovementCheckSplitMovementMaxStepLength = other2.myHorizontalMovementCheckSplitMovementMaxStepLength;
-        this.myHorizontalMovementCheckSplitMovementMinStepLength = other2.myHorizontalMovementCheckSplitMovementMinStepLength;
-        this.myHorizontalMovementCheckGetBetterReferenceHit = other2.myHorizontalMovementCheckGetBetterReferenceHit;
-        this.myHorizontalMovementHorizontalRadialCheckEnabled = other2.myHorizontalMovementHorizontalRadialCheckEnabled;
-        this.myHorizontalMovementHorizontalDiagonalOutwardCheckEnabled = other2.myHorizontalMovementHorizontalDiagonalOutwardCheckEnabled;
-        this.myHorizontalMovementHorizontalDiagonalInwardCheckEnabled = other2.myHorizontalMovementHorizontalDiagonalInwardCheckEnabled;
-        this.myHorizontalMovementHorizontalStraightCheckEnabled = other2.myHorizontalMovementHorizontalStraightCheckEnabled;
-        this.myHorizontalMovementHorizontalStraightCentralCheckEnabled = other2.myHorizontalMovementHorizontalStraightCentralCheckEnabled;
-        this.myHorizontalMovementHeightCheckSteps = other2.myHorizontalMovementHeightCheckSteps;
-        this.myHorizontalMovementHeightVerticalCheckEnabled = other2.myHorizontalMovementHeightVerticalCheckEnabled;
-        this.myHorizontalMovementHeightHorizontalCheckEnabled = other2.myHorizontalMovementHeightHorizontalCheckEnabled;
-        this.myHorizontalMovementVerticalRadialDiagonalOutwardCheckEnabled = other2.myHorizontalMovementVerticalRadialDiagonalOutwardCheckEnabled;
-        this.myHorizontalMovementVerticalRadialDiagonalInwardCheckEnabled = other2.myHorizontalMovementVerticalRadialDiagonalInwardCheckEnabled;
-        this.myHorizontalMovementVerticalDiagonalOutwardUpwardCheckEnabled = other2.myHorizontalMovementVerticalDiagonalOutwardUpwardCheckEnabled;
-        this.myHorizontalMovementVerticalDiagonalOutwardDownwardCheckEnabled = other2.myHorizontalMovementVerticalDiagonalOutwardDownwardCheckEnabled;
-        this.myHorizontalMovementVerticalDiagonalInwardUpwardCheckEnabled = other2.myHorizontalMovementVerticalDiagonalInwardUpwardCheckEnabled;
-        this.myHorizontalMovementVerticalDiagonalInwardDownwardCheckEnabled = other2.myHorizontalMovementVerticalDiagonalInwardDownwardCheckEnabled;
-        this.myHorizontalMovementVerticalStraightCheckEnabled = other2.myHorizontalMovementVerticalStraightCheckEnabled;
-        this.myHorizontalMovementVerticalStraightCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightCentralCheckEnabled;
-        this.myHorizontalMovementVerticalStraightDiagonalUpwardCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalUpwardCheckEnabled;
-        this.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled;
-        this.myHorizontalMovementVerticalStraightDiagonalDownwardCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalDownwardCheckEnabled;
-        this.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled = other2.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled;
-        this.myHorizontalPositionCheckEnabled = other2.myHorizontalPositionCheckEnabled;
-        this.myHorizontalPositionCheckConeHalfSlices = other2.myHorizontalPositionCheckConeHalfSlices;
-        this.myHorizontalPositionHorizontalBorderCheckEnabled = other2.myHorizontalPositionHorizontalBorderCheckEnabled;
-        this.myHorizontalPositionHorizontalRadialCheckEnabled = other2.myHorizontalPositionHorizontalRadialCheckEnabled;
-        this.myHorizontalPositionHeightCheckSteps = other2.myHorizontalPositionHeightCheckSteps;
-        this.myHorizontalPositionHeightHorizontalCheckEnabled = other2.myHorizontalPositionHeightHorizontalCheckEnabled;
-        this.myHorizontalPositionHeightVerticalCheckEnabled = other2.myHorizontalPositionHeightVerticalCheckEnabled;
-        this.myHorizontalPositionVerticalStraightCheckEnabled = other2.myHorizontalPositionVerticalStraightCheckEnabled;
-        this.myHorizontalPositionVerticalStraightCentralCheckEnabled = other2.myHorizontalPositionVerticalStraightCentralCheckEnabled;
-        this.myHorizontalPositionVerticalRadialDiagonalOutwardCheckEnabled = other2.myHorizontalPositionVerticalRadialDiagonalOutwardCheckEnabled;
-        this.myHorizontalPositionVerticalRadialDiagonalInwardCheckEnabled = other2.myHorizontalPositionVerticalRadialDiagonalInwardCheckEnabled;
-        this.myHorizontalPositionVerticalBorderDiagonalOutwardCheckEnabled = other2.myHorizontalPositionVerticalBorderDiagonalOutwardCheckEnabled;
-        this.myHorizontalPositionVerticalBorderDiagonalInwardCheckEnabled = other2.myHorizontalPositionVerticalBorderDiagonalInwardCheckEnabled;
-        this.myHorizontalPositionVerticalRadialBorderDiagonalOutwardCheckEnabled = other2.myHorizontalPositionVerticalRadialBorderDiagonalOutwardCheckEnabled;
-        this.myHorizontalPositionVerticalRadialBorderDiagonalInwardCheckEnabled = other2.myHorizontalPositionVerticalRadialBorderDiagonalInwardCheckEnabled;
-        this.myHorizontalPositionVerticalCheckGetFarthestHit = other2.myHorizontalPositionVerticalCheckGetFarthestHit;
-        this.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHit = other2.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHit;
-        this.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHitKeepVerticalHitIfNoHorizontalHit = other2.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHitKeepVerticalHitIfNoHorizontalHit;
-        this.myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision = other2.myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision;
-        this.myHorizontalPositionVerticalCheckDirection = other2.myHorizontalPositionVerticalCheckDirection;
-        this.myHorizontalCheckBlockLayerFlags.setMask(other2.myHorizontalCheckBlockLayerFlags.getMask());
-        this.myHorizontalCheckObjectsToIgnore.pp_copy(other2.myHorizontalCheckObjectsToIgnore);
+      PP.CharacterColliderHorizontalCheckSetup.prototype.copy = function(other) {
+        this.myHorizontalCheckConeRadius = other.myHorizontalCheckConeRadius;
+        this.myHorizontalCheckConeHalfAngle = other.myHorizontalCheckConeHalfAngle;
+        this.myHorizontalHeightCheckEnabled = other.myHorizontalHeightCheckEnabled;
+        this.myHorizontalCheckFeetDistanceToIgnore = other.myHorizontalCheckFeetDistanceToIgnore;
+        this.myHorizontalCheckHeadDistanceToIgnore = other.myHorizontalCheckHeadDistanceToIgnore;
+        this.myHorizontalCheckFixedForwardEnabled = other.myHorizontalCheckFixedForwardEnabled;
+        this.myHorizontalCheckFixedForward.vec3_copy(other.myHorizontalCheckFixedForward);
+        this.myHorizontalMovementCheckEnabled = other.myHorizontalMovementCheckEnabled;
+        this.myHorizontalMovementCheckRadialSteps = other.myHorizontalMovementCheckRadialSteps;
+        this.myHorizontalMovementCheckSplitMovementEnabled = other.myHorizontalMovementCheckSplitMovementEnabled;
+        this.myHorizontalMovementCheckSplitMovementMaxSteps = other.myHorizontalMovementCheckSplitMovementMaxSteps;
+        this.myHorizontalMovementCheckSplitMovementMaxStepLength = other.myHorizontalMovementCheckSplitMovementMaxStepLength;
+        this.myHorizontalMovementCheckSplitMovementMinStepLength = other.myHorizontalMovementCheckSplitMovementMinStepLength;
+        this.myHorizontalMovementCheckGetBetterReferenceHit = other.myHorizontalMovementCheckGetBetterReferenceHit;
+        this.myHorizontalMovementHorizontalRadialCheckEnabled = other.myHorizontalMovementHorizontalRadialCheckEnabled;
+        this.myHorizontalMovementHorizontalDiagonalOutwardCheckEnabled = other.myHorizontalMovementHorizontalDiagonalOutwardCheckEnabled;
+        this.myHorizontalMovementHorizontalDiagonalInwardCheckEnabled = other.myHorizontalMovementHorizontalDiagonalInwardCheckEnabled;
+        this.myHorizontalMovementHorizontalStraightCheckEnabled = other.myHorizontalMovementHorizontalStraightCheckEnabled;
+        this.myHorizontalMovementHorizontalStraightCentralCheckEnabled = other.myHorizontalMovementHorizontalStraightCentralCheckEnabled;
+        this.myHorizontalMovementHeightCheckSteps = other.myHorizontalMovementHeightCheckSteps;
+        this.myHorizontalMovementHeightVerticalCheckEnabled = other.myHorizontalMovementHeightVerticalCheckEnabled;
+        this.myHorizontalMovementHeightHorizontalCheckEnabled = other.myHorizontalMovementHeightHorizontalCheckEnabled;
+        this.myHorizontalMovementVerticalRadialDiagonalOutwardCheckEnabled = other.myHorizontalMovementVerticalRadialDiagonalOutwardCheckEnabled;
+        this.myHorizontalMovementVerticalRadialDiagonalInwardCheckEnabled = other.myHorizontalMovementVerticalRadialDiagonalInwardCheckEnabled;
+        this.myHorizontalMovementVerticalDiagonalOutwardUpwardCheckEnabled = other.myHorizontalMovementVerticalDiagonalOutwardUpwardCheckEnabled;
+        this.myHorizontalMovementVerticalDiagonalOutwardDownwardCheckEnabled = other.myHorizontalMovementVerticalDiagonalOutwardDownwardCheckEnabled;
+        this.myHorizontalMovementVerticalDiagonalInwardUpwardCheckEnabled = other.myHorizontalMovementVerticalDiagonalInwardUpwardCheckEnabled;
+        this.myHorizontalMovementVerticalDiagonalInwardDownwardCheckEnabled = other.myHorizontalMovementVerticalDiagonalInwardDownwardCheckEnabled;
+        this.myHorizontalMovementVerticalStraightCheckEnabled = other.myHorizontalMovementVerticalStraightCheckEnabled;
+        this.myHorizontalMovementVerticalStraightCentralCheckEnabled = other.myHorizontalMovementVerticalStraightCentralCheckEnabled;
+        this.myHorizontalMovementVerticalStraightDiagonalUpwardCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalUpwardCheckEnabled;
+        this.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalUpwardCentralCheckEnabled;
+        this.myHorizontalMovementVerticalStraightDiagonalDownwardCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalDownwardCheckEnabled;
+        this.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled = other.myHorizontalMovementVerticalStraightDiagonalDownwardCentralCheckEnabled;
+        this.myHorizontalPositionCheckEnabled = other.myHorizontalPositionCheckEnabled;
+        this.myHorizontalPositionCheckConeHalfSlices = other.myHorizontalPositionCheckConeHalfSlices;
+        this.myHorizontalPositionHorizontalBorderCheckEnabled = other.myHorizontalPositionHorizontalBorderCheckEnabled;
+        this.myHorizontalPositionHorizontalRadialCheckEnabled = other.myHorizontalPositionHorizontalRadialCheckEnabled;
+        this.myHorizontalPositionHeightCheckSteps = other.myHorizontalPositionHeightCheckSteps;
+        this.myHorizontalPositionHeightHorizontalCheckEnabled = other.myHorizontalPositionHeightHorizontalCheckEnabled;
+        this.myHorizontalPositionHeightVerticalCheckEnabled = other.myHorizontalPositionHeightVerticalCheckEnabled;
+        this.myHorizontalPositionVerticalStraightCheckEnabled = other.myHorizontalPositionVerticalStraightCheckEnabled;
+        this.myHorizontalPositionVerticalStraightCentralCheckEnabled = other.myHorizontalPositionVerticalStraightCentralCheckEnabled;
+        this.myHorizontalPositionVerticalRadialDiagonalOutwardCheckEnabled = other.myHorizontalPositionVerticalRadialDiagonalOutwardCheckEnabled;
+        this.myHorizontalPositionVerticalRadialDiagonalInwardCheckEnabled = other.myHorizontalPositionVerticalRadialDiagonalInwardCheckEnabled;
+        this.myHorizontalPositionVerticalBorderDiagonalOutwardCheckEnabled = other.myHorizontalPositionVerticalBorderDiagonalOutwardCheckEnabled;
+        this.myHorizontalPositionVerticalBorderDiagonalInwardCheckEnabled = other.myHorizontalPositionVerticalBorderDiagonalInwardCheckEnabled;
+        this.myHorizontalPositionVerticalRadialBorderDiagonalOutwardCheckEnabled = other.myHorizontalPositionVerticalRadialBorderDiagonalOutwardCheckEnabled;
+        this.myHorizontalPositionVerticalRadialBorderDiagonalInwardCheckEnabled = other.myHorizontalPositionVerticalRadialBorderDiagonalInwardCheckEnabled;
+        this.myHorizontalPositionVerticalCheckGetFarthestHit = other.myHorizontalPositionVerticalCheckGetFarthestHit;
+        this.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHit = other.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHit;
+        this.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHitKeepVerticalHitIfNoHorizontalHit = other.myHorizontalPositionVerticalCheckPerformHorizontalCheckOnHitKeepVerticalHitIfNoHorizontalHit;
+        this.myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision = other.myHorizontalPositionVerticalCheckIgnoreHitsInsideCollision;
+        this.myHorizontalPositionVerticalCheckDirection = other.myHorizontalPositionVerticalCheckDirection;
+        this.myHorizontalCheckBlockLayerFlags.setMask(other.myHorizontalCheckBlockLayerFlags.getMask());
+        this.myHorizontalCheckObjectsToIgnore.pp_copy(other.myHorizontalCheckObjectsToIgnore);
       };
-      PP.CharacterColliderVerticalCheckSetup.prototype.copy = function(other2) {
-        this.myVerticalCheckCircumferenceRadius = other2.myVerticalCheckCircumferenceRadius;
-        this.myVerticalCheckCircumferenceSlices = other2.myVerticalCheckCircumferenceSlices;
-        this.myVerticalCheckCircumferenceCentralCheckEnabled = other2.myVerticalCheckCircumferenceCentralCheckEnabled;
-        this.myVerticalCheckCircumferenceRadialSteps = other2.myVerticalCheckCircumferenceRadialSteps;
-        this.myVerticalCheckCircumferenceRotationPerRadialStep = other2.myVerticalCheckCircumferenceRotationPerRadialStep;
-        this.myVerticalCheckFixedForwardEnabled = other2.myVerticalCheckFixedForwardEnabled;
-        this.myVerticalCheckFixedForward.vec3_copy(other2.myVerticalCheckFixedForward);
-        this.myVerticalMovementCheckEnabled = other2.myVerticalMovementCheckEnabled;
-        this.myVerticalMovementCheckReductionEnabled = other2.myVerticalMovementCheckReductionEnabled;
-        this.myVerticalMovementCheckPerformCheckOnBothSides = other2.myVerticalMovementCheckPerformCheckOnBothSides;
-        this.myVerticalPositionCheckEnabled = other2.myVerticalPositionCheckEnabled;
-        this.myVerticalCheckAllowHitsInsideCollisionIfOneValid = other2.myVerticalCheckAllowHitsInsideCollisionIfOneValid;
-        this.myVerticalCheckBlockLayerFlags.setMask(other2.myVerticalCheckBlockLayerFlags.getMask());
-        this.myVerticalCheckObjectsToIgnore.pp_copy(other2.myVerticalCheckObjectsToIgnore);
+      PP.CharacterColliderVerticalCheckSetup.prototype.copy = function(other) {
+        this.myVerticalCheckCircumferenceRadius = other.myVerticalCheckCircumferenceRadius;
+        this.myVerticalCheckCircumferenceSlices = other.myVerticalCheckCircumferenceSlices;
+        this.myVerticalCheckCircumferenceCentralCheckEnabled = other.myVerticalCheckCircumferenceCentralCheckEnabled;
+        this.myVerticalCheckCircumferenceRadialSteps = other.myVerticalCheckCircumferenceRadialSteps;
+        this.myVerticalCheckCircumferenceRotationPerRadialStep = other.myVerticalCheckCircumferenceRotationPerRadialStep;
+        this.myVerticalCheckFixedForwardEnabled = other.myVerticalCheckFixedForwardEnabled;
+        this.myVerticalCheckFixedForward.vec3_copy(other.myVerticalCheckFixedForward);
+        this.myVerticalMovementCheckEnabled = other.myVerticalMovementCheckEnabled;
+        this.myVerticalMovementCheckReductionEnabled = other.myVerticalMovementCheckReductionEnabled;
+        this.myVerticalMovementCheckPerformCheckOnBothSides = other.myVerticalMovementCheckPerformCheckOnBothSides;
+        this.myVerticalPositionCheckEnabled = other.myVerticalPositionCheckEnabled;
+        this.myVerticalCheckAllowHitsInsideCollisionIfOneValid = other.myVerticalCheckAllowHitsInsideCollisionIfOneValid;
+        this.myVerticalCheckBlockLayerFlags.setMask(other.myVerticalCheckBlockLayerFlags.getMask());
+        this.myVerticalCheckObjectsToIgnore.pp_copy(other.myVerticalCheckObjectsToIgnore);
       };
-      PP.CharacterColliderWallSlideSetup.prototype.copy = function(other2) {
-        this.myWallSlideEnabled = other2.myWallSlideEnabled;
-        this.myWallSlideMaxAttempts = other2.myWallSlideMaxAttempts;
-        this.myCheckBothWallSlideDirections = other2.myCheckBothWallSlideDirections;
-        this.myWallSlideFlickerPreventionMode = other2.myWallSlideFlickerPreventionMode;
-        this.myWallSlideFlickerPreventionCheckOnlyIfAlreadySliding = other2.myWallSlideFlickerPreventionCheckOnlyIfAlreadySliding;
-        this.myWallSlideFlickerPreventionForceCheckCounter = other2.myWallSlideFlickerPreventionForceCheckCounter;
-        this.my90DegreesWallSlideAdjustDirectionSign = other2.my90DegreesWallSlideAdjustDirectionSign;
+      PP.CharacterColliderWallSlideSetup.prototype.copy = function(other) {
+        this.myWallSlideEnabled = other.myWallSlideEnabled;
+        this.myWallSlideMaxAttempts = other.myWallSlideMaxAttempts;
+        this.myCheckBothWallSlideDirections = other.myCheckBothWallSlideDirections;
+        this.myWallSlideFlickerPreventionMode = other.myWallSlideFlickerPreventionMode;
+        this.myWallSlideFlickerPreventionCheckOnlyIfAlreadySliding = other.myWallSlideFlickerPreventionCheckOnlyIfAlreadySliding;
+        this.myWallSlideFlickerPreventionForceCheckCounter = other.myWallSlideFlickerPreventionForceCheckCounter;
+        this.my90DegreesWallSlideAdjustDirectionSign = other.my90DegreesWallSlideAdjustDirectionSign;
       };
-      PP.CharacterColliderSurfaceSetup.prototype.copy = function(other2) {
-        this.mySurfaceSnapEnabled = other2.mySurfaceSnapEnabled;
-        this.mySurfaceSnapMaxDistance = other2.mySurfaceSnapMaxDistance;
-        this.mySurfacePopOutEnabled = other2.mySurfacePopOutEnabled;
-        this.mySurfacePopOutMaxDistance = other2.mySurfacePopOutMaxDistance;
-        this.mySurfaceAngleToIgnore = other2.mySurfaceAngleToIgnore;
-        this.mySurfaceAngleToIgnoreWithSurfacePerceivedAngle = other2.mySurfaceAngleToIgnoreWithSurfacePerceivedAngle;
-        this.myHorizontalMovementSurfaceAngleToIgnoreMaxVerticalDistance = other2.myHorizontalMovementSurfaceAngleToIgnoreMaxVerticalDistance;
-        this.myHorizontalPositionSurfaceAngleToIgnoreMaxVerticalDistance = other2.myHorizontalPositionSurfaceAngleToIgnoreMaxVerticalDistance;
-        this.myHorizontalMovementSurfaceAngleToIgnoreMaxHorizontalMovementLeft = other2.myHorizontalMovementSurfaceAngleToIgnoreMaxHorizontalMovementLeft;
-        this.myCollectSurfaceInfo = other2.myCollectSurfaceInfo;
-        this.myIsOnSurfaceMaxOutsideDistance = other2.myIsOnSurfaceMaxOutsideDistance;
-        this.myIsOnSurfaceMaxInsideDistance = other2.myIsOnSurfaceMaxInsideDistance;
-        this.myIsBaseInsideCollisionCheckEnabled = other2.myIsBaseInsideCollisionCheckEnabled;
-        this.myIsOnSurfaceIfBaseInsideCollision = other2.myIsOnSurfaceIfBaseInsideCollision;
-        this.myCollectSurfaceNormalMaxOutsideDistance = other2.myCollectSurfaceNormalMaxOutsideDistance;
-        this.myCollectSurfaceNormalMaxInsideDistance = other2.myCollectSurfaceNormalMaxInsideDistance;
-        this.myFindSurfaceDistanceMaxOutsideDistance = other2.myFindSurfaceDistanceMaxOutsideDistance;
-        this.myFindSurfaceDistanceMaxInsideDistance = other2.myFindSurfaceDistanceMaxInsideDistance;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhill = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhill;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphill = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphill;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfaceAngle = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfaceAngle;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfaceAngle = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfaceAngle;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfacePerceivedAngle = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfacePerceivedAngle;
-        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfacePerceivedAngle = other2.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfacePerceivedAngle;
-        this.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhill = other2.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhill;
-        this.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhillMinSurfaceAngle = other2.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhillMinSurfaceAngle;
-        this.myMovementMustStayOnSurface = other2.myMovementMustStayOnSurface;
-        this.myMovementMustStayOnSurfaceHitMaxAngle = other2.myMovementMustStayOnSurfaceHitMaxAngle;
-        this.myMovementMustStayOnIgnorableSurfaceAngleDownhill = other2.myMovementMustStayOnIgnorableSurfaceAngleDownhill;
-        this.myMovementMustStayOnSurfaceAngleDownhill = other2.myMovementMustStayOnSurfaceAngleDownhill;
-        this.myTeleportMustBeOnSurface = other2.myTeleportMustBeOnSurface;
-        this.myTeleportMustBeOnIgnorableSurfaceAngle = other2.myTeleportMustBeOnIgnorableSurfaceAngle;
-        this.myTeleportMustBeOnSurfaceAngle = other2.myTeleportMustBeOnSurfaceAngle;
-        this.myCheckTransformMustBeOnSurface = other2.myCheckTransformMustBeOnSurface;
-        this.myCheckTransformMustBeOnIgnorableSurfaceAngle = other2.myCheckTransformMustBeOnIgnorableSurfaceAngle;
-        this.myCheckTransformMustBeOnSurfaceAngle = other2.myCheckTransformMustBeOnSurfaceAngle;
-        this.myRecollectSurfaceInfoOnSurfaceCheckFailed = other2.myRecollectSurfaceInfoOnSurfaceCheckFailed;
-        this.myHorizontalMovementAllowExitAttemptWhenOnNotIgnorableSurfacePerceivedAngle = other2.myHorizontalMovementAllowExitAttemptWhenOnNotIgnorableSurfacePerceivedAngle;
+      PP.CharacterColliderSurfaceSetup.prototype.copy = function(other) {
+        this.mySurfaceSnapEnabled = other.mySurfaceSnapEnabled;
+        this.mySurfaceSnapMaxDistance = other.mySurfaceSnapMaxDistance;
+        this.mySurfacePopOutEnabled = other.mySurfacePopOutEnabled;
+        this.mySurfacePopOutMaxDistance = other.mySurfacePopOutMaxDistance;
+        this.mySurfaceAngleToIgnore = other.mySurfaceAngleToIgnore;
+        this.mySurfaceAngleToIgnoreWithSurfacePerceivedAngle = other.mySurfaceAngleToIgnoreWithSurfacePerceivedAngle;
+        this.myHorizontalMovementSurfaceAngleToIgnoreMaxVerticalDistance = other.myHorizontalMovementSurfaceAngleToIgnoreMaxVerticalDistance;
+        this.myHorizontalPositionSurfaceAngleToIgnoreMaxVerticalDistance = other.myHorizontalPositionSurfaceAngleToIgnoreMaxVerticalDistance;
+        this.myHorizontalMovementSurfaceAngleToIgnoreMaxHorizontalMovementLeft = other.myHorizontalMovementSurfaceAngleToIgnoreMaxHorizontalMovementLeft;
+        this.myCollectSurfaceInfo = other.myCollectSurfaceInfo;
+        this.myIsOnSurfaceMaxOutsideDistance = other.myIsOnSurfaceMaxOutsideDistance;
+        this.myIsOnSurfaceMaxInsideDistance = other.myIsOnSurfaceMaxInsideDistance;
+        this.myIsBaseInsideCollisionCheckEnabled = other.myIsBaseInsideCollisionCheckEnabled;
+        this.myIsOnSurfaceIfBaseInsideCollision = other.myIsOnSurfaceIfBaseInsideCollision;
+        this.myCollectSurfaceNormalMaxOutsideDistance = other.myCollectSurfaceNormalMaxOutsideDistance;
+        this.myCollectSurfaceNormalMaxInsideDistance = other.myCollectSurfaceNormalMaxInsideDistance;
+        this.myFindSurfaceDistanceMaxOutsideDistance = other.myFindSurfaceDistanceMaxOutsideDistance;
+        this.myFindSurfaceDistanceMaxInsideDistance = other.myFindSurfaceDistanceMaxInsideDistance;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhill = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhill;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphill = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphill;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfaceAngle = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfaceAngle;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfaceAngle = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfaceAngle;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfacePerceivedAngle = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleDownhillMaxSurfacePerceivedAngle;
+        this.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfacePerceivedAngle = other.myHorizontalMovementAdjustVerticalMovementBasedOnSurfacePerceivedAngleUphillMaxSurfacePerceivedAngle;
+        this.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhill = other.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhill;
+        this.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhillMinSurfaceAngle = other.myVerticalMovementAdjustHorizontalMovementBasedOnSurfaceAngleDownhillMinSurfaceAngle;
+        this.myMovementMustStayOnSurface = other.myMovementMustStayOnSurface;
+        this.myMovementMustStayOnSurfaceHitMaxAngle = other.myMovementMustStayOnSurfaceHitMaxAngle;
+        this.myMovementMustStayOnIgnorableSurfaceAngleDownhill = other.myMovementMustStayOnIgnorableSurfaceAngleDownhill;
+        this.myMovementMustStayOnSurfaceAngleDownhill = other.myMovementMustStayOnSurfaceAngleDownhill;
+        this.myTeleportMustBeOnSurface = other.myTeleportMustBeOnSurface;
+        this.myTeleportMustBeOnIgnorableSurfaceAngle = other.myTeleportMustBeOnIgnorableSurfaceAngle;
+        this.myTeleportMustBeOnSurfaceAngle = other.myTeleportMustBeOnSurfaceAngle;
+        this.myCheckTransformMustBeOnSurface = other.myCheckTransformMustBeOnSurface;
+        this.myCheckTransformMustBeOnIgnorableSurfaceAngle = other.myCheckTransformMustBeOnIgnorableSurfaceAngle;
+        this.myCheckTransformMustBeOnSurfaceAngle = other.myCheckTransformMustBeOnSurfaceAngle;
+        this.myRecollectSurfaceInfoOnSurfaceCheckFailed = other.myRecollectSurfaceInfoOnSurfaceCheckFailed;
+        this.myHorizontalMovementAllowExitAttemptWhenOnNotIgnorableSurfacePerceivedAngle = other.myHorizontalMovementAllowExitAttemptWhenOnNotIgnorableSurfacePerceivedAngle;
       };
-      PP.CharacterColliderSplitMovementSetup.prototype.copy = function(other2) {
-        this.mySplitMovementEnabled = other2.mySplitMovementEnabled;
-        this.mySplitMovementMaxSteps = other2.mySplitMovementMaxSteps;
-        this.mySplitMovementMaxStepLength = other2.mySplitMovementMaxStepLength;
-        this.mySplitMovementMinStepLength = other2.mySplitMovementMinStepLength;
-        this.mySplitMovementStopOnHorizontalMovementFailed = other2.mySplitMovementStopOnHorizontalMovementFailed;
-        this.mySplitMovementStopOnVerticalMovementFailed = other2.mySplitMovementStopOnVerticalMovementFailed;
-        this.mySplitMovementStopReturnPreviousResults = other2.mySplitMovementStopReturnPreviousResults;
+      PP.CharacterColliderSplitMovementSetup.prototype.copy = function(other) {
+        this.mySplitMovementEnabled = other.mySplitMovementEnabled;
+        this.mySplitMovementMaxSteps = other.mySplitMovementMaxSteps;
+        this.mySplitMovementMaxStepLength = other.mySplitMovementMaxStepLength;
+        this.mySplitMovementMinStepLength = other.mySplitMovementMinStepLength;
+        this.mySplitMovementStopOnHorizontalMovementFailed = other.mySplitMovementStopOnHorizontalMovementFailed;
+        this.mySplitMovementStopOnVerticalMovementFailed = other.mySplitMovementStopOnVerticalMovementFailed;
+        this.mySplitMovementStopReturnPreviousResults = other.mySplitMovementStopReturnPreviousResults;
       };
-      PP.CharacterColliderAdditionalSetup.prototype.copy = function(other2) {
-        this.myPositionOffsetLocal.vec3_copy(other2.myPositionOffsetLocal);
-        this.myRotationOffsetLocalQuat.quat_copy(other2.myRotationOffsetLocalQuat);
+      PP.CharacterColliderAdditionalSetup.prototype.copy = function(other) {
+        this.myPositionOffsetLocal.vec3_copy(other.myPositionOffsetLocal);
+        this.myRotationOffsetLocalQuat.quat_copy(other.myRotationOffsetLocalQuat);
       };
-      PP.CharacterColliderDebugSetup.prototype.copy = function(other2) {
-        this.myVisualDebugActive = other2.myVisualDebugActive;
-        this.myVisualDebugMovementActive = other2.myVisualDebugMovementActive;
-        this.myVisualDebugHorizontalMovementCheckActive = other2.myVisualDebugHorizontalMovementCheckActive;
-        this.myVisualDebugHorizontalPositionCheckActive = other2.myVisualDebugHorizontalPositionCheckActive;
-        this.myVisualDebugVerticalMovementCheckActive = other2.myVisualDebugVerticalMovementCheckActive;
-        this.myVisualDebugVerticalPositionCheckActive = other2.myVisualDebugVerticalPositionCheckActive;
-        this.myVisualDebugSlideActive = other2.myVisualDebugSlideActive;
-        this.myVisualDebugGroundInfoActive = other2.myVisualDebugGroundInfoActive;
-        this.myVisualDebugCeilingInfoActive = other2.myVisualDebugCeilingInfoActive;
-        this.myVisualDebugResultsActive = other2.myVisualDebugResultsActive;
+      PP.CharacterColliderDebugSetup.prototype.copy = function(other) {
+        this.myVisualDebugActive = other.myVisualDebugActive;
+        this.myVisualDebugMovementActive = other.myVisualDebugMovementActive;
+        this.myVisualDebugHorizontalMovementCheckActive = other.myVisualDebugHorizontalMovementCheckActive;
+        this.myVisualDebugHorizontalPositionCheckActive = other.myVisualDebugHorizontalPositionCheckActive;
+        this.myVisualDebugVerticalMovementCheckActive = other.myVisualDebugVerticalMovementCheckActive;
+        this.myVisualDebugVerticalPositionCheckActive = other.myVisualDebugVerticalPositionCheckActive;
+        this.myVisualDebugSlideActive = other.myVisualDebugSlideActive;
+        this.myVisualDebugGroundInfoActive = other.myVisualDebugGroundInfoActive;
+        this.myVisualDebugCeilingInfoActive = other.myVisualDebugCeilingInfoActive;
+        this.myVisualDebugResultsActive = other.myVisualDebugResultsActive;
       };
       Object.defineProperty(PP.CharacterColliderSetup.prototype, "copy", { enumerable: false });
       Object.defineProperty(PP.CharacterColliderHorizontalCheckSetup.prototype, "copy", { enumerable: false });
@@ -24101,7 +25550,7 @@
           outCharacterColliderSetup.myCeilingSetup.myIsBaseInsideCollisionCheckEnabled = true;
           let fps = 90;
           if (simplifiedCreationParams.myAverageSpeed / fps > simplifiedCreationParams.myRadius) {
-            outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementEnabled = other.mySplitMovementEnabled;
+            outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementEnabled = true;
             outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementMaxSteps = Math.ceil(simplifiedCreationParams.myAverageSpeed / fps / simplifiedCreationParams.myRadius);
             outCharacterColliderSetup.mySplitMovementSetup.mySplitMovementMinStepLength = simplifiedCreationParams.myRadius;
           }
@@ -24151,7 +25600,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionCheckType = {
@@ -24176,7 +25625,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionWallSlideResults = class CharacterCollisionWallSlideResults {
@@ -24188,7 +25637,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionTransformResults = class CharacterCollisionMovementResults {
@@ -24198,7 +25647,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionMovementResults = class CharacterCollisionMovementResults {
@@ -24211,7 +25660,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionTeleportResults = class CharacterCollisionTeleportResults {
@@ -24222,7 +25671,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionCheckTransformResults = class CharacterCollisionCheckTransformResults {
@@ -24233,7 +25682,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionSurfaceResults = class CharacterCollisionCheckTransformResults {
@@ -24246,7 +25695,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionSplitMovementResults = class CharacterCollisionSplitMovementResults {
@@ -24258,7 +25707,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionDebugResults = class CharacterCollisionDebugResults {
@@ -24267,7 +25716,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionInternalResults = class CharacterCollisionSplitMovementResults {
@@ -24287,7 +25736,7 @@
         }
         reset() {
         }
-        copy(other2) {
+        copy(other) {
         }
       };
       PP.CharacterCollisionResults.prototype.reset = function() {
@@ -24306,21 +25755,21 @@
         this.mySplitMovementResults.reset();
         this.myInternalResults.reset();
       };
-      PP.CharacterCollisionResults.prototype.copy = function(other2) {
-        this.myCheckType = other2.myCheckType;
-        this.myTransformResults.copy(other2.myTransformResults);
-        this.myMovementResults.copy(other2.myMovementResults);
-        this.myHorizontalMovementResults.copy(other2.myHorizontalMovementResults);
-        this.myVerticalMovementResults.copy(other2.myVerticalMovementResults);
-        this.myTeleportResults.copy(other2.myTeleportResults);
-        this.myCheckTransformResults.copy(other2.myCheckTransformResults);
-        this.myWallSlideResults.copy(other2.myWallSlideResults);
-        this.myGroundInfo.copy(other2.myGroundInfo);
-        this.myCeilingInfo.copy(other2.myCeilingInfo);
-        this.myGroundResults.copy(other2.myGroundResults);
-        this.myCeilingResults.copy(other2.myCeilingResults);
-        this.mySplitMovementResults.copy(other2.mySplitMovementResults);
-        this.myInternalResults.copy(other2.myInternalResults);
+      PP.CharacterCollisionResults.prototype.copy = function(other) {
+        this.myCheckType = other.myCheckType;
+        this.myTransformResults.copy(other.myTransformResults);
+        this.myMovementResults.copy(other.myMovementResults);
+        this.myHorizontalMovementResults.copy(other.myHorizontalMovementResults);
+        this.myVerticalMovementResults.copy(other.myVerticalMovementResults);
+        this.myTeleportResults.copy(other.myTeleportResults);
+        this.myCheckTransformResults.copy(other.myCheckTransformResults);
+        this.myWallSlideResults.copy(other.myWallSlideResults);
+        this.myGroundInfo.copy(other.myGroundInfo);
+        this.myCeilingInfo.copy(other.myCeilingInfo);
+        this.myGroundResults.copy(other.myGroundResults);
+        this.myCeilingResults.copy(other.myCeilingResults);
+        this.mySplitMovementResults.copy(other.mySplitMovementResults);
+        this.myInternalResults.copy(other.myInternalResults);
       };
       PP.CharacterCollisionSurfaceInfo.prototype.reset = function() {
         this.myIsOnSurface = false;
@@ -24332,15 +25781,15 @@
         this.mySurfaceDistance = null;
         this.myIsBaseInsideCollision = false;
       };
-      PP.CharacterCollisionSurfaceInfo.prototype.copy = function(other2) {
-        this.myIsOnSurface = other2.myIsOnSurface;
-        this.mySurfaceAngle = other2.mySurfaceAngle;
-        this.mySurfacePerceivedAngle = other2.mySurfacePerceivedAngle;
-        this.mySurfaceNormal.vec3_copy(other2.mySurfaceNormal);
-        this.mySurfaceHitMaxAngle = other2.mySurfaceHitMaxAngle;
-        this.mySurfaceHitMaxNormal.vec3_copy(other2.mySurfaceHitMaxNormal);
-        this.mySurfaceDistance = other2.mySurfaceDistance;
-        this.myIsBaseInsideCollision = other2.myIsBaseInsideCollision;
+      PP.CharacterCollisionSurfaceInfo.prototype.copy = function(other) {
+        this.myIsOnSurface = other.myIsOnSurface;
+        this.mySurfaceAngle = other.mySurfaceAngle;
+        this.mySurfacePerceivedAngle = other.mySurfacePerceivedAngle;
+        this.mySurfaceNormal.vec3_copy(other.mySurfaceNormal);
+        this.mySurfaceHitMaxAngle = other.mySurfaceHitMaxAngle;
+        this.mySurfaceHitMaxNormal.vec3_copy(other.mySurfaceHitMaxNormal);
+        this.mySurfaceDistance = other.mySurfaceDistance;
+        this.myIsBaseInsideCollision = other.myIsBaseInsideCollision;
       };
       PP.CharacterCollisionWallSlideResults.prototype.reset = function() {
         this.myHasSlid = false;
@@ -24348,19 +25797,19 @@
         this.mySlideMovementWallAngle = 0;
         this.myWallNormal.vec3_zero();
       };
-      PP.CharacterCollisionWallSlideResults.prototype.copy = function(other2) {
-        this.myHasSlid = other2.myHasSlid;
-        this.mySlideMovementAngle = other2.mySlideMovementAngle;
-        this.mySlideMovementWallAngle = other2.mySlideMovementWallAngle;
-        this.myWallNormal.vec3_copy(other2.myWallNormal);
+      PP.CharacterCollisionWallSlideResults.prototype.copy = function(other) {
+        this.myHasSlid = other.myHasSlid;
+        this.mySlideMovementAngle = other.mySlideMovementAngle;
+        this.mySlideMovementWallAngle = other.mySlideMovementWallAngle;
+        this.myWallNormal.vec3_copy(other.myWallNormal);
       };
       PP.CharacterCollisionTransformResults.prototype.reset = function() {
         this.myStartTransformQuat.quat2_identity();
         this.myEndTransformQuat.quat2_identity();
       };
-      PP.CharacterCollisionTransformResults.prototype.copy = function(other2) {
-        this.myStartTransformQuat.quat2_copy(other2.myStartTransformQuat);
-        this.myEndTransformQuat.quat2_copy(other2.myEndTransformQuat);
+      PP.CharacterCollisionTransformResults.prototype.copy = function(other) {
+        this.myStartTransformQuat.quat2_copy(other.myStartTransformQuat);
+        this.myEndTransformQuat.quat2_copy(other.myEndTransformQuat);
       };
       PP.CharacterCollisionMovementResults.prototype.reset = function() {
         this.myStartMovement.vec3_zero();
@@ -24369,32 +25818,32 @@
         this.myIsColliding = false;
         this.myReferenceCollisionHit.reset();
       };
-      PP.CharacterCollisionMovementResults.prototype.copy = function(other2) {
-        this.myStartMovement.vec3_copy(other2.myStartMovement);
-        this.myEndMovement.vec3_copy(other2.myEndMovement);
-        this.myMovementFailed = other2.myMovementFailed;
-        this.myIsColliding = other2.myIsColliding;
-        this.myReferenceCollisionHit.copy(other2.myReferenceCollisionHit);
+      PP.CharacterCollisionMovementResults.prototype.copy = function(other) {
+        this.myStartMovement.vec3_copy(other.myStartMovement);
+        this.myEndMovement.vec3_copy(other.myEndMovement);
+        this.myMovementFailed = other.myMovementFailed;
+        this.myIsColliding = other.myIsColliding;
+        this.myReferenceCollisionHit.copy(other.myReferenceCollisionHit);
       };
       PP.CharacterCollisionTeleportResults.prototype.reset = function() {
         this.myStartTeleportTransformQuat.quat2_identity();
         this.myEndTeleportTransformQuat.quat2_identity();
         this.myTeleportFailed = false;
       };
-      PP.CharacterCollisionTeleportResults.prototype.copy = function(other2) {
-        this.myStartTeleportTransformQuat.quat2_copy(other2.myStartTeleportTransformQuat);
-        this.myEndTeleportTransformQuat.quat2_copy(other2.myEndTeleportTransformQuat);
-        this.myTeleportFailed = other2.myTeleportFailed;
+      PP.CharacterCollisionTeleportResults.prototype.copy = function(other) {
+        this.myStartTeleportTransformQuat.quat2_copy(other.myStartTeleportTransformQuat);
+        this.myEndTeleportTransformQuat.quat2_copy(other.myEndTeleportTransformQuat);
+        this.myTeleportFailed = other.myTeleportFailed;
       };
       PP.CharacterCollisionCheckTransformResults.prototype.reset = function() {
         this.myStartCheckTransformQuat.quat2_identity();
         this.myEndCheckTransformQuat.quat2_identity();
         this.myCheckTransformFailed = false;
       };
-      PP.CharacterCollisionCheckTransformResults.prototype.copy = function(other2) {
-        this.myStartCheckTransformQuat.quat2_copy(other2.myStartCheckTransformQuat);
-        this.myEndCheckTransformQuat.quat2_copy(other2.myEndCheckTransformQuat);
-        this.myCheckTransformFailed = other2.myCheckTransformFailed;
+      PP.CharacterCollisionCheckTransformResults.prototype.copy = function(other) {
+        this.myStartCheckTransformQuat.quat2_copy(other.myStartCheckTransformQuat);
+        this.myEndCheckTransformQuat.quat2_copy(other.myEndCheckTransformQuat);
+        this.myCheckTransformFailed = other.myCheckTransformFailed;
       };
       PP.CharacterCollisionSurfaceResults.prototype.reset = function() {
         this.myHasSnappedOnSurface = false;
@@ -24403,12 +25852,12 @@
         this.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleUphill = false;
         this.myHasVerticalMovementAdjustedHorizontalMovementBasedOnSurfaceAngleDownhill = false;
       };
-      PP.CharacterCollisionSurfaceResults.prototype.copy = function(other2) {
-        this.myHasSnappedOnSurface = other2.myHasSnappedOnSurface;
-        this.myHasPoppedOutSurface = other2.myHasPoppedOutSurface;
-        this.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleDownhill = other2.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleDownhill;
-        this.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleUphill = other2.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleUphill;
-        this.myHasVerticalMovementAdjustedHorizontalMovementBasedOnSurfaceAngleDownhill = other2.myHasVerticalMovementAdjustedHorizontalMovementBasedOnSurfaceAngleDownhill;
+      PP.CharacterCollisionSurfaceResults.prototype.copy = function(other) {
+        this.myHasSnappedOnSurface = other.myHasSnappedOnSurface;
+        this.myHasPoppedOutSurface = other.myHasPoppedOutSurface;
+        this.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleDownhill = other.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleDownhill;
+        this.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleUphill = other.myHasHorizontalMovementAdjustedVerticalMovementBasedOnSurfacePerceivedAngleUphill;
+        this.myHasVerticalMovementAdjustedHorizontalMovementBasedOnSurfaceAngleDownhill = other.myHasVerticalMovementAdjustedHorizontalMovementBasedOnSurfaceAngleDownhill;
       };
       PP.CharacterCollisionSplitMovementResults.prototype.reset = function() {
         this.myStepsToPerform = 0;
@@ -24416,33 +25865,33 @@
         this.myMovementInterrupted = false;
         this.myMovementChecked.vec3_zero();
       };
-      PP.CharacterCollisionSplitMovementResults.prototype.copy = function(other2) {
-        this.myStepsToPerform = other2.myStepsToPerform;
-        this.myStepsPerformed = other2.myStepsPerformed;
-        this.myMovementInterrupted = other2.myMovementInterrupted;
-        this.myMovementChecked.vec3_copy(other2.myMovementChecked);
+      PP.CharacterCollisionSplitMovementResults.prototype.copy = function(other) {
+        this.myStepsToPerform = other.myStepsToPerform;
+        this.myStepsPerformed = other.myStepsPerformed;
+        this.myMovementInterrupted = other.myMovementInterrupted;
+        this.myMovementChecked.vec3_copy(other.myMovementChecked);
       };
       PP.CharacterCollisionDebugResults.prototype.reset = function() {
         this._myRaycastsPerformed = 0;
       };
-      PP.CharacterCollisionDebugResults.prototype.copy = function(other2) {
-        this._myRaycastsPerformed = other2._myRaycastsPerformed;
+      PP.CharacterCollisionDebugResults.prototype.copy = function(other) {
+        this._myRaycastsPerformed = other._myRaycastsPerformed;
       };
       PP.CharacterCollisionInternalResults.prototype.reset = function() {
       };
-      PP.CharacterCollisionInternalResults.prototype.copy = function(other2) {
-        this.myLastRelevantStartHorizontalMovement.vec3_copy(other2.myLastRelevantStartHorizontalMovement);
-        this.myLastRelevantAdjustedStartHorizontalMovement.vec3_copy(other2.myLastRelevantAdjustedStartHorizontalMovement);
-        this.myLastRelevantEndHorizontalMovement.vec3_copy(other2.myLastRelevantEndHorizontalMovement);
-        this.myLastRelevantStartVerticalMovement.vec3_copy(other2.myLastRelevantStartVerticalMovement);
-        this.myLastRelevantAdjustedStartVerticalMovement.vec3_copy(other2.myLastRelevantAdjustedStartVerticalMovement);
-        this.myLastRelevantEndVerticalMovement.vec3_copy(other2.myLastRelevantEndVerticalMovement);
-        this.myLastRelevantHasWallSlid = other2.myLastRelevantHasWallSlid;
-        this.myHasWallSlidTowardOppositeDirection = other2.myHasWallSlidTowardOppositeDirection;
-        this.myLastRelevantWallSlideFlickerPrevented = other2.myLastRelevantWallSlideFlickerPrevented;
-        this.myWallSlideFlickerPreventionForceCheckCounter = other2.myWallSlideFlickerPreventionForceCheckCounter;
-        this.myWallSlide90DegreesDirectionSign = other2.myWallSlide90DegreesDirectionSign;
-        this.myWallSlide90DegreesRecomputeDirectionSign = other2.myWallSlide90DegreesRecomputeDirectionSign;
+      PP.CharacterCollisionInternalResults.prototype.copy = function(other) {
+        this.myLastRelevantStartHorizontalMovement.vec3_copy(other.myLastRelevantStartHorizontalMovement);
+        this.myLastRelevantAdjustedStartHorizontalMovement.vec3_copy(other.myLastRelevantAdjustedStartHorizontalMovement);
+        this.myLastRelevantEndHorizontalMovement.vec3_copy(other.myLastRelevantEndHorizontalMovement);
+        this.myLastRelevantStartVerticalMovement.vec3_copy(other.myLastRelevantStartVerticalMovement);
+        this.myLastRelevantAdjustedStartVerticalMovement.vec3_copy(other.myLastRelevantAdjustedStartVerticalMovement);
+        this.myLastRelevantEndVerticalMovement.vec3_copy(other.myLastRelevantEndVerticalMovement);
+        this.myLastRelevantHasWallSlid = other.myLastRelevantHasWallSlid;
+        this.myHasWallSlidTowardOppositeDirection = other.myHasWallSlidTowardOppositeDirection;
+        this.myLastRelevantWallSlideFlickerPrevented = other.myLastRelevantWallSlideFlickerPrevented;
+        this.myWallSlideFlickerPreventionForceCheckCounter = other.myWallSlideFlickerPreventionForceCheckCounter;
+        this.myWallSlide90DegreesDirectionSign = other.myWallSlide90DegreesDirectionSign;
+        this.myWallSlide90DegreesRecomputeDirectionSign = other.myWallSlide90DegreesRecomputeDirectionSign;
       };
       Object.defineProperty(PP.CharacterCollisionResults.prototype, "reset", { enumerable: false });
       Object.defineProperty(PP.CharacterCollisionTransformResults.prototype, "reset", { enumerable: false });
@@ -24481,17 +25930,17 @@
           this._myCurrentFrameRaycastsPerformed = 0;
           PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts = 0;
         }
-        checkMovement(movement, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
-          PP.CollisionCheckBridge.checkMovement(movement, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+        checkMovement(movement, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          PP.CollisionCheckBridge.checkMovement(movement, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
           this._myLastCheckRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts - this._myCurrentFrameRaycastsPerformed;
           this._myCurrentFrameRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts;
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
           outCharacterCollisionResults.myDebugResults._myRaycastsPerformed = this._myLastCheckRaycastsPerformed;
         }
-        checkTeleportToPosition(teleportPosition, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+        checkTeleportToPosition(teleportPosition, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
         }
-        checkTeleportToTransform(teleportTransformQuat, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
-          PP.CollisionCheckBridge.checkTeleportToTransform(teleportTransformQuat, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+        checkTeleportToTransform(teleportTransformQuat, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          PP.CollisionCheckBridge.checkTeleportToTransform(teleportTransformQuat, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
           this._myLastCheckRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts - this._myCurrentFrameRaycastsPerformed;
           this._myCurrentFrameRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts;
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
@@ -24504,24 +25953,24 @@
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
           outCharacterCollisionResults.myDebugResults._myRaycastsPerformed = this._myLastCheckRaycastsPerformed;
         }
-        updateSurfaceInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+        updateSurfaceInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
           let currentFramePerformedRaycasts = this._myCurrentFrameRaycastsPerformed;
-          this.updateGroundInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
-          this.updateCeilingInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+          this.updateGroundInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+          this.updateCeilingInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
           this._myLastCheckRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts - currentFramePerformedRaycasts;
           this._myCurrentFrameRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts;
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
           outCharacterCollisionResults.myDebugResults._myRaycastsPerformed = this._myLastCheckRaycastsPerformed;
         }
-        updateGroundInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
-          PP.CollisionCheckBridge.updateGroundInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+        updateGroundInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          PP.CollisionCheckBridge.updateGroundInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
           this._myLastCheckRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts - this._myCurrentFrameRaycastsPerformed;
           this._myCurrentFrameRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts;
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
           outCharacterCollisionResults.myDebugResults._myRaycastsPerformed = this._myLastCheckRaycastsPerformed;
         }
-        updateCeilingInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
-          PP.CollisionCheckBridge.updateCeilingInfo(currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+        updateCeilingInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults = new PP.CharacterCollisionResults()) {
+          PP.CollisionCheckBridge.updateCeilingInfo(currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
           this._myLastCheckRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts - this._myCurrentFrameRaycastsPerformed;
           this._myCurrentFrameRaycastsPerformed = PP.CollisionCheckBridge._myCollisionCheck._myTotalRaycasts;
           this._myMaxFrameRaycastsPerformed = Math.max(this._myCurrentFrameRaycastsPerformed, this._myMaxFrameRaycastsPerformed);
@@ -24530,10 +25979,10 @@
       };
       PP.CharacterCollisionSystem.prototype.checkTeleportToPosition = function() {
         let teleportTransformQuat = PP.quat2_create();
-        return function checkTeleportToPosition(teleportPosition, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults) {
-          teleportTransformQuat.quat2_copy(currentTransformQuat2);
+        return function checkTeleportToPosition(teleportPosition, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults) {
+          teleportTransformQuat.quat2_copy(currentTransformQuat);
           teleportTransformQuat.quat2_setPosition(teleportPosition);
-          this.checkTeleportToTransform(teleportTransformQuat, currentTransformQuat2, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
+          this.checkTeleportToTransform(teleportTransformQuat, currentTransformQuat, characterColliderSetup, prevCharacterCollisionResults, outCharacterCollisionResults);
         };
       }();
       Object.defineProperty(PP.CharacterCollisionSystem.prototype, "checkTeleportToPosition", { enumerable: false });
@@ -24542,11 +25991,12 @@
 
   // js/pp/gameplay/character_controller/collision/components/character_collision_system_component.js
   var character_collision_system_component_exports = {};
-  var _a4;
   var init_character_collision_system_component = __esm({
     "js/pp/gameplay/character_controller/collision/components/character_collision_system_component.js"() {
       init_api();
-      PP.CharacterCollisionSystemComponent = (_a4 = class extends Component {
+      PP.CharacterCollisionSystemComponent = class CharacterCollisionSystemComponent extends Component {
+        static TypeName = "pp-character-collision-system";
+        static Properties = {};
         init() {
           PP.myCharacterCollisionSystem = new PP.CharacterCollisionSystem();
         }
@@ -24555,7 +26005,7 @@
         update(dt) {
           PP.myCharacterCollisionSystem.update(dt);
         }
-      }, __publicField(_a4, "TypeName", "pp-character-collision-system"), __publicField(_a4, "Properties", {}), _a4);
+      };
       WL.registerComponent(PP.CharacterCollisionSystemComponent);
       PP.myCharacterCollisionSystem = null;
     }
@@ -24629,11 +26079,12 @@
 
   // js/pp/gameplay/character_controller/components/character_controller_component.js
   var character_controller_component_exports = {};
-  var _a5;
   var init_character_controller_component = __esm({
     "js/pp/gameplay/character_controller/components/character_controller_component.js"() {
       init_api();
-      PP.CharacterControllerComponent = (_a5 = class extends Component {
+      PP.CharacterControllerComponent = class CharacterControllerComponent extends Component {
+        static TypeName = "pp-character-controller";
+        static Properties = {};
         init() {
         }
         start() {
@@ -24645,7 +26096,7 @@
         getCharacterController() {
           return this._myCharacterController;
         }
-      }, __publicField(_a5, "TypeName", "pp-character-controller"), __publicField(_a5, "Properties", {}), _a5);
+      };
       WL.registerComponent(PP.CharacterControllerComponent);
     }
   });
@@ -24685,11 +26136,12 @@
 
   // js/pp/gameplay/character_controller/player/components/player_character_controller_component.js
   var player_character_controller_component_exports = {};
-  var _a6;
   var init_player_character_controller_component = __esm({
     "js/pp/gameplay/character_controller/player/components/player_character_controller_component.js"() {
       init_api();
-      PP.PlayerCharacterControllerComponent = (_a6 = class extends Component {
+      PP.PlayerCharacterControllerComponent = class PlayerCharacterControllerComponent extends Component {
+        static TypeName = "pp-player-character-controller";
+        static Properties = {};
         init() {
         }
         start() {
@@ -24701,18 +26153,19 @@
         getPlayerCharacterController() {
           return this._myPlayerCharacterController;
         }
-      }, __publicField(_a6, "TypeName", "pp-player-character-controller"), __publicField(_a6, "Properties", {}), _a6);
+      };
       WL.registerComponent(PP.PlayerCharacterControllerComponent);
     }
   });
 
   // js/pp/gameplay/character_controller/player/components/player_head_character_controller_component.js
   var player_head_character_controller_component_exports = {};
-  var _a7;
   var init_player_head_character_controller_component = __esm({
     "js/pp/gameplay/character_controller/player/components/player_head_character_controller_component.js"() {
       init_api();
-      PP.PlayerHeadCharacterControllerComponent = (_a7 = class extends Component {
+      PP.PlayerHeadCharacterControllerComponent = class PlayerHeadCharacterControllerComponent extends Component {
+        static TypeName = "pp-player-head-character-controller";
+        static Properties = {};
         init() {
         }
         start() {
@@ -24724,18 +26177,19 @@
         getPlayerHeadCharacterController() {
           return this._myPlayerHeadCharacterController;
         }
-      }, __publicField(_a7, "TypeName", "pp-player-head-character-controller"), __publicField(_a7, "Properties", {}), _a7);
+      };
       WL.registerComponent(PP.PlayerHeadCharacterControllerComponent);
     }
   });
 
   // js/pp/gameplay/character_controller/player/components/player_hand_character_controller_component.js
   var player_hand_character_controller_component_exports = {};
-  var _a8;
   var init_player_hand_character_controller_component = __esm({
     "js/pp/gameplay/character_controller/player/components/player_hand_character_controller_component.js"() {
       init_api();
-      PP.PlayerHandCharacterControllerComponent = (_a8 = class extends Component {
+      PP.PlayerHandCharacterControllerComponent = class PlayerHandCharacterControllerComponent extends Component {
+        static TypeName = "pp-player-hand-character-controller";
+        static Properties = {};
         init() {
         }
         start() {
@@ -24747,7 +26201,7 @@
         getPlayerHandCharacterController() {
           return this._myPlayerHandCharacterController;
         }
-      }, __publicField(_a8, "TypeName", "pp-player-hand-character-controller"), __publicField(_a8, "Properties", {}), _a8);
+      };
       WL.registerComponent(PP.PlayerHandCharacterControllerComponent);
     }
   });
@@ -24896,16 +26350,24 @@
       WL.registerComponent("pp-grabber-hand", {
         _myHandedness: { type: WL.Type.Enum, values: ["left", "right"], default: "left" },
         _myGrabButton: { type: WL.Type.Enum, values: ["select", "squeeze", "both", "both_exclusive"], default: "squeeze" },
+        // both_exclusive means u can use both buttons but you have to use the same button you grabbed with to throw
         _mySnapOnPivot: { type: WL.Type.Bool, default: false },
         _myMaxNumberOfObjects: { type: WL.Type.Int, default: 1 },
+        // how many objects you can grab at the same time
+        // ADVANCED SETTINGS
         _myThrowVelocitySource: { type: WL.Type.Enum, values: ["hand", "grabbable"], default: "hand" },
         _myThrowLinearVelocityMultiplier: { type: WL.Type.Float, default: 1 },
+        // multiply the overall throw speed, so slow throws will be multiplied too
         _myThrowMaxLinearSpeed: { type: WL.Type.Float, default: 15 },
         _myThrowAngularVelocityMultiplier: { type: WL.Type.Float, default: 0.5 },
         _myThrowMaxAngularSpeed: { type: WL.Type.Float, default: 1080 },
+        // degrees
         _myThrowLinearVelocityBoost: { type: WL.Type.Float, default: 1.75 },
+        // this boost is applied from 0% to 100% based on how fast you throw, so slow throws are not affected
         _myThrowLinearVelocityBoostMinSpeedThreshold: { type: WL.Type.Float, default: 0.6 },
+        // 0% boost is applied if plain throw speed is under this value
         _myThrowLinearVelocityBoostMaxSpeedThreshold: { type: WL.Type.Float, default: 2.5 }
+        // 100% boost is applied if plain throw speed is over this value
       }, {
         init: function() {
           this._myGrabbables = [];
@@ -25087,16 +26549,20 @@
         },
         _updateLinearVelocityHistory() {
           let handPose = this._myGamepad.getHandPose();
-          this._myHandLinearVelocityHistory.unshift(handPose.getLinearVelocity().pp_clone());
-          this._myHandLinearVelocityHistory.pop();
+          if (handPose) {
+            this._myHandLinearVelocityHistory.unshift(handPose.getLinearVelocity().pp_clone());
+            this._myHandLinearVelocityHistory.pop();
+          }
           for (let grabbable of this._myGrabbables) {
             grabbable.updateLinearVelocityHistory();
           }
         },
         _updateAngularVelocityHistory() {
           let handPose = this._myGamepad.getHandPose();
-          this._myHandAngularVelocityHistory.unshift(handPose.getAngularVelocityRadians().pp_clone());
-          this._myHandAngularVelocityHistory.pop();
+          if (handPose) {
+            this._myHandAngularVelocityHistory.unshift(handPose.getAngularVelocityRadians().pp_clone());
+            this._myHandAngularVelocityHistory.pop();
+          }
           for (let grabbable of this._myGrabbables) {
             grabbable.updateAngularVelocityHistory();
           }
@@ -25151,7 +26617,7 @@
             }
             direction.vec3_normalize(direction);
             let color = 1 / j;
-            PP.myDebugVisualManager.drawLine(5, this.object.pp_getPosition(), direction, 0.2, PP.vec4_create(olor, color, color, 1));
+            PP.myDebugVisualManager.drawLine(5, this.object.pp_getPosition(), direction, 0.2, PP.vec4_create(color, color, color, 1));
           }
         },
         _isAlreadyGrabbed(grabbable) {
@@ -25197,14 +26663,15 @@
 
   // js/pp/gameplay/locomotion/components/global_gravity.js
   var global_gravity_exports = {};
-  var _a9;
   var init_global_gravity = __esm({
     "js/pp/gameplay/locomotion/components/global_gravity.js"() {
       init_api();
-      PP.GlobalGravityComponent = (_a9 = class extends Component {
+      PP.GlobalGravityComponent = class GlobalGravityComponent extends Component {
+        static TypeName = "pp-global-gravity";
+        static Properties = {};
         init() {
         }
-      }, __publicField(_a9, "TypeName", "pp-global-gravity"), __publicField(_a9, "Properties", {}), _a9);
+      };
       WL.registerComponent(PP.GlobalGravityComponent);
       PP.myGravityAcceleration = 0;
       PP.myGravityDirection = PP.vec3_create();
@@ -25253,11 +26720,12 @@
 
   // js/pp/gameplay/locomotion/player/components/player_locomotion_teleport_component.js
   var player_locomotion_teleport_component_exports = {};
-  var _a10;
   var init_player_locomotion_teleport_component = __esm({
     "js/pp/gameplay/locomotion/player/components/player_locomotion_teleport_component.js"() {
       init_api();
-      PP.PlayerLocomotionTeleportComponent = (_a10 = class extends Component {
+      PP.PlayerLocomotionTeleportComponent = class PlayerLocomotionTeleportComponent extends Component {
+        static TypeName = "pp-player-locomotion-teleport";
+        static Properties = {};
         init() {
         }
         start() {
@@ -25269,18 +26737,19 @@
         getPlayerLocomotionTeleport() {
           return this._myPlayerLocomotionTeleport;
         }
-      }, __publicField(_a10, "TypeName", "pp-player-locomotion-teleport"), __publicField(_a10, "Properties", {}), _a10);
+      };
       WL.registerComponent(PP.PlayerLocomotionTeleportComponent);
     }
   });
 
   // js/pp/gameplay/locomotion/player/components/player_locomotion_smooth_component.js
   var player_locomotion_smooth_component_exports = {};
-  var _a11;
   var init_player_locomotion_smooth_component = __esm({
     "js/pp/gameplay/locomotion/player/components/player_locomotion_smooth_component.js"() {
       init_api();
-      PP.PlayerLocomotionSmoothComponent = (_a11 = class extends Component {
+      PP.PlayerLocomotionSmoothComponent = class PlayerLocomotionSmoothComponent extends Component {
+        static TypeName = "pp-player-locomotion-smooth";
+        static Properties = {};
         init() {
         }
         start() {
@@ -25292,18 +26761,19 @@
         getPlayerLocomotionSmooth() {
           return this._myPlayerLocomotionSmooth;
         }
-      }, __publicField(_a11, "TypeName", "pp-player-locomotion-smooth"), __publicField(_a11, "Properties", {}), _a11);
+      };
       WL.registerComponent(PP.PlayerLocomotionSmoothComponent);
     }
   });
 
   // js/pp/gameplay/locomotion/player/components/player_locomotion_rotate_component.js
   var player_locomotion_rotate_component_exports = {};
-  var _a12;
   var init_player_locomotion_rotate_component = __esm({
     "js/pp/gameplay/locomotion/player/components/player_locomotion_rotate_component.js"() {
       init_api();
-      PP.PlayerLocomotionRotateComponent = (_a12 = class extends Component {
+      PP.PlayerLocomotionRotateComponent = class PlayerLocomotionRotateComponent extends Component {
+        static TypeName = "pp-player-locomotion-rotate";
+        static Properties = {};
         init() {
         }
         start() {
@@ -25315,18 +26785,19 @@
         getPlayerLocomotionRotate() {
           return this._myPlayerLocomotionRotate;
         }
-      }, __publicField(_a12, "TypeName", "pp-player-locomotion-rotate"), __publicField(_a12, "Properties", {}), _a12);
+      };
       WL.registerComponent(PP.PlayerLocomotionRotateComponent);
     }
   });
 
   // js/pp/gameplay/locomotion/player/components/player_locomotion_gravity_component.js
   var player_locomotion_gravity_component_exports = {};
-  var _a13;
   var init_player_locomotion_gravity_component = __esm({
     "js/pp/gameplay/locomotion/player/components/player_locomotion_gravity_component.js"() {
       init_api();
-      PP.PlayerLocomotionGravityComponent = (_a13 = class extends Component {
+      PP.PlayerLocomotionGravityComponent = class PlayerLocomotionGravityComponent extends Component {
+        static TypeName = "pp-player-locomotion-gravity";
+        static Properties = {};
         init() {
         }
         start() {
@@ -25338,7 +26809,7 @@
         getPlayerLocomotionGravity() {
           return this._myPlayerLocomotionGravity;
         }
-      }, __publicField(_a13, "TypeName", "pp-player-locomotion-gravity"), __publicField(_a13, "Properties", {}), _a13);
+      };
       WL.registerComponent(PP.PlayerLocomotionGravityComponent);
     }
   });
@@ -25369,291 +26840,348 @@
           return PP.CAUtils._myDummyServer;
         },
         isSDKAvailable: function() {
-          return "casdk" in window;
+          return window.heyVR != null;
         },
-        getLeaderboard: function(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
+        getSDK: function() {
+          return window.heyVR;
+        },
+        getLeaderboard: function(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback = null, onErrorCallback = null, useDummyServerOverride = null) {
           if (PP.CAUtils.isSDKAvailable()) {
-            if (!isAroundPlayer) {
-              try {
-                casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result) {
-                  if (result.leaderboard) {
-                    if (callbackOnDone) {
-                      callbackOnDone(result.leaderboard);
+            try {
+              PP.CAUtils._getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount).then(function(result) {
+                if (result.leaderboard != null) {
+                  if (!aroundPlayer) {
+                    if (onDoneCallback != null) {
+                      onDoneCallback(result.leaderboard);
                     }
                   } else {
-                    if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                      PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                    } else if (callbackOnError) {
-                      let error = {};
-                      error.reason = "Get leaderboard failed";
-                      error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                      callbackOnError(error, result);
-                    }
-                  }
-                }).catch(function(result) {
-                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                    PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                  } else if (callbackOnError) {
-                    let error = {};
-                    error.reason = "Get leaderboard failed";
-                    error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                    callbackOnError(error, result);
-                  }
-                });
-              } catch (error) {
-                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                  PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                } else if (callbackOnError) {
-                  let error2 = {};
-                  error2.reason = "Get leaderboard failed";
-                  error2.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                  callbackOnError(error2, null);
-                }
-              }
-            } else {
-              PP.CAUtils.getUser(
-                function(user) {
-                  let userName = user.displayName;
-                  try {
-                    casdk.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount).then(function(result) {
-                      if (result.leaderboard) {
+                    let userLeaderboard = result.leaderboard;
+                    PP.CAUtils.getUser(
+                      function(user) {
+                        let userName = user.displayName;
                         let userValid = false;
-                        for (let value of result.leaderboard) {
-                          if (value.displayName == userName && value.score != 0) {
+                        for (let userLeaderboardEntry of userLeaderboard) {
+                          if (userLeaderboardEntry.displayName == userName) {
                             userValid = true;
                             break;
                           }
                         }
                         if (userValid) {
-                          if (callbackOnDone) {
-                            callbackOnDone(result.leaderboard);
+                          if (onDoneCallback != null) {
+                            onDoneCallback(userLeaderboard);
                           }
                         } else {
-                          if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                            PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                          } else if (callbackOnError) {
+                          if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                            PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.USER_HAS_NO_SCORE);
+                          } else if (onErrorCallback != null) {
                             let error = {};
                             error.reason = "Searching for around player but the user has not submitted a score yet";
-                            error.type = PP.CAUtils.ErrorType.USER_HAS_NO_SCORE;
-                            callbackOnError(error, result);
+                            error.type = PP.CAUtils.CAError.USER_HAS_NO_SCORE;
+                            onErrorCallback(error, null);
                           }
                         }
-                      } else {
-                        if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                          PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                        } else if (callbackOnError) {
-                          let error = {};
-                          error.reason = "Get leaderboard failed";
-                          error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                          callbackOnError(error, result);
+                      },
+                      function(error, result2) {
+                        if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                          PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, error.type);
+                        } else if (onErrorCallback != null) {
+                          onErrorCallback(error, result2);
                         }
-                      }
-                    }).catch(function(result) {
-                      if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                        PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                      } else if (callbackOnError) {
-                        let error = {};
-                        error.reason = "Get leaderboard failed";
-                        error.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                        callbackOnError(error, result);
-                      }
-                    });
-                  } catch (error) {
-                    if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                      PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                    } else if (callbackOnError) {
-                      let error2 = {};
-                      error2.reason = "Get leaderboard failed";
-                      error2.type = PP.CAUtils.ErrorType.GET_LEADERBOARD_FAILED;
-                      callbackOnError(error2, null);
-                    }
+                      },
+                      false
+                    );
                   }
-                },
-                function() {
-                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                    PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-                  } else if (callbackOnError) {
+                } else {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                    PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_LEADERBOARD_FAILED);
+                  } else if (onErrorCallback != null) {
                     let error = {};
-                    error.reason = "Searching for around player but the user can't be retrieved";
-                    error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                    callbackOnError(error, null);
+                    error.reason = "Get leaderboard failed";
+                    error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
+                    onErrorCallback(error, result);
                   }
-                },
-                false
-              );
+                }
+              }).catch(function(result) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                  PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_LEADERBOARD_FAILED);
+                } else if (onErrorCallback != null) {
+                  let error = {};
+                  error.reason = "Get leaderboard failed";
+                  error.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
+                  onErrorCallback(error, result);
+                }
+              });
+            } catch (error) {
+              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_LEADERBOARD_FAILED);
+              } else if (onErrorCallback != null) {
+                let error2 = {};
+                error2.reason = "Get leaderboard failed";
+                error2.type = PP.CAUtils.CAError.GET_LEADERBOARD_FAILED;
+                onErrorCallback(error2, null);
+              }
             }
           } else {
-            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-              PP.CAUtils.getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
-            } else if (callbackOnError) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getLeaderboard != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+              PP.CAUtils.getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.CA_SDK_MISSING);
+            } else if (onErrorCallback != null) {
               let error = {};
               error.reason = "Construct Arcade SDK missing";
-              error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
+              onErrorCallback(error, null);
             }
           }
         },
-        getLeaderboardDummy(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError) {
+        getLeaderboardDummy(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           if (PP.CAUtils._myDummyServer) {
-            PP.CAUtils._myDummyServer.getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError);
+            PP.CAUtils._myDummyServer.getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback, onErrorCallback, caError);
           } else {
-            if (callbackOnError) {
+            if (onErrorCallback != null) {
               let error = {};
               error.reason = "Dummy server not initialized";
-              error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
+              onErrorCallback(error, null);
             }
           }
         },
-        submitScore: function(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
+        submitScore(leaderboardID, scoreToSubmit, onDoneCallback = null, onErrorCallback = null, useDummyServerOverride = null) {
           if (PP.CAUtils.isSDKAvailable()) {
             try {
-              casdk.submitScore(leaderboardID, scoreToSubmit).then(function(result) {
-                if (result.error) {
-                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                    PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
-                  } else if (callbackOnError) {
+              PP.CAUtils._submitScore(leaderboardID, scoreToSubmit).then(function(result) {
+                if (result.scoreSubmitted) {
+                  if (onDoneCallback != null) {
+                    onDoneCallback();
+                  }
+                } else if (result.scoreSubmitted != null) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                    PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.USER_NOT_LOGGED_IN);
+                  } else if (onErrorCallback != null) {
+                    let error = {};
+                    error.reason = "The score can't be submitted because the user is not logged in";
+                    error.type = PP.CAUtils.CAError.USER_NOT_LOGGED_IN;
+                    onErrorCallback(error, result);
+                  }
+                } else {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                    PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.SUBMIT_SCORE_FAILED);
+                  } else if (onErrorCallback != null) {
                     let error = {};
                     error.reason = "Submit score failed";
-                    error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                    callbackOnError(error, result);
+                    error.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
+                    onErrorCallback(error, result);
                   }
-                } else {
-                  callbackOnDone();
                 }
               }).catch(function(result) {
-                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                  PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
-                } else if (callbackOnError) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                  PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.SUBMIT_SCORE_FAILED);
+                } else if (onErrorCallback != null) {
                   let error = {};
                   error.reason = "Submit score failed";
-                  error.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                  callbackOnError(error, result);
+                  error.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
+                  onErrorCallback(error, result);
                 }
               });
             } catch (error) {
-              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
-              } else if (callbackOnError) {
+              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.SUBMIT_SCORE_FAILED);
+              } else if (onErrorCallback != null) {
                 let error2 = {};
                 error2.reason = "Submit score failed";
-                error2.type = PP.CAUtils.ErrorType.SUBMIT_SCORE_FAILED;
-                callbackOnError(error2, null);
+                error2.type = PP.CAUtils.CAError.SUBMIT_SCORE_FAILED;
+                onErrorCallback(error2, null);
               }
             }
           } else {
-            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-              PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
-            } else if (callbackOnError) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.submitScore != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+              PP.CAUtils.submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, PP.CAUtils.CAError.CA_SDK_MISSING);
+            } else if (onErrorCallback != null) {
               let error = {};
               error.reason = "Construct Arcade SDK missing";
-              error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
+              onErrorCallback(error, null);
             }
           }
         },
-        submitScoreDummy(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError) {
+        submitScoreDummy(leaderboardID, scoreToSubmit, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           if (PP.CAUtils._myDummyServer) {
-            PP.CAUtils._myDummyServer.submitScore(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError);
+            PP.CAUtils._myDummyServer.submitScore(leaderboardID, scoreToSubmit, onDoneCallback, onErrorCallback, caError);
           } else {
-            if (callbackOnError) {
+            if (onErrorCallback != null) {
               let error = {};
               error.reason = "Dummy server not initialized";
-              error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
+              onErrorCallback(error, null);
             }
           }
         },
-        getUser: function(callbackOnDone, callbackOnError, overrideUseDummyServer = null) {
+        getUser(onDoneCallback = null, onErrorCallback = null, useDummyServerOverride = null) {
           if (PP.CAUtils.isSDKAvailable()) {
             try {
-              casdk.getUser().then(function(result) {
-                if (result.user) {
-                  if (callbackOnDone) {
-                    callbackOnDone(result.user);
+              PP.CAUtils_getUser().then(function(result) {
+                if (result.user != null && result.user.displayName != null) {
+                  if (onDoneCallback != null) {
+                    onDoneCallback(result.user);
+                  }
+                } else if (result.user != null) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                    PP.CAUtils.getUserDummy(onDoneCallback, onErrorCallback, PP.CAUtils.CAError.USER_NOT_LOGGED_IN);
+                  } else if (onErrorCallback != null) {
+                    let error = {};
+                    error.reason = "User not logged in";
+                    error.type = PP.CAUtils.CAError.USER_NOT_LOGGED_IN;
+                    onErrorCallback(error, result);
                   }
                 } else {
-                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                    PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
-                  } else if (callbackOnError) {
+                  if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                    PP.CAUtils.getUserDummy(onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_USER_FAILED);
+                  } else if (onErrorCallback != null) {
                     let error = {};
                     error.reason = "Get user failed";
-                    error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                    callbackOnError(error, result);
+                    error.type = PP.CAUtils.CAError.GET_USER_FAILED;
+                    onErrorCallback(error, result);
                   }
                 }
               }).catch(function(result) {
-                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                  PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
-                } else if (callbackOnError) {
+                if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                  PP.CAUtils.getUserDummy(onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_USER_FAILED);
+                } else if (onErrorCallback != null) {
                   let error = {};
                   error.reason = "Get user failed";
-                  error.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                  callbackOnError(error, result);
+                  error.type = PP.CAUtils.CAError.GET_USER_FAILED;
+                  onErrorCallback(error, result);
                 }
               });
             } catch (error) {
-              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-                PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
-              } else if (callbackOnError) {
+              if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnError && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+                PP.CAUtils.getUserDummy(onDoneCallback, onErrorCallback, PP.CAUtils.CAError.GET_USER_FAILED);
+              } else if (onErrorCallback != null) {
                 let error2 = {};
                 error2.reason = "Get user failed";
-                error2.type = PP.CAUtils.ErrorType.GET_USER_FAILED;
-                callbackOnError(error2, null);
+                error2.type = PP.CAUtils.CAError.GET_USER_FAILED;
+                onErrorCallback(error2, null);
               }
             }
           } else {
-            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && overrideUseDummyServer == null) || overrideUseDummyServer != null && overrideUseDummyServer) {
-              PP.CAUtils.getUserDummy(callbackOnDone, callbackOnError);
-            } else if (callbackOnError) {
+            if (PP.CAUtils._myDummyServer != null && PP.CAUtils._myDummyServer.getUser != null && (PP.CAUtils._myUseDummyServerOnSDKMissing && useDummyServerOverride == null) || useDummyServerOverride != null && useDummyServerOverride) {
+              PP.CAUtils.getUserDummy(onDoneCallback, onErrorCallback, PP.CAUtils.CAError.CA_SDK_MISSING);
+            } else if (onErrorCallback != null) {
               let error = {};
               error.reason = "Construct Arcade SDK missing";
-              error.type = PP.CAUtils.ErrorType.CA_SDK_MISSING;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.CA_SDK_MISSING;
+              onErrorCallback(error, null);
             }
           }
         },
-        getUserDummy(callbackOnDone, callbackOnError) {
+        getUserDummy(onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           if (PP.CAUtils._myDummyServer) {
-            PP.CAUtils._myDummyServer.getUser(callbackOnDone, callbackOnError);
+            PP.CAUtils._myDummyServer.getUser(onDoneCallback, onErrorCallback, caError);
           } else {
-            if (callbackOnError) {
+            if (onErrorCallback != null) {
               let error = {};
               error.reason = "Dummy server not initialized";
-              error.type = PP.CAUtils.ErrorType.DUMMY_NOT_INITIALIZED;
-              callbackOnError(error, null);
+              error.type = PP.CAUtils.CAError.DUMMY_NOT_INITIALIZED;
+              onErrorCallback(error, null);
             }
           }
         },
-        ErrorType: {
-          DUMMY_NOT_INITIALIZED: 0,
+        _getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount) {
+          let heyVR = PP.CAUtils.getSDK();
+          if (aroundPlayer) {
+            return heyVR.leaderboard.getMy(leaderboardID, scoresAmount).then(function(result) {
+              let adjustedLeaderboard = [];
+              for (let leaderboardEntry of result) {
+                adjustedLeaderboard.push({ rank: leaderboardEntry.rank - 1, displayName: leaderboardEntry.user, score: leaderboardEntry.score });
+              }
+              return { leaderboard: adjustedLeaderboard };
+            }).catch(function(error) {
+              if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+                return { leaderboard: [] };
+              } else {
+                return { leaderboard: null };
+              }
+            });
+          } else {
+            return heyVR.leaderboard.get(leaderboardID, scoresAmount).then(function(result) {
+              let adjustedLeaderboard = [];
+              for (let leaderboardEntry of result) {
+                adjustedLeaderboard.push({ rank: leaderboardEntry.rank - 1, displayName: leaderboardEntry.user, score: leaderboardEntry.score });
+              }
+              return { leaderboard: adjustedLeaderboard };
+            }).catch(function() {
+              return { leaderboard: null };
+            });
+          }
+        },
+        _submitScore(leaderboardID, scoreToSubmit) {
+          let heyVR = PP.CAUtils.getSDK();
+          return heyVR.leaderboard.postScore(leaderboardID, scoreToSubmit).then(function() {
+            return { scoreSubmitted: true };
+          }).catch(function(error) {
+            if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+              return { scoreSubmitted: false };
+            } else {
+              return { scoreSubmitted: null };
+            }
+          });
+        },
+        _getUser() {
+          let heyVR = PP.CAUtils.getSDK();
+          return heyVR.user.getName().then((result) => {
+            return { user: { displayName: result } };
+          }).catch(function(error) {
+            if (error != null && error.status != null && error.status.debug == "err_unauthenticated") {
+              return { user: { displayName: null } };
+            } else {
+              return { user: null };
+            }
+          });
+        },
+        CAError: {
+          NONE: 0,
           CA_SDK_MISSING: 1,
-          SUBMIT_SCORE_FAILED: 2,
+          DUMMY_NOT_INITIALIZED: 2,
           GET_LEADERBOARD_FAILED: 3,
-          GET_USER_FAILED: 4,
-          USER_HAS_NO_SCORE: 5
+          SUBMIT_SCORE_FAILED: 4,
+          GET_USER_FAILED: 5,
+          USER_NOT_LOGGED_IN: 6,
+          USER_HAS_NO_SCORE: 7
         }
       };
       PP.CADummyServer = class CADummyServer {
         constructor() {
         }
-        getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError) {
+        getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           let leaderboard = null;
-          if (PP.CAUtils.isSDKAvailable()) {
-            leaderboard = [
-              { rank: 0, displayName: "An", score: 0 },
-              { rank: 1, displayName: "Error", score: 0 },
-              { rank: 2, displayName: "Has", score: 0 },
-              { rank: 3, displayName: "Occurred", score: 0 },
-              { rank: 4, displayName: "While", score: 0 },
-              { rank: 5, displayName: "Trying", score: 0 },
-              { rank: 6, displayName: "To", score: 0 },
-              { rank: 7, displayName: "Retrieve", score: 0 },
-              { rank: 8, displayName: "The", score: 0 },
-              { rank: 9, displayName: "Leaderboard", score: 0 }
-            ];
+          if (caError != PP.CAUtils.CAError.CA_SDK_MISSING) {
+            if (aroundPlayer && (caError == PP.CAUtils.CAError.USER_NOT_LOGGED_IN || caError == PP.CAUtils.CAError.USER_HAS_NO_SCORE)) {
+              leaderboard = [
+                { rank: 0, displayName: "Sign In", score: 0 },
+                { rank: 1, displayName: "And", score: 0 },
+                { rank: 2, displayName: "Play", score: 0 },
+                { rank: 3, displayName: "On", score: 0 },
+                { rank: 4, displayName: "HeyVR", score: 0 },
+                { rank: 5, displayName: "To", score: 0 },
+                { rank: 6, displayName: "Submit", score: 0 },
+                { rank: 7, displayName: "Your", score: 0 },
+                { rank: 8, displayName: "Own", score: 0 },
+                { rank: 9, displayName: "Score", score: 0 }
+              ];
+            } else {
+              leaderboard = [
+                { rank: 0, displayName: "An", score: 0 },
+                { rank: 1, displayName: "Error", score: 0 },
+                { rank: 2, displayName: "Has", score: 0 },
+                { rank: 3, displayName: "Occurred", score: 0 },
+                { rank: 4, displayName: "While", score: 0 },
+                { rank: 5, displayName: "Trying", score: 0 },
+                { rank: 6, displayName: "To", score: 0 },
+                { rank: 7, displayName: "Retrieve", score: 0 },
+                { rank: 8, displayName: "The", score: 0 },
+                { rank: 9, displayName: "Leaderboard", score: 0 }
+              ];
+            }
           } else {
-            if (isAroundPlayer) {
+            if (aroundPlayer) {
               leaderboard = [
                 { rank: 0, displayName: "Sign In", score: 0 },
                 { rank: 1, displayName: "And", score: 0 },
@@ -25684,20 +27212,20 @@
           while (leaderboard.length > scoresAmount) {
             leaderboard.pop();
           }
-          if (callbackOnDone) {
-            callbackOnDone(leaderboard);
+          if (onDoneCallback != null) {
+            onDoneCallback(leaderboard);
           }
         }
-        submitScore(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError) {
-          if (callbackOnDone) {
-            callbackOnDone();
+        submitScore(leaderboardID, scoreToSubmit, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
+          if (onDoneCallback != null) {
+            onDoneCallback();
           }
         }
-        getUser(callbackOnDone, callbackOnError) {
+        getUser(onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           let user = {};
           user.displayName = "Jonathan";
-          if (callbackOnDone) {
-            callbackOnDone(user);
+          if (onDoneCallback != null) {
+            onDoneCallback(user);
           }
         }
       };
@@ -25802,7 +27330,9 @@
           this._myCursorObjectRoot.pp_setActive(true);
         },
         onDeactivate: function() {
-          this._myCursorObjectRoot.pp_setActive(false);
+          if (this._myCursorObjectRoot != null) {
+            this._myCursorObjectRoot.pp_setActive(false);
+          }
         },
         _updateHand() {
           this._myHandInputSource = PP.InputUtils.getInputSource(this._myHandednessString, PP.InputSourceType.TRACKED_HAND);
@@ -26278,6 +27808,7 @@
         isTargetingRenderCanvas() {
           return this.isInsideView() && this._myLastValidPointerEvent != null && this._myLastValidPointerEvent.target == WL.canvas;
         }
+        // the origin and direction are set by the mouse
         raycastWorld(raycastSetup, raycastResults = new PP.RaycastResults()) {
           this.getOriginWorld(raycastSetup.myOrigin);
           this.getDirectionWorld(raycastSetup.myDirection);
@@ -26358,6 +27889,7 @@
         getLastValidPointerEvent() {
           return this._myLastValidPointerEvent;
         }
+        // can be used to specify that only some pointerType are valid (eg: mouse, touch, pen) or just some target (eg: WL.canvas)
         addPointerEventValidCallback(id, callback) {
           this._myPointerEventValidCallbacks.set(id, callback);
         }
@@ -26511,7 +28043,6 @@
               isValid = false;
               break;
             }
-            ;
           }
           return isValid;
         }
@@ -26822,24 +28353,34 @@
     "js/pp/input/gamepad/gamepad_buttons.js"() {
       PP.GamepadButtonID = {
         SELECT: 0,
+        // Trigger
         SQUEEZE: 1,
+        // Grip
         TOUCHPAD: 2,
+        // This is to support older gamepads, you can just use TOP_BUTTON to use this button for both older and newer gamepads
         THUMBSTICK: 3,
         BOTTOM_BUTTON: 4,
+        // A or X button on oculus quest gamepad
         TOP_BUTTON: 5,
+        // B or Y button on oculus quest gamepad, reverts to TOUCHPAD button for gamepads that does not support TOP_BUTTON
         THUMB_REST: 6
       };
       PP.GamepadButtonEvent = {
         PRESS_START: 0,
         PRESS_END: 1,
         PRESSED: 2,
+        //Every frame that it is pressed
         NOT_PRESSED: 3,
+        //Every frame that it is not pressed
         TOUCH_START: 4,
         TOUCH_END: 5,
         TOUCHED: 6,
+        //Every frame that it is touched
         NOT_TOUCHED: 7,
+        //Every frame that it is not touched
         VALUE_CHANGED: 8,
         ALWAYS: 9
+        //Every frame
       };
       PP.GamepadAxesEvent = {
         X_CHANGED: 0,
@@ -27037,6 +28578,7 @@
         setMultipleTouchMaxDelay(maxDelay) {
           this._myMultipleTouchMaxDelay = maxDelay;
         }
+        // the following functions should be re-implemented in the actual class
         getHandPose() {
           return null;
         }
@@ -27058,6 +28600,7 @@
           let hapticActuator = [];
           return hapticActuator;
         }
+        // the above functions should be re-implemented in the actual class
         start() {
           this._start();
         }
@@ -27094,6 +28637,12 @@
           button.myIsPressed = buttonData.myIsPressed;
           button.myIsTouched = buttonData.myIsTouched;
           button.myValue = buttonData.myValue;
+          if (button.myIsPressed) {
+            button.myIsTouched = true;
+            if (button.myValue == 0) {
+              button.myValue = 1;
+            }
+          }
         }
         _postUpdateButtonInfos(dt) {
           this._myButtonInfos.forEach(function(item) {
@@ -27236,12 +28785,16 @@
             if (hapticActuators.length > 0) {
               if (this._myPulseInfo.myIntensity > 0) {
                 for (let hapticActuator of hapticActuators) {
-                  hapticActuator.pulse(this._myPulseInfo.myIntensity, 1e3);
+                  hapticActuator.pulse(this._myPulseInfo.myIntensity, Math.max(250, this._myPulseInfo.myDuration * 1e3));
                 }
                 this._myPulseInfo.myIsDevicePulsing = true;
               } else if (this._myPulseInfo.myIsDevicePulsing) {
                 for (let hapticActuator of hapticActuators) {
-                  hapticActuator.reset();
+                  hapticActuator.pulse(0, 1);
+                  try {
+                    hapticActuator.reset();
+                  } catch (error) {
+                  }
                 }
                 this._myPulseInfo.myIsDevicePulsing = false;
               }
@@ -27513,13 +29066,19 @@
         }
         _updateHandPose(dt) {
           this._myHandPose.update(dt);
+          let prevInputSource = this._myInputSource;
           this._myInputSource = this._myHandPose.getInputSource();
+          if (prevInputSource != this._myInputSource) {
+            this._mySelectPressed = false;
+            this._mySqueezePressed = false;
+          }
           if (this._myInputSource != null) {
             this._myGamepad = this._myInputSource.gamepad;
           } else {
             this._myGamepad = null;
           }
         }
+        //This is to be more compatible
         _getSpecialButtonPressed(buttonID) {
           let isPressed = false;
           if (this.isGamepadCoreActive()) {
@@ -27539,8 +29098,11 @@
           this._myIsXRSessionActive = true;
         }
         _onXRSessionEnd(session) {
+          this._mySelectPressed = false;
+          this._mySqueezePressed = false;
           this._myIsXRSessionActive = false;
         }
+        //Select and Squeeze are managed this way to be more compatible
         _selectStart(event) {
           if (this._myInputSource != null && this._myInputSource == event.inputSource) {
             this._mySelectPressed = true;
@@ -27945,6 +29507,9 @@
         getSimultaneousTouchMaxDelay: function() {
           return PP.GamepadUtils._mySimultaneousTouchMaxDelay;
         },
+        // gamepadButtonIDsList is a sequence of a gamepads and a list of buttonIDs like this ([gamepad1, squeeze, top, select], [gamepad2, bottom, squeeze, select], ...)
+        // if the first parameter is a number it's used as multiplePressCount
+        // if the buttonIDs list is empty for a given gamepad, it means that every button will be included
         isAnyButtonPressStart: function(...gamepadButtonIDsList) {
           let multiplePressCount = null;
           let realGamepadButtonIDsList = gamepadButtonIDsList;
@@ -27976,6 +29541,9 @@
           }
           return isOnePressStart;
         },
+        // gamepadButtonIDsList is a sequence of a gamepads and a list of buttonIDs like this ([gamepad1, squeeze, top, select], [gamepad2, bottom, squeeze, select], ...)
+        // if the first parameter is a number it's used as multiplePressCount
+        // if the buttonIDs list is empty for a given gamepad, it means that every button will be included
         areButtonsPressStart: function(...gamepadButtonIDsList) {
           let multiplePressCount = null;
           let realGamepadButtonIDsList = gamepadButtonIDsList;
@@ -28261,8 +29829,10 @@
           this._mySetVisibleNextUpdate = true;
         },
         onDeactivate() {
-          this._myVisibleBackup = this._myVisible;
-          this.setVisible(false);
+          if (this._myVisible != null) {
+            this._myVisibleBackup = this._myVisible;
+            this.setVisible(false);
+          }
         },
         isVisible() {
           return this._myVisible;
@@ -28383,18 +29953,18 @@
         },
         _addLine(start, end, parentObject) {
           let lineDirection = end.vec3_sub(start);
-          let length7 = lineDirection.vec3_length();
+          let length6 = lineDirection.vec3_length();
           lineDirection.vec3_normalize(lineDirection);
-          lineRootObject = parentObject.pp_addObject();
-          lineObject = lineRootObject.pp_addObject();
+          let lineRootObject = parentObject.pp_addObject();
+          let lineObject = lineRootObject.pp_addObject();
           let lineMesh = lineObject.addComponent("mesh");
           lineMesh.mesh = PP.myDefaultResources.myMeshes.myCylinder;
           lineMesh.material = this._myLineMaterialFinal;
           lineRootObject.pp_setPositionLocal(start);
           let thickness = 1e-3 * this._myLineThicknessMultiplier;
-          lineObject.pp_scaleObject(PP.vec3_create(thickness / 2, length7 / 2, thickness / 2));
+          lineObject.pp_scaleObject(PP.vec3_create(thickness / 2, length6 / 2, thickness / 2));
           lineObject.pp_setUpLocal(lineDirection);
-          lineObject.pp_translateObject(PP.vec3_create(0, length7 / 2, 0));
+          lineObject.pp_translateObject(PP.vec3_create(0, length6 / 2, 0));
         },
         _addText(position, forward, up, parentObject) {
           let textObject = parentObject.pp_addObject();
@@ -28639,8 +30209,10 @@
     "js/pp/input/gamepad/virtual_gamepad/virtual_gamepad_component.js"() {
       WL.registerComponent("pp-virtual-gamepad", {
         _myShowOnDesktop: { type: WL.Type.Bool, default: false },
+        // you may have to enable headset too
         _myShowOnMobile: { type: WL.Type.Bool, default: true },
         _myShowOnHeadset: { type: WL.Type.Bool, default: false },
+        // not 100% reliable, this is true if the device supports vr and it is desktop
         _myReleaseOnPointerLeave: { type: WL.Type.Bool, default: false },
         _myAddToUniversalGamepad: { type: WL.Type.Bool, default: true },
         _myOpacity: { type: WL.Type.Float, default: 0.5 },
@@ -29599,6 +31171,8 @@
           this._myIsAngularVelocityEmulated = true;
           this._myPoseUpdatedCallbacks = /* @__PURE__ */ new Map();
         }
+        // if the reference object is set, the transform will be converted using it as a parent,
+        // otherwise the transform will be local, as if the parent/reference object was the identity transform
         setReferenceObject(referenceObject) {
           this._myReferenceObject = referenceObject;
         }
@@ -29683,6 +31257,7 @@
         update(dt) {
           this._update(dt, true);
         }
+        // Hooks
         _isReadyToGetPose() {
           return true;
         }
@@ -29697,6 +31272,7 @@
         }
         _onViewResetHook() {
         }
+        // Hooks end
         _update(dt, updateVelocity) {
           this._myPrevPosition.vec3_copy(this._myPosition);
           this._myPrevRotationQuat.quat_copy(this._myRotationQuat);
@@ -29930,31 +31506,28 @@
           return xrFrame.getPose(this._myInputSource.gripSpace, this._myReferenceSpace);
         }
         _onXRSessionStartHook(manualStart, session) {
-          session.addEventListener("inputsourceschange", function(event) {
-            if (event.removed) {
-              for (let item of event.removed) {
-                if (item == this._myInputSource) {
-                  this._myInputSource = null;
-                }
+          this._myInputSource = null;
+          if (session.inputSources != null && session.inputSources.length > 0) {
+            for (let i = 0; i < session.inputSources.length; i++) {
+              let inputSource = session.inputSources[i];
+              if (inputSource.handedness == this._myHandedness) {
+                this._myInputSource = inputSource;
+                this._myIsTrackedHand = PP.InputUtils.getInputSourceType(this._myInputSource) == PP.InputSourceType.TRACKED_HAND;
               }
             }
-            if (event.added) {
-              for (let item of event.added) {
-                if (item.handedness == this._myHandedness) {
-                  this._myInputSource = item;
+          }
+          session.addEventListener("inputsourceschange", function() {
+            this._myInputSource = null;
+            if (session.inputSources != null && session.inputSources.length > 0) {
+              for (let i = 0; i < session.inputSources.length; i++) {
+                let inputSource = session.inputSources[i];
+                if (inputSource.handedness == this._myHandedness) {
+                  this._myInputSource = inputSource;
                   this._myIsTrackedHand = PP.InputUtils.getInputSourceType(this._myInputSource) == PP.InputSourceType.TRACKED_HAND;
                 }
               }
             }
           }.bind(this));
-          if (manualStart && this._myInputSource == null && session.inputSources) {
-            for (let item of session.inputSources) {
-              if (item.handedness == this._myHandedness) {
-                this._myInputSource = item;
-                this._myIsTrackedHand = PP.InputUtils.getInputSourceType(this._myInputSource) == PP.InputSourceType.TRACKED_HAND;
-              }
-            }
-          }
         }
         _onXRSessionEndHook() {
           this._myInputSource = null;
@@ -30030,33 +31603,30 @@
           }
         }
         _onXRSessionStartHook(manualStart, session) {
-          session.addEventListener("inputsourceschange", function(event) {
-            if (event.removed) {
-              for (let item of event.removed) {
-                if (item == this._myInputSource) {
-                  this._myInputSource = null;
+          this._myInputSource = null;
+          if (session.inputSources != null && session.inputSources.length > 0) {
+            for (let i = 0; i < session.inputSources.length; i++) {
+              let inputSource = session.inputSources[i];
+              if (inputSource.handedness == this._myHandedness) {
+                if (PP.InputUtils.getInputSourceType(inputSource) == PP.InputSourceType.TRACKED_HAND) {
+                  this._myInputSource = inputSource;
                 }
               }
             }
-            if (event.added) {
-              for (let item of event.added) {
-                if (item.handedness == this._myHandedness) {
-                  if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
-                    this._myInputSource = item;
+          }
+          session.addEventListener("inputsourceschange", function() {
+            this._myInputSource = null;
+            if (session.inputSources != null && session.inputSources.length > 0) {
+              for (let i = 0; i < session.inputSources.length; i++) {
+                let inputSource = session.inputSources[i];
+                if (inputSource.handedness == this._myHandedness) {
+                  if (PP.InputUtils.getInputSourceType(inputSource) == PP.InputSourceType.TRACKED_HAND) {
+                    this._myInputSource = inputSource;
                   }
                 }
               }
             }
           }.bind(this));
-          if (manualStart && this._myInputSource == null && session.inputSources) {
-            for (let item of session.inputSources) {
-              if (item.handedness == this._myHandedness) {
-                if (PP.InputUtils.getInputSourceType(item) == PP.InputSourceType.TRACKED_HAND) {
-                  this._myInputSource = item;
-                }
-              }
-            }
-          }
         }
         _onXRSessionEndHook() {
           this._myInputSource = null;
@@ -30184,7 +31754,7 @@
             let localPosition = this.object.pp_getPositionLocal();
             if (PP.XRUtils.isReferenceSpaceLocalFloor()) {
               this.object.pp_setPositionLocal(PP.vec3_create(localPosition[0], 0, localPosition[2]));
-            } else if (PP.XRUtils.isDeviceEmulated()) {
+            } else if (PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost) {
               this.object.pp_setPositionLocal(PP.vec3_create(localPosition[0], 0, localPosition[2]));
             } else {
               this.object.pp_setPositionLocal(PP.vec3_create(localPosition[0], this._myEyesHeight, localPosition[2]));
@@ -30550,7 +32120,6 @@
         },
         update: function() {
           let transformQuat3 = PP.quat2_create();
-          let transform = PP.mat4_create();
           return function update(dt) {
             let isUsingHand = this._isUsingHand();
             this._myFingerCursorObject.pp_setActive(isUsingHand);
@@ -30760,6 +32329,7 @@
         setVisible(visible) {
           this.myPivotObject.pp_setActiveHierarchy(visible);
         }
+        //Skeleton
         _createSkeleton() {
           this.myPivotObject = WL.scene.addObject(this._myParentObject);
           this._createMessagesSkeleton();
@@ -30806,6 +32376,7 @@
         _createPointerSkeleton() {
           this.myPointerCursorTarget = WL.scene.addObject(this.myPivotObject);
         }
+        //Transforms
         _setTransforms() {
           this.myPivotObject.setDirty();
           this._setMessagesTransforms();
@@ -30858,6 +32429,7 @@
         _setPointerTransform() {
           this.myPointerCursorTarget.setTranslationLocal(this._mySetup.myPointerCursorTargetPosition);
         }
+        //Components
         _addComponents() {
           this._addMessagesComponents();
           this._addButtonsComponents();
@@ -31045,6 +32617,7 @@
           this._addListeners();
           this._overrideConsolesFunctions();
         }
+        //This must be done only when all the setup is complete, to avoid issues with other part of the code calling the console and then triggering the console vr while not ready yet
         _overrideConsolesFunctions() {
           this._myOldBrowserConsole[PP.ConsoleVRWidget.ConsoleFunction.LOG] = console.log;
           this._myOldBrowserConsole[PP.ConsoleVRWidget.ConsoleFunction.ERROR] = console.error;
@@ -31094,6 +32667,7 @@
           }
           this._updateGamepadsExtraActions(dt);
         }
+        //Text section
         _updateText(messageType) {
           let consoleText = "";
           if (!this._myTypeFilters[messageType]) {
@@ -31206,6 +32780,7 @@
           }
           return messageType;
         }
+        //Here the formatting using placeholder like %d could be implemented in the future
         _formatArgs(...args) {
           let stringifiedArgs = [];
           for (let i = 0; i < args.length; i++) {
@@ -31292,6 +32867,7 @@
           this._adjustScrollOffsetAfterMessageAdded(message, hasSameInfoAsPrev);
           this._updateNotifyIcon(message);
         }
+        //if you have scrolled, new messages does not move the scroll position
         _adjustScrollOffsetAfterMessageAdded(message, hasSameInfoAsPrev) {
           if (!hasSameInfoAsPrev && !this._myTypeFilters[message.myType] && this._myScrollOffset > 0) {
             this._myScrollOffset += message.myLines.length + this._mySetup.myLinesBetweenMessages;
@@ -31349,6 +32925,7 @@
           linesCount = Math.max(linesCount, 0);
           return linesCount;
         }
+        //Listener section
         _addListeners() {
           let ui = this._myUI;
           for (let key in PP.ConsoleVRWidget.MessageType) {
@@ -31516,6 +33093,7 @@
         _genericUnHover(material) {
           material.color = this._mySetup.myBackgroundColor;
         }
+        //Gamepad section
         _updateGamepadsExtraActions(dt) {
           if (this._myLeftGamepad && this._myRightGamepad) {
             if (this._myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressStart() && this._myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).myIsPressed || this._myRightGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressStart() && this._myLeftGamepad.getButtonInfo(PP.GamepadButtonID.THUMBSTICK).myIsPressed) {
@@ -31950,7 +33528,6 @@
             light.color[0] = color[0];
             light.color[1] = color[1];
             light.color[2] = color[2];
-            light.color[3] = light.color[3];
           }
           if (PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressStart() && PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myIsPressed || PP.myLeftGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).isPressStart() && PP.myRightGamepad.getButtonInfo(PP.GamepadButtonID.TOP_BUTTON).myIsPressed) {
             let hsvColor = PP.ColorUtils.color1To255(PP.ColorUtils.rgbToHsv(color));
@@ -32165,6 +33742,7 @@
         _myUseTuneTarget: { type: WL.Type.Bool, default: false },
         _myIsLocal: { type: WL.Type.Bool, default: false },
         _myScaleAsOne: { type: WL.Type.Bool, default: true }
+        // Edit all scale values together
       }, {
         init: function() {
           this._myEasyObjectTuner = new PP.EasyScale(this._myIsLocal, this._myScaleAsOne, this.object, this._myVariableName, this._mySetAsDefault, this._myUseTuneTarget);
@@ -32286,8 +33864,10 @@
           this._myGrabber.registerThrowEventListener(this, this._onRelease.bind(this));
         },
         onDeactivate() {
-          this._myGrabber.unregisterGrabEventListener(this);
-          this._myGrabber.unregisterThrowEventListener(this);
+          if (this._myGrabber != null) {
+            this._myGrabber.unregisterGrabEventListener(this);
+            this._myGrabber.unregisterThrowEventListener(this);
+          }
         }
       });
     }
@@ -32302,6 +33882,7 @@
         _myUseTuneTarget: { type: WL.Type.Bool, default: false },
         _myIsLocal: { type: WL.Type.Bool, default: false },
         _myScaleAsOne: { type: WL.Type.Bool, default: true }
+        // Edit all scale values together
       }, {
         init: function() {
           this._myEasyObjectTuner = new PP.EasyTransform(this._myIsLocal, this._myScaleAsOne, this.object, this._myVariableName, this._mySetAsDefault, this._myUseTuneTarget);
@@ -32317,8 +33898,7 @@
             "_myVariableName": this._myVariableName,
             "_mySetAsDefault": this._mySetAsDefault,
             "_myUseTuneTarget": this._myUseTuneTarget,
-            "_myIsLocal": this._myIsLocal,
-            "_myUseTuneTarget": this._myUseTuneTarget
+            "_myIsLocal": this._myIsLocal
           });
           clonedComponent.active = this.active;
           return clonedComponent;
@@ -32472,6 +34052,7 @@
             this._updateImportExportLabel(dt);
           }
         }
+        // Hooks
         _setEasyTuneVariableHook() {
         }
         _refreshUIHook() {
@@ -32482,6 +34063,7 @@
         }
         _updateHook(dt) {
         }
+        // Hooks end
         _refreshUI() {
           if (this._myVariable) {
             if (this._myVariable.myName != null) {
@@ -32620,6 +34202,7 @@
           this._myImportExportButtonsActive = active;
           this.myImportExportPanel.pp_setActiveHierarchy(this._myImportExportButtonsActive);
         }
+        // Hooks
         _buildHook() {
         }
         _setVisibleHook(visible) {
@@ -32630,6 +34213,8 @@
         }
         _addComponentsHook() {
         }
+        // Hooks end
+        // Skeleton
         _createSkeleton() {
           this.myPivotObject = WL.scene.addObject(this._myParentObject);
           this.myBackPanel = WL.scene.addObject(this.myPivotObject);
@@ -32658,6 +34243,7 @@
           this.myPointerCursorTarget = WL.scene.addObject(this.myPivotObject);
           this._createSkeletonHook();
         }
+        // Transforms
         _setTransforms() {
           this.myPivotObject.setTranslationLocal(this._mySetup.myPivotObjectPositions[this._myAdditionalSetup.myHandedness]);
           this.myBackPanel.setTranslationLocal(this._mySetup.myBackPanelPosition);
@@ -32690,6 +34276,7 @@
           this.myPointerCursorTarget.setTranslationLocal(this._mySetup.myPointerCursorTargetPosition);
           this._setTransformHook();
         }
+        // Components
         _addComponents() {
           this.myBackBackgroundComponent = this.myBackBackground.addComponent("mesh");
           this.myBackBackgroundComponent.mesh = this._myPlaneMesh;
@@ -32790,6 +34377,7 @@
           this._initializeBuildSetup();
           this._initializeRuntimeSetup();
         }
+        // Hooks
         _getBackPanelMaxY() {
           return this.myDisplayPanelPosition[1] + this.myVariableLabelPanelPosition[1] + this.mySideButtonBackgroundScale[1] + this._mySideButtonDistanceFromBorder * 1.25;
         }
@@ -32802,6 +34390,7 @@
         _getBackPanelMinX() {
           return -this._mySideButtonPanelHalfWidth;
         }
+        // small Z offset to avoid glitching with other widgets
         _getPivotZOffset() {
           return 0;
         }
@@ -32809,6 +34398,7 @@
         }
         _initializeRuntimeSetupHook() {
         }
+        // Hooks end
         _initializeBuildSetup() {
           this.myBackgroundColor = [46 / 255, 46 / 255, 46 / 255, 1];
           this.myCursorTargetCollisionCollider = WL.Collider.Box;
@@ -34341,8 +35931,6 @@
                 this._myVariable.myScale[index] = this._myVariable.myDefaultScale[index];
                 this._myUI.myScaleTextComponents[index].text = this._myVariable.myScale[index].toFixed(this._myVariable.myDecimalPlaces);
                 break;
-              default:
-                defaultValue = 0;
             }
           }
         }
@@ -34358,21 +35946,21 @@
         }
         _resetStep(index) {
           if (this._isActive()) {
-            let defaultValue2 = 0;
+            let defaultValue = 0;
             switch (index) {
               case 0:
-                defaultValue2 = this._myVariable.myDefaultPositionStepPerSecond;
+                defaultValue = this._myVariable.myDefaultPositionStepPerSecond;
                 break;
               case 1:
-                defaultValue2 = this._myVariable.myDefaultRotationStepPerSecond;
+                defaultValue = this._myVariable.myDefaultRotationStepPerSecond;
                 break;
               case 2:
-                defaultValue2 = this._myVariable.myDefaultScaleStepPerSecond;
+                defaultValue = this._myVariable.myDefaultScaleStepPerSecond;
                 break;
               default:
-                defaultValue2 = 0;
+                defaultValue = 0;
             }
-            this._changeStep(index, defaultValue2);
+            this._changeStep(index, defaultValue);
           }
         }
         _changeStep(index, step) {
@@ -35292,11 +36880,11 @@
         _createIndexString() {
           let indexString = " (";
           let index = (this._getVariableIndex(this._myCurrentVariable) + 1).toString();
-          let length7 = this._myEasyTuneVariables.length().toString();
-          while (index.length < length7.length) {
+          let length6 = this._myEasyTuneVariables.length().toString();
+          while (index.length < length6.length) {
             index = "0".concat(index);
           }
-          indexString = indexString.concat(index).concat(" - ").concat(length7).concat(")");
+          indexString = indexString.concat(index).concat(" - ").concat(length6).concat(")");
           return indexString;
         }
         _getVariableIndex(variable) {
@@ -35444,9 +37032,9 @@
         TRANSFORM: 3
       };
       PP.EasyTuneVariable = class EasyTuneVariable {
-        constructor(name, type2) {
+        constructor(name, type) {
           this.myName = name.slice(0);
-          this.myType = type2;
+          this.myType = type;
           this.myValue = null;
           this.myDefaultValue = null;
           this.myIsActive = false;
@@ -35490,8 +37078,8 @@
         }
       };
       PP.EasyTuneVariableArray = class EasyTuneVariableArray extends PP.EasyTuneVariable {
-        constructor(name, type2, value) {
-          super(name, type2);
+        constructor(name, type, value) {
+          super(name, type);
           PP.EasyTuneVariableArray.prototype.setValue.call(this, value, true);
         }
         getValue() {
@@ -35839,7 +37427,9 @@
         _myEnableGamepadScrollVariable: { type: WL.Type.Bool, default: true },
         _myEnableVariablesImportExportButtons: { type: WL.Type.Bool, default: false },
         _myVariablesImportURL: { type: WL.Type.String, default: "" },
+        // the URL can contain parameters inside brackets, like {param}
         _myVariablesExportURL: { type: WL.Type.String, default: "" },
+        // those parameters will be replaced with the same one on the current page url, like www.currentpage.com/?param=2
         _myImportVariablesOnStart: { type: WL.Type.Bool, default: false },
         _myResetVariablesDefaultValueOnImport: { type: WL.Type.Bool, default: false }
       }, {
@@ -36096,6 +37686,7 @@
             this.myVisibilityButtonPanel.pp_setActiveHierarchy(this._myWidgetVisible || this._myVisibilityButtonVisible);
           }
         }
+        //Skeleton
         _createSkeleton() {
           this.myFixForwardObject = WL.scene.addObject(this._myParentObject);
           this.myFixForwardObject.pp_rotateObject(PP.vec3_create(0, 180, 0));
@@ -36114,6 +37705,7 @@
           this.myNonVRParentObject.pp_translateLocal(PP.vec3_create(0, 0, -this._mySetup._myPivotObjectDistanceFromNonVRHead));
           this.myNonVRParentObject.pp_lookToLocal(PP.vec3_create(0, 0, 1), PP.vec3_create(0, 1, 0));
         }
+        //Transforms
         _setTransforms() {
           this.myPivotObject.setDirty();
           this.myVisibilityButtonPanel.setTranslationLocal(this._mySetup.myVisibilityButtonPosition[this._myAdditionalSetup.myHandedness].myPosition);
@@ -36127,6 +37719,7 @@
           this.myPinButtonText.scale(this._mySetup.myFlagButtonTextScale);
           this.myPinButtonCursorTarget.setTranslationLocal(this._mySetup.myPinButtonCursorTargetPosition);
         }
+        //Components
         _addComponents() {
           this.myVisibilityButtonBackgroundComponent = this.myVisibilityButtonBackground.addComponent("mesh");
           this.myVisibilityButtonBackgroundComponent.mesh = this._myPlaneMesh;
@@ -36458,7 +38051,7 @@
             if (this._myParams.myHeightOffsetVRWithFloor == null) {
               this._myParams.myHeightOffsetVRWithFloor = 0;
             }
-            let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated();
+            let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost;
             if (this._mySessionActive && isFloor) {
               this._myParams.myHeightOffsetVRWithFloor = this._myParams.myHeightOffsetVRWithFloor + (height - this.getHeight());
             } else if (!this._mySessionActive) {
@@ -36920,7 +38513,7 @@
               flatResyncHeadPosition = resyncHeadPosition.vec3_removeComponentAlongAxis(playerUp, flatResyncHeadPosition);
               resyncMovement = flatResyncHeadPosition.vec3_sub(flatCurrentHeadPosition, resyncMovement);
               this.moveFeet(resyncMovement);
-              let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated();
+              let isFloor = PP.XRUtils.isReferenceSpaceLocalFloor() || PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost;
               if (this._myParams.myEnterSessionResyncHeight || this._myParams.myNextEnterSessionResyncHeight) {
                 this._myParams.myNextEnterSessionResyncHeight = false;
                 let resyncHeadHeight = this._getPositionHeight(resyncHeadPosition);
@@ -37022,7 +38615,7 @@
       PlayerHeadManager.prototype._updateHeightOffset = function() {
         return function _updateHeightOffset() {
           if (this._mySessionActive) {
-            if (PP.XRUtils.isDeviceEmulated()) {
+            if (PP.XRUtils.isDeviceEmulated() && Global.myIsLocalhost) {
               this._setPlayerPivotHeightOffset(0, 0);
             } else if (PP.XRUtils.isReferenceSpaceLocalFloor()) {
               this._setPlayerPivotHeightOffset(this._myParams.myHeightOffsetVRWithFloor, 0);
@@ -37189,6 +38782,13 @@
           WL.onXRSessionStart.push(this._onXRSessionStart.bind(this, false));
           WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         }
+        // update should be before to check the new valid transform and if the head new transform is fine
+        // then update movements, so that they will use the proper transform
+        // pre/post update?
+        // for sliding if previous frame no horizontal movement then reset sliding on pre update
+        // in generale capire come fare per risolvere i problemi quando c'è un move solo verticale che sputtana i dati dello sliding precedente
+        // che servono per far slidare bene anche dopo, magari un flag per dire non aggiornare le cose relative al movimento orizzontale
+        // o un move check solo verticale
         update(dt) {
         }
         move(movement, outCollisionRuntimeParams = null, forceMove = false) {
@@ -37274,9 +38874,6 @@
         }
         isFloating() {
           return this.isLeaning() || this.isHopping();
-        }
-        isHopping() {
-          return this._myIsHopping;
         }
         isLeaning() {
           return this._myIsLeaning;
@@ -38219,7 +39816,8 @@
           }
           if (PP.myGamepads[PP.InputUtils.getOppositeHandedness(this._myParams.myHandedness)].getButtonInfo(PP.GamepadButtonID.BOTTOM_BUTTON).isPressed()) {
             if (!PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
-              if (!this._myLocomotionRuntimeParams.myIsFlying && false) {
+              let gravityEnabled = false;
+              if (!this._myLocomotionRuntimeParams.myIsFlying && gravityEnabled) {
                 let gravity = -2;
                 verticalMovement = playerUp.vec3_scale(gravity * dt, verticalMovement);
                 headMovement = headMovement.vec3_add(verticalMovement, headMovement);
@@ -38277,7 +39875,6 @@
         };
       }();
       PlayerLocomotionSmooth.prototype._onXRSessionEnd = function() {
-        let playerUp = PP.vec3_create();
         return function _onXRSessionEnd(session) {
           this._myDirectionReference = PP.myPlayerObjects.myHead;
           this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;
@@ -38322,6 +39919,7 @@
           this._myTargetObscureLevel = 0;
           this._myLastTargetObscureLevel = null;
           this._myLastIsFadingIn = null;
+          this._myHeadPosition = PP.vec3_create();
           this._myFadeTimer = new PP.Timer(0, false);
           this._myFSM = new PP.FSM();
           this._myFSM.addState("init");
@@ -38471,6 +40069,9 @@
               let relativeDistance = distance4 - this._myParams.myDistanceToStartObscureWhenHeadColliding;
               if (relativeDistance >= 0) {
                 let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenHeadColliding, 0, 1);
+                if (isNaN(relativeDistancePercentage)) {
+                  relativeDistancePercentage = 1;
+                }
                 let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                 this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
               }
@@ -38480,6 +40081,9 @@
               let relativeDistance = distance4 - this._myParams.myDistanceToStartObscureWhenBodyColliding;
               if (relativeDistance >= 0) {
                 let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenBodyColliding, 0, 1);
+                if (isNaN(relativeDistancePercentage)) {
+                  relativeDistancePercentage = 1;
+                }
                 let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                 this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
               }
@@ -38489,6 +40093,9 @@
               let relativeDistance = distance4 - this._myParams.myDistanceToStartObscureWhenFloating;
               if (relativeDistance >= 0) {
                 let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFloating, 0, 1);
+                if (isNaN(relativeDistancePercentage)) {
+                  relativeDistancePercentage = 1;
+                }
                 let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                 this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
               }
@@ -38498,9 +40105,16 @@
               let relativeDistance = distance4 - this._myParams.myDistanceToStartObscureWhenFar;
               if (relativeDistance >= 0) {
                 let relativeDistancePercentage = Math.pp_clamp(relativeDistance / this._myParams.myRelativeDistanceToMaxObscureWhenFar, 0, 1);
+                if (isNaN(relativeDistancePercentage)) {
+                  relativeDistancePercentage = 1;
+                }
                 let targetObscureLevel = this._myParams.myObscureLevelRelativeDistanceEasingFunction(relativeDistancePercentage);
                 this._myTargetObscureLevel = Math.max(this._myTargetObscureLevel, targetObscureLevel);
               }
+            }
+            this._myParams.myPlayerTransformManager.getHead().pp_getPosition(this._myHeadPosition);
+            if (this._myHeadPosition[1] < 0.15 && this._myHeadPosition[1] > -1) {
+              this._myTargetObscureLevel = 1;
             }
           }
         }
@@ -38661,7 +40275,7 @@
             params2.myPlayerTransformManager = this._myPlayerTransformManager;
             params2.myObscureObject = null;
             params2.myObscureMaterial = null;
-            params2.myObscureRadius = 0.1;
+            params2.myObscureRadius = 0.5;
             params2.myObscureFadeOutSeconds = 0.25;
             params2.myObscureFadeInSeconds = 0.25;
             params2.myObscureFadeEasingFunction = PP.EasingFunction.linear;
@@ -39766,17 +41380,17 @@
           this._myLocomotionRuntimeParams.myIsTeleportDetecting = false;
           this._myVisualizer.end();
         }
-        update(dt, fsm2) {
+        update(dt, fsm) {
           this._detectTeleportPosition();
           this._myVisualizer.update(dt);
           if (this._confirmTeleport()) {
             if (this._myDetectionRuntimeParams.myTeleportPositionValid) {
-              fsm2.perform("teleport");
+              fsm.perform("teleport");
             } else {
-              fsm2.perform("cancel");
+              fsm.perform("cancel");
             }
           } else if (this._cancelTeleport()) {
-            fsm2.perform("cancel");
+            fsm.perform("cancel");
           }
         }
         _confirmTeleport() {
@@ -39869,7 +41483,7 @@
         let prevParablePosition = PP.vec3_create();
         let parableFinalPosition = PP.vec3_create();
         let raycastSetup = new PP.RaycastSetup();
-        let raycastResult2 = new PP.RaycastResults();
+        let raycastResult = new PP.RaycastResults();
         let parableHitPosition = PP.vec3_create();
         let parableHitNormal = PP.vec3_create();
         let verticalHitOrigin = PP.vec3_create();
@@ -39900,15 +41514,15 @@
             raycastSetup.myDirection = parablePosition.vec3_sub(prevParablePosition, raycastSetup.myDirection);
             raycastSetup.myDistance = raycastSetup.myDirection.vec3_length();
             raycastSetup.myDirection.vec3_normalize(raycastSetup.myDirection);
-            raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+            raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
             if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
-              PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+              PP.myDebugVisualManager.drawRaycast(0, raycastResult);
             }
             prevParablePosition.vec3_copy(parablePosition);
             positionFlatDistance = parablePosition.vec3_sub(startPosition, parablePosition).vec3_removeComponentAlongAxis(up, parablePosition).vec3_length();
             positionParableDistance = this._myDetectionRuntimeParams.myParable.getDistance(currentPositionIndex);
             currentPositionIndex++;
-          } while (positionFlatDistance <= this._myTeleportParams.myDetectionParams.myMaxDistance && positionParableDistance <= maxParableDistance && !raycastResult2.isColliding());
+          } while (positionFlatDistance <= this._myTeleportParams.myDetectionParams.myMaxDistance && positionParableDistance <= maxParableDistance && !raycastResult.isColliding());
           let maxParableDistanceOverFlatDistance = this._myDetectionRuntimeParams.myParable.getDistanceOverFlatDistance(this._myTeleportParams.myDetectionParams.myMaxDistance, maxParableDistance);
           let fixedPositionParableDistance = positionParableDistance;
           if (positionParableDistance > maxParableDistanceOverFlatDistance || positionParableDistance > maxParableDistance) {
@@ -39917,8 +41531,8 @@
           this._myDetectionRuntimeParams.myParableDistance = fixedPositionParableDistance;
           let hitCollisionValid = false;
           let bottomCheckMaxLength = 100;
-          if (raycastResult2.isColliding()) {
-            let hit = raycastResult2.myHits.pp_first();
+          if (raycastResult.isColliding()) {
+            let hit = raycastResult.myHits.pp_first();
             let hitParableDistance = positionParableDistance - (raycastSetup.myDistance - hit.myDistance);
             if (hitParableDistance <= fixedPositionParableDistance) {
               hitCollisionValid = true;
@@ -39935,12 +41549,12 @@
                 raycastSetup.myOrigin.vec3_copy(verticalHitOrigin);
                 raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                 raycastSetup.myDistance = bottomCheckMaxLength;
-                raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                 if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
-                  PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                  PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                 }
-                if (raycastResult2.isColliding()) {
-                  let hit2 = raycastResult2.myHits.pp_first();
+                if (raycastResult.isColliding()) {
+                  let hit2 = raycastResult.myHits.pp_first();
                   teleportCollisionRuntimeParams.reset();
                   this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit2, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                   this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -39953,13 +41567,13 @@
                       raycastSetup.myOrigin = verticalHitOrigin.vec3_add(flatTeleportHorizontalHitNormal.vec3_scale(backwardStep, raycastSetup.myOrigin), raycastSetup.myOrigin);
                       raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                       raycastSetup.myDistance = bottomCheckMaxLength;
-                      raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                      raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                       if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
                         PP.myDebugVisualManager.drawPoint(0, raycastSetup.myOrigin, PP.vec4_create(0, 0, 0, 1), 0.03);
-                        PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                        PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                       }
-                      if (raycastResult2.isColliding()) {
-                        let hit3 = raycastResult2.myHits.pp_first();
+                      if (raycastResult.isColliding()) {
+                        let hit3 = raycastResult.myHits.pp_first();
                         teleportCollisionRuntimeParams.reset();
                         this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit3, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                         this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -39976,13 +41590,13 @@
                       raycastSetup.myOrigin = verticalHitOrigin.vec3_add(flatParableHitNormal.vec3_scale(backwardStep, raycastSetup.myOrigin), raycastSetup.myOrigin);
                       raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                       raycastSetup.myDistance = bottomCheckMaxLength;
-                      raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                      raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                       if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
                         PP.myDebugVisualManager.drawPoint(0, raycastSetup.myOrigin, PP.vec4_create(0, 0, 0, 1), 0.03);
-                        PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                        PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                       }
-                      if (raycastResult2.isColliding()) {
-                        let hit3 = raycastResult2.myHits.pp_first();
+                      if (raycastResult.isColliding()) {
+                        let hit3 = raycastResult.myHits.pp_first();
                         teleportCollisionRuntimeParams.reset();
                         this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit3, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                         this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -39999,13 +41613,13 @@
                       raycastSetup.myOrigin = verticalHitOrigin.vec3_add(flatParableDirectionNegate.vec3_scale(backwardStep, raycastSetup.myOrigin), raycastSetup.myOrigin);
                       raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                       raycastSetup.myDistance = bottomCheckMaxLength;
-                      raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                      raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                       if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
                         PP.myDebugVisualManager.drawPoint(0, raycastSetup.myOrigin, PP.vec4_create(0, 0, 0, 1), 0.03);
-                        PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                        PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                       }
-                      if (raycastResult2.isColliding()) {
-                        let hit3 = raycastResult2.myHits.pp_first();
+                      if (raycastResult.isColliding()) {
+                        let hit3 = raycastResult.myHits.pp_first();
                         teleportCollisionRuntimeParams.reset();
                         this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit3, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                         this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -40026,12 +41640,12 @@
             raycastSetup.myOrigin.vec3_copy(verticalHitOrigin);
             raycastSetup.myDirection.vec3_copy(verticalHitDirection);
             raycastSetup.myDistance = bottomCheckMaxLength;
-            raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+            raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
             if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
-              PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+              PP.myDebugVisualManager.drawRaycast(0, raycastResult);
             }
-            if (raycastResult2.isColliding()) {
-              let hit = raycastResult2.myHits.pp_first();
+            if (raycastResult.isColliding()) {
+              let hit = raycastResult.myHits.pp_first();
               teleportCollisionRuntimeParams.reset();
               this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
               this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -40044,13 +41658,13 @@
                   raycastSetup.myOrigin = verticalHitOrigin.vec3_add(flatTeleportHorizontalHitNormal.vec3_scale(backwardStep, raycastSetup.myOrigin), raycastSetup.myOrigin);
                   raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                   raycastSetup.myDistance = bottomCheckMaxLength;
-                  raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                  raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                   if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
                     PP.myDebugVisualManager.drawPoint(0, raycastSetup.myOrigin, PP.vec4_create(0, 0, 0, 1), 0.03);
-                    PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                    PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                   }
-                  if (raycastResult2.isColliding()) {
-                    let hit2 = raycastResult2.myHits.pp_first();
+                  if (raycastResult.isColliding()) {
+                    let hit2 = raycastResult.myHits.pp_first();
                     teleportCollisionRuntimeParams.reset();
                     this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit2, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                     this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -40066,13 +41680,13 @@
                   raycastSetup.myOrigin = verticalHitOrigin.vec3_add(flatParableDirectionNegate.vec3_scale(backwardStep, raycastSetup.myOrigin), raycastSetup.myOrigin);
                   raycastSetup.myDirection.vec3_copy(verticalHitDirection);
                   raycastSetup.myDistance = bottomCheckMaxLength;
-                  raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+                  raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
                   if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugDetectActive) {
                     PP.myDebugVisualManager.drawPoint(0, raycastSetup.myOrigin, PP.vec4_create(0, 0, 0, 1), 0.03);
-                    PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+                    PP.myDebugVisualManager.drawRaycast(0, raycastResult);
                   }
-                  if (raycastResult2.isColliding()) {
-                    let hit2 = raycastResult2.myHits.pp_first();
+                  if (raycastResult.isColliding()) {
+                    let hit2 = raycastResult.myHits.pp_first();
                     teleportCollisionRuntimeParams.reset();
                     this._myDetectionRuntimeParams.myTeleportPositionValid = this._isTeleportHitValid(hit2, this._myTeleportRuntimeParams.myTeleportRotationOnUp, teleportCollisionRuntimeParams);
                     this._myTeleportRuntimeParams.myTeleportPosition.vec3_copy(teleportCollisionRuntimeParams.myNewPosition);
@@ -40103,14 +41717,15 @@
       }();
       PlayerLocomotionTeleportDetectionState.prototype._isTeleportHitValid = function() {
         let raycastSetup = new PP.RaycastSetup();
-        let raycastResult2 = new PP.RaycastResults();
+        let raycastResult = new PP.RaycastResults();
         let playerUp = PP.vec3_create();
         return function _isTeleportHitValid(hit, rotationOnUp, checkTeleportCollisionRuntimeParams) {
           let isValid = false;
           this._myTeleportAsMovementFailed = false;
           if (hit.isValid() && !hit.myIsInsideCollision) {
             playerUp = this._myTeleportParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
-            if (true) {
+            let hitValidEvenWhenNotConcordant = true;
+            if (hitValidEvenWhenNotConcordant || hit.myNormal.vec3_isConcordant(playerUp)) {
               raycastSetup.myObjectsToIgnore.pp_copy(this._myTeleportParams.myCollisionCheckParams.myHorizontalObjectsToIgnore);
               raycastSetup.myIgnoreHitsInsideCollision = true;
               raycastSetup.myBlockLayerFlags.setMask(this._myTeleportParams.myDetectionParams.myTeleportFloorLayerFlags.getMask());
@@ -40119,9 +41734,9 @@
               raycastSetup.myDirection = hit.myNormal.vec3_negate(raycastSetup.myDirection);
               raycastSetup.myDistance = distanceToCheck * 1.25;
               raycastSetup.myDirection.vec3_normalize(raycastSetup.myDirection);
-              raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
-              if (raycastResult2.isColliding()) {
-                let floorHit = raycastResult2.myHits.pp_first();
+              raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
+              if (raycastResult.isColliding()) {
+                let floorHit = raycastResult.myHits.pp_first();
                 if (floorHit.myObject.pp_equals(hit.myObject)) {
                   isValid = this._isTeleportPositionValid(hit.myPosition, rotationOnUp, checkTeleportCollisionRuntimeParams);
                 }
@@ -40227,7 +41842,7 @@
         let fixedUp = PP.vec3_create();
         let raycastEndPosition = PP.vec3_create();
         let raycastSetup = new PP.RaycastSetup();
-        let raycastResult2 = new PP.RaycastResults();
+        let raycastResult = new PP.RaycastResults();
         let objectsEqualCallback = (first, second) => first.pp_equals(second);
         return function _isPositionVisible(position) {
           let isVisible = true;
@@ -40256,13 +41871,13 @@
               raycastSetup.myObjectsToIgnore.pp_pushUnique(objectToIgnore, objectsEqualCallback);
             }
             raycastSetup.myIgnoreHitsInsideCollision = true;
-            raycastResult2 = PP.PhysicsUtils.raycast(raycastSetup, raycastResult2);
+            raycastResult = PP.PhysicsUtils.raycast(raycastSetup, raycastResult);
             if (this._myTeleportParams.myDebugActive && this._myTeleportParams.myDebugVisibilityActive) {
-              PP.myDebugVisualManager.drawRaycast(0, raycastResult2);
+              PP.myDebugVisualManager.drawRaycast(0, raycastResult);
             }
-            if (raycastResult2.isColliding()) {
+            if (raycastResult.isColliding()) {
               raycastEndPosition = checkPosition.vec3_add(fixedForward.vec3_scale(distance4, raycastEndPosition), raycastEndPosition);
-              let hit = raycastResult2.myHits.pp_first();
+              let hit = raycastResult.myHits.pp_first();
               if (this._myTeleportParams.myDetectionParams.myVisibilityCheckDistanceFromHitThreshold == 0 || hit.myPosition.vec3_distance(raycastEndPosition) > this._myTeleportParams.myDetectionParams.myVisibilityCheckDistanceFromHitThreshold + 1e-5) {
                 isVisible = false;
                 break;
@@ -40366,8 +41981,8 @@
           this._myFSM.init("init");
           this._myFSM.perform("start");
         }
-        start(fsm2) {
-          this._myParentFSM = fsm2;
+        start(fsm) {
+          this._myParentFSM = fsm;
           switch (this._myTeleportParams.myTeleportParams.myTeleportType) {
             case PlayerLocomotionTeleportTeleportType.INSTANT:
               this._myFSM.perform("start_instant");
@@ -40384,23 +41999,20 @@
         }
         end() {
         }
-        update(dt, fsm2) {
+        update(dt, fsm) {
           this._myFSM.update(dt);
         }
         completeTeleport() {
           this._myFSM.perform("stop");
           this._teleportToPosition(this._myTeleportRuntimeParams.myTeleportPosition, this._myTeleportRuntimeParams.myTeleportRotationOnUp, this._myLocomotionRuntimeParams.myCollisionRuntimeParams);
         }
-        _instantUpdate(dt, fsm2) {
+        _instantUpdate(dt, fsm) {
           this._teleportToPosition(this._myTeleportRuntimeParams.myTeleportPosition, this._myTeleportRuntimeParams.myTeleportRotationOnUp, this._myLocomotionRuntimeParams.myCollisionRuntimeParams);
           this._myLocomotionRuntimeParams.myTeleportJustPerformed = true;
-          fsm2.perform("done");
+          fsm.perform("done");
         }
-        _instantStop(fsm2) {
-          this._instantUpdate(0, fsm2);
-        }
-        _completeTeleport() {
-          fsm.perform("stop");
+        _instantStop(fsm) {
+          this._instantUpdate(0, fsm);
         }
         _teleportDone() {
           Global.myPlayer.resetReal(true, false, false);
@@ -40453,8 +42065,8 @@
           this._myFadeOutAlphaOverTime = new PP.NumberOverValue(0, 1, 0, 1);
           this._myFadeInAlphaOverTime = new PP.NumberOverValue(1, 0, 0, 1);
         }
-        start(fsm2) {
-          this._myParentFSM = fsm2;
+        start(fsm) {
+          this._myParentFSM = fsm;
           this._myFSM.perform("teleport");
         }
         end() {
@@ -40462,7 +42074,7 @@
           this._myBlinkSphere.pp_setParent(null, false);
           this._myFSM.perform("stop");
         }
-        update(dt, fsm2) {
+        update(dt, fsm) {
           this._myBlinkSphere.pp_setParent(this._myTeleportParams.myPlayerHeadManager.getHead(), false);
           this._myFSM.update(dt);
         }
@@ -40475,22 +42087,22 @@
         _startFadeIn() {
           this._myFadeInTimer.start();
         }
-        _fadeOutUpdate(dt, fsm2) {
+        _fadeOutUpdate(dt, fsm) {
           this._myFadeOutTimer.update(dt);
           let alpha = this._myFadeOutAlphaOverTime.get(this._myFadeOutTimer.getPercentage());
           this._myBlinkSphereMaterialColor[3] = alpha;
           this._myBlinkSphereMeshComponent.material.color = this._myBlinkSphereMaterialColor;
           if (this._myFadeOutTimer.isDone()) {
-            fsm2.perform("done");
+            fsm.perform("done");
           }
         }
-        _fadeInUpdate(dt, fsm2) {
+        _fadeInUpdate(dt, fsm) {
           this._myFadeInTimer.update(dt);
           let alpha = this._myFadeInAlphaOverTime.get(this._myFadeInTimer.getPercentage());
           this._myBlinkSphereMaterialColor[3] = alpha;
           this._myBlinkSphereMeshComponent.material.color = this._myBlinkSphereMaterialColor;
           if (this._myFadeInTimer.isDone()) {
-            fsm2.perform("done");
+            fsm.perform("done");
           }
         }
         _teleportDone() {
@@ -40512,9 +42124,12 @@
   });
 
   // js/locomotion/teleport/player_locomotion_teleport_teleport_shift_state.js
-  var require_player_locomotion_teleport_teleport_shift_state = __commonJS({
+  var player_locomotion_teleport_teleport_shift_state_exports = {};
+  var import_howler8;
+  var init_player_locomotion_teleport_teleport_shift_state = __esm({
     "js/locomotion/teleport/player_locomotion_teleport_teleport_shift_state.js"() {
-      PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTeleportShiftState extends PlayerLocomotionTeleportState {
+      import_howler8 = __toESM(require_howler());
+      PlayerLocomotionTeleportTeleportShiftState = class PlayerLocomotionTeleportTeleportShiftState2 extends PlayerLocomotionTeleportState {
         constructor(teleportParams, teleportRuntimeParams, locomotionRuntimeParams) {
           super(teleportParams, teleportRuntimeParams, locomotionRuntimeParams);
           this._myFSM = new PP.FSM();
@@ -40538,14 +42153,14 @@
           PP.myEasyTuneVariables.add(new PP.EasyTuneNumber("Shift Rotate Start Percentage", this._myTeleportParams.myTeleportParams.myShiftRotateStartAfterMovementPercentage, 0.5, 3, 0, 1));
           this._mySteps = [];
         }
-        start(fsm2) {
-          this._myParentFSM = fsm2;
+        start(fsm) {
+          this._myParentFSM = fsm;
           this._myFSM.perform("teleport");
         }
         end() {
           this._myFSM.perform("stop");
         }
-        update(dt, fsm2) {
+        update(dt, fsm) {
           this._myTeleportParams.myTeleportParams.myShiftMovementSeconds = PP.myEasyTuneVariables.get("Shift Movement Seconds");
           this._myTeleportParams.myTeleportParams.myShiftRotateSeconds = PP.myEasyTuneVariables.get("Shift Rotate Seconds");
           this._myTeleportParams.myTeleportParams.myShiftRotateStartAfterMovementPercentage = PP.myEasyTuneVariables.get("Shift Rotate Start Percentage");
@@ -40561,7 +42176,7 @@
           player.play();
           if (Global.myUnmute) {
             Global.myUnmute = false;
-            Howler.mute(false);
+            import_howler8.Howler.mute(false);
           }
           this._myTeleportParams.myPlayerTransformManager.getParams().mySyncPositionDisabled = true;
           this._myLocomotionRuntimeParams.myIsTeleporting = true;
@@ -40596,11 +42211,11 @@
       PlayerLocomotionTeleportTeleportShiftState.prototype._shiftingUpdate = function() {
         let movementToTeleportFeet = PP.vec3_create();
         let newFeetPosition = PP.vec3_create();
-        return function _shiftingUpdate(dt, fsm2) {
+        return function _shiftingUpdate(dt, fsm) {
           this._myShiftMovementTimer.update(dt);
           this._myShiftRotateTimer.update(dt);
           if (this._myShiftRotateTimer.isDone() && this._myShiftMovementTimer.isDone()) {
-            fsm2.perform("done");
+            fsm.perform("done");
           } else {
             newFeetPosition.vec3_copy(this._myTeleportRuntimeParams.myTeleportPosition);
             if (this._myShiftMovementTimer.isStarted() || this._myShiftMovementTimer.isJustDone()) {
@@ -40772,7 +42387,7 @@
             params2.myBlurEndResyncRotation = true;
             params2.myEnterSessionResyncHeight = false;
             params2.myExitSessionResyncHeight = false;
-            params2.myExitSessionResyncVerticalAngle = true;
+            params2.myExitSessionResyncVerticalAngle = false;
             params2.myExitSessionRemoveRightTilt = true;
             params2.myExitSessionAdjustMaxVerticalAngle = true;
             params2.myExitSessionMaxVerticalAngle = 90;
@@ -41089,9 +42704,12 @@
   });
 
   // js/locomotion/cleaned/player_locomotion_smooth_cleaned.js
-  var require_player_locomotion_smooth_cleaned = __commonJS({
+  var player_locomotion_smooth_cleaned_exports = {};
+  var import_howler9;
+  var init_player_locomotion_smooth_cleaned = __esm({
     "js/locomotion/cleaned/player_locomotion_smooth_cleaned.js"() {
-      CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth extends PlayerLocomotionMovement {
+      import_howler9 = __toESM(require_howler());
+      CleanedPlayerLocomotionSmooth = class CleanedPlayerLocomotionSmooth2 extends PlayerLocomotionMovement {
         constructor(params, locomotionRuntimeParams) {
           super(locomotionRuntimeParams);
           this._myParams = params;
@@ -41216,7 +42834,8 @@
               this._myLocomotionRuntimeParams.myIsFlying = false;
             }
           }
-          if (true) {
+          let ignoreMoveThroughCollisionShortcut = true;
+          if (ignoreMoveThroughCollisionShortcut || !PP.myGamepads[this._myParams.myHandedness].getButtonInfo(PP.GamepadButtonID.THUMBSTICK).isPressed()) {
             if (!this._myLocomotionRuntimeParams.myIsFlying) {
               this._myGravitySpeed += this._myParams.myGravityAcceleration * dt;
               verticalMovement = playerUp.vec3_scale(this._myGravitySpeed * dt, verticalMovement);
@@ -41266,7 +42885,7 @@
               }
               if (Global.myUnmute) {
                 Global.myUnmute = false;
-                Howler.mute(false);
+                import_howler9.Howler.mute(false);
               }
             } else {
               if (this._StepRemove) {
@@ -41307,7 +42926,6 @@
         };
       }();
       CleanedPlayerLocomotionSmooth.prototype._onXRSessionEnd = function() {
-        let playerUp = PP.vec3_create();
         return function _onXRSessionEnd(session) {
           this._myDirectionReference = PP.myPlayerObjects.myHead;
           this._myCurrentDirectionConverter = this._myDirectionConverterNonVR;
@@ -41357,6 +42975,13 @@
           WL.onXRSessionStart.push(this._onXRSessionStart.bind(this, false));
           WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
         }
+        // update should be before to check the new valid transform and if the head new transform is fine
+        // then update movements, so that they will use the proper transform
+        // pre/post update?
+        // for sliding if previous frame no horizontal movement then reset sliding on pre update
+        // in generale capire come fare per risolvere i problemi quando c'è un move solo verticale che sputtana i dati dello sliding precedente
+        // che servono per far slidare bene anche dopo, magari un flag per dire non aggiornare le cose relative al movimento orizzontale
+        // o un move check solo verticale
         update(dt) {
         }
         move(movement, outCollisionRuntimeParams = null, forceMove = false) {
@@ -41445,9 +43070,6 @@
         }
         isFloating() {
           return this.isLeaning() || this.isHopping();
-        }
-        isHopping() {
-          return this._myIsHopping;
         }
         isLeaning() {
           return this._myIsLeaning;
@@ -41689,14 +43311,15 @@
                 this.resetReal(
                   !this._myParams.myNeverResetRealPositionNonVR,
                   !this._myParams.myNeverResetRealRotationNonVR,
-                  !this._myParams.myNeverResetRealHeightNonVR,
+                  !this._myParams.myNeverResetRealHeightNonVR && false,
                   false
                 );
               }
             }
           }
           this._updateReal(dt);
-          if (false) {
+          let updatePositionValidEnabled = false;
+          if (updatePositionValidEnabled && this._myParams.myUpdatePositionValid) {
             transformQuat3 = this.getTransformQuat(transformQuat3);
             transformUp = transformQuat3.quat2_getUp(transformUp);
             rotationQuat = transformQuat3.quat2_getRotationQuat(rotationQuat);
@@ -41736,13 +43359,13 @@
         let rotationQuat = PP.quat_create();
         return function _updateReal(dt, resetRealEnabled = true) {
           if (this.getPlayerHeadManager().isSynced()) {
-            this._updateCollisionHeight();
             this._myIsBodyColliding = false;
             this._myIsHeadColliding = false;
             this._myIsLeaning = false;
             this._myIsHopping = false;
             this._myIsFar = false;
             this._generateRealMovementParamsFromMovementParams();
+            this._updateCollisionHeight();
             movementToCheck = this.getPositionReal(positionReal).vec3_sub(this.getPosition(position), movementToCheck);
             if (movementToCheck.vec3_length() > 1e-4) {
               this._myLastValidMovementDirection = movementToCheck.vec3_normalize(this._myLastValidMovementDirection);
@@ -41779,7 +43402,8 @@
                 this._myIsBodyColliding = true;
               }
             }
-            if (false) {
+            let updateFloatingEnabled = false;
+            if (updateFloatingEnabled && this._myParams.mySyncEnabledFlagMap.get(PlayerTransformManagerSyncFlag.FLOATING)) {
               if (!this._myIsBodyColliding) {
                 movementToCheck = newPosition.vec3_sub(position, movementToCheck);
               } else {
@@ -41901,14 +43525,17 @@
             if (this.isSynced(this._myParams.mySyncPositionHeadFlagMap)) {
               this._myValidPositionHead = this.getPositionHeadReal(newPositionHead);
             }
-            if (true) {
+            let alwaysSyncRotation = true;
+            if (alwaysSyncRotation || this.isSynced(this._myParams.mySyncRotationFlagMap)) {
               this._myValidRotationQuat = this.getRotationRealQuat(this._myValidRotationQuat);
             }
-            if (true) {
+            let alwaysSyncHeight = true;
+            if (alwaysSyncHeight || this.isSynced(this._myParams.mySyncHeightFlagMap)) {
               this._myValidHeight = this._myRealMovementCollisionCheckParams.myHeight;
               this._updateCollisionHeight();
             }
-            if (false) {
+            let updateRealPositionValidEnabled = false;
+            if (updateRealPositionValidEnabled && this._myParams.myUpdateRealPositionValid) {
               transformQuat3 = this.getTransformRealQuat(transformQuat3);
               transformUp = transformQuat3.quat2_getUp(transformUp);
               rotationQuat = transformQuat3.quat2_getRotationQuat(rotationQuat);
@@ -42065,27 +43692,55 @@
       }, {
         init: function() {
           Global.myAnalyticsEnabled = true;
+          Global.sendAnalytics("event", "game_init_started", {
+            "value": 1
+          });
           Global.myFromAbove = this._myFromAbove;
+          Global.mySaveManager = new PP.SaveManager("labyroots");
+          Global.mySaveManager.setDelaySavesCommit(false);
+          this._myVRButtonVisibilityUpdated = false;
+          this._myVRButtonDisabledOpacityUpdated = false;
+          this._myVRButtonUsabilityUpdated = false;
+          this._myXRButtonsContainer = document.getElementById("xr-buttons-container");
+          this._myVRButton = document.getElementById("vr-button");
+          if (window.location != null && window.location.host != null) {
+            Global.myIsLocalhost = window.location.host == "localhost:8080";
+          }
+          this._myGestureStartEventListener = function(event) {
+            event.preventDefault();
+          };
+          document.addEventListener("gesturestart", this._myGestureStartEventListener);
         },
         start: function() {
           this._myLoadSetupDone = false;
           this._loadSetup();
           this._myFirstUpdate = true;
+          this._myVeryFirstUpdate = true;
           this._myReadyCounter = 10;
           if (WL.xrSession) {
             this._onXRSessionStart(WL.xrSession);
           }
           WL.onXRSessionStart.push(this._onXRSessionStart.bind(this));
+          WL.onXRSessionEnd.push(this._onXRSessionEnd.bind(this));
           this._myButtonPressed = false;
           PP.CAUtils.setDummyServer(new LR.LRCADummyServer());
           PP.CAUtils.setUseDummyServerOnSDKMissing(true);
           PP.CAUtils.setUseDummyServerOnError(true);
-          Global.mySaveManager = new PP.SaveManager();
           this._myTimePlayingVR = 0;
           this._myTimePlayingVRStep = [1, 2, 3, 5, 10, 20, 30, 60];
           this._myTimePlayingVRStepIndex = 0;
         },
         update: function(dt) {
+          if (this._myVeryFirstUpdate) {
+            this._myVeryFirstUpdate = false;
+            if (this._myVRButton != null) {
+              this._myVRButton.style.setProperty("display", "block");
+            }
+          } else {
+            if (!this._myVRButtonUsabilityUpdated) {
+              this._updateVRButtonVisibility();
+            }
+          }
           if (!this._myLoadSetupDone) {
             return;
           }
@@ -42122,6 +43777,9 @@
           } else if (this._myReadyCounter > 0) {
             this._myReadyCounter--;
             if (this._myReadyCounter == 0) {
+              Global.sendAnalytics("event", "game_init_ended", {
+                "value": 1
+              });
               Global.myStoryReady = true;
             }
           }
@@ -42146,6 +43804,19 @@
               }
             }
           }
+          if (Global.myElementToClick != null) {
+            Global.myElementToClickCounter--;
+            if (Global.myElementToClickCounter <= 0) {
+              Global.myElementToClickCounter = 0;
+              let elementToClick = Global.myElementToClick;
+              Global.myElementToClick = null;
+              try {
+                elementToClick.click();
+                document.body.removeChild(elementToClick);
+              } catch (error) {
+              }
+            }
+          }
         },
         _loadSetup() {
           loadFileJSON("./setup.json", (data) => {
@@ -42157,18 +43828,46 @@
         _loadMaze() {
           Global.myMaze = new LR.Maze(Global.mySetup.myMazeSetup, this.object);
         },
+        _updateVRButtonVisibility() {
+          if (this._myVRButton != null) {
+            if (!this._myVRButtonVisibilityUpdated) {
+              this._myVRButton.style.setProperty("transform", "scale(1)");
+              this._myVRButtonVisibilityUpdated = true;
+            }
+            if (!this._myVRButtonUsabilityUpdated) {
+              if (WL.vrSupported != 0) {
+                this._myVRButton.style.setProperty("opacity", "1");
+                this._myVRButton.style.setProperty("pointer-events", "all");
+                this._myVRButtonUsabilityUpdated = true;
+              } else if (!this._myVRButtonDisabledOpacityUpdated) {
+                this._myVRButton.style.setProperty("opacity", "0.5");
+                this._myVRButtonDisabledOpacityUpdated = true;
+              }
+            }
+          } else {
+            this._myVRButtonUsabilityUpdated = true;
+          }
+        },
         _onXRSessionStart() {
+          if (this._myXRButtonsContainer != null) {
+            this._myXRButtonsContainer.style.setProperty("display", "none");
+          }
           Global.sendAnalytics("event", "enter_vr", {
             "value": 1
           });
-          let isFirstEnterVR = Global.mySaveManager.loadBool("is_first_enter_vr", true);
+          let isFirstEnterVR = Global.mySaveManager.load("is_first_enter_vr", true);
           if (isFirstEnterVR) {
             Global.sendAnalytics("event", "enter_vr_first_time", {
               "value": 1
             });
           }
-          Global.mySaveManager.save("is_first_enter_vr", false, false);
+          Global.mySaveManager.save("is_first_enter_vr", false);
           Global.mySessionStarted = true;
+        },
+        _onXRSessionEnd() {
+          if (this._myXRButtonsContainer != null) {
+            this._myXRButtonsContainer.style.removeProperty("display");
+          }
         }
       });
       Global = {
@@ -42185,14 +43884,17 @@
         myAxeProto: null,
         myFollowAxe: null,
         myFromAbove: false,
-        myAnalyticsEnabled: false
+        myAnalyticsEnabled: false,
+        myIsLocalhost: false,
+        myElementToClick: null,
+        myElementToClickCounter: 0
       };
       Global.mySessionStarted = false;
-      Global.sendAnalytics = function sendAnalytics(...args) {
+      Global.sendAnalytics = function sendAnalytics(eventType, eventName, eventValue) {
         try {
           if (Global.myAnalyticsEnabled) {
             if (window.gtag != null) {
-              window.gtag(...args);
+              window.gtag(eventType, eventName, eventValue);
             }
           }
         } catch (error) {
@@ -42288,7 +43990,7 @@
           this._myGridToUse = mazeSetup.myGrid;
           Global.myIsWeddingTime = false;
           Global.myIsMazeverseTime = false;
-          Global.myWinMazeverse = Global.mySaveManager.loadBool("win_mazeverse", false);
+          Global.myWinMazeverse = Global.mySaveManager.load("win_mazeverse", false);
           if (isMazeverse) {
             this._myGridToUse = Global.createMazeverseMaze();
             if (this._myGridToUse == null) {
@@ -42549,11 +44251,11 @@
         }
       };
       Global.isWedding = function() {
-        let isWedding = Global.mySaveManager.loadBool("is_wedding", false);
+        let isWedding = Global.mySaveManager.load("is_wedding", false);
         if (!isWedding) {
           try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("wedding") != null) {
+            if (urlSearchParams != null && urlSearchParams.get("wedding") == "true") {
               isWedding = true;
             }
           } catch (error) {
@@ -42562,11 +44264,11 @@
         return isWedding;
       };
       Global.isMazeverse = function() {
-        let isMazeverse = Global.mySaveManager.loadBool("is_mazeverse", false);
+        let isMazeverse = Global.mySaveManager.load("is_mazeverse", false);
         if (!isMazeverse) {
           try {
             let urlSearchParams = new URL(window.location).searchParams;
-            if (urlSearchParams != null && urlSearchParams.get("mazeverse") != null) {
+            if (urlSearchParams != null && urlSearchParams.get("mazeverse") == "true") {
               isMazeverse = true;
             }
           } catch (error) {
@@ -43091,12 +44793,12 @@
         }
         return reachableCells;
       };
-      Global.isWallType = function(type2, rootWallIsWall = false) {
+      Global.isWallType = function(type, rootWallIsWall = false) {
         let isWallType = false;
-        if (type2 >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && type2 <= LR.MazeItemType.ROCK_WALL_CROSS) {
+        if (type >= LR.MazeItemType.ROCK_WALL_HORIZONTAL && type <= LR.MazeItemType.ROCK_WALL_CROSS) {
           isWallType = true;
         } else if (rootWallIsWall) {
-          if (type2 == LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL || type2 == LR.MazeItemType.BIG_TREE_WALL_VERTICAL) {
+          if (type == LR.MazeItemType.BIG_TREE_WALL_HORIZONTAL || type == LR.MazeItemType.BIG_TREE_WALL_VERTICAL) {
             isWallType = true;
           }
         }
@@ -43392,8 +45094,6 @@
       };
       Global.addRootWalls = function(maze, createWallsResults, freeCells, doors, addElementsResults) {
         let rootWallsToAdd = Math.round(createWallsResults.myDoors.length * Math.pp_random(0.2, 0.4));
-        let rootWallsAdded = 0;
-        let rootWallsToAddOriginal = rootWallsToAdd;
         let allowOneBigRootWall = false;
         if (Math.pp_randomInt(0, 9) == 0) {
           allowOneBigRootWall = true;
@@ -43454,7 +45154,6 @@
                       }
                     } else {
                     }
-                    rootWallsAdded++;
                     break;
                   } else {
                     blockedDoors++;
@@ -43783,10 +45482,10 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = 25;
+                let currentVersion = "2.1.0";
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
-                this._myCanSkip = Global.mySaveManager.loadBool("can_skip", false);
+                this._myCanSkip = Global.mySaveManager.load("can_skip", false);
                 if (Global.myIsWeddingTime || Global.myIsMazeverseTime) {
                   if (Global.myFromAbove) {
                     this._myTimer.start(0);
@@ -43799,7 +45498,7 @@
                   Global.mySky.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                   Global.myLights.pp_rotateAxis(Math.pp_randomInt(0, 360), [0, 1, 0]);
                 }
-                Global.mySaveManager.save("is_wedding", false, false);
+                Global.mySaveManager.save("is_wedding", false);
                 this._mySessionActive = PP.XRUtils.isSessionActive();
               }
             }
@@ -43885,7 +45584,7 @@
                 Global.myAxe.pp_setActive(true);
                 Global.myFollowAxe.pp_setActive(true);
                 Global.myReady = true;
-                Global.mySaveManager.save("can_skip", true, false);
+                Global.mySaveManager.save("can_skip", true);
                 Global.myMusicPlayer = PP.myAudioManager.createAudioPlayer(AudioID.MUSIC);
                 Global.myMusicPlayer.play();
               }
@@ -43898,11 +45597,8 @@
   });
 
   // js/labyroots/cauldron/audio_load.js
-  var audio_load_exports = {};
-  var import_howler7;
-  var init_audio_load = __esm({
+  var require_audio_load = __commonJS({
     "js/labyroots/cauldron/audio_load.js"() {
-      import_howler7 = __toESM(require_howler());
       WL.registerComponent("audio-load", {}, {
         init() {
         },
@@ -44110,9 +45806,6 @@
             audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.BIG_TREE_DIE_HIT, audioSetup);
           }
-          for (let i = 0; i <= AudioID.INVINCIBLE; i++) {
-            manager.createAudioPlayer(i);
-          }
         }
       });
       AudioID = {
@@ -44162,8 +45855,11 @@
   });
 
   // js/labyroots/cauldron/open_ggj.js
-  var require_open_ggj = __commonJS({
+  var open_ggj_exports = {};
+  var import_howler10;
+  var init_open_ggj = __esm({
     "js/labyroots/cauldron/open_ggj.js"() {
+      import_howler10 = __toESM(require_howler());
       WL.registerComponent("open-ggj", {}, {
         init: function() {
         },
@@ -44178,7 +45874,7 @@
             if (this._myEnd == 0) {
               this._myChange = 1;
               Global.myUnmute = true;
-              Howler.mute(true);
+              import_howler10.Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                 Global.myAxe._myGrabbable.release();
               }
@@ -44189,7 +45885,7 @@
             if (this._myChange == 0) {
               let onSuccess = function() {
                 Global.myUnmute = true;
-                Howler.mute(true);
+                import_howler10.Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
@@ -44225,8 +45921,11 @@
   });
 
   // js/labyroots/cauldron/open_github.js
-  var require_open_github = __commonJS({
+  var open_github_exports = {};
+  var import_howler11;
+  var init_open_github = __esm({
     "js/labyroots/cauldron/open_github.js"() {
+      import_howler11 = __toESM(require_howler());
       WL.registerComponent("open-github", {}, {
         init: function() {
         },
@@ -44241,7 +45940,7 @@
             if (this._myEnd == 0) {
               this._myChange = 1;
               Global.myUnmute = true;
-              Howler.mute(true);
+              import_howler11.Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                 Global.myAxe._myGrabbable.release();
               }
@@ -44252,7 +45951,7 @@
             if (this._myChange == 0) {
               let onSuccess = function() {
                 Global.myUnmute = true;
-                Howler.mute(true);
+                import_howler11.Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
@@ -44288,8 +45987,11 @@
   });
 
   // js/labyroots/cauldron/open_zesty.js
-  var require_open_zesty = __commonJS({
+  var open_zesty_exports = {};
+  var import_howler12;
+  var init_open_zesty = __esm({
     "js/labyroots/cauldron/open_zesty.js"() {
+      import_howler12 = __toESM(require_howler());
       WL.registerComponent("open-zesty", {}, {
         init: function() {
         },
@@ -44304,7 +46006,7 @@
             if (this._myEnd == 0) {
               this._myChange = 1;
               Global.myUnmute = true;
-              Howler.mute(true);
+              import_howler12.Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                 Global.myAxe._myGrabbable.release();
               }
@@ -44345,7 +46047,7 @@
               Global.myZestyComponent = zesty;
               let onSuccess = function() {
                 Global.myUnmute = true;
-                Howler.mute(true);
+                import_howler12.Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
@@ -44378,20 +46080,20 @@
   var require_zesty_wonderland_sdk_compat = __commonJS({
     "js/labyroots/cauldron/zesty-wonderland-sdk-compat.js"() {
       (() => {
-        var Kt = Object.create;
+        var Vt = Object.create;
         var Ee = Object.defineProperty;
-        var Xt = Object.getOwnPropertyDescriptor;
-        var Gt = Object.getOwnPropertyNames;
-        var Qt = Object.getPrototypeOf, Zt = Object.prototype.hasOwnProperty;
+        var Kt = Object.getOwnPropertyDescriptor;
+        var Xt = Object.getOwnPropertyNames;
+        var Gt = Object.getPrototypeOf, Qt = Object.prototype.hasOwnProperty;
         var l = (t, e) => () => (e || t((e = { exports: {} }).exports, e), e.exports);
-        var Yt = (t, e, r, i) => {
+        var Zt = (t, e, r, i) => {
           if (e && typeof e == "object" || typeof e == "function")
-            for (let n of Gt(e))
-              !Zt.call(t, n) && n !== r && Ee(t, n, { get: () => e[n], enumerable: !(i = Xt(e, n)) || i.enumerable });
+            for (let n of Xt(e))
+              !Qt.call(t, n) && n !== r && Ee(t, n, { get: () => e[n], enumerable: !(i = Kt(e, n)) || i.enumerable });
           return t;
         };
-        var xe = (t, e, r) => (r = t != null ? Kt(Qt(t)) : {}, Yt(e || !t || !t.__esModule ? Ee(r, "default", { value: t, enumerable: true }) : r, t));
-        var V = l((cn, Oe) => {
+        var xe = (t, e, r) => (r = t != null ? Vt(Gt(t)) : {}, Zt(e || !t || !t.__esModule ? Ee(r, "default", { value: t, enumerable: true }) : r, t));
+        var V = l((un, Oe) => {
           "use strict";
           Oe.exports = function(e, r) {
             return function() {
@@ -44401,9 +46103,9 @@
             };
           };
         });
-        var f = l((ln2, Ae) => {
+        var f = l((cn, Ae) => {
           "use strict";
-          var er = V(), X = Object.prototype.toString, G = function(t) {
+          var Yt = V(), X = Object.prototype.toString, G = function(t) {
             return function(e) {
               var r = X.call(e);
               return t[r] || (t[r] = r.slice(8, -1).toLowerCase());
@@ -44417,48 +46119,48 @@
           function Q(t) {
             return Array.isArray(t);
           }
-          function j(t) {
+          function U(t) {
             return typeof t > "u";
           }
-          function tr(t) {
-            return t !== null && !j(t) && t.constructor !== null && !j(t.constructor) && typeof t.constructor.isBuffer == "function" && t.constructor.isBuffer(t);
+          function er(t) {
+            return t !== null && !U(t) && t.constructor !== null && !U(t.constructor) && typeof t.constructor.isBuffer == "function" && t.constructor.isBuffer(t);
           }
           var Re = C("ArrayBuffer");
-          function rr(t) {
+          function tr(t) {
             var e;
             return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? e = ArrayBuffer.isView(t) : e = t && t.buffer && Re(t.buffer), e;
           }
-          function nr(t) {
+          function rr(t) {
             return typeof t == "string";
           }
-          function ir(t) {
+          function nr(t) {
             return typeof t == "number";
           }
           function Ce(t) {
             return t !== null && typeof t == "object";
           }
-          function U(t) {
+          function D(t) {
             if (G(t) !== "object")
               return false;
             var e = Object.getPrototypeOf(t);
             return e === null || e === Object.prototype;
           }
-          var sr = C("Date"), ar = C("File"), or = C("Blob"), ur = C("FileList");
+          var ir = C("Date"), sr = C("File"), ar = C("Blob"), or = C("FileList");
           function Z(t) {
             return X.call(t) === "[object Function]";
           }
-          function cr(t) {
+          function ur(t) {
             return Ce(t) && Z(t.pipe);
           }
-          function lr(t) {
+          function cr(t) {
             var e = "[object FormData]";
             return t && (typeof FormData == "function" && t instanceof FormData || X.call(t) === e || Z(t.toString) && t.toString() === e);
           }
-          var dr = C("URLSearchParams");
-          function fr(t) {
+          var lr = C("URLSearchParams");
+          function dr(t) {
             return t.trim ? t.trim() : t.replace(/^\s+|\s+$/g, "");
           }
-          function pr() {
+          function fr() {
             return typeof navigator < "u" && (navigator.product === "ReactNative" || navigator.product === "NativeScript" || navigator.product === "NS") ? false : typeof window < "u" && typeof document < "u";
           }
           function Y(t, e) {
@@ -44473,24 +46175,24 @@
           function K() {
             var t = {};
             function e(n, s) {
-              U(t[s]) && U(n) ? t[s] = K(t[s], n) : U(n) ? t[s] = K({}, n) : Q(n) ? t[s] = n.slice() : t[s] = n;
+              D(t[s]) && D(n) ? t[s] = K(t[s], n) : D(n) ? t[s] = K({}, n) : Q(n) ? t[s] = n.slice() : t[s] = n;
             }
             for (var r = 0, i = arguments.length; r < i; r++)
               Y(arguments[r], e);
             return t;
           }
-          function hr(t, e, r) {
+          function pr(t, e, r) {
             return Y(e, function(n, s) {
-              r && typeof n == "function" ? t[s] = er(n, r) : t[s] = n;
+              r && typeof n == "function" ? t[s] = Yt(n, r) : t[s] = n;
             }), t;
           }
-          function mr(t) {
+          function hr(t) {
             return t.charCodeAt(0) === 65279 && (t = t.slice(1)), t;
           }
-          function yr(t, e, r, i) {
+          function mr(t, e, r, i) {
             t.prototype = Object.create(e.prototype, i), t.prototype.constructor = t, r && Object.assign(t.prototype, r);
           }
-          function vr(t, e, r) {
+          function yr(t, e, r) {
             var i, n, s, a = {};
             e = e || {};
             do {
@@ -44500,31 +46202,31 @@
             } while (t && (!r || r(t, e)) && t !== Object.prototype);
             return e;
           }
-          function wr(t, e, r) {
+          function vr(t, e, r) {
             t = String(t), (r === void 0 || r > t.length) && (r = t.length), r -= e.length;
             var i = t.indexOf(e, r);
             return i !== -1 && i === r;
           }
-          function gr(t) {
+          function wr(t) {
             if (!t)
               return null;
             var e = t.length;
-            if (j(e))
+            if (U(e))
               return null;
             for (var r = new Array(e); e-- > 0; )
               r[e] = t[e];
             return r;
           }
-          var br = function(t) {
+          var gr = function(t) {
             return function(e) {
               return t && e instanceof t;
             };
           }(typeof Uint8Array < "u" && Object.getPrototypeOf(Uint8Array));
-          Ae.exports = { isArray: Q, isArrayBuffer: Re, isBuffer: tr, isFormData: lr, isArrayBufferView: rr, isString: nr, isNumber: ir, isObject: Ce, isPlainObject: U, isUndefined: j, isDate: sr, isFile: ar, isBlob: or, isFunction: Z, isStream: cr, isURLSearchParams: dr, isStandardBrowserEnv: pr, forEach: Y, merge: K, extend: hr, trim: fr, stripBOM: mr, inherits: yr, toFlatObject: vr, kindOf: G, kindOfTest: C, endsWith: wr, toArray: gr, isTypedArray: br, isFileList: ur };
+          Ae.exports = { isArray: Q, isArrayBuffer: Re, isBuffer: er, isFormData: cr, isArrayBufferView: tr, isString: rr, isNumber: nr, isObject: Ce, isPlainObject: D, isUndefined: U, isDate: ir, isFile: sr, isBlob: ar, isFunction: Z, isStream: ur, isURLSearchParams: lr, isStandardBrowserEnv: fr, forEach: Y, merge: K, extend: pr, trim: dr, stripBOM: hr, inherits: mr, toFlatObject: yr, kindOf: G, kindOfTest: C, endsWith: vr, toArray: wr, isTypedArray: gr, isFileList: or };
         });
-        var ee = l((dn, qe) => {
+        var ee = l((ln2, qe) => {
           "use strict";
-          var q = f();
+          var S = f();
           function Te(t) {
             return encodeURIComponent(t).replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",").replace(/%20/g, "+").replace(/%5B/gi, "[").replace(/%5D/gi, "]");
           }
@@ -44534,13 +46236,13 @@
             var n;
             if (i)
               n = i(r);
-            else if (q.isURLSearchParams(r))
+            else if (S.isURLSearchParams(r))
               n = r.toString();
             else {
               var s = [];
-              q.forEach(r, function(c, h) {
-                c === null || typeof c > "u" || (q.isArray(c) ? h = h + "[]" : c = [c], q.forEach(c, function(d) {
-                  q.isDate(d) ? d = d.toISOString() : q.isObject(d) && (d = JSON.stringify(d)), s.push(Te(h) + "=" + Te(d));
+              S.forEach(r, function(c, h) {
+                c === null || typeof c > "u" || (S.isArray(c) ? h = h + "[]" : c = [c], S.forEach(c, function(d) {
+                  S.isDate(d) ? d = d.toISOString() : S.isObject(d) && (d = JSON.stringify(d)), s.push(Te(h) + "=" + Te(d));
                 }));
               }), n = s.join("&");
             }
@@ -44551,65 +46253,65 @@
             return e;
           };
         });
-        var Ne = l((fn, Se) => {
+        var Ne = l((dn, Se) => {
           "use strict";
-          var Er = f();
-          function F() {
+          var br = f();
+          function j() {
             this.handlers = [];
           }
-          F.prototype.use = function(e, r, i) {
+          j.prototype.use = function(e, r, i) {
             return this.handlers.push({ fulfilled: e, rejected: r, synchronous: i ? i.synchronous : false, runWhen: i ? i.runWhen : null }), this.handlers.length - 1;
           };
-          F.prototype.eject = function(e) {
+          j.prototype.eject = function(e) {
             this.handlers[e] && (this.handlers[e] = null);
           };
-          F.prototype.forEach = function(e) {
-            Er.forEach(this.handlers, function(i) {
+          j.prototype.forEach = function(e) {
+            br.forEach(this.handlers, function(i) {
               i !== null && e(i);
             });
           };
-          Se.exports = F;
+          Se.exports = j;
         });
-        var Pe = l((pn, ke) => {
+        var Pe = l((fn, ke) => {
           "use strict";
-          var xr = f();
+          var Er = f();
           ke.exports = function(e, r) {
-            xr.forEach(e, function(n, s) {
+            Er.forEach(e, function(n, s) {
               s !== r && s.toUpperCase() === r.toUpperCase() && (e[r] = n, delete e[s]);
             });
           };
         });
-        var A = l((hn, De) => {
+        var A = l((pn, De) => {
           "use strict";
           var _e = f();
-          function S(t, e, r, i, n) {
+          function N(t, e, r, i, n) {
             Error.call(this), this.message = t, this.name = "AxiosError", e && (this.code = e), r && (this.config = r), i && (this.request = i), n && (this.response = n);
           }
-          _e.inherits(S, Error, { toJSON: function() {
+          _e.inherits(N, Error, { toJSON: function() {
             return { message: this.message, name: this.name, description: this.description, number: this.number, fileName: this.fileName, lineNumber: this.lineNumber, columnNumber: this.columnNumber, stack: this.stack, config: this.config, code: this.code, status: this.response && this.response.status ? this.response.status : null };
           } });
-          var Le = S.prototype, Be = {};
+          var Le = N.prototype, Be = {};
           ["ERR_BAD_OPTION_VALUE", "ERR_BAD_OPTION", "ECONNABORTED", "ETIMEDOUT", "ERR_NETWORK", "ERR_FR_TOO_MANY_REDIRECTS", "ERR_DEPRECATED", "ERR_BAD_RESPONSE", "ERR_BAD_REQUEST", "ERR_CANCELED"].forEach(function(t) {
             Be[t] = { value: t };
           });
-          Object.defineProperties(S, Be);
+          Object.defineProperties(N, Be);
           Object.defineProperty(Le, "isAxiosError", { value: true });
-          S.from = function(t, e, r, i, n, s) {
+          N.from = function(t, e, r, i, n, s) {
             var a = Object.create(Le);
             return _e.toFlatObject(t, a, function(c) {
               return c !== Error.prototype;
-            }), S.call(a, t.message, e, r, i, n), a.name = t.name, s && Object.assign(a, s), a;
+            }), N.call(a, t.message, e, r, i, n), a.name = t.name, s && Object.assign(a, s), a;
           };
-          De.exports = S;
+          De.exports = N;
         });
-        var te = l((mn, Ue) => {
+        var te = l((hn, Ue) => {
           "use strict";
           Ue.exports = { silentJSONParsing: true, forcedJSONParsing: true, clarifyTimeoutError: false };
         });
-        var re = l((yn, je) => {
+        var re = l((mn, je) => {
           "use strict";
           var b = f();
-          function Or(t, e) {
+          function xr(t, e) {
             e = e || new FormData();
             var r = [];
             function i(s) {
@@ -44640,9 +46342,9 @@
             }
             return n(t), e;
           }
-          je.exports = Or;
+          je.exports = xr;
         });
-        var Ie = l((vn, Fe) => {
+        var Ie = l((yn, Fe) => {
           "use strict";
           var ne = A();
           Fe.exports = function(e, r, i) {
@@ -44650,13 +46352,13 @@
             !i.status || !n || n(i.status) ? e(i) : r(new ne("Request failed with status code " + i.status, [ne.ERR_BAD_REQUEST, ne.ERR_BAD_RESPONSE][Math.floor(i.status / 100) - 4], i.config, i.request, i));
           };
         });
-        var Me = l((wn, ze) => {
+        var Me = l((vn, ze) => {
           "use strict";
-          var I = f();
-          ze.exports = I.isStandardBrowserEnv() ? function() {
+          var F = f();
+          ze.exports = F.isStandardBrowserEnv() ? function() {
             return { write: function(r, i, n, s, a, u) {
               var c = [];
-              c.push(r + "=" + encodeURIComponent(i)), I.isNumber(n) && c.push("expires=" + new Date(n).toGMTString()), I.isString(s) && c.push("path=" + s), I.isString(a) && c.push("domain=" + a), u === true && c.push("secure"), document.cookie = c.join("; ");
+              c.push(r + "=" + encodeURIComponent(i)), F.isNumber(n) && c.push("expires=" + new Date(n).toGMTString()), F.isString(s) && c.push("path=" + s), F.isString(a) && c.push("domain=" + a), u === true && c.push("secure"), document.cookie = c.join("; ");
             }, read: function(r) {
               var i = document.cookie.match(new RegExp("(^|;\\s*)(" + r + ")=([^;]*)"));
               return i ? decodeURIComponent(i[3]) : null;
@@ -44671,41 +46373,41 @@
             } };
           }();
         });
-        var We = l((gn, $e) => {
+        var We = l((wn, $e) => {
           "use strict";
           $e.exports = function(e) {
             return /^([a-z][a-z\d+\-.]*:)?\/\//i.test(e);
           };
         });
-        var Je = l((bn, He) => {
+        var Je = l((gn, He) => {
           "use strict";
           He.exports = function(e, r) {
             return r ? e.replace(/\/+$/, "") + "/" + r.replace(/^\/+/, "") : e;
           };
         });
-        var ie = l((En, Ve) => {
+        var ie = l((bn, Ve) => {
           "use strict";
-          var Rr = We(), Cr = Je();
+          var Or = We(), Rr = Je();
           Ve.exports = function(e, r) {
-            return e && !Rr(r) ? Cr(e, r) : r;
+            return e && !Or(r) ? Rr(e, r) : r;
           };
         });
-        var Xe = l((xn, Ke) => {
+        var Xe = l((En, Ke) => {
           "use strict";
-          var se = f(), Ar = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];
+          var se = f(), Cr = ["age", "authorization", "content-length", "content-type", "etag", "expires", "from", "host", "if-modified-since", "if-unmodified-since", "last-modified", "location", "max-forwards", "proxy-authorization", "referer", "retry-after", "user-agent"];
           Ke.exports = function(e) {
             var r = {}, i, n, s;
             return e && se.forEach(e.split(`
 `), function(u) {
               if (s = u.indexOf(":"), i = se.trim(u.substr(0, s)).toLowerCase(), n = se.trim(u.substr(s + 1)), i) {
-                if (r[i] && Ar.indexOf(i) >= 0)
+                if (r[i] && Cr.indexOf(i) >= 0)
                   return;
                 i === "set-cookie" ? r[i] = (r[i] ? r[i] : []).concat([n]) : r[i] = r[i] ? r[i] + ", " + n : n;
               }
             }), r;
           };
         });
-        var Ze = l((On, Qe) => {
+        var Ze = l((xn, Qe) => {
           "use strict";
           var Ge = f();
           Qe.exports = Ge.isStandardBrowserEnv() ? function() {
@@ -44724,43 +46426,43 @@
             };
           }();
         });
-        var B = l((Rn, et) => {
+        var L = l((On, et) => {
           "use strict";
-          var ae = A(), Tr = f();
+          var ae = A(), Ar = f();
           function Ye(t) {
             ae.call(this, t ?? "canceled", ae.ERR_CANCELED), this.name = "CanceledError";
           }
-          Tr.inherits(Ye, ae, { __CANCEL__: true });
+          Ar.inherits(Ye, ae, { __CANCEL__: true });
           et.exports = Ye;
         });
-        var rt = l((Cn, tt) => {
+        var rt = l((Rn, tt) => {
           "use strict";
           tt.exports = function(e) {
             var r = /^([-+\w]{1,25})(:?\/\/|:)/.exec(e);
             return r && r[1] || "";
           };
         });
-        var oe = l((An, nt) => {
+        var oe = l((Cn, nt) => {
           "use strict";
-          var D = f(), qr = Ie(), Sr = Me(), Nr = ee(), kr = ie(), Pr = Xe(), _r = Ze(), Lr = te(), E = A(), Br = B(), Dr = rt();
+          var B = f(), Tr = Ie(), qr = Me(), Sr = ee(), Nr = ie(), kr = Xe(), Pr = Ze(), _r = te(), E = A(), Lr = L(), Br = rt();
           nt.exports = function(e) {
             return new Promise(function(i, n) {
               var s = e.data, a = e.headers, u = e.responseType, c;
               function h() {
                 e.cancelToken && e.cancelToken.unsubscribe(c), e.signal && e.signal.removeEventListener("abort", c);
               }
-              D.isFormData(s) && D.isStandardBrowserEnv() && delete a["Content-Type"];
+              B.isFormData(s) && B.isStandardBrowserEnv() && delete a["Content-Type"];
               var o = new XMLHttpRequest();
               if (e.auth) {
                 var d = e.auth.username || "", v = e.auth.password ? unescape(encodeURIComponent(e.auth.password)) : "";
                 a.Authorization = "Basic " + btoa(d + ":" + v);
               }
-              var m = kr(e.baseURL, e.url);
-              o.open(e.method.toUpperCase(), Nr(m, e.params, e.paramsSerializer), true), o.timeout = e.timeout;
+              var m = Nr(e.baseURL, e.url);
+              o.open(e.method.toUpperCase(), Sr(m, e.params, e.paramsSerializer), true), o.timeout = e.timeout;
               function ge() {
                 if (o) {
-                  var g = "getAllResponseHeaders" in o ? Pr(o.getAllResponseHeaders()) : null, T = !u || u === "text" || u === "json" ? o.responseText : o.response, R = { data: T, status: o.status, statusText: o.statusText, headers: g, config: e, request: o };
-                  qr(function(J) {
+                  var g = "getAllResponseHeaders" in o ? kr(o.getAllResponseHeaders()) : null, q = !u || u === "text" || u === "json" ? o.responseText : o.response, R = { data: q, status: o.status, statusText: o.statusText, headers: g, config: e, request: o };
+                  Tr(function(J) {
                     i(J), h();
                   }, function(J) {
                     n(J), h();
@@ -44774,18 +46476,18 @@
               }, o.onerror = function() {
                 n(new E("Network Error", E.ERR_NETWORK, e, o, o)), o = null;
               }, o.ontimeout = function() {
-                var T = e.timeout ? "timeout of " + e.timeout + "ms exceeded" : "timeout exceeded", R = e.transitional || Lr;
-                e.timeoutErrorMessage && (T = e.timeoutErrorMessage), n(new E(T, R.clarifyTimeoutError ? E.ETIMEDOUT : E.ECONNABORTED, e, o)), o = null;
-              }, D.isStandardBrowserEnv()) {
-                var be = (e.withCredentials || _r(m)) && e.xsrfCookieName ? Sr.read(e.xsrfCookieName) : void 0;
+                var q = e.timeout ? "timeout of " + e.timeout + "ms exceeded" : "timeout exceeded", R = e.transitional || _r;
+                e.timeoutErrorMessage && (q = e.timeoutErrorMessage), n(new E(q, R.clarifyTimeoutError ? E.ETIMEDOUT : E.ECONNABORTED, e, o)), o = null;
+              }, B.isStandardBrowserEnv()) {
+                var be = (e.withCredentials || Pr(m)) && e.xsrfCookieName ? qr.read(e.xsrfCookieName) : void 0;
                 be && (a[e.xsrfHeaderName] = be);
               }
-              "setRequestHeader" in o && D.forEach(a, function(T, R) {
-                typeof s > "u" && R.toLowerCase() === "content-type" ? delete a[R] : o.setRequestHeader(R, T);
-              }), D.isUndefined(e.withCredentials) || (o.withCredentials = !!e.withCredentials), u && u !== "json" && (o.responseType = e.responseType), typeof e.onDownloadProgress == "function" && o.addEventListener("progress", e.onDownloadProgress), typeof e.onUploadProgress == "function" && o.upload && o.upload.addEventListener("progress", e.onUploadProgress), (e.cancelToken || e.signal) && (c = function(g) {
-                o && (n(!g || g && g.type ? new Br() : g), o.abort(), o = null);
+              "setRequestHeader" in o && B.forEach(a, function(q, R) {
+                typeof s > "u" && R.toLowerCase() === "content-type" ? delete a[R] : o.setRequestHeader(R, q);
+              }), B.isUndefined(e.withCredentials) || (o.withCredentials = !!e.withCredentials), u && u !== "json" && (o.responseType = e.responseType), typeof e.onDownloadProgress == "function" && o.addEventListener("progress", e.onDownloadProgress), typeof e.onUploadProgress == "function" && o.upload && o.upload.addEventListener("progress", e.onUploadProgress), (e.cancelToken || e.signal) && (c = function(g) {
+                o && (n(!g || g && g.type ? new Lr() : g), o.abort(), o = null);
               }, e.cancelToken && e.cancelToken.subscribe(c), e.signal && (e.signal.aborted ? c() : e.signal.addEventListener("abort", c))), s || (s = null);
-              var H = Dr(m);
+              var H = Br(m);
               if (H && ["http", "https", "file"].indexOf(H) === -1) {
                 n(new E("Unsupported protocol " + H + ":", E.ERR_BAD_REQUEST, e));
                 return;
@@ -44794,20 +46496,20 @@
             });
           };
         });
-        var st = l((Tn, it) => {
+        var st = l((An, it) => {
           it.exports = null;
         });
-        var M = l((qn, ct) => {
+        var z = l((Tn, ct) => {
           "use strict";
-          var p = f(), at = Pe(), ot = A(), Ur = te(), jr = re(), Fr = { "Content-Type": "application/x-www-form-urlencoded" };
+          var p = f(), at = Pe(), ot = A(), Dr = te(), Ur = re(), jr = { "Content-Type": "application/x-www-form-urlencoded" };
           function ut(t, e) {
             !p.isUndefined(t) && p.isUndefined(t["Content-Type"]) && (t["Content-Type"] = e);
           }
-          function Ir() {
+          function Fr() {
             var t;
             return typeof XMLHttpRequest < "u" ? t = oe() : typeof process < "u" && Object.prototype.toString.call(process) === "[object process]" && (t = oe()), t;
           }
-          function zr(t, e, r) {
+          function Ir(t, e, r) {
             if (p.isString(t))
               try {
                 return (e || JSON.parse)(t), p.trim(t);
@@ -44817,7 +46519,7 @@
               }
             return (r || JSON.stringify)(t);
           }
-          var z = { transitional: Ur, adapter: Ir(), transformRequest: [function(e, r) {
+          var I = { transitional: Dr, adapter: Fr(), transformRequest: [function(e, r) {
             if (at(r, "Accept"), at(r, "Content-Type"), p.isFormData(e) || p.isArrayBuffer(e) || p.isBuffer(e) || p.isStream(e) || p.isFile(e) || p.isBlob(e))
               return e;
             if (p.isArrayBufferView(e))
@@ -44827,12 +46529,12 @@
             var i = p.isObject(e), n = r && r["Content-Type"], s;
             if ((s = p.isFileList(e)) || i && n === "multipart/form-data") {
               var a = this.env && this.env.FormData;
-              return jr(s ? { "files[]": e } : e, a && new a());
+              return Ur(s ? { "files[]": e } : e, a && new a());
             } else if (i || n === "application/json")
-              return ut(r, "application/json"), zr(e);
+              return ut(r, "application/json"), Ir(e);
             return e;
           }], transformResponse: [function(e) {
-            var r = this.transitional || z.transitional, i = r && r.silentJSONParsing, n = r && r.forcedJSONParsing, s = !i && this.responseType === "json";
+            var r = this.transitional || I.transitional, i = r && r.silentJSONParsing, n = r && r.forcedJSONParsing, s = !i && this.responseType === "json";
             if (s || n && p.isString(e) && e.length)
               try {
                 return JSON.parse(e);
@@ -44845,49 +46547,49 @@
             return e >= 200 && e < 300;
           }, headers: { common: { Accept: "application/json, text/plain, */*" } } };
           p.forEach(["delete", "get", "head"], function(e) {
-            z.headers[e] = {};
+            I.headers[e] = {};
           });
           p.forEach(["post", "put", "patch"], function(e) {
-            z.headers[e] = p.merge(Fr);
+            I.headers[e] = p.merge(jr);
           });
-          ct.exports = z;
+          ct.exports = I;
         });
-        var dt = l((Sn, lt) => {
+        var dt = l((qn, lt) => {
           "use strict";
-          var Mr = f(), $r = M();
+          var zr = f(), Mr = z();
           lt.exports = function(e, r, i) {
-            var n = this || $r;
-            return Mr.forEach(i, function(a) {
+            var n = this || Mr;
+            return zr.forEach(i, function(a) {
               e = a.call(n, e, r);
             }), e;
           };
         });
-        var ue = l((Nn, ft) => {
+        var ue = l((Sn, ft) => {
           "use strict";
           ft.exports = function(e) {
             return !!(e && e.__CANCEL__);
           };
         });
-        var mt = l((kn, ht) => {
+        var mt = l((Nn, ht) => {
           "use strict";
-          var pt = f(), ce = dt(), Wr = ue(), Hr = M(), Jr = B();
+          var pt = f(), ce = dt(), $r = ue(), Wr = z(), Hr = L();
           function le(t) {
             if (t.cancelToken && t.cancelToken.throwIfRequested(), t.signal && t.signal.aborted)
-              throw new Jr();
+              throw new Hr();
           }
           ht.exports = function(e) {
             le(e), e.headers = e.headers || {}, e.data = ce.call(e, e.data, e.headers, e.transformRequest), e.headers = pt.merge(e.headers.common || {}, e.headers[e.method] || {}, e.headers), pt.forEach(["delete", "get", "head", "post", "put", "patch", "common"], function(n) {
               delete e.headers[n];
             });
-            var r = e.adapter || Hr.adapter;
+            var r = e.adapter || Wr.adapter;
             return r(e).then(function(n) {
               return le(e), n.data = ce.call(e, n.data, n.headers, e.transformResponse), n;
             }, function(n) {
-              return Wr(n) || (le(e), n && n.response && (n.response.data = ce.call(e, n.response.data, n.response.headers, e.transformResponse))), Promise.reject(n);
+              return $r(n) || (le(e), n && n.response && (n.response.data = ce.call(e, n.response.data, n.response.headers, e.transformResponse))), Promise.reject(n);
             });
           };
         });
-        var de = l((Pn, yt) => {
+        var de = l((kn, yt) => {
           "use strict";
           var w = f();
           yt.exports = function(e, r) {
@@ -44927,12 +46629,12 @@
             }), i;
           };
         });
-        var fe = l((_n, vt) => {
+        var fe = l((Pn, vt) => {
           vt.exports = { version: "0.27.2" };
         });
-        var bt = l((Ln, gt) => {
+        var bt = l((_n, gt) => {
           "use strict";
-          var Vr = fe().version, O = A(), pe = {};
+          var Jr = fe().version, O = A(), pe = {};
           ["object", "boolean", "number", "function", "string", "symbol"].forEach(function(t, e) {
             pe[t] = function(i) {
               return typeof i === t || "a" + (e < 1 ? "n " : " ") + t;
@@ -44941,7 +46643,7 @@
           var wt = {};
           pe.transitional = function(e, r, i) {
             function n(s, a) {
-              return "[Axios v" + Vr + "] Transitional option '" + s + "'" + a + (i ? ". " + i : "");
+              return "[Axios v" + Jr + "] Transitional option '" + s + "'" + a + (i ? ". " + i : "");
             }
             return function(s, a, u) {
               if (e === false)
@@ -44949,7 +46651,7 @@
               return r && !wt[a] && (wt[a] = true, console.warn(n(a, " has been deprecated since v" + r + " and will be removed in the near future"))), e ? e(s, a, u) : true;
             };
           };
-          function Kr(t, e, r) {
+          function Vr(t, e, r) {
             if (typeof t != "object")
               throw new O("options must be an object", O.ERR_BAD_OPTION_VALUE);
             for (var i = Object.keys(t), n = i.length; n-- > 0; ) {
@@ -44964,18 +46666,18 @@
                 throw new O("Unknown option " + s, O.ERR_BAD_OPTION);
             }
           }
-          gt.exports = { assertOptions: Kr, validators: pe };
+          gt.exports = { assertOptions: Vr, validators: pe };
         });
-        var At = l((Bn, Ct) => {
+        var At = l((Ln, Ct) => {
           "use strict";
-          var Ot = f(), Xr = ee(), Et = Ne(), xt = mt(), $ = de(), Gr = ie(), Rt = bt(), N = Rt.validators;
-          function k(t) {
+          var Ot = f(), Kr = ee(), Et = Ne(), xt = mt(), M = de(), Xr = ie(), Rt = bt(), k = Rt.validators;
+          function P(t) {
             this.defaults = t, this.interceptors = { request: new Et(), response: new Et() };
           }
-          k.prototype.request = function(e, r) {
-            typeof e == "string" ? (r = r || {}, r.url = e) : r = e || {}, r = $(this.defaults, r), r.method ? r.method = r.method.toLowerCase() : this.defaults.method ? r.method = this.defaults.method.toLowerCase() : r.method = "get";
+          P.prototype.request = function(e, r) {
+            typeof e == "string" ? (r = r || {}, r.url = e) : r = e || {}, r = M(this.defaults, r), r.method ? r.method = r.method.toLowerCase() : this.defaults.method ? r.method = this.defaults.method.toLowerCase() : r.method = "get";
             var i = r.transitional;
-            i !== void 0 && Rt.assertOptions(i, { silentJSONParsing: N.transitional(N.boolean), forcedJSONParsing: N.transitional(N.boolean), clarifyTimeoutError: N.transitional(N.boolean) }, false);
+            i !== void 0 && Rt.assertOptions(i, { silentJSONParsing: k.transitional(k.boolean), forcedJSONParsing: k.transitional(k.boolean), clarifyTimeoutError: k.transitional(k.boolean) }, false);
             var n = [], s = true;
             this.interceptors.request.forEach(function(m) {
               typeof m.runWhen == "function" && m.runWhen(r) === false || (s = s && m.synchronous, n.unshift(m.fulfilled, m.rejected));
@@ -45009,30 +46711,30 @@
               u = u.then(a.shift(), a.shift());
             return u;
           };
-          k.prototype.getUri = function(e) {
-            e = $(this.defaults, e);
-            var r = Gr(e.baseURL, e.url);
-            return Xr(r, e.params, e.paramsSerializer);
+          P.prototype.getUri = function(e) {
+            e = M(this.defaults, e);
+            var r = Xr(e.baseURL, e.url);
+            return Kr(r, e.params, e.paramsSerializer);
           };
           Ot.forEach(["delete", "get", "head", "options"], function(e) {
-            k.prototype[e] = function(r, i) {
-              return this.request($(i || {}, { method: e, url: r, data: (i || {}).data }));
+            P.prototype[e] = function(r, i) {
+              return this.request(M(i || {}, { method: e, url: r, data: (i || {}).data }));
             };
           });
           Ot.forEach(["post", "put", "patch"], function(e) {
             function r(i) {
               return function(s, a, u) {
-                return this.request($(u || {}, { method: e, headers: i ? { "Content-Type": "multipart/form-data" } : {}, url: s, data: a }));
+                return this.request(M(u || {}, { method: e, headers: i ? { "Content-Type": "multipart/form-data" } : {}, url: s, data: a }));
               };
             }
-            k.prototype[e] = r(), k.prototype[e + "Form"] = r(true);
+            P.prototype[e] = r(), P.prototype[e + "Form"] = r(true);
           });
-          Ct.exports = k;
+          Ct.exports = P;
         });
-        var qt = l((Dn, Tt) => {
+        var qt = l((Bn, Tt) => {
           "use strict";
-          var Qr = B();
-          function P(t) {
+          var Gr = L();
+          function _(t) {
             if (typeof t != "function")
               throw new TypeError("executor must be a function.");
             var e;
@@ -45055,35 +46757,35 @@
                 r.unsubscribe(n);
               }, s;
             }, t(function(n) {
-              r.reason || (r.reason = new Qr(n), e(r.reason));
+              r.reason || (r.reason = new Gr(n), e(r.reason));
             });
           }
-          P.prototype.throwIfRequested = function() {
+          _.prototype.throwIfRequested = function() {
             if (this.reason)
               throw this.reason;
           };
-          P.prototype.subscribe = function(e) {
+          _.prototype.subscribe = function(e) {
             if (this.reason) {
               e(this.reason);
               return;
             }
             this._listeners ? this._listeners.push(e) : this._listeners = [e];
           };
-          P.prototype.unsubscribe = function(e) {
+          _.prototype.unsubscribe = function(e) {
             if (this._listeners) {
               var r = this._listeners.indexOf(e);
               r !== -1 && this._listeners.splice(r, 1);
             }
           };
-          P.source = function() {
-            var e, r = new P(function(n) {
+          _.source = function() {
+            var e, r = new _(function(n) {
               e = n;
             });
             return { token: r, cancel: e };
           };
-          Tt.exports = P;
+          Tt.exports = _;
         });
-        var Nt = l((Un, St) => {
+        var Nt = l((Dn, St) => {
           "use strict";
           St.exports = function(e) {
             return function(i) {
@@ -45091,25 +46793,25 @@
             };
           };
         });
-        var Pt = l((jn, kt) => {
+        var Pt = l((Un, kt) => {
           "use strict";
-          var Zr = f();
+          var Qr = f();
           kt.exports = function(e) {
-            return Zr.isObject(e) && e.isAxiosError === true;
+            return Qr.isObject(e) && e.isAxiosError === true;
           };
         });
-        var Bt = l((Fn, he) => {
+        var Bt = l((jn, he) => {
           "use strict";
-          var _t = f(), Yr = V(), W = At(), en = de(), tn = M();
+          var _t = f(), Zr = V(), $ = At(), Yr = de(), en = z();
           function Lt(t) {
-            var e = new W(t), r = Yr(W.prototype.request, e);
-            return _t.extend(r, W.prototype, e), _t.extend(r, e), r.create = function(n) {
-              return Lt(en(t, n));
+            var e = new $(t), r = Zr($.prototype.request, e);
+            return _t.extend(r, $.prototype, e), _t.extend(r, e), r.create = function(n) {
+              return Lt(Yr(t, n));
             }, r;
           }
-          var y = Lt(tn);
-          y.Axios = W;
-          y.CanceledError = B();
+          var y = Lt(en);
+          y.Axios = $;
+          y.CanceledError = L();
           y.CancelToken = qt();
           y.isCancel = ue();
           y.VERSION = fe().version;
@@ -45124,12 +46826,12 @@
           he.exports = y;
           he.exports.default = y;
         });
-        var me = l((In, Dt) => {
+        var me = l((Fn, Dt) => {
           Dt.exports = Bt();
         });
-        var L = xe(me(), 1);
-        var x = "https://zesty-storage-prod.s3.amazonaws.com/images/zesty", _ = { tall: { width: 0.75, height: 1, style: { standard: `${x}/zesty-banner-tall.png`, minimal: `${x}/zesty-banner-tall-minimal.png`, transparent: `${x}/zesty-banner-tall-transparent.png` } }, wide: { width: 4, height: 1, style: { standard: `${x}/zesty-banner-wide.png`, minimal: `${x}/zesty-banner-wide-minimal.png`, transparent: `${x}/zesty-banner-wide-transparent.png` } }, square: { width: 1, height: 1, style: { standard: `${x}/zesty-banner-square.png`, minimal: `${x}/zesty-banner-square-minimal.png`, transparent: `${x}/zesty-banner-square-transparent.png` } } }, Ut = "square";
-        var rn = xe(me(), 1);
+        var W = xe(me(), 1);
+        var x = "https://zesty-storage-prod.s3.amazonaws.com/images/zesty", T = { tall: { width: 0.75, height: 1, style: { standard: `${x}/zesty-banner-tall.png`, minimal: `${x}/zesty-banner-tall-minimal.png`, transparent: `${x}/zesty-banner-tall-transparent.png` } }, wide: { width: 4, height: 1, style: { standard: `${x}/zesty-banner-wide.png`, minimal: `${x}/zesty-banner-wide-minimal.png`, transparent: `${x}/zesty-banner-wide-transparent.png` } }, square: { width: 1, height: 1, style: { standard: `${x}/zesty-banner-square.png`, minimal: `${x}/zesty-banner-square-minimal.png`, transparent: `${x}/zesty-banner-square-transparent.png` } } }, Ut = "square";
+        var tn = xe(me(), 1);
         var ye = () => {
           let t = window.XRHand != null && window.XRMediaBinding != null, e = navigator.userAgent.includes("OculusBrowser"), r = t && e ? "Full" : t || e ? "Partial" : "None";
           return { match: r !== "None", confidence: r };
@@ -45168,36 +46870,34 @@
             window.open(t, "_blank");
           }
         };
-        var zt = "https://beacon.zesty.market", Mt = "https://beacon2.zesty.market/zgraphql", nn = "https://api.zesty.market/api";
-        var $t = async (t, e = "tall", r = "standard") => {
+        var zt = "https://beacon2.zesty.market/zgraphql", rn = "https://api.zesty.market/api";
+        var Mt = async (t, e = "tall", r = "standard") => {
           try {
-            let i = encodeURI(window.top.location.href).replace(/\/$/, "");
-            return (await L.default.get(`${nn}/ad?ad_unit_id=${t}&url=${i}`)).data;
+            let i = encodeURI(window.top.location.href).replace(/\/$/, ""), n = await W.default.get(`${rn}/ad?ad_unit_id=${t}&url=${i}`);
+            return n.data ? n.data : { Ads: [{ asset_url: T[e].style[r], cta_url: "https://www.zesty.market" }], CampaignId: "TestCampaign" };
           } catch {
-            return console.warn("No active campaign banner could be located. Displaying default banner."), { Ads: [{ asset_url: _[e].style[r], cta_url: "https://www.zesty.market" }], CampaignId: "TestCampaign" };
+            return console.warn("Could not retrieve an active campaign banner. Retrieving default banner."), { Ads: [{ asset_url: T[e].style[r], cta_url: "https://www.zesty.market" }], CampaignId: "TestCampaign" };
+          }
+        }, $t = async (t, e = null) => {
+          let { platform: r, confidence: i } = await we();
+          try {
+            await W.default.post(zt, { query: `mutation { increment(eventType: visits, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
+          } catch (n) {
+            console.log("Failed to emit onload event", n.message);
           }
         }, Wt = async (t, e = null) => {
           let { platform: r, confidence: i } = await we();
           try {
-            let n = zt + `/api/v1/space/${t}`;
-            await L.default.put(n), await L.default.post(Mt, { query: `mutation { increment(eventType: visits, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
-          } catch (n) {
-            console.log("Failed to emit onload event", n.message);
-          }
-        }, Ht = async (t, e = null) => {
-          let { platform: r, confidence: i } = await we();
-          try {
-            let n = zt + `/api/v1/space/click/${t}`;
-            await L.default.put(n), await L.default.post(Mt, { query: `mutation { increment(eventType: clicks, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
+            await W.default.post(zt, { query: `mutation { increment(eventType: clicks, spaceId: "${t}", campaignId: "${e}", platform: { name: ${r}, confidence: ${i} }) { message } }` }, { headers: { "Content-Type": "application/json" } });
           } catch (n) {
             console.log("Failed to emit onclick event", n.message);
           }
         };
-        var Jt = "2.0.5";
-        console.log(`Zesty SDK Version: ${Jt} (compatibility)`);
-        var an = "https://ipfs.io/ipns/libv2.zesty.market/zesty-formats.js", on = "https://ipfs.io/ipns/libv2.zesty.market/zesty-networking.js";
-        WL.registerComponent("zesty-banner", { adUnit: { type: WL.Type.String }, format: { type: WL.Type.Enum, values: Object.keys(_), default: Ut }, style: { type: WL.Type.Enum, values: ["standard", "minimal", "transparent"], default: "transparent" }, scaleToRatio: { type: WL.Type.Bool, default: true }, textureProperty: { type: WL.Type.String, default: "auto" }, beacon: { type: WL.Type.Bool, default: true }, dynamicFormats: { type: WL.Type.Bool, default: true }, createAutomaticCollision: { type: WL.Type.Bool, default: true }, dynamicNetworking: { type: WL.Type.Bool, default: true } }, { init: function() {
-          this.formats = Object.values(_), this.formatKeys = Object.keys(_), this.styleKeys = ["standard", "minimal", "transparent"];
+        var Ht = "2.2.0";
+        console.log(`Zesty SDK Version: ${Ht} (compatibility)`);
+        var sn = "https://cdn.zesty.xyz/sdk/zesty-formats.js", an = "https://cdn.zesty.xyz/sdk/zesty-networking.js";
+        WL.registerComponent("zesty-banner", { adUnit: { type: WL.Type.String }, format: { type: WL.Type.Enum, values: Object.keys(T), default: Ut }, style: { type: WL.Type.Enum, values: ["standard", "minimal", "transparent"], default: "transparent" }, scaleToRatio: { type: WL.Type.Bool, default: true }, textureProperty: { type: WL.Type.String, default: "auto" }, beacon: { type: WL.Type.Bool, default: true }, dynamicFormats: { type: WL.Type.Bool, default: true }, createAutomaticCollision: { type: WL.Type.Bool, default: true }, dynamicNetworking: { type: WL.Type.Bool, default: true } }, { init: function() {
+          this.formats = Object.values(T), this.formatKeys = Object.keys(T), this.styleKeys = ["standard", "minimal", "transparent"];
         }, start: function() {
           if (this.mesh = this.object.getComponent("mesh"), !this.mesh)
             throw new Error("'zesty-banner ' missing mesh component");
@@ -45205,10 +46905,12 @@
             let t = document.createElement("script");
             t.onload = () => {
               this.formatsOverride = zestyFormats.formats;
-            }, t.setAttribute("src", an), t.setAttribute("crossorigin", "anonymous"), document.body.appendChild(t);
+            }, t.setAttribute("src", sn), t.setAttribute("crossorigin", "anonymous"), document.body.appendChild(t);
           }
-          this.dynamicNetworking ? import(on).then((t) => {
+          this.dynamicNetworking ? import(an).then((t) => {
             this.zestyNetworking = Object.assign({}, t), this.startLoading();
+          }).catch(() => {
+            console.error("Failed to dynamically retrieve networking code, falling back to bundled version."), this.dynamicNetworking = null, this.startLoading();
           }) : this.startLoading();
         }, startLoading: function() {
           this.loadBanner(this.adUnit, this.formatKeys[this.format], this.styleKeys[this.style]).then((t) => {
@@ -45225,14 +46927,14 @@
               this.mesh.material = e;
             } else
               this.mesh.material[this.textureProperty] = t.texture;
-            this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnLoadMetric(this.adUnit, this.banner.campaignId) : Wt(this.adUnit, this.banner.campaignId));
+            this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnLoadMetric(this.adUnit, this.banner.campaignId) : $t(this.adUnit, this.banner.campaignId));
           });
         }, onClick: function() {
           this.banner?.url && (WL.xrSession ? WL.xrSession.end().then(this.executeClick.bind(this)) : this.executeClick());
         }, executeClick: function() {
-          this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnClickMetric(this.adUnit, this.banner.campaignId) : Ht(this.adUnit, this.banner.campaignId));
+          this.beacon && (this.dynamicNetworking ? this.zestyNetworking.sendOnClickMetric(this.adUnit, this.banner.campaignId) : Wt(this.adUnit, this.banner.campaignId));
         }, loadBanner: async function(t, e, r) {
-          let i = this.dynamicNetworking ? await this.zestyNetworking.fetchCampaignAd(t, e, r) : await $t(t, e, r), { asset_url: n, cta_url: s } = i.Ads[0];
+          let i = this.dynamicNetworking ? await this.zestyNetworking.fetchCampaignAd(t, e, r) : await Mt(t, e, r), { asset_url: n, cta_url: s } = i.Ads[0];
           return WL.textures.load(n, "").then((a) => ({ texture: a, imageSrc: n, url: s, campaignId: i.CampaignId }));
         } });
       })();
@@ -45322,6 +47024,26 @@
         _myIsLocal: { type: WL.Type.Bool, default: false }
       }, {
         init: function() {
+          this._myCharacterWeightMap = /* @__PURE__ */ new Map();
+          this._myCharacterWeightMap.set("W", 1.3);
+          this._myCharacterWeightMap.set("m", 1.3);
+          this._myCharacterWeightMap.set("@", 1.3);
+          this._myCharacterWeightMap.set("#", 1.3);
+          this._myCharacterWeightMap.set("M", 1.2);
+          this._myCharacterWeightMap.set("D", 1.1);
+          this._myCharacterWeightMap.set("G", 1.1);
+          this._myCharacterWeightMap.set("O", 1.1);
+          this._myCharacterWeightMap.set("Q", 1.1);
+          this._myCharacterWeightMap.set("w", 1.1);
+          this._myCharacterWeightMap.set("I", 0.75);
+          this._myCharacterWeightMap.set("f", 0.75);
+          this._myCharacterWeightMap.set("i", 0.75);
+          this._myCharacterWeightMap.set("j", 0.75);
+          this._myCharacterWeightMap.set("l", 0.75);
+          this._myCharacterWeightMap.set("t", 0.75);
+          this._myCharacterWeightMap.set(" ", 0.75);
+          this._myCharacterWeightMap.set(".", 0.75);
+          this._myCharacterWeightMap.set("-", 0.75);
         },
         start: function() {
           this._myStarted = false;
@@ -45331,6 +47053,12 @@
             this._myStarted = true;
             this._myNamesTextComponent = this.object.pp_getObjectByName("Names").pp_getComponent("text");
             this._myScoresTextComponent = this.object.pp_getObjectByName("Scores").pp_getComponent("text");
+            if (this._myNamesTextComponent != null && this._myScoresTextComponent != null) {
+              this._myNamesTextComponent.text = " ";
+              this._myNamesTextComponent.text = "";
+              this._myScoresTextComponent.text = " ";
+              this._myScoresTextComponent.text = "";
+            }
             this.updateLeaderboard();
           }
         },
@@ -45342,20 +47070,25 @@
           let scoresText = "";
           let maxRankDigit = 0;
           for (let value of leaderboard) {
-            let rank = value.rank + 1;
-            if (rank.toFixed(0).length > maxRankDigit) {
-              maxRankDigit = rank.toFixed(0).length;
+            if (value != null && value.rank != null && value.displayName != null && value.score != null) {
+              let rank = value.rank + 1;
+              if (rank.toFixed(0).length > maxRankDigit) {
+                maxRankDigit = rank.toFixed(0).length;
+              }
             }
           }
           for (let value of leaderboard) {
-            let rank = value.rank + 1;
-            let fixedRank = rank.toFixed(0);
-            while (fixedRank.length < maxRankDigit) {
-              fixedRank = "0".concat(fixedRank);
+            if (value != null && value.rank != null && value.displayName != null && value.score != null) {
+              let rank = value.rank + 1;
+              let fixedRank = rank.toFixed(0);
+              while (fixedRank.length < maxRankDigit) {
+                fixedRank = "0".concat(fixedRank);
+              }
+              let clampedDisplayName = this._clampDisplayName(value.displayName);
+              namesText = namesText.concat(fixedRank, " - ", clampedDisplayName, "\n\n");
+              let convertedScore = this._convertTime(value.score);
+              scoresText = scoresText.concat(convertedScore, "\n\n");
             }
-            namesText = namesText.concat(fixedRank, " - ", value.displayName, "\n\n");
-            let convertedScore = this._convertTime(value.score);
-            scoresText = scoresText.concat(convertedScore, "\n\n");
           }
           if (this._myNamesTextComponent != null && this._myScoresTextComponent != null) {
             this._myNamesTextComponent.text = namesText;
@@ -45381,6 +47114,25 @@
           clonedComponent._myName = this._myName;
           clonedComponent._myIsLocal = this._myIsLocal;
           return clonedComponent;
+        },
+        _clampDisplayName(displayName) {
+          let nameCharactersToShow = 0;
+          let currentWeight = 0;
+          for (let i = 0; i < displayName.length; i++) {
+            let currentCharacter = displayName.charAt(i);
+            let characterWeight = this._myCharacterWeightMap.get(currentCharacter);
+            characterWeight = characterWeight != null ? characterWeight : 1;
+            currentWeight += characterWeight;
+            if (currentWeight > 15) {
+              break;
+            }
+            nameCharactersToShow++;
+          }
+          nameCharactersToShow = Math.min(nameCharactersToShow, displayName.length);
+          if (nameCharactersToShow < displayName.length) {
+            return displayName.slice(0, nameCharactersToShow) + "...";
+          }
+          return displayName;
         }
       });
     }
@@ -45392,23 +47144,38 @@
       LR.LRCADummyServer = class LRCADummyServer {
         constructor() {
         }
-        getLeaderboard(leaderboardID, isAscending, isAroundPlayer, scoresAmount, callbackOnDone, callbackOnError) {
+        getLeaderboard(leaderboardID, ascending, aroundPlayer, scoresAmount, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           let leaderboard = null;
-          if (PP.CAUtils.isSDKAvailable()) {
-            leaderboard = [
-              { rank: 0, displayName: "An", score: 0 },
-              { rank: 1, displayName: "Error", score: 0 },
-              { rank: 2, displayName: "Has", score: 0 },
-              { rank: 3, displayName: "Occurred", score: 0 },
-              { rank: 4, displayName: "While", score: 0 },
-              { rank: 5, displayName: "Trying", score: 0 },
-              { rank: 6, displayName: "To", score: 0 },
-              { rank: 7, displayName: "Retrieve", score: 0 },
-              { rank: 8, displayName: "The", score: 0 },
-              { rank: 9, displayName: "Leaderboard", score: 0 }
-            ];
+          if (caError != PP.CAUtils.CAError.CA_SDK_MISSING) {
+            if (aroundPlayer && (caError == PP.CAUtils.CAError.USER_NOT_LOGGED_IN || caError == PP.CAUtils.CAError.USER_HAS_NO_SCORE)) {
+              leaderboard = [
+                { rank: 0, displayName: "Sign In", score: 0 },
+                { rank: 1, displayName: "And", score: 0 },
+                { rank: 2, displayName: "Play", score: 0 },
+                { rank: 3, displayName: "On", score: 0 },
+                { rank: 4, displayName: "HeyVR", score: 0 },
+                { rank: 5, displayName: "To", score: 0 },
+                { rank: 6, displayName: "Submit", score: 0 },
+                { rank: 7, displayName: "Your", score: 0 },
+                { rank: 8, displayName: "Own", score: 0 },
+                { rank: 9, displayName: "Score", score: 0 }
+              ];
+            } else {
+              leaderboard = [
+                { rank: 0, displayName: "An", score: 0 },
+                { rank: 1, displayName: "Error", score: 0 },
+                { rank: 2, displayName: "Has", score: 0 },
+                { rank: 3, displayName: "Occurred", score: 0 },
+                { rank: 4, displayName: "While", score: 0 },
+                { rank: 5, displayName: "Trying", score: 0 },
+                { rank: 6, displayName: "To", score: 0 },
+                { rank: 7, displayName: "Retrieve", score: 0 },
+                { rank: 8, displayName: "The", score: 0 },
+                { rank: 9, displayName: "Leaderboard", score: 0 }
+              ];
+            }
           } else {
-            if (isAroundPlayer) {
+            if (aroundPlayer) {
               leaderboard = [
                 { rank: 0, displayName: "Sign In", score: 0 },
                 { rank: 1, displayName: "And", score: 0 },
@@ -45439,20 +47206,20 @@
           while (leaderboard.length > scoresAmount) {
             leaderboard.pop();
           }
-          if (callbackOnDone) {
-            callbackOnDone(leaderboard);
+          if (onDoneCallback != null) {
+            onDoneCallback(leaderboard);
           }
         }
-        submitScore(leaderboardID, scoreToSubmit, callbackOnDone, callbackOnError) {
-          if (callbackOnDone) {
-            callbackOnDone();
+        submitScore(leaderboardID, scoreToSubmit, onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
+          if (onDoneCallback != null) {
+            onDoneCallback();
           }
         }
-        getUser(callbackOnDone, callbackOnError) {
+        getUser(onDoneCallback = null, onErrorCallback = null, caError = PP.CAUtils.CAError.NONE) {
           let user = {};
           user.displayName = "I Polaretti";
-          if (callbackOnDone) {
-            callbackOnDone(user);
+          if (onDoneCallback != null) {
+            onDoneCallback(user);
           }
         }
       };
@@ -45519,8 +47286,6 @@
           if (!this._myStartd) {
             this._myStartd = true;
             this._myPhysxList = this.object.pp_getComponents("physx");
-            for (let physx of this._myPhysxList) {
-            }
           } else if (this._myActive) {
             let position = this.object.pp_getPosition(this._myPosition);
             let playerPosition = Global.myPlayer.getPosition(this._myPlayerPosition);
@@ -45943,8 +47708,11 @@
   });
 
   // js/labyroots/cauldron/wondermelon.js
-  var require_wondermelon = __commonJS({
+  var wondermelon_exports = {};
+  var import_howler13;
+  var init_wondermelon = __esm({
     "js/labyroots/cauldron/wondermelon.js"() {
+      import_howler13 = __toESM(require_howler());
       WL.registerComponent("wondermelon", {}, {
         start: function() {
           this._myGathered = false;
@@ -46031,7 +47799,7 @@
             if (this._myEnd == 0) {
               this._myChange = 1;
               Global.myUnmute = true;
-              Howler.mute(true);
+              import_howler13.Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                 Global.myAxe._myGrabbable.release();
               }
@@ -46042,7 +47810,7 @@
             if (this._myChange == 0) {
               let onSuccess = function() {
                 Global.myUnmute = true;
-                Howler.mute(true);
+                import_howler13.Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
@@ -46076,16 +47844,16 @@
             for (let i = 0; i < 10; i++) {
               for (let j = 0; j < 10; j++) {
                 if (i != 0) {
-                  newTile = spawnedTile.pp_clone();
+                  let newTile = spawnedTile.pp_clone();
                   newTile.pp_translate([i * 5, 0, j * -5]);
                   newTile = spawnedTile.pp_clone();
                   newTile.pp_translate([i * -5, 0, j * 5]);
                 }
                 if (j != 0) {
-                  let newTile2 = spawnedTile.pp_clone();
-                  newTile2.pp_translate([i * 5, 0, j * 5]);
-                  newTile2 = spawnedTile.pp_clone();
-                  newTile2.pp_translate([i * -5, 0, j * -5]);
+                  let newTile = spawnedTile.pp_clone();
+                  newTile.pp_translate([i * 5, 0, j * 5]);
+                  newTile = spawnedTile.pp_clone();
+                  newTile.pp_translate([i * -5, 0, j * -5]);
                 }
               }
             }
@@ -46105,10 +47873,14 @@
         start() {
           this._myGamepad = PP.myGamepads[PP.InputUtils.getHandednessByIndex(this._myHandedness)];
           this._myGrabberHand = this._myHand.pp_getComponent("pp-grabber-hand");
+          this.firstUpdate = true;
         },
         update(dt) {
-          if (this._myGamepad.getHandPose() != null) {
-            if (this._myGamepad.getHandPose().isValid()) {
+          if (this.firstUpdate) {
+            this.firstUpdate = false;
+            this._myHand.pp_setActive(false);
+          } else {
+            if (this._myGamepad.getHandPose() != null && this._myGamepad.getHandPose().isValid()) {
               this._myHand.pp_setActive(true);
             } else {
               if (this._myGrabberHand != null) {
@@ -46123,8 +47895,11 @@
   });
 
   // js/labyroots/player/transformation.js
-  var require_transformation = __commonJS({
+  var transformation_exports = {};
+  var import_howler14;
+  var init_transformation = __esm({
     "js/labyroots/player/transformation.js"() {
+      import_howler14 = __toESM(require_howler());
       WL.registerComponent("transformation", {}, {
         init: function() {
           Global.myTransformation = this;
@@ -46430,14 +48205,14 @@
         _secretMazeCodeUpdate(dt) {
           if (Global.myUnmute && PP.XRUtils.isSessionActive()) {
             Global.myUnmute = false;
-            Howler.mute(false);
+            import_howler14.Howler.mute(false);
           }
           if (this._myEnd > 0) {
             this._myEnd--;
             if (this._myEnd == 0) {
               this._myChange = 1;
               Global.myUnmute = true;
-              Howler.mute(true);
+              import_howler14.Howler.mute(true);
               if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                 Global.myAxe._myGrabbable.release();
               }
@@ -46459,16 +48234,16 @@
                 }
               } else {
                 if (this._myIsWedding) {
-                  url = url + "/?wedding=1";
+                  url = url + "/?wedding=true";
                 } else if (this._myIsMazeverse) {
                   if (!Global.myIsMazeverseTime) {
-                    url = url + "/?mazeverse=1";
+                    url = url + "/?mazeverse=true";
                   }
                 }
               }
               let onSuccess = function() {
                 Global.myUnmute = true;
-                Howler.mute(true);
+                import_howler14.Howler.mute(true);
                 if (Global.myAxe != null && Global.myAxe._myGrabbable != null) {
                   Global.myAxe._myGrabbable.release();
                 }
@@ -46481,8 +48256,6 @@
                     "value": 1
                   });
                 }
-                this._myIsWedding = false;
-                this._myIsMazeverse = false;
               }.bind(this);
               PP.XRUtils.openLink(url, true, true, true, true, onSuccess);
             }
@@ -46494,7 +48267,7 @@
                 Global.sendAnalytics("event", "secret_code_mazeverse", {
                   "value": 1
                 });
-                Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime, false);
+                Global.mySaveManager.save("is_mazeverse", !Global.myIsMazeverseTime);
                 this._myEnd = 1;
                 this._myChange = 1;
                 this._myIsWedding = false;
@@ -46511,7 +48284,7 @@
                 Global.sendAnalytics("event", "secret_code_wedding", {
                   "value": 1
                 });
-                Global.mySaveManager.save("is_wedding", true, false);
+                Global.mySaveManager.save("is_wedding", true);
                 this._myEnd = 1;
                 this._myChange = 1;
                 this._myIsMazeverse = false;
@@ -46562,6 +48335,7 @@
   var require_stage_switch = __commonJS({
     "js/labyroots/player/stage_switch.js"() {
       WL.registerComponent("stage-switch", {
+        _myHandedness: { type: WL.Type.Enum, values: ["left", "right"], default: "left" },
         _myOnlyVR: { type: WL.Type.Bool, default: false },
         _myStage1: { type: WL.Type.Object },
         _myStage2: { type: WL.Type.Object },
@@ -46573,6 +48347,11 @@
         init: function() {
         },
         start: function() {
+          if (this._myHandedness == PP.HandednessIndex.LEFT) {
+            this._myGamepad = PP.myLeftGamepad;
+          } else {
+            this._myGamepad = PP.myRightGamepad;
+          }
           this._myStages = [];
           this._myStages[0] = this._myStage1;
           this._myStages[1] = this._myStage2;
@@ -46588,12 +48367,13 @@
           this._myCurrentStage = -1;
         },
         update: function(dt) {
-          if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
+          if (!this._myOnlyVR || PP.XRUtils.isSessionActive() && this._myGamepad.getHandPose() != null && this._myGamepad.getHandPose().isValid()) {
             if (Global.myReady) {
               if (Global.myStage != this._myCurrentStage) {
                 this.setStageActive(Global.myStage);
               }
             } else {
+              this._myCurrentStage = -1;
               for (let stage of this._myStages) {
                 if (stage != null) {
                   stage.pp_setActive(false);
@@ -46601,6 +48381,7 @@
               }
             }
           } else {
+            this._myCurrentStage = -1;
             for (let stage of this._myStages) {
               if (stage != null) {
                 stage.pp_setActive(false);
@@ -46646,8 +48427,8 @@
             }
           }
         },
-        _onCollision(type2, physXComponent) {
-          if (type2 == WL.CollisionEventType.Touch || type2 == WL.CollisionEventType.TriggerTouch) {
+        _onCollision(type, physXComponent) {
+          if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
             let fruit = physXComponent.object.pp_getComponent("fruit");
             if (fruit != null) {
               if (!fruit._myUsed) {
@@ -46691,12 +48472,17 @@
           }
         },
         update: function(dt) {
-          if (this._myGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+          if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
             this._myNormalHand.pp_setActive(false);
-            this._myGrabHand.pp_setActive(true);
-          } else {
-            this._myNormalHand.pp_setActive(true);
             this._myGrabHand.pp_setActive(false);
+          } else {
+            if (this._myGamepad.getButtonInfo(PP.GamepadButtonID.SQUEEZE).isPressed()) {
+              this._myNormalHand.pp_setActive(false);
+              this._myGrabHand.pp_setActive(true);
+            } else {
+              this._myNormalHand.pp_setActive(true);
+              this._myGrabHand.pp_setActive(false);
+            }
           }
         }
       });
@@ -46736,7 +48522,7 @@
             this._myGrabbable = this.object.pp_getComponent("pp-grabbable");
           }
           if (!this._myStarted) {
-            if (Global.myStoryReady) {
+            if (Global.myReady) {
               this._myStarted = true;
               this._myAudioColpi = [];
               this._myAudioColpi[0] = PP.myAudioManager.createAudioPlayer(AudioID.COLPO_NORMALE_1);
@@ -46815,12 +48601,12 @@
           this._myResetPos = true;
           this.object.pp_setTransformLocalQuat(this._myRespawnTransform);
         },
-        _onCollision(type2, physXComponent) {
+        _onCollision(type, physXComponent) {
           if (!Global.myReady) {
             return;
           }
           if (this._myGrabbable.isGrabbed() && this._mySpeed >= Global.mySetup.myPlayerSetup.myAxeSpeedToHit) {
-            if (type2 == WL.CollisionEventType.Touch || type2 == WL.CollisionEventType.TriggerTouch) {
+            if (type == WL.CollisionEventType.Touch || type == WL.CollisionEventType.TriggerTouch) {
               let root = physXComponent.object.pp_getComponent("root");
               if (root) {
                 if (root._myHit > 0) {
@@ -46963,7 +48749,8 @@
                     player.setPitch(Math.pp_random(this._myLamentoPitch - 0.15, this._myLamentoPitch + 0.05));
                     player.play();
                     this._myToDestroy.push([humanTree.object, true]);
-                    if (false) {
+                    let manageFruits = false;
+                    if (manageFruits) {
                       let fruits = humanTree._myFruits;
                       for (let fruit of fruits) {
                         if (!fruit._myGathered) {
@@ -47072,7 +48859,7 @@
         },
         update: function(dt) {
           if (!this._myStarted) {
-            if (Global.myStoryReady) {
+            if (Global.myReady) {
               this._myStarted = true;
               this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
@@ -47189,7 +48976,6 @@
               this._myHit = Global.mySetup.myTreeSetup.myRootHit;
               this._myPhases[0].pp_setActive(true);
             }
-          } else {
           }
         },
         hit() {
@@ -47283,7 +49069,6 @@
               this._myStarted = true;
               this._myHit = Global.mySetup.myTreeSetup.myRootWallHit;
             }
-          } else {
           }
         },
         hit() {
@@ -47392,15 +49177,15 @@
               if (this._myHit == 0) {
                 Global.myBigTreeDead = true;
                 Global.myStage = 0;
-                let isFirstWin = !Global.mySaveManager.loadBool("win_normal_maze", false);
+                let isFirstWin = !Global.mySaveManager.load("win_normal_maze", false);
                 if (isFirstWin && !Global.myIsMazeverseTime) {
-                  Global.mySaveManager.save("is_mazeverse", true, false);
+                  Global.mySaveManager.save("is_mazeverse", true);
                 }
-                Global.mySaveManager.save("win", true, false);
+                Global.mySaveManager.save("win", true);
                 if (Global.myIsMazeverseTime) {
-                  Global.mySaveManager.save("win_mazeverse", true, false);
+                  Global.mySaveManager.save("win_mazeverse", true);
                 } else {
-                  Global.mySaveManager.save("win_normal_maze", true, false);
+                  Global.mySaveManager.save("win_normal_maze", true);
                 }
                 Global.sendAnalytics("event", "defeat_mother_tree", {
                   "value": 1
@@ -47480,7 +49265,6 @@
                 this._myHit = Global.mySetup.myTreeSetup.myHumanTreeHit;
               }
             }
-          } else {
           }
         },
         pp_clone(targetObject) {
@@ -47624,13 +49408,13 @@
           this._myTimer -= dt;
           if (this._myState == 3 && this._myTimer <= 10) {
             console.log(this._myState + " --> " + --this._myState);
-            console.log(10 + "secondi rimanenti");
+            console.log("10secondi rimanenti");
           } else if (this._myState == 2 && this._myTimer <= 6) {
             console.log(this._myState + " --> " + --this._myState);
-            console.log(6 + "secondi rimanenti");
+            console.log("6secondi rimanenti");
           } else if (this._myState == 1 && this._myTimer <= 3) {
             console.log(this._myState + " --> " + --this._myState);
-            console.log(3 + "secondi rimanenti");
+            console.log("3secondi rimanenti");
           } else if (this._myState == 0 && this._myTimer <= 0) {
             console.log(this._myState + " --> " + --this._myState);
             console.log("Sei un albero");
@@ -47675,7 +49459,7 @@
   init_audio_manager();
   init_audio_player();
   require_audio_setup();
-  require_audio_utils();
+  init_audio_utils();
   init_mute_everything();
   require_howler_audio_player();
   init_max_physx();
@@ -47867,10 +49651,10 @@
   require_player_locomotion_teleport_detection_state_visibility();
   require_player_locomotion_teleport_teleport_state();
   require_player_locomotion_teleport_teleport_blink_state();
-  require_player_locomotion_teleport_teleport_shift_state();
+  init_player_locomotion_teleport_teleport_shift_state();
   require_player_locomotion_teleport2();
   require_player_locomotion_cleaned();
-  require_player_locomotion_smooth_cleaned();
+  init_player_locomotion_smooth_cleaned();
   require_player_transform_manager_cleaned();
   require_labyroots_gateway();
   require_file_manager();
@@ -47881,11 +49665,11 @@
   require_mazeverse_add_elements();
   require_billboard_player();
   require_story();
-  init_audio_load();
+  require_audio_load();
   require_deactivate_on_story();
-  require_open_ggj();
-  require_open_github();
-  require_open_zesty();
+  init_open_ggj();
+  init_open_github();
+  init_open_zesty();
   require_zesty_wonderland_sdk_compat();
   require_set_texture_after_delay();
   require_secret_zone_check();
@@ -47901,10 +49685,10 @@
   require_send_all_events();
   require_sky_setter();
   require_lights_setter();
-  require_wondermelon();
+  init_wondermelon();
   require_spawn_floor();
   require_hide_if_pose_not_valid();
-  require_transformation();
+  init_transformation();
   require_stage_switch();
   require_mouth();
   require_swap_grab_hand();
@@ -47917,24 +49701,28 @@
   require_big_tree_die();
   require_test();
 })();
-/*!
- *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
- *  
- *  howler.js v2.2.3
- *  howlerjs.com
- *
- *  (c) 2013-2020, James Simpson of GoldFire Studios
- *  goldfirestudios.com
- *
- *  MIT License
- */
-/*!
- *  howler.js v2.2.3
- *  howlerjs.com
- *
- *  (c) 2013-2020, James Simpson of GoldFire Studios
- *  goldfirestudios.com
- *
- *  MIT License
- */
+/*! Bundled license information:
+
+howler/dist/howler.js:
+  (*!
+   *  howler.js v2.2.4
+   *  howlerjs.com
+   *
+   *  (c) 2013-2020, James Simpson of GoldFire Studios
+   *  goldfirestudios.com
+   *
+   *  MIT License
+   *)
+  (*!
+   *  Spatial Plugin - Adds support for stereo and 3D audio where Web Audio is supported.
+   *  
+   *  howler.js v2.2.4
+   *  howlerjs.com
+   *
+   *  (c) 2013-2020, James Simpson of GoldFire Studios
+   *  goldfirestudios.com
+   *
+   *  MIT License
+   *)
+*/
 //# sourceMappingURL=labyroots-bundle.js.map
