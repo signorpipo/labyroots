@@ -1,0 +1,2 @@
+- hand tracking con indice vai avanti, con tutorial sulla mano stile console VR
+	- non puoi fare le shortcut ma va bene lo stesso
