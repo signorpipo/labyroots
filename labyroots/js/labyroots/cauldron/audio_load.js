@@ -10,6 +10,8 @@ WL.registerComponent('audio-load', {
             if (Global.myStoryReady) {
                 this._myStarted = true;
                 this.prepareSFXSetups();
+
+                Global.myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
         }
     },

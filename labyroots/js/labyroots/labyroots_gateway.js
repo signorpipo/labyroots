@@ -237,7 +237,8 @@ Global = {
     myAnalyticsEnabled: false,
     myIsLocalhost: false,
     myElementToClick: null,
-    myElementToClickCounter: 0
+    myElementToClickCounter: 0,
+    myAudioMangia: null
 };
 
 Global.mySessionStarted = false;

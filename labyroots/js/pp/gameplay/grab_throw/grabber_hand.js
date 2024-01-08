@@ -177,9 +177,12 @@ WL.registerComponent('pp-grabber-hand', {
                 if (pulseInfo.myIntensity <= intensity) {
                     this._myGamepad.pulse(intensity, 0.1);
                 }
-                this._myAudioPrendi.setPosition(this.object.pp_getPosition());
-                this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-                this._myAudioPrendi.play();
+
+                if (this._myAudioPrendi != null) {
+                    this._myAudioPrendi.setPosition(this.object.pp_getPosition());
+                    this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+                    this._myAudioPrendi.play();
+                }
             }
         }
     },

@@ -26,7 +26,6 @@ WL.registerComponent('wondermelon', {
             if (Global.myStoryReady) {
                 this.object.pp_translate([0, 0.5, 0]);
                 this._myStarted = true;
-                this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
         } else {
             if (this._myDisable) {
@@ -90,9 +89,9 @@ WL.registerComponent('wondermelon', {
 
             this._myUsed = true;
 
-            //this._myAudioMangia.setPosition(this.object.pp_getPosition());
-            this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-            this._myAudioMangia.play();
+            //Global.myAudioMangia.setPosition(this.object.pp_getPosition());
+            Global.myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+            Global.myAudioMangia.play();
 
             this._myDisable = true;
         }
