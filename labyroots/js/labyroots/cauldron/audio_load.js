@@ -138,6 +138,7 @@ WL.registerComponent('audio-load', {
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 3;
+            audioSetup.myPool = 10;
             audioSetup.myReferenceDistance = 0.3;
             audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
