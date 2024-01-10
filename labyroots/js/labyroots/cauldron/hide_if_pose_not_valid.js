@@ -11,16 +11,13 @@ WL.registerComponent('hide-if-pose-not-valid', {
     update(dt) {
         if (this.firstUpdate) {
             this.firstUpdate = false;
-            this._myHand.pp_setActive(false);
         } else {
             if (this._myGamepad.getHandPose() != null && this._myGamepad.getHandPose().isValid()) {
-                this._myHand.pp_setActive(true);
+                //Do nothing
             } else {
                 if (this._myGrabberHand != null) {
                     this._myGrabberHand.throw();
                 }
-
-                this._myHand.pp_setActive(false);
             }
         }
     }
