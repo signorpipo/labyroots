@@ -303,13 +303,6 @@
             "components": [
                 {
                     "type": "pp-set-hand-local-transform"
-                },
-                {
-                    "type": "hide-if-pose-not-valid",
-                    "hide-if-pose-not-valid": {
-                        "_myHand": "b8418728-9728-46c6-8041-dedac6ef6fd4"
-                    },
-                    "active": true
                 }
             ],
             "translation": [
@@ -457,14 +450,6 @@
                     "pp-set-hand-local-transform": {
                         "_myHandedness": "right"
                     }
-                },
-                {
-                    "type": "hide-if-pose-not-valid",
-                    "hide-if-pose-not-valid": {
-                        "_myHand": "043d9aad-ab79-4d70-97b5-5e0f8a3728f4",
-                        "_myHandedness": "right"
-                    },
-                    "active": true
                 }
             ],
             "translation": [

@@ -64,6 +64,10 @@ WL.registerComponent('pp-grabber-hand', {
             this._updateLinearVelocityHistory();
             this._updateAngularVelocityHistory();
         }
+
+        if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
+            this.throw();
+        }
     },
     grab: function (grabButton = null) {
         this._grab(grabButton);
@@ -123,6 +127,10 @@ WL.registerComponent('pp-grabber-hand', {
     },
     _grab: function (grabButton) {
         if (this._myGrabbables.length >= this._myMaxNumberOfObjects) {
+            return;
+        }
+
+        if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
             return;
         }
 
