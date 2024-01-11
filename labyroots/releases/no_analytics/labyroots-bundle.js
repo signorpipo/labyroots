@@ -26408,6 +26408,9 @@
             this._updateLinearVelocityHistory();
             this._updateAngularVelocityHistory();
           }
+          if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
+            this.throw();
+          }
         },
         grab: function(grabButton = null) {
           this._grab(grabButton);
@@ -26465,6 +26468,9 @@
           if (this._myGrabbables.length >= this._myMaxNumberOfObjects) {
             return;
           }
+          if (this._myGamepad.getHandPose() == null || !this._myGamepad.getHandPose().isValid()) {
+            return;
+          }
           if (this._myGrabButton == 2 || this._myActiveGrabButton == null || this._myActiveGrabButton == grabButton || grabButton == null) {
             let grabbablesToGrab = [];
             let collisions = this._myCollisionsCollector.getCollisions();
@@ -26508,9 +26514,11 @@
               if (pulseInfo.myIntensity <= intensity) {
                 this._myGamepad.pulse(intensity, 0.1);
               }
-              this._myAudioPrendi.setPosition(this.object.pp_getPosition());
-              this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-              this._myAudioPrendi.play();
+              if (this._myAudioPrendi != null) {
+                this._myAudioPrendi.setPosition(this.object.pp_getPosition());
+                this._myAudioPrendi.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+                this._myAudioPrendi.play();
+              }
             }
           }
         },
@@ -27017,7 +27025,7 @@
         getUser(onDoneCallback = null, onErrorCallback = null, useDummyServerOverride = null) {
           if (PP.CAUtils.isSDKAvailable()) {
             try {
-              PP.CAUtils_getUser().then(function(result) {
+              PP.CAUtils._getUser().then(function(result) {
                 if (result.user != null && result.user.displayName != null) {
                   if (onDoneCallback != null) {
                     onDoneCallback(result.user);
@@ -40554,7 +40562,6 @@
         }
         _setupLocomotionMovementFSM() {
           this._myLocomotionMovementFSM = new PP.FSM();
-          this._myLocomotionMovementFSM.setDebugLogActive(true, "Locomotion Movement");
           this._myLocomotionMovementFSM.addState("init");
           this._myLocomotionMovementFSM.addState("smooth", (dt) => this._myPlayerLocomotionSmooth.update(dt));
           this._myLocomotionMovementFSM.addState("teleport", (dt) => this._myPlayerLocomotionTeleport.update(dt));
@@ -42668,7 +42675,6 @@
         }
         _setupLocomotionMovementFSM() {
           this._myLocomotionMovementFSM = new PP.FSM();
-          this._myLocomotionMovementFSM.setDebugLogActive(true, "Locomotion Movement");
           this._myLocomotionMovementFSM.addState("init");
           this._myLocomotionMovementFSM.addState("smooth", (dt) => this._myPlayerLocomotionSmooth.update(dt));
           this._myLocomotionMovementFSM.addState("teleport", (dt) => this._myPlayerLocomotionTeleport.update(dt));
@@ -43887,7 +43893,8 @@
         myAnalyticsEnabled: false,
         myIsLocalhost: false,
         myElementToClick: null,
-        myElementToClickCounter: 0
+        myElementToClickCounter: 0,
+        myAudioMangia: null
       };
       Global.mySessionStarted = false;
       Global.sendAnalytics = function sendAnalytics(eventType, eventName, eventValue) {
@@ -45482,7 +45489,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = "2.1.0";
+                let currentVersion = "2.1.2";
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.load("can_skip", false);
@@ -45610,6 +45617,7 @@
             if (Global.myStoryReady) {
               this._myStarted = true;
               this.prepareSFXSetups();
+              Global.myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
           }
         },
@@ -45722,6 +45730,7 @@
             let audioSetup = new PP.AudioSetup("assets/audio/sfx/Mangiare frutto 1.mp3");
             audioSetup.myRate = 1;
             audioSetup.myVolume = 3;
+            audioSetup.myPool = 10;
             audioSetup.myReferenceDistance = 0.3;
             audioSetup.myPreventPlayWhenAudioContextNotRunning = true;
             manager.addAudioSetup(AudioID.MANGIA_FRUTTO, audioSetup);
@@ -47734,7 +47743,6 @@
             if (Global.myStoryReady) {
               this.object.pp_translate([0, 0.5, 0]);
               this._myStarted = true;
-              this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
           } else {
             if (this._myDisable) {
@@ -47788,8 +47796,8 @@
               "value": 1
             });
             this._myUsed = true;
-            this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-            this._myAudioMangia.play();
+            Global.myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+            Global.myAudioMangia.play();
             this._myDisable = true;
           }
         },
@@ -47878,15 +47886,12 @@
         update(dt) {
           if (this.firstUpdate) {
             this.firstUpdate = false;
-            this._myHand.pp_setActive(false);
           } else {
             if (this._myGamepad.getHandPose() != null && this._myGamepad.getHandPose().isValid()) {
-              this._myHand.pp_setActive(true);
             } else {
               if (this._myGrabberHand != null) {
                 this._myGrabberHand.throw();
               }
-              this._myHand.pp_setActive(false);
             }
           }
         }
@@ -48859,9 +48864,8 @@
         },
         update: function(dt) {
           if (!this._myStarted) {
-            if (Global.myReady) {
+            if (Global.myStoryReady) {
               this._myStarted = true;
-              this._myAudioMangia = PP.myAudioManager.createAudioPlayer(AudioID.MANGIA_FRUTTO);
             }
           }
           if (this._myGrabbable != null) {
@@ -48903,8 +48907,8 @@
             });
             Global.myFruitRandomPowers[this._myType]();
             this._myUsed = true;
-            this._myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
-            this._myAudioMangia.play();
+            Global.myAudioMangia.setPitch(Math.pp_random(1.25 - 0.15, 1.25 + 0.05));
+            Global.myAudioMangia.play();
           }
         }
       });
