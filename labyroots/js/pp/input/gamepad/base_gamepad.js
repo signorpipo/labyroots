@@ -370,7 +370,9 @@ PP.BaseGamepad = class BaseGamepad {
                         hapticActuator.pulse(0, 1);
 
                         try {
-                            hapticActuator.reset();
+                            if (hapticActuator.reset != null) {
+                                hapticActuator.reset();
+                            }
                         } catch (error) {
                             // Do nothing
                         }
