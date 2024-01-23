@@ -2,27 +2,28 @@ PP.SaveManager = class SaveManager {
     constructor(saveID) {
         this._mySaveID = saveID;
 
-        this._mySaveObject = {};
-
-        let loadSucceded = false;
-        let maxAttempts = 3;
-        do {
-            try {
-                this._mySaveObject = PP.SaveUtils.loadObject(this._mySaveID, {});
-                loadSucceded = true;
-            } catch (error) {
-                maxAttempts--;
-            }
-        } while (maxAttempts > 0 && !loadSucceded);
-
-        if (!loadSucceded) {
-            this._mySaveObject = {};
-        }
-
         this._myCommitSavesDelayTimer = new PP.Timer(0, false);
         this._myDelaySavesCommit = true;
         this._myCommitSavesDirty = false;
         this._myCommitSavesDirtyClearOnFail = true;
+        this._myCommitSavesWhenLoadFailed = false;
+
+        this._mySaveObject = {};
+        this._myLoadSucceded = false;
+
+        let maxAttempts = 3;
+        do {
+            try {
+                this._mySaveObject = PP.SaveUtils.loadObject(this._mySaveID, {});
+                this._myLoadSucceded = true;
+            } catch (error) {
+                maxAttempts--;
+            }
+        } while (maxAttempts > 0 && !this._myLoadSucceded);
+
+        if (!this._myLoadSucceded) {
+            this._mySaveObject = {};
+        }
 
         this._myClearCallbacks = new Map();                 // Signature: callback()
         this._myDeleteCallbacks = new Map();                // Signature: callback(id)
@@ -71,6 +72,10 @@ PP.SaveManager = class SaveManager {
         this._myCommitSavesDirtyClearOnFail = clearOnFail;
     }
 
+    setCommitSavesWhenLoadFailed(commitSavesWhenLoadFailed) {
+        this._myCommitSavesWhenLoadFailed = commitSavesWhenLoadFailed;
+    }
+
     getCommitSavesDelay() {
         return this._myCommitSavesDelayTimer.getDuration();
     }
@@ -85,6 +90,10 @@ PP.SaveManager = class SaveManager {
 
     isCommitSavesDirtyClearOnFail() {
         return this._myCommitSavesDirtyClearOnFail;
+    }
+
+    isCommitSavesWhenLoadFailed() {
+        return this._myCommitSavesWhenLoadFailed;
     }
 
     update(dt) {
@@ -224,11 +233,14 @@ PP.SaveManager = class SaveManager {
 
     _commitSaves() {
         let succeded = true;
-        try {
-            let saveObjectStringified = JSON.stringify(this._mySaveObject);
-            PP.SaveUtils.save(this._mySaveID, saveObjectStringified);
-        } catch (error) {
-            succeded = false;
+
+        if (this._myLoadSucceded || this._myCommitSavesWhenLoadFailed) {
+            try {
+                let saveObjectStringified = JSON.stringify(this._mySaveObject);
+                PP.SaveUtils.save(this._mySaveID, saveObjectStringified);
+            } catch (error) {
+                succeded = false;
+            }
         }
 
         if (this._myCommitSavesCallbacks.size > 0) {
