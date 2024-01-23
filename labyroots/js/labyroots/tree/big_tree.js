@@ -140,12 +140,43 @@ WL.registerComponent('big-tree', {
 
                     if (!Global.myIsMazeverseTime) {
                         let score = Math.floor(this._myTimeToWin * 1000);
-                        PP.CAUtils.submitScore("labyroots", score, function () {
-                            let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
-                            for (let leaderboard of leaderboards) {
-                                leaderboard.updateLeaderboard();
+
+                        let scoreSubmittedSucceded = false;
+                        let scoreStopSubmitting = false;
+                        let submitScoreSuccessCallback = function () {
+                            if (!scoreSubmittedSucceded) {
+                                scoreSubmittedSucceded = true;
+
+                                let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
+                                for (let leaderboard of leaderboards) {
+                                    leaderboard.updateLeaderboard();
+                                }
+
+                                Global.sendAnalytics("event", "score_submitted", {
+                                    "value": 1
+                                });
                             }
-                        });
+                        };
+
+                        let submitScoreErrorCallback = function (error) {
+                            if (error != null && error.type != PP.CAUtils.CAError.SUBMIT_SCORE_FAILED) {
+                                scoreStopSubmitting = true;
+                            }
+                        };
+
+                        PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+
+                        setTimeout(function () {
+                            if (!scoreSubmittedSucceded && !scoreStopSubmitting) {
+                                PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+                            }
+                        }, 5000);
+
+                        setTimeout(function () {
+                            if (!scoreSubmittedSucceded && !scoreStopSubmitting) {
+                                PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+                            }
+                        }, 10000);
                     }
                 } else {
                     Global.sendAnalytics("event", "mother_tree_hit", {
