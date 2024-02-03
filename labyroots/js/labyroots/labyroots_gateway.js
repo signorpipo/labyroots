@@ -19,6 +19,9 @@ WL.registerComponent("labyroots-gateway", {
         this._myXRButtonsContainer = document.getElementById("xr-buttons-container");
         this._myVRButton = document.getElementById("vr-button");
 
+        this._myDesiredFrameRate = null;
+        this._mySetDesiredFrameRateMaxAttempts = 10;
+
         if (window.location != null && window.location.host != null) {
             Global.myIsLocalhost = window.location.host == "localhost:8080";
         }
@@ -161,6 +164,24 @@ WL.registerComponent("labyroots-gateway", {
                 }
             }
         }
+
+        if (WL.xrSession != null && WL.xrSession.updateTargetFrameRate != null && this._myDesiredFrameRate != null && WL.xrSession.frameRate != this._myDesiredFrameRate) {
+            try {
+                WL.xrSession.updateTargetFrameRate(this._myDesiredFrameRate).catch(function () {
+                    if (this._mySetDesiredFrameRateMaxAttempts > 0) {
+                        this._mySetDesiredFrameRateMaxAttempts--;
+                    } else {
+                        this._myDesiredFrameRate = null;
+                    }
+                }.bind(this));
+            } catch (error) {
+                if (this._mySetDesiredFrameRateMaxAttempts > 0) {
+                    this._mySetDesiredFrameRateMaxAttempts--;
+                } else {
+                    this._myDesiredFrameRate = null;
+                }
+            }
+        }
     },
     _loadSetup() {
         loadFileJSON("./setup.json", data => {
@@ -195,9 +216,29 @@ WL.registerComponent("labyroots-gateway", {
             this._myVRButtonUsabilityUpdated = true;
         }
     },
-    _onXRSessionStart() {
+    _onXRSessionStart(session) {
         if (this._myXRButtonsContainer != null) {
             this._myXRButtonsContainer.style.setProperty("display", "none");
+        }
+
+        this._myDesiredFrameRate = null;
+        this._mySetDesiredFrameRateMaxAttempts = 10;
+        if (session.supportedFrameRates != null) {
+            let desiredFrameRate = 72;
+
+            let bestFrameRate = null;
+            for (let supportedFrameRate of session.supportedFrameRates) {
+                if (supportedFrameRate == desiredFrameRate) {
+                    bestFrameRate = desiredFrameRate;
+                    break;
+                } else if (supportedFrameRate > desiredFrameRate) {
+                    if (bestFrameRate == null || supportedFrameRate < bestFrameRate) {
+                        bestFrameRate = supportedFrameRate;
+                    }
+                }
+            }
+
+            this._myDesiredFrameRate = bestFrameRate;
         }
 
         Global.sendAnalytics("event", "enter_vr", {
@@ -219,6 +260,8 @@ WL.registerComponent("labyroots-gateway", {
         if (this._myXRButtonsContainer != null) {
             this._myXRButtonsContainer.style.removeProperty("display");
         }
+
+        this._myDesiredFrameRate = null;
     }
 });
 

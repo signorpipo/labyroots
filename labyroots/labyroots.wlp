@@ -70,13 +70,6 @@
                         "fixedFoveation": 0.5
                     },
                     "active": true
-                },
-                {
-                    "type": "target-framerate",
-                    "target-framerate": {
-                        "framerate": 72.0
-                    },
-                    "active": true
                 }
             ]
         },
