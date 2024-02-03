@@ -231,10 +231,12 @@ WL.registerComponent("labyroots-gateway", {
                 if (supportedFrameRate == desiredFrameRate) {
                     bestFrameRate = desiredFrameRate;
                     break;
-                } else if (supportedFrameRate > desiredFrameRate) {
-                    if (bestFrameRate == null || supportedFrameRate < bestFrameRate) {
-                        bestFrameRate = supportedFrameRate;
-                    }
+                } else if (bestFrameRate == null) {
+                    bestFrameRate = supportedFrameRate;
+                } else if (supportedFrameRate > desiredFrameRate && (supportedFrameRate < bestFrameRate || bestFrameRate < desiredFrameRate)) {
+                    bestFrameRate = supportedFrameRate;
+                } else if (supportedFrameRate < desiredFrameRate && supportedFrameRate > bestFrameRate) {
+                    bestFrameRate = supportedFrameRate;
                 }
             }
 
