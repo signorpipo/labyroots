@@ -425,7 +425,7 @@ WL.registerComponent('transformation', {
                         let ancestorOrigin = window.location.ancestorOrigins[0];
 
                         if (ancestorOrigin.includes("itch.io")) {
-                            url = "https://signor-pipo.itch.io/labyroots";
+                            url = "https://signorpipo.itch.io/labyroots";
                         } else if (ancestorOrigin.includes("heyvr.io")) {
                             url = "https://heyvr.io/game/labyroots";
                         }
