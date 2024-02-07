@@ -40,7 +40,7 @@ WL.registerComponent('open-github', {
                     });
                 }.bind(this);
 
-                PP.XRUtils.openLink("https://github.com/SignorPipo/labyroots", true, true, true, true, onSuccess);
+                PP.XRUtils.openLink("https://github.com/signorpipo/labyroots", true, true, true, true, onSuccess);
             }
         }
     },
