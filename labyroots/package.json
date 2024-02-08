@@ -3,10 +3,10 @@
     "version": "2.1.2",
     "author": "I Polaretti",
     "description": "GGJ 2023 Entry - Theme: Roots",
-    "homepage": "https://signor-pipo.itch.io/labyroots",
+    "homepage": "https://signorpipo.itch.io/labyroots",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/SignorPipo/labyroots.git"
+        "url": "git+https://github.com/signorpipo/labyroots.git"
     },
     "license": "ISC",
     "dependencies": {

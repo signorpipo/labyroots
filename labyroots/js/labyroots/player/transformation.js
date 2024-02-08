@@ -420,14 +420,14 @@ WL.registerComponent('transformation', {
                 let url = window.location.origin;
 
                 if (window.location != window.parent.location) {
-                    url = "https://heyvr.io/game/labyroots";
+                    url = "https://heyvr.io/arcade/games/labyroots";
                     if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
                         let ancestorOrigin = window.location.ancestorOrigins[0];
 
                         if (ancestorOrigin.includes("itch.io")) {
                             url = "https://signorpipo.itch.io/labyroots";
                         } else if (ancestorOrigin.includes("heyvr.io")) {
-                            url = "https://heyvr.io/game/labyroots";
+                            url = "https://heyvr.io/arcade/games/labyroots";
                         }
                     }
                 } else {

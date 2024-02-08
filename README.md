@@ -16,4 +16,4 @@ Global Game Jam 2023 - Theme: Roots - Entry: [LabyRoots](https://globalgamejam.o
 - Special Thanks
   - Sound Designer with Sunglasses
   - Sound Gallery by Dmitry Taras
-- Made using [PP](https://github.com/SignorPipo/wle_pp)
+- Made using [PP](https://github.com/signorpipo/wle-pp)
