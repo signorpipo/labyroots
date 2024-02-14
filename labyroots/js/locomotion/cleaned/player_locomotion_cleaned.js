@@ -28,8 +28,8 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
             params.myExitSessionMaxVerticalAngle = 90;
 
             params.myHeightOffsetVRWithFloor = 0;
-            params.myHeightOffsetVRWithoutFloor = 1.75;
-            params.myHeightOffsetNonVR = 1.75;
+            params.myHeightOffsetVRWithoutFloor = 1.70;
+            params.myHeightOffsetNonVR = 1.70;
 
             params.myForeheadExtraHeight = this._myParams.myForeheadExtraHeight;
 
