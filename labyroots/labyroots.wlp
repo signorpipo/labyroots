@@ -24179,7 +24179,7 @@
                     "hit-test": false
                 },
                 "requiredFeatures": {
-                    "local-floor": true
+                    "local-floor": false
                 }
             },
             "viewObject": "21",
