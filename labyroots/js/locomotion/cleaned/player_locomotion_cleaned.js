@@ -341,7 +341,7 @@ CleanedPlayerLocomotion = class CleanedPlayerLocomotion {
     _setupCollisionCheckParamsMovement() {
         let simplifiedParams = new PP.CharacterColliderSetupSimplifiedCreationParams();
 
-        simplifiedParams.myHeight = 1.75;
+        simplifiedParams.myHeight = 1.70;
         simplifiedParams.myRadius = this._myParams.myCharacterRadius;
 
         simplifiedParams.myAccuracyLevel = PP.CharacterColliderSetupSimplifiedCreationAccuracyLevel.MEDIUM;
