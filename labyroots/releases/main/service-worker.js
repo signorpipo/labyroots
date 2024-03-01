@@ -41,7 +41,7 @@ let _myAppName = "labyroots";
 // with other service workers, especially during the installation and activation phases
 //
 // It must be an incremental integer greater than 0
-let _myServiceWorkerVersion = 7;
+let _myServiceWorkerVersion = 8;
 
 
 
@@ -52,7 +52,7 @@ let _myServiceWorkerVersion = 7;
 // since u could get a mix of old (from the cache) and new (from the network) resources
 //
 // It must be an incremental integer greater than 0
-let _myCacheVersion = 7;
+let _myCacheVersion = 8;
 
 
 
@@ -65,11 +65,20 @@ let _myCacheVersion = 7;
 // In general, u should precache at least every static resource u have in your app if u want to make it work offline after the first load
 //
 // The resources URLs can be relative to the service worker location, so, for example,
-// for "https://signor-pipo.itch.io/assets/wondermelon.png" u can just specify "assets/wondermelon.png"
+// for "https://signorpipo.itch.io/assets/wondermelon.png" u can just specify "assets/wondermelon.png"
 // The resources URLs can't be a regex in this case, since it needs to know the specific resource to fetch
 let _myResourceURLsToPrecache = [
     "/",
     "index.html",
+    "favicon.ico",
+    "manifest.json",
+    "icon48.png",
+    "icon72.png",
+    "icon96.png",
+    "icon144.png",
+    "icon168.png",
+    "icon192.png",
+    "icon512.png",
     "wonderland.min.js",
     //"WonderlandRuntime-physx.wasm",
     //"WonderlandRuntime-physx.js",
@@ -81,18 +90,9 @@ let _myResourceURLsToPrecache = [
     //"WonderlandRuntime-physx-simd-threads.wasm",
     //"WonderlandRuntime-physx-simd-threads.js",
     //"WonderlandRuntime-physx-simd-threads.worker.js",
-    "f0.png",
     "labyroots-bundle.js",
     "labyroots.bin",
-    "favicon.ico",
-    "manifest.json",
-    //"icon48.png",
-    //"icon72.png",
-    //"icon96.png",
-    //"icon144.png",
-    //"icon168.png",
-    //"icon192.png",
-    //"icon512.png",
+    "f0.png",
     "setup.json",
     "assets/audio/music/creepy_music.mp3",
     "assets/audio/sfx/Ascia su muro di radici.mp3",
@@ -258,8 +258,8 @@ let _myForceTryFetchFromCacheFirstOnNetworkErrorResourceURLsToExclude = _NO_RESO
 //
 // Sometimes though this could be used for other reasons, for example they can be used on the index URL to give parameters to the app,
 // and not really to fetch a different resource
-// Like doing "https://signor-pipo.itch.io/?useWondermelon=true" to specify that a certain feature should be turned on
-// If only "https://signor-pipo.itch.io/" is cached, when u ask for the above URL, the cache will fail
+// Like doing "https://signorpipo.itch.io/?useWondermelon=true" to specify that a certain feature should be turned on
+// If only "https://signorpipo.itch.io" is cached, when u ask for the above URL, the cache will fail
 // U can turn on this feature to ignore the URL params when checking the cache
 // In this specific case u can use @_IGNORE_INDEX_URL_PARAMS to specify that only the index URL should be allowed to ignore them
 //
@@ -653,7 +653,7 @@ let _myImmediatelyTakeControlOfAllPages = false;
 // u can decide if u want to reload even pages that were not previously controlled by any service worker or not
 //
 // This is due to the fact that @_myReloadAllPagesOnServiceWorkerActivation can only reload pages already controlled, while
-// this flag let you also reload the pages that will be controlled thanks to @ _myImmediatelyTakeControlOfAllPages
+// this flag let you also reload the pages that will be controlled thanks to @_myImmediatelyTakeControlOfAllPages
 let _myReloadAllPagesAfterImmediatelyTakingControlOfThem = false;
 
 
@@ -878,7 +878,9 @@ async function _activate() {
 
         if (_myReloadAllPagesOnServiceWorkerActivation) {
             let clients = await self.clients.matchAll();
-            clients.forEach(client => client.navigate(client.url));
+            for (let client of clients) {
+                client.navigate(client.url);
+            }
         }
 
         if (_myImmediatelyTakeControlOfAllPages) {
@@ -886,7 +888,9 @@ async function _activate() {
 
             if (_myReloadAllPagesAfterImmediatelyTakingControlOfThem) {
                 let clients = await self.clients.matchAll();
-                clients.forEach(client => client.navigate(client.url));
+                for (let client of clients) {
+                    client.navigate(client.url);
+                }
             }
         }
     } catch (error) {
@@ -906,7 +910,9 @@ async function _activate() {
 
             let clients = await self.clients.matchAll();
             await self.registration.unregister();
-            clients.forEach(client => client.navigate(client.url));
+            for (let client of clients) {
+                client.navigate(client.url);
+            }
 
             let logEnabled = _shouldResourceURLBeIncluded(_getCurrentLocation(), _myLogEnabledLocationURLsToInclude, _myLogEnabledLocationURLsToExclude);
             if (logEnabled) {
