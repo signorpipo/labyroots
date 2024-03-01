@@ -2,8 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-    <link rel="preload" href="labyroots-bundle.js" as="script">
-
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="white">
@@ -147,7 +145,7 @@
     <canvas id="canvas" style="width: 100%; height: 100%; display: block;" tabindex="0"></canvas>
 
     <div id="xr-buttons-container">
-        <a id="vr-button" class="xr-button" onclick="Module['webxr_request_session_func']('immersive-vr', ['local','local-floor'], ['local','local-floor','hand-tracking'])">
+        <a id="vr-button" class="xr-button" onclick="Module['webxr_request_session_func']('immersive-vr', ['local'], ['local','local-floor','hand-tracking'])">
             <div class="xr-button-svg-container">
                 <svg class="xr-button-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 109.41 65">
                     <rect class="xr-button-svg-frame" x="3.5" y="3.5" width="102.41" height="58" rx="16.68" style="fill:none;stroke-linejoin:round;stroke-width:7px" />
