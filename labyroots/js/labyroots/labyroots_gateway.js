@@ -201,7 +201,7 @@ WL.registerComponent("labyroots-gateway", {
             }
 
             if (!this._myVRButtonUsabilityUpdated) {
-                if (WL.vrSupported != 0) {
+                if (WL.vrSupported != null && WL.vrSupported) {
                     this._myVRButton.style.setProperty("opacity", "1");
                     this._myVRButton.style.setProperty("pointer-events", "all");
 
