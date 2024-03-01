@@ -43928,7 +43928,7 @@
               this._myVRButtonVisibilityUpdated = true;
             }
             if (!this._myVRButtonUsabilityUpdated) {
-              if (WL.vrSupported != 0) {
+              if (WL.vrSupported != null && WL.vrSupported) {
                 this._myVRButton.style.setProperty("opacity", "1");
                 this._myVRButton.style.setProperty("pointer-events", "all");
                 this._myVRButtonUsabilityUpdated = true;
@@ -45602,7 +45602,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = "2.1.3";
+                let currentVersion = "2.2.0";
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.load("can_skip", false);
