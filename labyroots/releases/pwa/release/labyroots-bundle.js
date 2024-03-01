@@ -16369,13 +16369,16 @@
   var require_save_manager = __commonJS({
     "js/pp/cauldron/cauldron/save_manager.js"() {
       PP.SaveManager = class SaveManager {
-        constructor(saveID) {
+        constructor(saveID, autoLoadSaves = true) {
           this._mySaveID = saveID;
-          this._mySaveObject = PP.SaveUtils.loadObject(this._mySaveID, {});
           this._myCommitSavesDelayTimer = new PP.Timer(0, false);
           this._myDelaySavesCommit = true;
           this._myCommitSavesDirty = false;
           this._myCommitSavesDirtyClearOnFail = true;
+          this._myCommitSavesWhenLoadSavesFailed = false;
+          this._myResetSaveObjectOnLoadSavesFail = false;
+          this._mySaveObject = {};
+          this._myLoadSavesSucceded = false;
           this._myClearCallbacks = /* @__PURE__ */ new Map();
           this._myDeleteCallbacks = /* @__PURE__ */ new Map();
           this._myDeleteIDCallbacks = /* @__PURE__ */ new Map();
@@ -16386,6 +16389,10 @@
           this._myCommitSavesCallbacks = /* @__PURE__ */ new Map();
           this._myLoadCallbacks = /* @__PURE__ */ new Map();
           this._myLoadIDCallbacks = /* @__PURE__ */ new Map();
+          this._myLoadSavesCallbacks = /* @__PURE__ */ new Map();
+          if (autoLoadSaves) {
+            this.loadSaves();
+          }
           window.addEventListener("visibilitychange", function() {
             if (document.visibilityState != "visible") {
               this._onInterrupt();
@@ -16416,6 +16423,12 @@
         setCommitSavesDirtyClearOnFail(clearOnFail) {
           this._myCommitSavesDirtyClearOnFail = clearOnFail;
         }
+        setCommitSavesWhenLoadSavesFailed(commitSavesWhenLoadSavesFailed) {
+          this._myCommitSavesWhenLoadSavesFailed = commitSavesWhenLoadSavesFailed;
+        }
+        setResetSaveObjectOnLoadSavesFail(resetSaveObjectOnLoadSavesFail) {
+          this._myResetSaveObjectOnLoadSavesFail = resetSaveObjectOnLoadSavesFail;
+        }
         getCommitSavesDelay() {
           return this._myCommitSavesDelayTimer.getDuration();
         }
@@ -16427,6 +16440,15 @@
         }
         isCommitSavesDirtyClearOnFail() {
           return this._myCommitSavesDirtyClearOnFail;
+        }
+        isCommitSavesWhenLoadSavesFailed() {
+          return this._myCommitSavesWhenLoadSavesFailed;
+        }
+        isResetSaveObjectOnLoadSavesFail() {
+          return this._myResetSaveObjectOnLoadSavesFail;
+        }
+        hasLoadSavesSucceded() {
+          return this._myLoadSavesSucceded;
         }
         update(dt) {
           if (this._myCommitSavesDelayTimer.isRunning()) {
@@ -16561,22 +16583,52 @@
         }
         _commitSaves() {
           let succeded = true;
-          try {
-            let saveObjectStringified = JSON.stringify(this._mySaveObject);
-            PP.SaveUtils.save(this._mySaveID, saveObjectStringified);
-          } catch (error) {
-            succeded = false;
+          if (this._myLoadSavesSucceded || this._myCommitSavesWhenLoadSavesFailed) {
+            try {
+              let saveObjectStringified = JSON.stringify(this._mySaveObject);
+              PP.SaveUtils.save(this._mySaveID, saveObjectStringified);
+            } catch (error) {
+              succeded = false;
+            }
+          }
+          if (succeded || this._myCommitSavesDirtyClearOnFail) {
+            this._myCommitSavesDirty = false;
+            this._myCommitSavesDelayTimer.reset();
           }
           if (this._myCommitSavesCallbacks.size > 0) {
             this._myCommitSavesCallbacks.forEach(function(callback) {
               callback(succeded);
             });
           }
-          if (succeded || this._myCommitSavesDirtyClearOnFail) {
-            this._myCommitSavesDirty = false;
-            this._myCommitSavesDelayTimer.reset();
-          }
           return succeded;
+        }
+        loadSaves() {
+          let saveObject = {};
+          let loadSavesSucceded = false;
+          let saveObjectReset = false;
+          let maxLoadObjectAttempts = 3;
+          do {
+            try {
+              saveObject = PP.SaveUtils.loadObject(this._mySaveID, {});
+              loadSavesSucceded = true;
+            } catch (error) {
+              maxLoadObjectAttempts--;
+            }
+          } while (maxLoadObjectAttempts > 0 && !loadSavesSucceded);
+          if (loadSavesSucceded) {
+            this._mySaveObject = saveObject;
+            this._myLoadSavesSucceded = true;
+          } else if (this._myResetSaveObjectOnLoadSavesFail) {
+            this._mySaveObject = {};
+            this._myLoadSavesSucceded = false;
+            saveObjectReset = true;
+          }
+          if (this._myLoadSavesCallbacks.size > 0) {
+            this._myLoadSavesCallbacks.forEach(function(callback) {
+              callback(loadSavesSucceded, saveObjectReset);
+            });
+          }
+          return loadSavesSucceded;
         }
         _onXRSessionStart(session) {
           session.addEventListener("visibilitychange", function(event) {
@@ -16684,6 +16736,12 @@
           if (valueIDMap != null) {
             valueIDMap.delete(callbackID);
           }
+        }
+        registerLoadSavesEventListener(callbackID, callback) {
+          this._myLoadSavesCallbacks.set(callbackID, callback);
+        }
+        unregisterLoadSavesEventListener(callbackID) {
+          this._myLoadSavesCallbacks.delete(callbackID);
         }
       };
     }
@@ -18150,7 +18208,10 @@
         loadObject: function(id, defaultValue = null) {
           let item = PP.SaveUtils.loadString(id);
           if (item != null) {
-            return JSON.parse(item);
+            try {
+              return JSON.parse(item);
+            } catch (error) {
+            }
           }
           return defaultValue;
         }
@@ -27345,7 +27406,11 @@
         _updateHand() {
           this._myHandInputSource = PP.InputUtils.getInputSource(this._myHandednessString, PP.InputSourceType.TRACKED_HAND);
           if (this._myHandInputSource) {
-            let tip = Module["webxr_frame"].getJointPose(this._myHandInputSource.hand.get("index-finger-tip"), this._myReferenceSpace);
+            let tip = null;
+            try {
+              tip = Module["webxr_frame"].getJointPose(this._myHandInputSource.hand.get("index-finger-tip"), this._myReferenceSpace);
+            } catch (error) {
+            }
             if (tip) {
               this._myCursorObject.pp_setRotationLocalQuat([
                 tip.transform.orientation.x,
@@ -28800,7 +28865,9 @@
                 for (let hapticActuator of hapticActuators) {
                   hapticActuator.pulse(0, 1);
                   try {
-                    hapticActuator.reset();
+                    if (hapticActuator.reset != null) {
+                      hapticActuator.reset();
+                    }
                   } catch (error) {
                   }
                 }
@@ -42399,8 +42466,8 @@
             params2.myExitSessionAdjustMaxVerticalAngle = true;
             params2.myExitSessionMaxVerticalAngle = 90;
             params2.myHeightOffsetVRWithFloor = 0;
-            params2.myHeightOffsetVRWithoutFloor = 1.75;
-            params2.myHeightOffsetNonVR = 1.75;
+            params2.myHeightOffsetVRWithoutFloor = 1.7;
+            params2.myHeightOffsetNonVR = 1.7;
             params2.myForeheadExtraHeight = this._myParams.myForeheadExtraHeight;
             params2.myFeetRotationKeepUp = true;
             params2.myDebugActive = false;
@@ -42624,7 +42691,7 @@
         }
         _setupCollisionCheckParamsMovement() {
           let simplifiedParams = new PP.CharacterColliderSetupSimplifiedCreationParams();
-          simplifiedParams.myHeight = 1.75;
+          simplifiedParams.myHeight = 1.7;
           simplifiedParams.myRadius = this._myParams.myCharacterRadius;
           simplifiedParams.myAccuracyLevel = PP.CharacterColliderSetupSimplifiedCreationAccuracyLevel.MEDIUM;
           simplifiedParams.myIsPlayer = true;
@@ -43709,9 +43776,12 @@
           this._myVRButtonUsabilityUpdated = false;
           this._myXRButtonsContainer = document.getElementById("xr-buttons-container");
           this._myVRButton = document.getElementById("vr-button");
+          this._myDesiredFrameRate = null;
+          this._mySetDesiredFrameRateMaxAttempts = 10;
           if (window.location != null && window.location.host != null) {
             Global.myIsLocalhost = window.location.host == "localhost:8080";
           }
+          Global.myAnalyticsEnabled = !Global.myIsLocalhost;
           this._myGestureStartEventListener = function(event) {
             event.preventDefault();
           };
@@ -43745,6 +43815,23 @@
           } else {
             if (!this._myVRButtonUsabilityUpdated) {
               this._updateVRButtonVisibility();
+            }
+          }
+          if (WL.xrSession != null && WL.xrSession.updateTargetFrameRate != null && this._myDesiredFrameRate != null && WL.xrSession.frameRate != this._myDesiredFrameRate) {
+            try {
+              WL.xrSession.updateTargetFrameRate(this._myDesiredFrameRate).catch(function() {
+                if (this._mySetDesiredFrameRateMaxAttempts > 0) {
+                  this._mySetDesiredFrameRateMaxAttempts--;
+                } else {
+                  this._myDesiredFrameRate = null;
+                }
+              }.bind(this));
+            } catch (error) {
+              if (this._mySetDesiredFrameRateMaxAttempts > 0) {
+                this._mySetDesiredFrameRateMaxAttempts--;
+              } else {
+                this._myDesiredFrameRate = null;
+              }
             }
           }
           if (!this._myLoadSetupDone) {
@@ -43854,9 +43941,34 @@
             this._myVRButtonUsabilityUpdated = true;
           }
         },
-        _onXRSessionStart() {
+        _onXRSessionStart(session) {
           if (this._myXRButtonsContainer != null) {
             this._myXRButtonsContainer.style.setProperty("display", "none");
+          }
+          this._myDesiredFrameRate = null;
+          this._mySetDesiredFrameRateMaxAttempts = 10;
+          if (session.supportedFrameRates != null) {
+            let desiredFrameRate = 72;
+            let bestFrameRate = null;
+            for (let supportedFrameRate of session.supportedFrameRates) {
+              if (supportedFrameRate == desiredFrameRate) {
+                bestFrameRate = desiredFrameRate;
+                break;
+              } else if (bestFrameRate == null) {
+                bestFrameRate = supportedFrameRate;
+              } else if (supportedFrameRate > desiredFrameRate && (supportedFrameRate < bestFrameRate || bestFrameRate < desiredFrameRate)) {
+                bestFrameRate = supportedFrameRate;
+              } else if (supportedFrameRate < desiredFrameRate && supportedFrameRate > bestFrameRate) {
+                bestFrameRate = supportedFrameRate;
+              }
+            }
+            this._myDesiredFrameRate = bestFrameRate;
+          }
+          if (session.updateTargetFrameRate != null && this._myDesiredFrameRate != null) {
+            try {
+              session.updateTargetFrameRate(this._myDesiredFrameRate);
+            } catch (error) {
+            }
           }
           Global.sendAnalytics("event", "enter_vr", {
             "value": 1
@@ -43874,6 +43986,7 @@
           if (this._myXRButtonsContainer != null) {
             this._myXRButtonsContainer.style.removeProperty("display");
           }
+          this._myDesiredFrameRate = null;
         }
       });
       Global = {
@@ -45489,7 +45602,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = "2.1.2";
+                let currentVersion = "2.1.3";
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.load("can_skip", false);
@@ -45968,7 +46081,7 @@
                   "value": 1
                 });
               }.bind(this);
-              PP.XRUtils.openLink("https://github.com/SignorPipo/labyroots", true, true, true, true, onSuccess);
+              PP.XRUtils.openLink("https://github.com/signorpipo/labyroots", true, true, true, true, onSuccess);
             }
           }
         },
@@ -47827,7 +47940,7 @@
                 });
                 this.active = false;
               }.bind(this);
-              PP.XRUtils.openLink("https://signor-pipo.itch.io", true, true, true, true, onSuccess);
+              PP.XRUtils.openLink("https://signorpipo.itch.io", true, true, true, true, onSuccess);
             }
           }
         }
@@ -48228,13 +48341,13 @@
             if (this._myChange == 0) {
               let url = window.location.origin;
               if (window.location != window.parent.location) {
-                url = "https://heyvr.io/game/labyroots";
+                url = "https://heyvr.io/arcade/games/labyroots";
                 if (window.location.ancestorOrigins != null && window.location.ancestorOrigins.length > 0) {
                   let ancestorOrigin = window.location.ancestorOrigins[0];
                   if (ancestorOrigin.includes("itch.io")) {
-                    url = "https://signor-pipo.itch.io/labyroots";
+                    url = "https://signorpipo.itch.io/labyroots";
                   } else if (ancestorOrigin.includes("heyvr.io")) {
-                    url = "https://heyvr.io/game/labyroots";
+                    url = "https://heyvr.io/arcade/games/labyroots";
                   }
                 }
               } else {
@@ -49213,12 +49326,36 @@
                 });
                 if (!Global.myIsMazeverseTime) {
                   let score = Math.floor(this._myTimeToWin * 1e3);
-                  PP.CAUtils.submitScore("labyroots", score, function() {
-                    let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
-                    for (let leaderboard of leaderboards) {
-                      leaderboard.updateLeaderboard();
+                  let scoreSubmittedSucceded = false;
+                  let scoreStopSubmitting = false;
+                  let submitScoreSuccessCallback = function() {
+                    if (!scoreSubmittedSucceded) {
+                      scoreSubmittedSucceded = true;
+                      let leaderboards = WL.scene.pp_getComponents("display-leaderboard");
+                      for (let leaderboard of leaderboards) {
+                        leaderboard.updateLeaderboard();
+                      }
+                      Global.sendAnalytics("event", "score_submitted", {
+                        "value": 1
+                      });
                     }
-                  });
+                  };
+                  let submitScoreErrorCallback = function(error) {
+                    if (error != null && error.type != PP.CAUtils.CAError.SUBMIT_SCORE_FAILED) {
+                      scoreStopSubmitting = true;
+                    }
+                  };
+                  PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+                  setTimeout(function() {
+                    if (!scoreSubmittedSucceded && !scoreStopSubmitting) {
+                      PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+                    }
+                  }, 5e3);
+                  setTimeout(function() {
+                    if (!scoreSubmittedSucceded && !scoreStopSubmitting) {
+                      PP.CAUtils.submitScore("labyroots", score, submitScoreSuccessCallback, submitScoreErrorCallback, false);
+                    }
+                  }, 1e4);
                 }
               } else {
                 Global.sendAnalytics("event", "mother_tree_hit", {
