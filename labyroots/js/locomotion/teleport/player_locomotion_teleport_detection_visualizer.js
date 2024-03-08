@@ -6,7 +6,7 @@ PlayerLocomotionTeleportDetectionVisualizerParams = class PlayerLocomotionTelepo
         this.myTeleportPositionObject = null;
 
         this.myTeleportParableLineEndOffset = 0.05;
-        this.myTeleportParableMinVerticalDistanceToShowVerticalLine = 0.80;
+        this.myTeleportParableMinVerticalDistanceToShowVerticalLine = 0.60;
 
         this.myTeleportParablePositionUpOffset = 0.05;
 
