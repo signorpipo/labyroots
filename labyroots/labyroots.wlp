@@ -13888,7 +13888,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "d6200692-e881-494f-81ce-71d04fad0c04"
                     }
                 }
@@ -14032,7 +14032,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -14045,7 +14045,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -21743,7 +21743,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "d6200692-e881-494f-81ce-71d04fad0c04"
                     }
                 }
@@ -21772,7 +21772,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "d6200692-e881-494f-81ce-71d04fad0c04"
                     }
                 }
@@ -21786,7 +21786,7 @@
                 7.549789415861596e-8,
                 1.0,
                 -4.371138118131057e-8,
-                -8.748033053507244e-8
+                -8.748033053507245e-8
             ],
             "scale": [
                 1.0000095,
@@ -21801,7 +21801,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "d6200692-e881-494f-81ce-71d04fad0c04"
                     }
                 }
@@ -21830,7 +21830,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -21859,7 +21859,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -21888,7 +21888,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -21902,7 +21902,7 @@
                 7.549789415861596e-8,
                 1.0,
                 -4.371138118131057e-8,
-                -8.748033053507244e-8
+                -8.748033053507245e-8
             ],
             "scale": [
                 1.0000095,
@@ -21917,7 +21917,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -21946,7 +21946,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -21975,7 +21975,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -22004,7 +22004,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -22033,7 +22033,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -22046,7 +22046,7 @@
             "rotation": [
                 1.0,
                 0.0,
-                8.748033053507244e-8,
+                8.748033053507245e-8,
                 -4.3711388286737935e-8
             ],
             "scale": [
@@ -22062,7 +22062,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -22091,7 +22091,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "8f7661b3-7b2e-4295-bc8f-8de69a583f98"
                     }
                 }
@@ -22120,7 +22120,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -22149,7 +22149,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -22178,7 +22178,7 @@
                 {
                     "type": "mesh",
                     "mesh": {
-                        "mesh": "p0",
+                        "mesh": "974211fe-a445-467c-a9d4-2e75545ceee9",
                         "material": "a54dbc73-9651-475a-857f-500633aff8b4"
                     }
                 }
@@ -22410,6 +22410,12 @@
             "link": {
                 "name": "Wondermelon Convex Mesh Fit",
                 "file": "assets\\models\\wondermelon.fbx"
+            }
+        },
+        "974211fe-a445-467c-a9d4-2e75545ceee9": {
+            "link": {
+                "name": "InsetUVPlane",
+                "file": "assets\\models\\altro\\inset-uv-plane.glb"
             }
         }
     },
@@ -24787,7 +24793,8 @@
         "assets/textures/webp/concept foglie albero/texture mani1.2 destra.webp",
         "assets/textures/webp/concept foglie albero/texture mani1.1 destra.webp",
         "assets/textures/webp/Walls/Angolo_A_lambert1_BaseMap_Bigger.webp",
-        "assets/models/wondermelon.fbx"
+        "assets/models/wondermelon.fbx",
+        "assets/models/altro/inset-uv-plane.glb"
     ],
     "fonts": {
         "147": {
