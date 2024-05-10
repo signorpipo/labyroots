@@ -18209,7 +18209,10 @@
           let item = PP.SaveUtils.loadString(id);
           if (item != null) {
             try {
-              return JSON.parse(item);
+              const parsedValue = JSON.parse(item);
+              if (parsedValue.constructor == Object) {
+                return parsedValue;
+              }
             } catch (error) {
             }
           }
@@ -41066,7 +41069,7 @@
           this.myTeleportParableInvalidMaterial = null;
           this.myTeleportPositionObject = null;
           this.myTeleportParableLineEndOffset = 0.05;
-          this.myTeleportParableMinVerticalDistanceToShowVerticalLine = 0.25;
+          this.myTeleportParableMinVerticalDistanceToShowVerticalLine = 0.6;
           this.myTeleportParablePositionUpOffset = 0.05;
           this.myTeleportParablePositionVisualAlignOnSurface = true;
           this.myVisualTeleportPositionLerpActive = true;
@@ -41119,7 +41122,6 @@
           }
         }
         _showTeleportPosition(dt) {
-          this._hideTeleportPosition();
           this._showTeleportParable(dt);
         }
         _hideTeleportPosition() {
@@ -41255,10 +41257,12 @@
           if (lastParableIndex + 1 > this._myValidVisualLines.length) {
             this._addVisualLines(lastParableIndex + 1, this._myValidVisualLines.length);
           }
+          const usedVisualLines = [];
           for (let i = 0; i <= lastParableIndex; i++) {
             currentPosition = this._myDetectionRuntimeParams.myParable.getPosition(i, currentPosition);
             nextPosition = this._myDetectionRuntimeParams.myParable.getPosition(i + 1, nextPosition);
             let visuaLine = this._myDetectionRuntimeParams.myTeleportPositionValid ? this._myValidVisualLines[i] : this._myInvalidVisualLines[i];
+            usedVisualLines.push(visuaLine);
             let currentVisualLineParams = visuaLine.getParams();
             if (i == lastParableIndex) {
               let stepLength = Math.max(0, showParableDistance - lastParableIndexDistance);
@@ -41273,12 +41277,24 @@
               PP.myDebugVisualManager.drawPoint(0, currentPosition, PP.vec4_create(1, 0, 0, 1), 0.01);
             }
           }
+          for (let visualLine of this._myValidVisualLines) {
+            if (usedVisualLines.indexOf(visualLine) == -1) {
+              visualLine.setVisible(false);
+            }
+          }
+          for (let visualLine of this._myInvalidVisualLines) {
+            if (usedVisualLines.indexOf(visualLine) == -1) {
+              visualLine.setVisible(false);
+            }
+          }
           let visualPoint = this._myDetectionRuntimeParams.myTeleportPositionValid ? this._myValidVisualPoint : this._myInvalidVisualPoint;
           let visualPointParams = visualPoint.getParams();
           visualPointParams.myPosition.vec3_copy(nextPosition);
           visualPointParams.myRadius = 0.01;
           visualPoint.paramsUpdated();
           visualPoint.setVisible(true);
+          let unusedVisualPoint = this._myDetectionRuntimeParams.myTeleportPositionValid ? this._myInvalidVisualPoint : this._myValidVisualPoint;
+          unusedVisualPoint.setVisible(false);
           if (this._myDetectionRuntimeParams.myTeleportPositionValid) {
             playerUp = this._myTeleportParams.myPlayerHeadManager.getPlayer().pp_getUp(playerUp);
             upDifference = nextPosition.vec3_sub(this._myTeleportRuntimeParams.myTeleportPosition, upDifference).vec3_componentAlongAxis(playerUp, upDifference);
@@ -41292,9 +41308,17 @@
               visualLineParams.myThickness = 5e-3;
               this._myValidVisualVerticalLine.paramsUpdated();
               this._myValidVisualVerticalLine.setVisible(true);
+            } else {
+              this._myValidVisualVerticalLine.setVisible(false);
             }
             this._showTeleportParablePosition(dt);
           } else {
+            this._myValidVisualTeleportPositionTorus.setVisible(false);
+            this._myValidVisualTeleportPositionTorusInner.setVisible(false);
+            this._myValidVisualVerticalLine.setVisible(false);
+            if (this._myTeleportParams.myVisualizerParams.myTeleportPositionObject != null) {
+              this._myTeleportParams.myVisualizerParams.myTeleportPositionObject.pp_setActive(false);
+            }
             this._myVisualTeleportTransformQuatReset = true;
             this._myVisualTeleportTransformPositionLerping = false;
             this._myVisualTeleportTransformRotationLerping = false;
@@ -45602,7 +45626,7 @@
           if (!this._myStarted) {
             if (Global.myStoryReady) {
               if (PP.XRUtils.isSessionActive() || !this._myOnlyVR) {
-                let currentVersion = "2.2.0";
+                let currentVersion = "2.2.1";
                 console.log("Game Version:", currentVersion);
                 this._myStarted = true;
                 this._myCanSkip = Global.mySaveManager.load("can_skip", false);
