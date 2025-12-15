@@ -8,6 +8,8 @@ WL.registerComponent("labyroots-gateway", {
             "value": 1
         });
 
+        PP.CAUtils.initializeSDK();
+
         Global.myFromAbove = this._myFromAbove;
 
         Global.mySaveManager = new PP.SaveManager("labyroots");
